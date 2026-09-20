@@ -1,0 +1,176 @@
+{
+  "name": "Paper Proposed/MST comparison: PyTorch + SB3 + corrected SUMO protocol",
+  "version": 15,
+  "scope": "Five-seed reproduction of the complete Proposed method and its MST ablation under the same corrected SUMO contract used by the v14 SAC/PPO baselines.",
+  "evidence_priority": [
+    "released_source_code",
+    "paper_experiment_text_and_tables",
+    "explicit_environment_reconstruction_where_original_test_assets_are_unpublished"
+  ],
+  "profiles": {
+    "paper": {
+      "raw_training_steps": 100000,
+      "seeds": [0, 1, 2, 3, 4],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 20000,
+      "evaluation_frequency_raw_steps": 0,
+      "description": "Paper budget, five seeds, and 50 deterministic test episodes per trained seed."
+    }
+  },
+  "environment_protocol": {
+    "ego_control_profile": "smarts_ackermann_proxy",
+    "traffic_protocol": "frozen_80_20",
+    "episode_limit_profile": "paper"
+  },
+  "environment_protocol_rationale": {
+    "ego_control_profile": "Curve-speed and per-tick acceleration/deceleration limits proxy the released SMARTS Bullet/Ackermann lane-following controller instead of direct TraCI speed teleportation.",
+    "traffic_protocol": "Every fifth lexicographically ordered released traffic XML is frozen for evaluation and excluded from training. This deterministic split is a reconstruction because the authors did not release the paper's held-out traffic generation.",
+    "episode_limit_profile": "Uses paper Table VI limits, including 400 for Double Merging and 800 for Roundabout-C."
+  },
+  "compatible_predecessor_results": [],
+  "diagnostic_predecessor_results": [
+    {
+      "root": "results_sb3_sumo_paper/paper_source_audited_runs_v12_frozen",
+      "protocol_version": 12,
+      "methods": ["proposed", "mst"],
+      "reason": "v12 is retained only as released-source/direct-SUMO diagnostic evidence. It uses direct ego speed control, the complete released traffic pool for both training and evaluation, and source episode limits, so it is not compatible with v15 formal aggregation."
+    }
+  ],
+  "common_hyperparameters": {
+    "off_policy_action_repeat": 3,
+    "history_steps": 10,
+    "neighbors": 5,
+    "path_length": 10,
+    "learning_rate": 0.0001,
+    "discount": 0.99,
+    "batch_size": 32,
+    "learning_starts_raw_steps": 5000,
+    "replay_buffer_capacity": 20000,
+    "n_step": 4,
+    "polyak_tau": 0.005,
+    "speed_limit_mps": 10
+  },
+  "source_compatibility_contract": {
+    "proposed": "MST plus SLT plus released-source SAC, including the hierarchical scene encoder, source N-step replay, raw-step update clock, random rotation during training, and source optimizer behavior.",
+    "mst": "The same released-source SAC and hierarchical scene encoder with SLT disabled before construction, avoiding auxiliary-objective RNG consumption and terminal duplicate insertion.",
+    "action_and_clock": "One action is held for three 0.1 s SUMO steps; eligible learning updates occur once per raw step and periodic checkpoints serialize at exact raw-step thresholds.",
+    "selection": "The source-recoverable latest 100k checkpoint is primary. A prospective latest-20 training-success checkpoint is captured separately as the paper-style reconstructed secondary selection."
+  },
+  "scenario_order": [
+    "left_turn",
+    "cross",
+    "roundabout_easy",
+    "roundabout_medium",
+    "roundabout",
+    "carla"
+  ],
+  "scenario_labels": {
+    "left_turn": "Unprotected Left Turn",
+    "cross": "Double Merging",
+    "roundabout_easy": "Roundabout-A",
+    "roundabout_medium": "Roundabout-B",
+    "roundabout": "Roundabout-C",
+    "carla": "CARLA Town-10 task recreated in SUMO"
+  },
+  "supported_methods": {
+    "proposed": {
+      "train_cli_algorithm": "scene_rep",
+      "paper_label": "Proposed",
+      "implementation_id": "released_scene_rep_pytorch_port_v1",
+      "fidelity": "Complete released method: MST hierarchical scene representation plus SLT auxiliary prediction plus source SAC.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    },
+    "mst": {
+      "train_cli_algorithm": "mst",
+      "paper_label": "MST",
+      "implementation_id": "released_mst_pytorch_port_v1",
+      "fidelity": "Released MST ablation: identical hierarchical scene representation and source SAC with SLT disabled before model construction.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    }
+  },
+  "policy_selection_artifacts": {
+    "primary": "Source-recoverable latest periodic checkpoint at 100k raw steps.",
+    "secondary": "best_training_success_model.zip captures strict improvements in source-style latest-20 training success after episode 20.",
+    "reporting": "Evaluate primary and reconstructed secondary selection separately; never choose retrospectively using test outcomes."
+  },
+  "environment_equivalence_limitations": {
+    "smarts": "Original SUMO networks and traffic XMLs are reused, but SMARTS Bullet/Ackermann dynamics are approximated by a documented SUMO control proxy.",
+    "carla": "The released route, waypoint tensors, success region, actor/history contract, required lane change, vehicles, and pedestrians are reconstructed in SUMO; CARLA physics and sensor timing are not claimed equivalent.",
+    "held_out_traffic": "The exact paper test traffic assets were not released; the frozen 80/20 XML split is deterministic and disjoint but reconstructed."
+  },
+  "paper_reference_percent": {
+    "left_turn": {
+      "MST": [88, 12, 0],
+      "Proposed": [94, 4, 0]
+    },
+    "cross": {
+      "MST": [92, 4, 0],
+      "Proposed": [96, 2, 0]
+    },
+    "roundabout_easy": {
+      "MST": [84, 16, 0],
+      "Proposed": [88, 12, 0]
+    },
+    "roundabout_medium": {
+      "MST": [76, 24, 0],
+      "Proposed": [82, 18, 0]
+    },
+    "roundabout": {
+      "MST": [66, 34, 0],
+      "Proposed": [76, 24, 0]
+    },
+    "carla": {
+      "Proposed": [88, 6, 2]
+    }
+  },
+  "known_source_paper_conflicts": [
+    {
+      "field": "global predictive horizon",
+      "paper": 3,
+      "released_source_default": 1
+    },
+    {
+      "field": "entropy temperature initialization",
+      "paper": 1.0,
+      "released_source": 0.2
+    },
+    {
+      "field": "optimizer",
+      "paper": "Adam",
+      "released_source": "NAdam for actor, critic, and representation optimizers"
+    },
+    {
+      "field": "ego starting position",
+      "paper": "random along starting route",
+      "released_scenarios": "fixed lane and position"
+    },
+    {
+      "field": "test policy selection",
+      "paper": "highest training success",
+      "released_source": "latest periodic checkpoint is the only executable selection; v15 also captures a prospective reconstructed best-success checkpoint"
+    }
+  ]
+}

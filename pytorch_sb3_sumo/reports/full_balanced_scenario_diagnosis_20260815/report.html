@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Full+BalancedSlots 场景退化诊断</title>
+<style>
+:root{--ink:#15212b;--muted:#52616b;--blue:#1261a0;--red:#b33a3a;--paper:#fff;--bg:#eef2f4;--line:#d8e0e5}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}
+main{max-width:1180px;margin:28px auto;padding:0 20px 48px} header,section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 28px;margin-bottom:18px;box-shadow:0 4px 14px rgba(25,45,60,.05)}
+h1{font-size:30px;margin:0 0 10px} h2{font-size:22px;border-bottom:2px solid #e6edf1;padding-bottom:8px} h3{font-size:17px;color:var(--blue)}
+.lede{font-size:17px;color:var(--muted)} .verdict{border-left:5px solid var(--red);background:#fff7f5;padding:14px 18px;border-radius:6px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px} .card{background:#f7fafb;border:1px solid var(--line);padding:14px;border-radius:8px} .card b{display:block;font-size:24px;color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top} th{background:#f4f7f9;position:sticky;top:0} .scroll{overflow:auto}
+figure{margin:18px 0} img{max-width:100%;height:auto} figcaption{color:var(--muted);font-size:13px} code{background:#f2f5f7;padding:1px 4px;border-radius:3px} li{margin:.35em 0}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr} header,section{padding:18px}}
+</style></head><body><main>
+<header><h1>Full+BalancedSlots 场景退化诊断</h1><p class="lede">冻结 108-run 矩阵、源码/资产审计与只读 deterministic rollout 的联合证据；未修改研究方法。</p>
+<p class="verdict"><b>判定：</b>模型完整组合存在结构性缺陷；现有场景不应因暴露缺陷而被替换。A/B/C 是直接 SMARTS SUMO 资产迁移，CARLA 只能称为 Town-10 任务语义的受控 SUMO 重建。</p>
+<div class="cards"><div class="card"><b>−9.78pp</b>Full−TG 宏成功率</div><div class="card"><b>−22.67pp</b>环岛 B 成功率</div><div class="card"><b>+2.00pp</b>环岛 C 成功率（未下降）</div><div class="card"><b>1 XML</b>CARLA train/eval 共用</div></div></header>
+<section><h2>1. 逐场景事实</h2><div class="scroll"><table><thead><tr><th>场景</th><th>TG Success</th><th>Full Success</th><th>ΔSuccess</th><th>ΔCollision</th><th>ΔTimeout</th><th>ΔReturn</th></tr></thead><tbody><tr><td>无保护左转</td><td>95.3%</td><td>98.0%</td><td>+2.7%</td><td>-2.7%</td><td>+0.0%</td><td>+0.053</td></tr><tr><td>双汇入</td><td>82.7%</td><td>77.3%</td><td>-5.3%</td><td>+8.7%</td><td>-4.7%</td><td>-0.140</td></tr><tr><td>环岛 A</td><td>96.7%</td><td>94.7%</td><td>-2.0%</td><td>+0.7%</td><td>+1.3%</td><td>-0.027</td></tr><tr><td>环岛 B</td><td>88.0%</td><td>65.3%</td><td>-22.7%</td><td>+22.7%</td><td>+0.0%</td><td>-0.453</td></tr><tr><td>环岛 C</td><td>81.3%</td><td>83.3%</td><td>+2.0%</td><td>-2.7%</td><td>+0.7%</td><td>+0.047</td></tr><tr><td>CARLA Town-10 任务重建</td><td>100.0%</td><td>66.7%</td><td>-33.3%</td><td>+1.3%</td><td>+32.0%</td><td>-0.347</td></tr></tbody></table></div><p>环岛 C 的主指标实际略升；清楚退化集中在环岛 B，CARLA 均值下降由 Full seed0 主导。</p>
+<figure><img src="figures/full_vs_temporal_scene_deltas.png"><figcaption>正值 Success 为改善；正值 Collision 为恶化。</figcaption></figure>
+<figure><img src="figures/seed_instability_roundabout_b_carla.png"><figcaption>训练种子只有 3 个，CARLA 不能据此判为普遍不兼容。</figcaption></figure></section>
+<section><h2>2. 场景来源与有效性</h2><div class="scroll"><table><thead><tr><th>场景</th><th>迁移判定</th><th>持出互斥</th><th>可达性</th><th>限制</th></tr></thead><tbody><tr><td>环岛 A</td><td>可视为原 SMARTS 场景的直接 SUMO 资产迁移</td><td>True</td><td>PASS</td><td>无资产破损；但 A/B/C 不是只改变密度的单因子难度阶梯</td></tr><tr><td>环岛 B</td><td>可视为原 SMARTS 场景的直接 SUMO 资产迁移</td><td>True</td><td>PASS</td><td>无资产破损；但 A/B/C 不是只改变密度的单因子难度阶梯</td></tr><tr><td>环岛 C</td><td>可视为原 SMARTS 场景的直接 SUMO 资产迁移</td><td>True</td><td>PASS</td><td>无资产破损；但 A/B/C 不是只改变密度的单因子难度阶梯</td></tr><tr><td>CARLA Town-10 任务重建</td><td>只能称为 Town-10 任务语义重建，不能称为原 CARLA 地图/动力学直接迁移</td><td>False</td><td>PASS（含强制目标车道变换测试）</td><td>只有一个交通 XML，train/evaluation 资产不互斥；仍有 SUMO seed 随机性</td></tr></tbody></table></div>
+<h3>A/B/C</h3><p>同一发布路网、不同 ego route/流量/时限。网络 SHA256 相同，拓扑与可达性通过；但不是只改变密度的单因子阶梯。名义配置流量约 820/950/450 veh/h，B 最密，C 路线最长。</p>
+<h3>CARLA</h3><p>从 CARLA 源码与 waypoint 恢复任务约束，但路网、交通流和动力学均为 SUMO 重建。只有一个交通 XML，代码在训练与评估两侧复用；随机 SUMO seed 不等于持出交通资产。</p></section>
+<section><h2>3. 拓扑审计</h2><div class="scroll"><table><thead><tr><th>场景</th><th>Nodes</th><th>Edges</th><th>Conflict</th><th>容量通过</th></tr></thead><tbody><tr><td>无保护左转</td><td>17</td><td>62</td><td>20</td><td>True</td></tr><tr><td>双汇入</td><td>10</td><td>18</td><td>0</td><td>True</td></tr><tr><td>环岛 A</td><td>44</td><td>160</td><td>40</td><td>True</td></tr><tr><td>环岛 B</td><td>44</td><td>160</td><td>40</td><td>True</td></tr><tr><td>环岛 C</td><td>44</td><td>160</td><td>40</td><td>True</td></tr><tr><td>CARLA Town-10 任务重建</td><td>42</td><td>142</td><td>36</td><td>True</td></tr></tbody></table></div><p>没有容量截断。双汇入的 <code>conflict=0</code> 是关键缺口：构图只识别 junction foes，不能表达下游 merge conflict。</p></section>
+<section><h2>4. 模型缺陷链</h2><ol>
+<li><b>联合改动不可识别：</b>Full 同时开启 topology query 和 non-affine slot normalization。</li>
+<li><b>lane attention 弥散：</b>固定 20m 距离偏置、无路线/方向硬门；复杂图常等效关注 4–8 条 lane。</li>
+<li><b>误差二次传播：</b>same-lane/conflict 由两个软拓扑注意力相乘后进入车辆图。</li>
+<li><b>路线 token 稀释：</b>A/B/C 仅 2 个 route token 与 44 个 topology token 直接同池，等分质量仅 4.35%。</li>
+<li><b>BalancedSlots 删除置信幅值：</b>每样本内 LayerNorm 不能保证跨 batch 平衡；Full latent std 更低而 slot-scale ratio 更高。</li>
+<li><b>容量/预算失配：</b>参数约 +40%，更新 +47%，推理 +87%，仍只给同样 100k raw steps。</li>
+<li><b>稀疏奖励与离散阈值锁死：</b>部分 seed 固化为单一横向动作符号，形成碰撞或超时。</li></ol>
+<div class="scroll"><table><thead><tr><th>只读轨迹</th><th>结果</th><th>Mean speed</th><th>Cmd −</th><th>Cmd 0</th><th>Cmd +</th></tr></thead><tbody><tr><td>paper__full_balanced__carla__seed0</td><td>timeout</td><td>2.17</td><td>5.0%</td><td>3.0%</td><td>92.1%</td></tr><tr><td>paper__full_balanced__carla__seed1</td><td>success</td><td>7.60</td><td>39.4%</td><td>60.6%</td><td>0.0%</td></tr><tr><td>paper__temporal_graph__carla__seed0</td><td>success</td><td>8.88</td><td>100.0%</td><td>0.0%</td><td>0.0%</td></tr><tr><td>paper__full_balanced__roundabout_medium__seed2</td><td>collision</td><td>8.04</td><td>0.0%</td><td>0.0%</td><td>100.0%</td></tr><tr><td>paper__full_balanced__roundabout_medium__seed1</td><td>success</td><td>4.39</td><td>94.6%</td><td>0.7%</td><td>4.7%</td></tr><tr><td>paper__temporal_graph__roundabout_medium__seed2</td><td>success</td><td>6.84</td><td>44.3%</td><td>13.4%</td><td>42.3%</td></tr><tr><td>paper__full_balanced__roundabout__seed2</td><td>success</td><td>6.22</td><td>100.0%</td><td>0.0%</td><td>0.0%</td></tr><tr><td>paper__full_balanced__cross__seed1</td><td>success</td><td>6.81</td><td>25.8%</td><td>28.0%</td><td>46.2%</td></tr><tr><td>paper__temporal_graph__cross__seed1</td><td>success</td><td>6.53</td><td>51.1%</td><td>17.3%</td><td>31.7%</td></tr></tbody></table></div></section>
+<section><h2>5. 是否需要另外设计场景</h2><p><b>不替换现有主场景。</b>保留 A/B/C 与双汇入；CARLA 分栏标为受控 proxy。新增场景只用于因果诊断：</p><ol>
+<li>现有场景上的 topology × slot-normalization 2×2 正交消融。</li><li>同图、同路线、同时限，只改变流量的环岛密度梯度。</li><li>双汇入显式 merge-conflict 关系配对。</li><li>无关 topology token 数量压力测试。</li><li>CARLA 换道/行人 on-off 与左右镜像配对。</li><li>环岛 B/CARLA 至少 10 个预注册 seeds；预算曲线须预注册。</li></ol></section>
+<section><h2>6. 证据边界</h2><ul><li>3 个训练 seeds；50 回合不能替代训练重复。</li><li>环岛 B 的方向最稳；CARLA 由单 seed 主导。</li><li>宏观差值 Holm 校正后不显著。</li><li>机制链与代码/诊断/轨迹一致，但仍需 2×2 才能给组件级因果。</li></ul>
+<p>伴随材料：<code>TECHNICAL_REPORT.md</code>、<code>full_balanced_diagnosis_companion.ipynb</code>、<code>tables/*.csv</code>、<code>evidence_manifest.json</code>。</p></section>
+</main></body></html>

@@ -1,0 +1,1548 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "双汇入0%与PPO环岛A/C反转：机制诊断",
+    "description": "双汇入0%与PPO环岛A/C成功率反转的逐层机制诊断。",
+    "generatedAt": "2026-08-05T12:26:43+08:00",
+    "sources": [
+      {
+        "id": "cross_evidence_source",
+        "label": "双汇入训练、400/600步评测与行为追踪",
+        "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evaluation_source.sql",
+        "query": {
+          "engine": "DuckDB-compatible local artifact audit",
+          "id": "cross_evidence_source",
+          "description": "同一seed0最终模型在严格论文环境中的双协议400步结果、source-all 600步反事实、训练monitor以及3回合确定性动作/路线进度追踪。",
+          "executed_at": "2026-08-05T12:26:43+08:00",
+          "language": "sql",
+          "tables_used": [
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__cross__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__sac__cross__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+            "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/ppo_cross_seed0_source_all_h600.json",
+            "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/sac_cross_seed0_source_all_h600.json",
+            "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/ppo_cross_seed0_trace_h600.json",
+            "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/sac_cross_seed0_trace_h600.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__cross__seed0/train_monitor.csv",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__sac__cross__seed0/train_monitor.csv"
+          ],
+          "metric_definitions": [
+            "success_rate = reached-goal episodes / 50",
+            "timeout_rate = max-time episodes / 50; boundary events may overlap",
+            "training last-20 rate = successes in fixed 20 completed episodes / 20",
+            "trace mean speed = arithmetic mean over deterministic policy decisions"
+          ],
+          "filters": [
+            "training seed = 0",
+            "evaluation seeds = 10000..10049",
+            "formal comparison uses latest 100k checkpoint"
+          ]
+        }
+      },
+      {
+        "id": "roundabout_evidence_source",
+        "label": "PPO环岛A/C逐回合双协议评测",
+        "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evaluation_source.sql",
+        "query": {
+          "engine": "DuckDB-compatible local artifact audit",
+          "id": "roundabout_evidence_source",
+          "description": "PPO seed0在环岛A/C的frozen_80_20与source_all各50回合；成功时刻、碰撞、超时、交通变体及论文Table I/II参考值均保留。",
+          "executed_at": "2026-08-05T12:26:43+08:00",
+          "language": "sql",
+          "tables_used": [
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+            "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+            "pytorch_sb3_sumo/experiments/sb3_sumo_paper/protocol_baselines_v14.json",
+            "pytorch_sb3_sumo/experiments/sb3_sumo_paper/paper_reference_tables.json"
+          ],
+          "metric_definitions": [
+            "success_rate = successful episodes / 50",
+            "mean completion time = population mean over successful episodes only",
+            "success_after_step400 = successful episodes whose raw_steps > 400"
+          ],
+          "filters": [
+            "training seed = 0",
+            "deterministic evaluation",
+            "50 episodes"
+          ]
+        }
+      },
+      {
+        "id": "scenario_contract_source",
+        "label": "发布场景路线、交通XML与生成器",
+        "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/scenario_source.sql",
+        "query": {
+          "engine": "DuckDB-compatible local artifact audit",
+          "id": "scenario_contract_source",
+          "description": "从发布ego.rou.xml/map.net.xml重算外部边路线长度，从全部traffic XML重算交通文件与ego出发时刻前车辆数，并核对原场景生成脚本。",
+          "executed_at": "2026-08-05T12:26:43+08:00",
+          "language": "sql",
+          "tables_used": [
+            "pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/{cross,roundabout_easy,roundabout}/ego.rou.xml",
+            "pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/{cross,roundabout_easy,roundabout}/map.net.xml",
+            "pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/{cross,roundabout_easy,roundabout}/traffic/*.rou.xml",
+            "tmp/original_scenarios/smarts_scenarios/{cross,roundabout_easy,roundabout}/scenario.py"
+          ],
+          "metric_definitions": [
+            "external route length = sum of first driving-lane lengths for mission route edges",
+            "initial social vehicles = XML vehicles with depart <= ego mission depart time"
+          ]
+        }
+      },
+      {
+        "id": "paper_protocol_source",
+        "label": "原论文Tables I/II/VI、发布测试源码与v14协议",
+        "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/paper_protocol_source.sql",
+        "query": {
+          "engine": "DuckDB-compatible local artifact audit",
+          "id": "paper_protocol_source",
+          "description": "直接核对论文PDF中的成功/碰撞/停滞定义、Table I成功率、Table II完成时间、Table VI场景上限，并与tools/test.py及v14迁移协议对照。",
+          "executed_at": "2026-08-05T12:26:43+08:00",
+          "language": "sql",
+          "tables_used": [
+            "tmp/pdfs/scene_rep_transformer_arxiv_v3.pdf",
+            "tools/test.py",
+            "envs/smarts/env_adapters.py",
+            "envs/runners/on_policy_trainer.py",
+            "envs/runners/off_policy_trainer.py",
+            "pytorch_sb3_sumo/experiments/sb3_sumo_paper/protocol_baselines_v14.json",
+            "pytorch_sb3_sumo/experiments/sb3_sumo_paper/paper_reference_tables.json",
+            "pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+            "pytorch_sb3_sumo/envs/sumo/paper_env.py",
+            "pytorch_sb3_sumo/envs/sumo/ppo_env.py"
+          ],
+          "metric_definitions": [
+            "paper test success = episodes reaching target / all test episodes",
+            "paper collision = episodes colliding / all test episodes",
+            "source stagnation implementation = reached_max_episode_steps / all test episodes"
+          ]
+        }
+      }
+    ],
+    "cards": [
+      {
+        "id": "cross-training-successes",
+        "description": "两种seed0基线在双汇入训练期完成的全部回合；奖励只有到达+1、碰撞/偏航-1。",
+        "dataset": "headline_metrics",
+        "sourceId": "cross_evidence_source",
+        "metrics": [
+          {
+            "label": "双汇入训练成功回合",
+            "field": "cross_training_successes",
+            "format": "number"
+          },
+          {
+            "label": "已完成训练回合",
+            "field": "cross_training_episodes",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "cross-h600-success",
+        "description": "不重训，仅把source-all评测上限从400放宽到源码600步；PPO与SAC各50回合。",
+        "dataset": "headline_metrics",
+        "sourceId": "cross_evidence_source",
+        "metrics": [
+          {
+            "label": "600步反事实成功率",
+            "field": "cross_h600_success_rate",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "ppo-a-source",
+        "description": "PPO seed0、source-all、50个确定性回合。",
+        "dataset": "headline_metrics",
+        "sourceId": "roundabout_evidence_source",
+        "metrics": [
+          {
+            "label": "环岛A成功率",
+            "field": "ppo_a_source_success",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "ppo-c-source",
+        "description": "PPO seed0、source-all、50个确定性回合。",
+        "dataset": "headline_metrics",
+        "sourceId": "roundabout_evidence_source",
+        "metrics": [
+          {
+            "label": "环岛C成功率",
+            "field": "ppo_c_source_success",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "ppo-c-minus-a",
+        "description": "同一训练seed、同一source-all协议下C减A的成功率差。",
+        "dataset": "headline_metrics",
+        "sourceId": "roundabout_evidence_source",
+        "metrics": [
+          {
+            "label": "C−A成功率差",
+            "field": "ppo_c_minus_a_source",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "ppo-c-late-success",
+        "description": "环岛C的41个source-all成功回合中，完成步数超过400的比例。",
+        "dataset": "headline_metrics",
+        "sourceId": "roundabout_evidence_source",
+        "metrics": [
+          {
+            "label": "C成功发生在400步后",
+            "field": "ppo_c_success_after_400_fraction",
+            "format": "percent"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "ppo-success-comparison",
+        "title": "PPO环岛A/C成功率：论文与两套迁移评测协议",
+        "subtitle": "seed0迁移结果在两套交通协议下均出现C>A；论文Table I则为A>C。",
+        "intent": "comparison",
+        "question": "A/C排序反转是否只由frozen交通切分造成？",
+        "rationale": "分组横向条形图同时保留场景和协议两个比较维度。",
+        "comparisonContext": {
+          "denominator": "每项50个测试回合",
+          "grain": "场景×评测协议",
+          "normalization": "成功回合数/50",
+          "semanticFamily": "episode success rate",
+          "unit": "%"
+        },
+        "type": "horizontalBar",
+        "dataset": "ppo_success_comparison",
+        "sourceId": "roundabout_evidence_source",
+        "encodings": {
+          "x": {
+            "field": "scenario",
+            "type": "ordinal",
+            "label": "场景"
+          },
+          "y": {
+            "field": "success_rate",
+            "type": "quantitative",
+            "format": "percent",
+            "label": "成功率"
+          },
+          "color": {
+            "field": "protocol",
+            "type": "nominal",
+            "label": "评测口径"
+          },
+          "tooltip": [
+            {
+              "field": "protocol",
+              "type": "nominal",
+              "label": "口径"
+            },
+            {
+              "field": "success_rate",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "成功率"
+            }
+          ]
+        },
+        "xAxisTitle": "场景",
+        "yAxisTitle": "成功率",
+        "valueFormat": "percent",
+        "layout": "full",
+        "maxRows": 8,
+        "palette": {
+          "kind": "categorical",
+          "name": "blue-gold"
+        },
+        "labels": {
+          "values": "all"
+        },
+        "settings": {
+          "orientation": "horizontal",
+          "showValues": true,
+          "sort": "custom",
+          "categoryLabelPolicy": "wrap"
+        }
+      },
+      {
+        "id": "completion-vs-limit",
+        "title": "PPO成功回合完成时间与场景时限",
+        "subtitle": "迁移A成功时已用掉约92%的40秒时限；C约用掉88%的80秒时限。",
+        "intent": "comparison",
+        "question": "迁移策略的成功发生在场景时限的什么位置？",
+        "rationale": "同为秒的完成均值与上限可直接分组比较。",
+        "comparisonContext": {
+          "denominator": "完成时间只统计成功回合",
+          "grain": "场景×时间系列",
+          "normalization": "原始0.1秒步数换算为秒",
+          "semanticFamily": "time",
+          "unit": "s"
+        },
+        "type": "bar",
+        "dataset": "completion_time_comparison",
+        "sourceId": "roundabout_evidence_source",
+        "encodings": {
+          "x": {
+            "field": "scenario",
+            "type": "ordinal",
+            "label": "场景"
+          },
+          "y": {
+            "field": "seconds",
+            "type": "quantitative",
+            "format": "number",
+            "label": "秒"
+          },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "label": "系列"
+          },
+          "tooltip": [
+            {
+              "field": "series",
+              "type": "nominal",
+              "label": "系列"
+            },
+            {
+              "field": "seconds",
+              "type": "quantitative",
+              "format": "number",
+              "label": "秒"
+            }
+          ]
+        },
+        "xAxisTitle": "场景",
+        "yAxisTitle": "时间（秒）",
+        "valueFormat": "number",
+        "layout": "full",
+        "maxRows": 8,
+        "palette": {
+          "kind": "categorical",
+          "name": "blue-gold"
+        },
+        "labels": {
+          "values": "all"
+        },
+        "settings": {
+          "showValues": true,
+          "sort": "custom"
+        }
+      },
+      {
+        "id": "cross-speed-trace",
+        "title": "双汇入确定性策略的目标速度轨迹",
+        "subtitle": "600步诊断回合中两种策略均长期把目标速度压在接近0 m/s。",
+        "intent": "trend",
+        "question": "双汇入超时是差一点到达，还是策略主动停滞？",
+        "rationale": "按原始仿真步绘制目标速度，直接显示策略行为而非只看终局标签。",
+        "comparisonContext": {
+          "denominator": "每算法第1个诊断回合的等间隔采样点",
+          "grain": "算法×原始仿真步",
+          "normalization": "动作[0]线性映射至0–10 m/s",
+          "semanticFamily": "target speed",
+          "unit": "m/s"
+        },
+        "type": "line",
+        "dataset": "cross_speed_trace",
+        "sourceId": "cross_evidence_source",
+        "encodings": {
+          "x": {
+            "field": "raw_steps",
+            "type": "quantitative",
+            "label": "原始仿真步"
+          },
+          "y": {
+            "field": "requested_speed_mps",
+            "type": "quantitative",
+            "format": "number",
+            "label": "目标速度"
+          },
+          "color": {
+            "field": "algorithm",
+            "type": "nominal",
+            "label": "算法"
+          },
+          "tooltip": [
+            {
+              "field": "algorithm",
+              "type": "nominal",
+              "label": "算法"
+            },
+            {
+              "field": "raw_steps",
+              "type": "quantitative",
+              "format": "number",
+              "label": "步"
+            },
+            {
+              "field": "requested_speed_mps",
+              "type": "quantitative",
+              "format": "number",
+              "label": "目标速度"
+            },
+            {
+              "field": "road_id",
+              "type": "nominal",
+              "label": "道路边"
+            }
+          ]
+        },
+        "xAxisTitle": "原始仿真步",
+        "yAxisTitle": "目标速度（m/s）",
+        "valueFormat": "number",
+        "layout": "full",
+        "maxRows": 40,
+        "palette": {
+          "kind": "categorical",
+          "name": "blue-gold"
+        },
+        "settings": {
+          "showPoints": true
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "cross-diagnosis-table",
+        "title": "双汇入：训练、反事实评测与行为定位",
+        "subtitle": "latest seed0模型；400步为论文profile，600步为发布tools/test.py上限；速度追踪各3回合。",
+        "dataset": "cross_diagnosis",
+        "sourceId": "cross_evidence_source",
+        "density": "spacious",
+        "layout": "full",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "序",
+            "format": "number"
+          },
+          {
+            "field": "algorithm",
+            "label": "算法",
+            "type": "text"
+          },
+          {
+            "field": "training_episodes",
+            "label": "训练回合",
+            "format": "number"
+          },
+          {
+            "field": "training_successes",
+            "label": "训练成功",
+            "format": "number"
+          },
+          {
+            "field": "h400_source_success",
+            "label": "400步成功率",
+            "format": "percent"
+          },
+          {
+            "field": "h600_source_success",
+            "label": "600步成功率",
+            "format": "percent"
+          },
+          {
+            "field": "mean_requested_speed_mps",
+            "label": "目标速度均值(m/s)",
+            "format": "number"
+          },
+          {
+            "field": "mean_distance_60s_m",
+            "label": "60秒前进均值(m)",
+            "format": "number"
+          },
+          {
+            "field": "final_road",
+            "label": "终止道路边",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "roundabout-outcomes-table",
+        "title": "PPO环岛A/C：成功、碰撞、超时与成功时刻",
+        "subtitle": "迁移行均为seed0每协议50回合；论文行为Table I/II参考值。",
+        "dataset": "roundabout_outcomes",
+        "sourceId": "roundabout_evidence_source",
+        "density": "spacious",
+        "layout": "full",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "序",
+            "format": "number"
+          },
+          {
+            "field": "scenario",
+            "label": "场景",
+            "type": "text"
+          },
+          {
+            "field": "protocol",
+            "label": "口径",
+            "type": "text"
+          },
+          {
+            "field": "success_rate",
+            "label": "成功率",
+            "format": "percent"
+          },
+          {
+            "field": "collision_rate",
+            "label": "碰撞率",
+            "format": "percent"
+          },
+          {
+            "field": "timeout_rate",
+            "label": "超时/停滞率",
+            "format": "percent"
+          },
+          {
+            "field": "successful_episodes",
+            "label": "成功回合",
+            "format": "number"
+          },
+          {
+            "field": "success_after_step400",
+            "label": "成功>400步",
+            "format": "number"
+          },
+          {
+            "field": "mean_success_steps",
+            "label": "成功步数均值",
+            "format": "number"
+          },
+          {
+            "field": "traffic_variants",
+            "label": "交通变体",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "scenario-contract-table",
+        "title": "场景路线、时限与发布交通资产",
+        "subtitle": "路线长度只求和任务XML中的外部边；内部连接边未计入，因此用于相对诊断而非精确里程。",
+        "dataset": "scenario_contract",
+        "sourceId": "scenario_contract_source",
+        "density": "spacious",
+        "layout": "full",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "序",
+            "format": "number"
+          },
+          {
+            "field": "scenario",
+            "label": "场景",
+            "type": "text"
+          },
+          {
+            "field": "paper_horizon_steps",
+            "label": "论文步数",
+            "format": "number"
+          },
+          {
+            "field": "source_horizon_steps",
+            "label": "源码步数",
+            "format": "number"
+          },
+          {
+            "field": "external_route_length_m",
+            "label": "外部边长度(m)",
+            "format": "number"
+          },
+          {
+            "field": "minimum_required_mean_speed_mps",
+            "label": "最低平均进度速度(m/s)",
+            "format": "number"
+          },
+          {
+            "field": "released_traffic_files",
+            "label": "交通XML",
+            "format": "number"
+          },
+          {
+            "field": "frozen_traffic_variants",
+            "label": "frozen变体",
+            "format": "number"
+          },
+          {
+            "field": "initial_social_vehicles_mean",
+            "label": "ego出发时社会车",
+            "format": "number"
+          },
+          {
+            "field": "traffic_generator",
+            "label": "发布生成器流量",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "protocol-conflicts-table",
+        "title": "论文、发布源码与迁移v14的关键口径",
+        "subtitle": "这些差异均显式记录；表内“诊断作用”只陈述已完成检查或尚待消融的范围。",
+        "dataset": "protocol_conflicts",
+        "sourceId": "paper_protocol_source",
+        "density": "spacious",
+        "layout": "full",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "序",
+            "format": "number"
+          },
+          {
+            "field": "dimension",
+            "label": "维度",
+            "type": "text"
+          },
+          {
+            "field": "paper",
+            "label": "论文",
+            "type": "text"
+          },
+          {
+            "field": "released_source",
+            "label": "发布源码",
+            "type": "text"
+          },
+          {
+            "field": "migration_v14",
+            "label": "迁移v14",
+            "type": "text"
+          },
+          {
+            "field": "diagnostic_effect",
+            "label": "本次诊断作用",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "confidence-table",
+        "title": "结论强度与剩余实验",
+        "subtitle": "“已证实”来自当前文件和受控反事实；“强推断”有一致证据但尚无单因素消融；“未决”不得当作结论。",
+        "dataset": "confidence_rows",
+        "sourceId": "paper_protocol_source",
+        "density": "spacious",
+        "layout": "full",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "序",
+            "format": "number"
+          },
+          {
+            "field": "finding",
+            "label": "判断",
+            "type": "text"
+          },
+          {
+            "field": "confidence",
+            "label": "证据等级",
+            "type": "text"
+          },
+          {
+            "field": "evidence",
+            "label": "现有证据",
+            "type": "text"
+          },
+          {
+            "field": "remaining_test",
+            "label": "仍需实验",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "layout": "full",
+        "body": "# 双汇入0%与PPO环岛A/C反转：机制诊断"
+      },
+      {
+        "id": "technical-summary",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 技术摘要\n\n**双汇入的0%不是统计或环境工厂再次出错，而是当前两个seed0策略真实地选择了近乎停车。** 严格环境下400步、放宽到发布源码600步，PPO与RLEncoder(GRU)-SAC仍全部超时；训练monitor合计527个回合没有一次到达。3回合行为追踪显示PPO平均目标速度约0.03–0.06 m/s，SAC约0.12 m/s，60秒仍停在任务第一条边。\n\n**PPO seed0在环岛C高于A也是真实的当前协议结果，但不能解释成C更简单。** source-all下A/C为56%/82%，frozen下为60%/94%。关键机制是迁移策略整体偏慢：A有32%超时，C没有超时；C的41个source-all成功全部发生在第400步之后。与此同时，C的frozen集合只有3个交通变体，A有6个；发布A场景还含C没有的特殊冲突流。当前仅有seed0，最终总体排序必须等待seed1–4。"
+      },
+      {
+        "id": "headline-strip",
+        "type": "metric-strip",
+        "layout": "full",
+        "cardIds": [
+          "cross-training-successes",
+          "cross-h600-success",
+          "ppo-a-source",
+          "ppo-c-source",
+          "ppo-c-minus-a",
+          "ppo-c-late-success"
+        ]
+      },
+      {
+        "id": "cross-finding",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 为什么双汇入成功率为0\n\n证据链是：**训练从未见到成功正奖励 → 策略学会以极低速度规避碰撞负奖励 → 评测在第一条边超时**。双汇入外部边剩余距离约259 m，论文400步只给40秒，至少需要约6.49 m/s的平均进度速度；当前PPO/SAC实际平均速度低两个数量级。把评测上限放到60秒仍只前进几米，因此“400步把本来能成功的回合截断”已被排除为当前模型0%的充分原因。\n\n但400步训练上限仍可能使早期探索更难，因为奖励除到达+1与碰撞/偏航−1外始终为0。要判断训练时600步是否能打破零成功，需要配对重训；本报告没有用无重训反事实冒充该因果实验。"
+      },
+      {
+        "id": "cross-speed-chart-block",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "cross-speed-trace"
+      },
+      {
+        "id": "cross-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "cross-diagnosis-table"
+      },
+      {
+        "id": "roundabout-finding",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "roundabout_evidence_source",
+        "body": "## 为什么PPO在环岛C高于环岛A\n\n排序反转主要不是A异常差，而是**C在迁移版中异常高**：source-all的A比论文低10个百分点，C却比论文高44个百分点。论文PPO在A/C的碰撞率为34%/50%、停滞率为0%/12%；迁移source-all变成12%/18%碰撞和32%/0%超时。也就是说，迁移策略把大量风险行为变成了慢速等待；A的40秒上限将等待记为失败，C的80秒上限则让慢策略有时间完成。迁移成功回合均值为A 36.78秒、C 70.11秒，分别贴近40秒和80秒上限。"
+      },
+      {
+        "id": "ppo-success-chart-block",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "ppo-success-comparison"
+      },
+      {
+        "id": "completion-chart-block",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "completion-vs-limit"
+      },
+      {
+        "id": "roundabout-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "roundabout-outcomes-table"
+      },
+      {
+        "id": "scenario-finding",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "scenario_contract_source",
+        "body": "## 场景资产也让A的即时决策更难\n\n环岛A与C并不是只改变终点。发布A生成器包含9条80 veh/h流和一条额外100 veh/h特殊流，C为9条50 veh/h流且没有该特殊流；ego出发前XML中分别有40与36辆社会车。A还发布30个交通XML，C只有15个；frozen评测因此只覆盖6与3个变体。source-all仍重复完整集合，所以C的82%不是单纯frozen抽样造成，但frozen的94%相对source-all又高12个百分点，说明小变体集合确实放大了结果。"
+      },
+      {
+        "id": "scenario-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "scenario-contract-table"
+      },
+      {
+        "id": "metric-contract",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 成功率定义核验\n\n论文把测试成功率定义为“到达目标的回合数/全部测试回合”，发布SMARTS源码读取`events.reached_goal`，迁移SUMO环境只在ego进入TraCI `arrived`列表时置成功。三者语义一致，且本次每份迁移JSON都由50条逐回合记录重算通过。`provenance.validated=true`、模型与环境observation/action space签名一致、发布场景资产与traffic_variant均可追溯。\n\n需要保留的细节是：论文文字把Stag描述为“静止并超时”，发布runner实际只检查`reached_max_episode_steps`，迁移也按达到上限计timeout。因此本报告的超时与可执行源码一致，但比论文自然语言定义更宽；另有极少边界回合可同时成功和超时，不能强行把三种率当互斥堆叠。"
+      },
+      {
+        "id": "protocol-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "protocol-conflicts-table"
+      },
+      {
+        "id": "confidence-intro",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 结论边界与优先实验\n\n当前可以把双汇入判定为策略停滞，把A/C反转判定为seed0下跨协议稳定存在；不能把它们外推成五seed总体规律。优先级应为：先完成正在运行的seed1–4；同时不重训重评A/C的`best_training_success_model.zip`，直接检验论文best-policy选择；随后再做双汇入400/600训练上限的同seed配对，以及A/C控制代理与交通流的单因素消融。"
+      },
+      {
+        "id": "confidence-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "confidence-table"
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 限制\n\n本报告是当前latest seed0检查点的机制诊断，不是最终五seed统计报告。论文未发布真实held-out traffic、可执行best-policy选择器或SMARTS Bullet物理状态；迁移PPO按发布源码使用单帧RGB，而论文文字称连续栅格帧。SUMO Ackermann代理、确定性测试修复和交通循环都会改变碰撞/等待权衡，因此不能从本结果反推原论文数据错误。后台seed补齐未被本诊断中断。"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-05T12:26:43+08:00",
+    "status": "ready",
+    "datasets": {
+      "headline_metrics": [
+        {
+          "cross_training_successes": 0,
+          "cross_training_episodes": 527,
+          "cross_h600_success_rate": 0.0,
+          "ppo_a_source_success": 0.56,
+          "ppo_c_source_success": 0.82,
+          "ppo_c_minus_a_source": 0.2599999999999999,
+          "ppo_c_success_after_400_fraction": 1.0
+        }
+      ],
+      "cross_diagnosis": [
+        {
+          "order": 1,
+          "algorithm": "PPO",
+          "training_episodes": 262,
+          "training_successes": 0,
+          "training_max_last20_success": 0.0,
+          "h400_frozen_success": 0.0,
+          "h400_source_success": 0.0,
+          "h400_source_timeout": 1.0,
+          "h600_source_success": 0.0,
+          "h600_source_timeout": 1.0,
+          "trace_episodes": 3,
+          "mean_requested_speed_mps": 0.04571415219042036,
+          "mean_actual_speed_mps": 0.04571415219042036,
+          "mean_distance_60s_m": 2.7415139277776084,
+          "distance_range_60s_m": "1.88–3.28",
+          "final_road": "gneE17",
+          "final_route_index": "0"
+        },
+        {
+          "order": 2,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "training_episodes": 265,
+          "training_successes": 0,
+          "training_max_last20_success": 0.0,
+          "h400_frozen_success": 0.0,
+          "h400_source_success": 0.0,
+          "h400_source_timeout": 1.0,
+          "h600_source_success": 0.0,
+          "h600_source_timeout": 1.0,
+          "trace_episodes": 3,
+          "mean_requested_speed_mps": 0.12108921557664871,
+          "mean_actual_speed_mps": 0.12108921557664871,
+          "mean_distance_60s_m": 7.260288203756015,
+          "distance_range_60s_m": "7.04–7.43",
+          "final_road": "gneE17",
+          "final_route_index": "0"
+        }
+      ],
+      "cross_speed_trace": [
+        {
+          "order": 1,
+          "algorithm": "PPO",
+          "raw_steps": 1,
+          "requested_speed_mps": 0.0001633167266845703,
+          "actual_speed_mps": 0.0001633167266845703,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 2,
+          "algorithm": "PPO",
+          "raw_steps": 51,
+          "requested_speed_mps": 0.0001633167266845703,
+          "actual_speed_mps": 0.0001633167266845703,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 3,
+          "algorithm": "PPO",
+          "raw_steps": 101,
+          "requested_speed_mps": 0.401211678981781,
+          "actual_speed_mps": 0.401211678981781,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 4,
+          "algorithm": "PPO",
+          "raw_steps": 151,
+          "requested_speed_mps": 0.1387554407119751,
+          "actual_speed_mps": 0.1387554407119751,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 5,
+          "algorithm": "PPO",
+          "raw_steps": 201,
+          "requested_speed_mps": 0.1649060845375061,
+          "actual_speed_mps": 0.1649060845375061,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 6,
+          "algorithm": "PPO",
+          "raw_steps": 251,
+          "requested_speed_mps": 0.06386011838912964,
+          "actual_speed_mps": 0.06386011838912964,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 7,
+          "algorithm": "PPO",
+          "raw_steps": 301,
+          "requested_speed_mps": 0.02154827117919922,
+          "actual_speed_mps": 0.02154827117919922,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 8,
+          "algorithm": "PPO",
+          "raw_steps": 351,
+          "requested_speed_mps": 0.02154827117919922,
+          "actual_speed_mps": 0.02154827117919922,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 9,
+          "algorithm": "PPO",
+          "raw_steps": 401,
+          "requested_speed_mps": 0.02154827117919922,
+          "actual_speed_mps": 0.02154827117919922,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 10,
+          "algorithm": "PPO",
+          "raw_steps": 451,
+          "requested_speed_mps": 0.013752877712249756,
+          "actual_speed_mps": 0.013752877712249756,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 11,
+          "algorithm": "PPO",
+          "raw_steps": 501,
+          "requested_speed_mps": 0.013752877712249756,
+          "actual_speed_mps": 0.013752877712249756,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 12,
+          "algorithm": "PPO",
+          "raw_steps": 551,
+          "requested_speed_mps": 0.013752877712249756,
+          "actual_speed_mps": 0.013752877712249756,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 13,
+          "algorithm": "PPO",
+          "raw_steps": 600,
+          "requested_speed_mps": 0.013752877712249756,
+          "actual_speed_mps": 0.013752877712249756,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 1,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 3,
+          "requested_speed_mps": 0.18596261739730835,
+          "actual_speed_mps": 0.18596261739730835,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 2,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 63,
+          "requested_speed_mps": 0.10412544012069702,
+          "actual_speed_mps": 0.10412544012069702,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 3,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 123,
+          "requested_speed_mps": 0.1343172788619995,
+          "actual_speed_mps": 0.1343172788619995,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 4,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 183,
+          "requested_speed_mps": 0.13795584440231323,
+          "actual_speed_mps": 0.13795584440231323,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 5,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 243,
+          "requested_speed_mps": 0.15311777591705322,
+          "actual_speed_mps": 0.15311777591705322,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 6,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 303,
+          "requested_speed_mps": 0.1393851637840271,
+          "actual_speed_mps": 0.1393851637840271,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 7,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 363,
+          "requested_speed_mps": 0.1488897204399109,
+          "actual_speed_mps": 0.1488897204399109,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 8,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 423,
+          "requested_speed_mps": 0.17375022172927856,
+          "actual_speed_mps": 0.17375022172927856,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 9,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 483,
+          "requested_speed_mps": 0.1057615876197815,
+          "actual_speed_mps": 0.1057615876197815,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 10,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 543,
+          "requested_speed_mps": 0.09078711271286011,
+          "actual_speed_mps": 0.09078711271286011,
+          "road_id": "gneE17",
+          "route_index": 0
+        },
+        {
+          "order": 11,
+          "algorithm": "RLEncoder(GRU)-SAC",
+          "raw_steps": 600,
+          "requested_speed_mps": 0.10502815246582031,
+          "actual_speed_mps": 0.10502815246582031,
+          "road_id": "gneE17",
+          "route_index": 0
+        }
+      ],
+      "ppo_success_comparison": [
+        {
+          "order": 11,
+          "scenario": "环岛 A",
+          "protocol": "论文 Table I",
+          "success_rate": 0.66
+        },
+        {
+          "order": 12,
+          "scenario": "环岛 A",
+          "protocol": "frozen_80_20",
+          "success_rate": 0.6
+        },
+        {
+          "order": 13,
+          "scenario": "环岛 A",
+          "protocol": "source_all",
+          "success_rate": 0.56
+        },
+        {
+          "order": 21,
+          "scenario": "环岛 C",
+          "protocol": "论文 Table I",
+          "success_rate": 0.38
+        },
+        {
+          "order": 22,
+          "scenario": "环岛 C",
+          "protocol": "frozen_80_20",
+          "success_rate": 0.94
+        },
+        {
+          "order": 23,
+          "scenario": "环岛 C",
+          "protocol": "source_all",
+          "success_rate": 0.82
+        }
+      ],
+      "completion_time_comparison": [
+        {
+          "order": 11,
+          "scenario": "环岛 A",
+          "series": "论文成功回合均值",
+          "seconds": 23.0
+        },
+        {
+          "order": 13,
+          "scenario": "环岛 A",
+          "series": "论文场景时限",
+          "seconds": 40.0
+        },
+        {
+          "order": 12,
+          "scenario": "环岛 A",
+          "series": "迁移 source-all 成功均值",
+          "seconds": 36.778571428571425
+        },
+        {
+          "order": 21,
+          "scenario": "环岛 C",
+          "series": "论文成功回合均值",
+          "seconds": 63.5
+        },
+        {
+          "order": 23,
+          "scenario": "环岛 C",
+          "series": "论文场景时限",
+          "seconds": 80.0
+        },
+        {
+          "order": 22,
+          "scenario": "环岛 C",
+          "series": "迁移 source-all 成功均值",
+          "seconds": 70.10731707317075
+        }
+      ],
+      "roundabout_outcomes": [
+        {
+          "order": 12,
+          "scenario": "环岛 A",
+          "protocol": "frozen_80_20",
+          "episodes": 50,
+          "success_rate": 0.6,
+          "collision_rate": 0.08,
+          "timeout_rate": 0.34,
+          "success_timeout_overlap": 1,
+          "successful_episodes": 30,
+          "success_after_step400": 0,
+          "mean_success_steps": 353.9,
+          "min_success_steps": 319,
+          "max_success_steps": 400,
+          "traffic_variants": 6,
+          "provenance_validated": true,
+          "spaces_match": true
+        },
+        {
+          "order": 13,
+          "scenario": "环岛 A",
+          "protocol": "source_all",
+          "episodes": 50,
+          "success_rate": 0.56,
+          "collision_rate": 0.12,
+          "timeout_rate": 0.32,
+          "success_timeout_overlap": 0,
+          "successful_episodes": 28,
+          "success_after_step400": 0,
+          "mean_success_steps": 367.7857142857143,
+          "min_success_steps": 325,
+          "max_success_steps": 398,
+          "traffic_variants": 30,
+          "provenance_validated": true,
+          "spaces_match": true
+        },
+        {
+          "order": 14,
+          "scenario": "环岛 A",
+          "protocol": "论文 Table I",
+          "episodes": 50,
+          "success_rate": 0.66,
+          "collision_rate": 0.34,
+          "timeout_rate": 0.0,
+          "success_timeout_overlap": null,
+          "successful_episodes": 33,
+          "success_after_step400": null,
+          "mean_success_steps": 230.0,
+          "min_success_steps": null,
+          "max_success_steps": null,
+          "traffic_variants": null,
+          "provenance_validated": null,
+          "spaces_match": null
+        },
+        {
+          "order": 22,
+          "scenario": "环岛 C",
+          "protocol": "frozen_80_20",
+          "episodes": 50,
+          "success_rate": 0.94,
+          "collision_rate": 0.06,
+          "timeout_rate": 0.0,
+          "success_timeout_overlap": 0,
+          "successful_episodes": 47,
+          "success_after_step400": 47,
+          "mean_success_steps": 700.8723404255319,
+          "min_success_steps": 687,
+          "max_success_steps": 711,
+          "traffic_variants": 3,
+          "provenance_validated": true,
+          "spaces_match": true
+        },
+        {
+          "order": 23,
+          "scenario": "环岛 C",
+          "protocol": "source_all",
+          "episodes": 50,
+          "success_rate": 0.82,
+          "collision_rate": 0.18,
+          "timeout_rate": 0.0,
+          "success_timeout_overlap": 0,
+          "successful_episodes": 41,
+          "success_after_step400": 41,
+          "mean_success_steps": 701.0731707317074,
+          "min_success_steps": 687,
+          "max_success_steps": 721,
+          "traffic_variants": 15,
+          "provenance_validated": true,
+          "spaces_match": true
+        },
+        {
+          "order": 24,
+          "scenario": "环岛 C",
+          "protocol": "论文 Table I",
+          "episodes": 50,
+          "success_rate": 0.38,
+          "collision_rate": 0.5,
+          "timeout_rate": 0.12,
+          "success_timeout_overlap": null,
+          "successful_episodes": 19,
+          "success_after_step400": null,
+          "mean_success_steps": 635.0,
+          "min_success_steps": null,
+          "max_success_steps": null,
+          "traffic_variants": null,
+          "provenance_validated": null,
+          "spaces_match": null
+        }
+      ],
+      "scenario_contract": [
+        {
+          "order": 1,
+          "scenario": "双汇入",
+          "paper_horizon_steps": 400,
+          "source_horizon_steps": 600,
+          "control_time_limit_s": 40.0,
+          "external_route_length_m": 269.49,
+          "remaining_external_distance_m": 259.49,
+          "minimum_required_mean_speed_mps": 6.48725,
+          "released_traffic_files": 118,
+          "frozen_traffic_variants": 24,
+          "initial_social_vehicles_mean": 18.0,
+          "traffic_generator": "3 条流：80/200/200 veh/h；6 actor types",
+          "ego_route": "gneE17 → gneE5 → gneE23"
+        },
+        {
+          "order": 2,
+          "scenario": "环岛 A",
+          "paper_horizon_steps": 400,
+          "source_horizon_steps": 400,
+          "control_time_limit_s": 40.0,
+          "external_route_length_m": 92.66,
+          "remaining_external_distance_m": 91.66,
+          "minimum_required_mean_speed_mps": 2.2915,
+          "released_traffic_files": 30,
+          "frozen_traffic_variants": 6,
+          "initial_social_vehicles_mean": 40.0,
+          "traffic_generator": "9×80 veh/h + 1×100 veh/h 特殊流",
+          "ego_route": "edge-east-EW → edge-east-EN → edge-north-SN"
+        },
+        {
+          "order": 3,
+          "scenario": "环岛 C",
+          "paper_horizon_steps": 800,
+          "source_horizon_steps": 1000,
+          "control_time_limit_s": 80.0,
+          "external_route_length_m": 226.53,
+          "remaining_external_distance_m": 225.53,
+          "minimum_required_mean_speed_mps": 2.819125,
+          "released_traffic_files": 15,
+          "frozen_traffic_variants": 3,
+          "initial_social_vehicles_mean": 36.0,
+          "traffic_generator": "9×50 veh/h；无 A 的特殊流",
+          "ego_route": "edge-east-EW → edge-east-EN → edge-north-NW → edge-west-WS → edge-south-NS"
+        }
+      ],
+      "protocol_conflicts": [
+        {
+          "order": 1,
+          "dimension": "双汇入最大步数",
+          "paper": "400（Table VI）",
+          "released_source": "600（tools/test.py）",
+          "migration_v14": "400（paper profile）",
+          "diagnostic_effect": "无重训改为600后两算法仍0%；评测截断不是充分原因"
+        },
+        {
+          "order": 2,
+          "dimension": "环岛 C 最大步数",
+          "paper": "800（Table VI）",
+          "released_source": "1000（tools/test.py）",
+          "migration_v14": "800（paper profile）",
+          "diagnostic_effect": "当前高成功率不是误用了1000步"
+        },
+        {
+          "order": 3,
+          "dimension": "PPO 图像历史",
+          "paper": "连续多帧栅格图像",
+          "released_source": "单个当前80×80×3帧",
+          "migration_v14": "按源码单帧",
+          "diagnostic_effect": "A 的即时冲突速度判断更可能受影响；尚无消融定量"
+        },
+        {
+          "order": 4,
+          "dimension": "测试策略选择",
+          "paper": "训练成功率最高策略",
+          "released_source": "无可执行best-success保存器",
+          "migration_v14": "主结果用latest；另存best重建检查点",
+          "diagnostic_effect": "A/C best检查点尚未正式双协议重评"
+        },
+        {
+          "order": 5,
+          "dimension": "成功事件",
+          "paper": "到达目标",
+          "released_source": "events.reached_goal",
+          "migration_v14": "ego进入TraCI arrived列表",
+          "diagnostic_effect": "语义一致；逐回合重算与summary完全一致"
+        },
+        {
+          "order": 6,
+          "dimension": "停滞/超时",
+          "paper": "保持静止并超过上限",
+          "released_source": "reached_max_episode_steps即计stag",
+          "migration_v14": "raw_steps达到上限即计timeout",
+          "diagnostic_effect": "迁移与可执行源码一致，但比论文文字定义更宽"
+        }
+      ],
+      "confidence_rows": [
+        {
+          "order": 1,
+          "finding": "成功率统计链没有漏记",
+          "confidence": "已证实",
+          "evidence": "到达判据、50回合分母、逐回合重算、provenance/space均通过",
+          "remaining_test": "无"
+        },
+        {
+          "order": 2,
+          "finding": "双汇入0%是当前策略真实停滞",
+          "confidence": "已证实",
+          "evidence": "400/600步均100%超时；两算法训练0成功；行为追踪仅走1.9–7.4 m",
+          "remaining_test": "无"
+        },
+        {
+          "order": 3,
+          "finding": "PPO seed0在C高于A",
+          "confidence": "已证实",
+          "evidence": "frozen差34pp，source-all差26pp；两协议方向一致",
+          "remaining_test": "不等同于跨seed总体结论"
+        },
+        {
+          "order": 4,
+          "finding": "C的长时限把慢速策略转为成功",
+          "confidence": "已证实",
+          "evidence": "source-all 41/41个C成功均晚于第400步；A在400步截止",
+          "remaining_test": "不能单独解释为何C策略更愿意前进"
+        },
+        {
+          "order": 5,
+          "finding": "A即时交通更难、迁移控制更保守共同造成反转",
+          "confidence": "强推断",
+          "evidence": "A有特殊冲突流、更多交通变体；A失败32%超时，C失败18%碰撞且0超时",
+          "remaining_test": "需要同检查点控制器/交通消融"
+        },
+        {
+          "order": 6,
+          "finding": "PPO跨seed仍保持C>A",
+          "confidence": "未决",
+          "evidence": "正式v14目前两场景都只有seed0双协议结果",
+          "remaining_test": "完成seed1–4并报告均值±标准差"
+        },
+        {
+          "order": 7,
+          "finding": "论文best-policy选择会消除A/C反转",
+          "confidence": "未决",
+          "evidence": "A最佳训练窗口15%，C为5%，但best模型尚未双协议重评",
+          "remaining_test": "不重训重评两份best模型"
+        },
+        {
+          "order": 8,
+          "finding": "训练时把双汇入改为600步可恢复学习",
+          "confidence": "未决",
+          "evidence": "无重训600步只排除了评测截断；不能反推训练探索",
+          "remaining_test": "同seed配对重训400 vs 600"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "cross_evidence_source",
+      "label": "双汇入训练、400/600步评测与行为追踪",
+      "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evaluation_source.sql",
+      "query": {
+        "engine": "DuckDB-compatible local artifact audit",
+        "id": "cross_evidence_source",
+        "description": "同一seed0最终模型在严格论文环境中的双协议400步结果、source-all 600步反事实、训练monitor以及3回合确定性动作/路线进度追踪。",
+        "executed_at": "2026-08-05T12:26:43+08:00",
+        "language": "sql",
+        "tables_used": [
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__cross__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__sac__cross__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+          "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/ppo_cross_seed0_source_all_h600.json",
+          "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/sac_cross_seed0_source_all_h600.json",
+          "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/ppo_cross_seed0_trace_h600.json",
+          "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evidence/sac_cross_seed0_trace_h600.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__cross__seed0/train_monitor.csv",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__sac__cross__seed0/train_monitor.csv"
+        ],
+        "metric_definitions": [
+          "success_rate = reached-goal episodes / 50",
+          "timeout_rate = max-time episodes / 50; boundary events may overlap",
+          "training last-20 rate = successes in fixed 20 completed episodes / 20",
+          "trace mean speed = arithmetic mean over deterministic policy decisions"
+        ],
+        "filters": [
+          "training seed = 0",
+          "evaluation seeds = 10000..10049",
+          "formal comparison uses latest 100k checkpoint"
+        ]
+      }
+    },
+    {
+      "id": "roundabout_evidence_source",
+      "label": "PPO环岛A/C逐回合双协议评测",
+      "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/evaluation_source.sql",
+      "query": {
+        "engine": "DuckDB-compatible local artifact audit",
+        "id": "roundabout_evidence_source",
+        "description": "PPO seed0在环岛A/C的frozen_80_20与source_all各50回合；成功时刻、碰撞、超时、交通变体及论文Table I/II参考值均保留。",
+        "executed_at": "2026-08-05T12:26:43+08:00",
+        "language": "sql",
+        "tables_used": [
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout_easy__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/frozen_80_20/paper_evaluation_detailed.json",
+          "results_sb3_sumo_paper/paper_baselines_sac_ppo_v14_frozen/paper__ppo__roundabout__seed0/protocol_evaluations/source_all/paper_evaluation_detailed.json",
+          "pytorch_sb3_sumo/experiments/sb3_sumo_paper/protocol_baselines_v14.json",
+          "pytorch_sb3_sumo/experiments/sb3_sumo_paper/paper_reference_tables.json"
+        ],
+        "metric_definitions": [
+          "success_rate = successful episodes / 50",
+          "mean completion time = population mean over successful episodes only",
+          "success_after_step400 = successful episodes whose raw_steps > 400"
+        ],
+        "filters": [
+          "training seed = 0",
+          "deterministic evaluation",
+          "50 episodes"
+        ]
+      }
+    },
+    {
+      "id": "scenario_contract_source",
+      "label": "发布场景路线、交通XML与生成器",
+      "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/scenario_source.sql",
+      "query": {
+        "engine": "DuckDB-compatible local artifact audit",
+        "id": "scenario_contract_source",
+        "description": "从发布ego.rou.xml/map.net.xml重算外部边路线长度，从全部traffic XML重算交通文件与ego出发时刻前车辆数，并核对原场景生成脚本。",
+        "executed_at": "2026-08-05T12:26:43+08:00",
+        "language": "sql",
+        "tables_used": [
+          "pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/{cross,roundabout_easy,roundabout}/ego.rou.xml",
+          "pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/{cross,roundabout_easy,roundabout}/map.net.xml",
+          "pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/{cross,roundabout_easy,roundabout}/traffic/*.rou.xml",
+          "tmp/original_scenarios/smarts_scenarios/{cross,roundabout_easy,roundabout}/scenario.py"
+        ],
+        "metric_definitions": [
+          "external route length = sum of first driving-lane lengths for mission route edges",
+          "initial social vehicles = XML vehicles with depart <= ego mission depart time"
+        ]
+      }
+    },
+    {
+      "id": "paper_protocol_source",
+      "label": "原论文Tables I/II/VI、发布测试源码与v14协议",
+      "path": "pytorch_sb3_sumo/reports/cross_roundabout_anomaly_diagnosis_20260805/paper_protocol_source.sql",
+      "query": {
+        "engine": "DuckDB-compatible local artifact audit",
+        "id": "paper_protocol_source",
+        "description": "直接核对论文PDF中的成功/碰撞/停滞定义、Table I成功率、Table II完成时间、Table VI场景上限，并与tools/test.py及v14迁移协议对照。",
+        "executed_at": "2026-08-05T12:26:43+08:00",
+        "language": "sql",
+        "tables_used": [
+          "tmp/pdfs/scene_rep_transformer_arxiv_v3.pdf",
+          "tools/test.py",
+          "envs/smarts/env_adapters.py",
+          "envs/runners/on_policy_trainer.py",
+          "envs/runners/off_policy_trainer.py",
+          "pytorch_sb3_sumo/experiments/sb3_sumo_paper/protocol_baselines_v14.json",
+          "pytorch_sb3_sumo/experiments/sb3_sumo_paper/paper_reference_tables.json",
+          "pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+          "pytorch_sb3_sumo/envs/sumo/paper_env.py",
+          "pytorch_sb3_sumo/envs/sumo/ppo_env.py"
+        ],
+        "metric_definitions": [
+          "paper test success = episodes reaching target / all test episodes",
+          "paper collision = episodes colliding / all test episodes",
+          "source stagnation implementation = reached_max_episode_steps / all test episodes"
+        ]
+      }
+    }
+  ]
+}

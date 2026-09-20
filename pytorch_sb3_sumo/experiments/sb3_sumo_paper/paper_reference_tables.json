@@ -1,0 +1,53 @@
+{
+  "source": "Paper Tables II and III",
+  "statistic": "mean and standard deviation of completion time in seconds over successful testing trials",
+  "population_ddof_in_paper": "not stated",
+  "completion_time_seconds": {
+    "left_turn": {
+      "PPO": [36.4, 6.7],
+      "SAC": [19.2, 0.5],
+      "DrQ": [18.2, 0.4],
+      "DT": [26.3, 4.6],
+      "MST": [17.3, 2.9],
+      "Proposed": [12.5, 0.4]
+    },
+    "cross": {
+      "PPO": [36.3, 3.0],
+      "SAC": [34.9, 1.9],
+      "DrQ": [34.9, 1.7],
+      "DT": [26.7, 5.6],
+      "MST": [30.9, 2.5],
+      "Proposed": [28.6, 0.6]
+    },
+    "roundabout_easy": {
+      "PPO": [23.0, 4.9],
+      "SAC": [25.2, 1.3],
+      "DrQ": [22.4, 0.3],
+      "DT": [25.5, 4.8],
+      "MST": [28.3, 3.3],
+      "Proposed": [24.5, 1.2]
+    },
+    "roundabout_medium": {
+      "PPO": [43.5, 1.8],
+      "SAC": [44.0, 1.1],
+      "DrQ": [40.3, 0.5],
+      "DT": [34.4, 4.2],
+      "MST": [35.3, 1.9],
+      "Proposed": [33.7, 1.2]
+    },
+    "roundabout": {
+      "PPO": [63.5, 1.7],
+      "SAC": [60.7, 1.4],
+      "DrQ": [57.4, 1.8],
+      "DT": [50.1, 6.7],
+      "MST": [58.5, 2.2],
+      "Proposed": [56.6, 2.2]
+    },
+    "carla": {
+      "PPO": [22.6, 1.7],
+      "DrQ": [21.3, 1.4],
+      "DT": [22.6, 1.5],
+      "Proposed": [22.9, 1.6]
+    }
+  }
+}

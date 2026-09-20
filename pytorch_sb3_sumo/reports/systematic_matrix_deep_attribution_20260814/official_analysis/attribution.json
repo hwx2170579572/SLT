@@ -1,0 +1,74 @@
+{
+  "evidence_bound": true,
+  "matrix_complete": true,
+  "topology_and_balancing_confound_recorded": true,
+  "causal_language_rule": "Only the predeclared single-variable MST-to-MST+SLT contrast is directly component-identifying. Other contrasts are bounded to their explicitly listed joint changes.",
+  "findings": [
+    {
+      "comparison": "mst_minus_sac",
+      "classification": "directionally_positive_without_safety_tradeoff",
+      "success_rate_macro_delta": 0.08333333333333331,
+      "collision_rate_macro_delta": -0.043333333333333335,
+      "mean_return_macro_delta": 0.12666666666666668,
+      "success_rate_holm_adjusted_p": 0.75,
+      "collision_rate_holm_adjusted_p": 1.0,
+      "identifiable_scope": "Effect of the released hierarchical scene encoder relative to the reconstructed recurrent SAC baseline under the same off-policy clock."
+    },
+    {
+      "comparison": "mst_slt_minus_mst",
+      "classification": "directionally_positive_without_safety_tradeoff",
+      "success_rate_macro_delta": 0.05111111111111112,
+      "collision_rate_macro_delta": -0.04666666666666666,
+      "mean_return_macro_delta": 0.09777777777777776,
+      "success_rate_holm_adjusted_p": 0.75,
+      "collision_rate_holm_adjusted_p": 1.0,
+      "identifiable_scope": "Effect of the one-step SLT auxiliary objective with the MST encoder held fixed."
+    },
+    {
+      "comparison": "temporal_graph_minus_mst_slt",
+      "classification": "directionally_worse_with_safety_regression",
+      "success_rate_macro_delta": -0.03333333333333333,
+      "collision_rate_macro_delta": 0.02777777777777778,
+      "mean_return_macro_delta": -0.061111111111111095,
+      "success_rate_holm_adjusted_p": 0.375,
+      "collision_rate_holm_adjusted_p": 0.625,
+      "identifiable_scope": "Effect of delaying temporal pooling until after per-frame vehicle interaction, together with structured Graph-SLT."
+    },
+    {
+      "comparison": "full_balanced_minus_temporal_graph",
+      "classification": "directionally_worse_with_safety_regression",
+      "success_rate_macro_delta": -0.09777777777777778,
+      "collision_rate_macro_delta": 0.04666666666666666,
+      "mean_return_macro_delta": -0.14444444444444446,
+      "success_rate_holm_adjusted_p": 0.65625,
+      "collision_rate_holm_adjusted_p": 1.0,
+      "identifiable_scope": "Joint incremental effect of topology query and balanced latent slots. This comparison does not identify either component alone."
+    },
+    {
+      "comparison": "full_balanced_minus_mst_slt",
+      "classification": "directionally_worse_with_safety_regression",
+      "success_rate_macro_delta": -0.13111111111111112,
+      "collision_rate_macro_delta": 0.07444444444444444,
+      "mean_return_macro_delta": -0.20555555555555555,
+      "success_rate_holm_adjusted_p": 0.3125,
+      "collision_rate_holm_adjusted_p": 0.625,
+      "identifiable_scope": "End-to-end comparison of the retained stabilized full method against the closest released MST+SLT baseline."
+    },
+    {
+      "comparison": "ppo_minus_sac",
+      "classification": "directionally_worse_with_safety_regression",
+      "success_rate_macro_delta": -0.29777777777777775,
+      "collision_rate_macro_delta": 0.09111111111111111,
+      "mean_return_macro_delta": -0.38888888888888884,
+      "success_rate_holm_adjusted_p": null,
+      "collision_rate_holm_adjusted_p": null,
+      "identifiable_scope": "Cross-family on-policy versus off-policy baseline comparison; not a single-component ablation."
+    }
+  ],
+  "deep_attribution_limits": [
+    "TemporalGraph versus MST+SLT jointly changes interaction timing and the auxiliary objective structure.",
+    "Full+BalancedSlots versus TemporalGraph jointly changes topology query and slot normalization.",
+    "PPO versus SAC changes algorithm family, observation encoder, update rule, and action clock.",
+    "Three seeds yield weak tail-resolution; Holm-adjusted sign-flip tests across six scenarios are conservative."
+  ]
+}

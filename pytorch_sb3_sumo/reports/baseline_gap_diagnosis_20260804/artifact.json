@@ -1,0 +1,386 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "SAC/PPO 基线复现差异诊断",
+    "description": "论文、原始 SMARTS 源码与 PyTorch + Stable-Baselines3 + SUMO 迁移版之间的评测链路核对与受控复评。",
+    "generatedAt": "2026-08-04T17:05:00+08:00",
+    "sources": [
+      { "id": "paper_protocol_source", "label": "论文实验协议与 Table I" },
+      { "id": "migrated_code_audit", "label": "迁移版环境工厂代码审计" },
+      { "id": "controlled_reevaluation", "label": "检查点受控复评" },
+      { "id": "matrix_summary_source", "label": "实验矩阵状态汇总" },
+      { "id": "sac_reconciliation_source", "label": "SAC 联合核对" },
+      { "id": "ppo_reconciliation_source", "label": "PPO 联合核对" },
+      { "id": "matrix_audit", "label": "逐任务 provenance 审计" },
+      { "id": "cause_audit", "label": "根因综合诊断" }
+    ],
+    "cards": [
+      {
+        "id": "valid-jobs",
+        "description": "当前可用于论文场景对照的已完成任务数",
+        "dataset": "matrix_summary",
+        "sourceId": "matrix_summary_source",
+        "metrics": [
+          { "label": "有效完成", "field": "valid_jobs", "format": "number" }
+        ]
+      },
+      {
+        "id": "contaminated-jobs",
+        "description": "被通用环境错误评测、不能纳入论文比较",
+        "dataset": "matrix_summary",
+        "sourceId": "matrix_summary_source",
+        "metrics": [
+          { "label": "污染任务", "field": "contaminated_jobs", "format": "number" }
+        ]
+      },
+      {
+        "id": "recoverable-jobs",
+        "description": "训练与模型保存已完成，只需重新评测",
+        "dataset": "matrix_summary",
+        "sourceId": "matrix_summary_source",
+        "metrics": [
+          { "label": "可抢救任务", "field": "recoverable_jobs", "format": "number" }
+        ]
+      },
+      {
+        "id": "pending-jobs",
+        "description": "尚未执行，不能推断五场景总体性能",
+        "dataset": "matrix_summary",
+        "sourceId": "matrix_summary_source",
+        "metrics": [
+          { "label": "待执行", "field": "pending_jobs", "format": "number" }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "sac-reconciliation",
+        "title": "同一 SAC 检查点在错误与正确评测环境中的成功率",
+        "subtitle": "每行 50 个确定性评测回合；标为“无效”的 0% 来自错误通用环境，不能解释为策略能力。",
+        "intent": "comparison",
+        "question": "近期 SAC 的 0% 是训练失败，还是评测链路错误？",
+        "rationale": "横向条形图便于逐行核对环境协议、受控复评与论文参考值。",
+        "comparisonContext": {
+          "baseline": "论文 Table I",
+          "denominator": "每个评测 50 回合",
+          "grain": "场景 × 同一训练检查点 × 评测协议",
+          "normalization": "成功回合数 / 50",
+          "semanticFamily": "episode success rate",
+          "unit": "%"
+        },
+        "type": "horizontalBar",
+        "dataset": "sac_reconciliation",
+        "sourceId": "sac_reconciliation_source",
+        "encodings": {
+          "x": { "field": "case", "type": "ordinal", "label": "场景与评测协议" },
+          "y": { "field": "success_rate", "type": "quantitative", "format": "percent", "label": "成功率" },
+          "tooltip": [
+            { "field": "success_rate", "type": "quantitative", "format": "percent", "label": "成功率" },
+            { "field": "collision_rate", "type": "quantitative", "format": "percent", "label": "碰撞率" },
+            { "field": "timeout_rate", "type": "quantitative", "format": "percent", "label": "超时率" },
+            { "field": "episodes", "type": "quantitative", "format": "number", "label": "回合数" }
+          ]
+        },
+        "xAxisTitle": "场景与评测协议",
+        "yAxisTitle": "成功率",
+        "valueFormat": "percent",
+        "layout": "full",
+        "maxRows": 8,
+        "palette": { "kind": "sequential", "name": "blue" },
+        "labels": { "values": "all" },
+        "settings": { "orientation": "horizontal", "showValues": true, "sort": "custom", "categoryLabelPolicy": "wrap" },
+        "surface": { "surface": "explorer", "compact": false, "interactiveLegend": false, "showControls": true, "viewMode": "both" }
+      }
+    ],
+    "tables": [
+      {
+        "id": "ppo-seed-table",
+        "title": "PPO 左转：单 seed 双峰与三 seed 均值",
+        "subtitle": "source-all、每个 seed 50 回合；均值行为 150 回合的三策略等权平均，论文行为单个已选策略的 50 回合结果。",
+        "dataset": "ppo_source_all",
+        "sourceId": "ppo_reconciliation_source",
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          { "field": "policy", "label": "策略/汇总", "type": "text" },
+          { "field": "episodes", "label": "回合数", "format": "number" },
+          { "field": "success_rate", "label": "成功率", "format": "percent" },
+          { "field": "collision_rate", "label": "碰撞率", "format": "percent" },
+          { "field": "comparison", "label": "比较口径", "type": "text" }
+        ]
+      },
+      {
+        "id": "matrix-quality-table",
+        "title": "当前 50 个计划任务的证据可用性",
+        "subtitle": "“complete”并不自动等于可比；必须同时通过场景资产与 observation-space 追溯。",
+        "dataset": "matrix_quality",
+        "sourceId": "matrix_audit",
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          { "field": "status", "label": "状态", "type": "text" },
+          { "field": "jobs", "label": "任务数", "format": "number" },
+          { "field": "usable", "label": "论文对照可用性", "type": "text" },
+          { "field": "interpretation", "label": "判定依据", "type": "text" }
+        ]
+      },
+      {
+        "id": "cause-ranking-table",
+        "title": "差异来源的证据等级与影响",
+        "subtitle": "优先级按对当前异常结果的解释力与修复顺序排列。",
+        "dataset": "cause_ranking",
+        "sourceId": "cause_audit",
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          { "field": "cause", "label": "差异来源", "type": "text" },
+          { "field": "evidence", "label": "证据等级", "type": "text" },
+          { "field": "observed_impact", "label": "已观察影响", "type": "text" },
+          { "field": "interpretation", "label": "结论", "type": "text" }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "id": "technical-summary",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "cause_audit",
+        "body": "## 技术摘要\n\n结论不是‘SAC/PPO 在 SUMO 中完全复现失败’，而是**当前汇总混入了错误环境产生的最终评测，并把极强的单 seed 方差当成算法均值**。迁移训练脚本的周期评测使用场景专用 `env_factory`，但最终评测在 `pytorch_sb3_sumo/tools/train_sb3.py:484` 又直接调用通用 `_make_env`。这会丢失论文场景交通资产、流量分区和 PPO RGB observation wrapper。结果是三个 SAC 任务被错误记为 complete 且成功率异常为 0%，两个 PPO 任务在训练完成后因 Dict/Box observation 不匹配而崩溃。\n\n把现有 SAC 检查点放回正确论文环境后，无需重训：左转 seed3 从无效的 0% 恢复为 90%（frozen）或 74%（source-all）；环岛 A seed0 从无效的 0% 恢复为 84% 或 76%，后者与论文 SAC 的 76% 完全一致。PPO 左转三个有效 seed 分别为 2%、98%、0%，但三 seed 均值 33.3%，与论文 36% 只差 2.7 个百分点。"
+      },
+      {
+        "id": "matrix-metrics",
+        "type": "metric-strip",
+        "layout": "full",
+        "cardIds": ["valid-jobs", "contaminated-jobs", "recoverable-jobs", "pending-jobs"]
+      },
+      {
+        "id": "finding-sac",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "sac_reconciliation_source",
+        "body": "## 关键发现 1：近期 SAC 的 0% 是测量缺陷\n\n两个受控反事实实验只改变最终评测环境与交通协议，模型、评测 seed、确定性推理、控制代理和回合上限保持不变。正确环境下成功率立即恢复，且 source-all 的环岛 A 结果正好复现论文值。因此，错误通用环境是近期‘巨大差距’的直接原因；`frozen_80_20` 与 `source_all` 的差别属于后续需分栏报告的协议敏感性，而不是 0% 的成因。"
+      },
+      {
+        "id": "sac-chart-block",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "sac-reconciliation"
+      },
+      {
+        "id": "finding-ppo",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "ppo_reconciliation_source",
+        "body": "## 关键发现 2：PPO 的表观差距主要是单 seed 双峰\n\n同一左转配置出现 0%—98% 的离散范围。若只挑 seed0 或 seed1，都会得到与论文相差巨大的故事；但当前三个 seed 的等权均值为 33.3%，已经接近论文 36%。这不证明五 seed 复现已完成，因为论文报告的是按训练成功率选择后的单策略 50 回合结果，而迁移计划拟报告五个独立训练策略的均值；它说明**不能用单 seed 判断 PPO 是否复现成功**。"
+      },
+      {
+        "id": "ppo-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "ppo-seed-table"
+      },
+      {
+        "id": "finding-matrix",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "matrix_audit",
+        "body": "## 关键发现 3：当前实验矩阵尚不能产出五场景总体结论\n\n计划矩阵为 2 个算法 × 5 个场景 × 5 个训练 seed，共 50 个任务。编排器记录 9 complete、2 partial、39 pending，但对逐回合 provenance 核验后，只有 6 个 complete 真正含有发布交通 XML 标识；另外 3 个 complete 是通用环境污染。两个 partial 已保存模型，只在最终评测阶段崩溃，原则上无需重训。"
+      },
+      {
+        "id": "matrix-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "matrix-quality-table"
+      },
+      {
+        "id": "scope-metrics",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "paper_protocol_source",
+        "body": "## 范围、数据与指标定义\n\n- **论文成功率**：测试回合中到达目标的比例；论文用最高训练成功率策略执行 50 个测试回合。碰撞、超时、驶出道路等不是成功。\n- **迁移版成功率**：`episode_success` 的均值；在正确 `PaperSumoSceneEnv` 中由到达目标终止判定产生。本报告只比较 50 回合、确定性推理的评测。\n- **场景映射**：左转、双汇入、环岛 A/B/C 对应论文五个 SMARTS 场景；本报告的定量反事实只覆盖已有正确检查点的左转与环岛 A，不外推到另外三个场景。\n- **交通协议**：`source_all` 循环使用发布源码可执行的全部交通变体；`frozen_80_20` 是迁移版对未发布论文测试集的可复现实验重建。二者都不应被冒充为论文未公开的精确 held-out 集。"
+      },
+      {
+        "id": "cause-intro",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "cause_audit",
+        "body": "## 差异来源排序\n\n第一项已经由代码审计、失败栈与同检查点受控复评共同确认；第二、三项有实测量级；其余项是会限制严格可比性的协议或平台残差，但不能解释近期从论文水平骤降到 0% 的现象。"
+      },
+      {
+        "id": "cause-table-block",
+        "type": "table",
+        "layout": "full",
+        "tableId": "cause-ranking-table"
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "controlled_reevaluation",
+        "body": "## 方法\n\n1. 逐项核对论文 Table I、实验协议、成功定义、训练步数、seed 与 50 回合测试口径。\n2. 检查原始 SMARTS 测试路径和迁移版周期/最终评测的环境构造调用。\n3. 按逐回合 `traffic_variant` 判定已完成任务是否真的使用论文场景资产。\n4. 对两个异常 SAC 检查点做 50 回合受控复评，仅切换为正确论文环境，并分别运行 frozen 与 source-all。\n5. 对三个 PPO 左转检查点做同口径 source-all 复评并计算等权 seed 均值。\n6. 用 `reproduce_diagnosis.ps1` 从原始 JSON 重新聚合图表与表格数值。"
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "paper_protocol_source",
+        "body": "## 限制与稳健性\n\n- 论文没有发布精确 held-out 交通资产，也没有发布‘最高训练成功率策略’的完整可执行选择器；无法做到位级复现。\n- 发布源码中的 RLEncoder 是 GRU(256)+Dense(256)，论文文字称 LSTM；普通 SAC 入口也不是开箱可运行基线，因此迁移 SAC 属于受约束重建。\n- PPO 论文描述与发布配置存在优化器、学习率和 raster 帧堆叠差异；应把 source-executable 与 paper-described 两套设置分开标注。\n- SUMO 代理动力学、到达判据和固定起点与 SMARTS Bullet/Ackermann、2 m 目标圈及论文随机起点不完全一致，最终仍会带来残余偏差。\n- 当前矩阵仅 6 个有效完成任务，不能报告跨五场景总平均，也不能为 PPO 双峰给出稳定置信区间。"
+      },
+      {
+        "id": "recommendations",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "migrated_code_audit",
+        "body": "## 建议的修复与实验顺序\n\n1. 将最终评测的 `final_eval_env = _make_env(...)` 改为 `env_factory(...)`，并加入 observation space 与非空 `traffic_variant` 的回归断言。\n2. **先只重评、不要重训**：抢救 3 个被污染 SAC 任务和 2 个评测崩溃 PPO 任务。\n3. 编排器验收规则不得仅检查结果文件存在；缺失场景 provenance 或 observation space 不符时必须标为 invalid/partial。\n4. 再按‘不同场景、不同算法优先’补齐矩阵：先让每个场景的 SAC、PPO 各有一个有效 seed，再补齐 seed1—4，以尽早暴露场景专属错误。\n5. 结果同时给出每 seed、均值±标准差；`frozen_80_20` 与 `source_all` 分栏，latest/source-recoverable 与重建 best-checkpoint 分栏。\n6. 在上述口径锁定前，不把任何单 seed 或错误 complete 任务写入论文对照结论。"
+      },
+      {
+        "id": "further-questions",
+        "type": "markdown",
+        "layout": "full",
+        "sourceId": "paper_protocol_source",
+        "body": "## 后续仍需回答的问题\n\n- 论文作者实际使用的 held-out traffic 资产和 best-policy 选择窗口是什么？\n- 迁移版最终主表应以 paper-described、source-executable，还是两者并列为主口径？\n- 修复最终评测后，五场景 × 五 seed 的置信区间是否仍覆盖论文值？\n- RLEncoder(GRU)-SAC 与普通 SAC 的 observation、replay sequence 和 hidden-state 重置是否已经逐字段对齐？"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-04T17:05:00+08:00",
+    "status": "partial",
+    "datasets": {
+      "matrix_summary": [
+        { "valid_jobs": 6, "contaminated_jobs": 3, "recoverable_jobs": 2, "pending_jobs": 39 }
+      ],
+      "sac_reconciliation": [
+        { "order": 1, "case": "左转｜错误通用环境（无效）", "scenario": "左转", "protocol": "generic_env", "validity": "invalid", "episodes": 50, "success_rate": 0.00, "collision_rate": 0.08, "timeout_rate": 0.92 },
+        { "order": 2, "case": "左转｜正确论文环境 / frozen", "scenario": "左转", "protocol": "frozen_80_20", "validity": "valid", "episodes": 50, "success_rate": 0.90, "collision_rate": 0.10, "timeout_rate": 0.00 },
+        { "order": 3, "case": "左转｜正确论文环境 / source-all", "scenario": "左转", "protocol": "source_all", "validity": "valid", "episodes": 50, "success_rate": 0.74, "collision_rate": 0.26, "timeout_rate": 0.00 },
+        { "order": 4, "case": "左转｜论文 SAC", "scenario": "左转", "protocol": "paper_reference", "validity": "paper", "episodes": 50, "success_rate": 0.68, "collision_rate": 0.28, "timeout_rate": 0.00 },
+        { "order": 5, "case": "环岛 A｜错误通用环境（无效）", "scenario": "环岛 A", "protocol": "generic_env", "validity": "invalid", "episodes": 50, "success_rate": 0.00, "collision_rate": 0.16, "timeout_rate": 0.84 },
+        { "order": 6, "case": "环岛 A｜正确论文环境 / frozen", "scenario": "环岛 A", "protocol": "frozen_80_20", "validity": "valid", "episodes": 50, "success_rate": 0.84, "collision_rate": 0.16, "timeout_rate": 0.00 },
+        { "order": 7, "case": "环岛 A｜正确论文环境 / source-all", "scenario": "环岛 A", "protocol": "source_all", "validity": "valid", "episodes": 50, "success_rate": 0.76, "collision_rate": 0.24, "timeout_rate": 0.00 },
+        { "order": 8, "case": "环岛 A｜论文 SAC", "scenario": "环岛 A", "protocol": "paper_reference", "validity": "paper", "episodes": 50, "success_rate": 0.76, "collision_rate": 0.24, "timeout_rate": 0.00 }
+      ],
+      "ppo_source_all": [
+        { "order": 1, "policy": "seed0", "episodes": 50, "success_rate": 0.02, "collision_rate": 0.98, "comparison": "source-all 单策略" },
+        { "order": 2, "policy": "seed1", "episodes": 50, "success_rate": 0.98, "collision_rate": 0.02, "comparison": "source-all 单策略" },
+        { "order": 3, "policy": "seed2", "episodes": 50, "success_rate": 0.00, "collision_rate": 1.00, "comparison": "source-all 单策略" },
+        { "order": 4, "policy": "三 seed 等权均值", "episodes": 150, "success_rate": 0.33333333333333331, "collision_rate": 0.66666666666666663, "comparison": "三策略等权汇总" },
+        { "order": 5, "policy": "论文 PPO", "episodes": 50, "success_rate": 0.36, "collision_rate": 0.50, "comparison": "Table I 单个已选策略" }
+      ],
+      "matrix_quality": [
+        { "order": 1, "status": "论文场景评测可追溯", "jobs": 6, "usable": "是", "interpretation": "逐回合记录含发布交通 XML 标识" },
+        { "order": 2, "status": "被通用环境污染", "jobs": 3, "usable": "否", "interpretation": "被错误计为 complete；traffic_variant 为空" },
+        { "order": 3, "status": "训练后最终评测崩溃", "jobs": 2, "usable": "模型可抢救", "interpretation": "PPO Dict observation 与 Box space 不匹配" },
+        { "order": 4, "status": "尚未执行", "jobs": 39, "usable": "否", "interpretation": "不能进入论文对照汇总" }
+      ],
+      "cause_ranking": [
+        { "priority": 1, "cause": "最终评测绕过场景专用 env_factory", "evidence": "已确认因果", "observed_impact": "SAC 0% 假异常；PPO 评测崩溃", "interpretation": "近期巨大差距的首要原因" },
+        { "priority": 2, "cause": "PPO 单 seed 方差/双峰", "evidence": "三 seed 实测", "observed_impact": "单 seed 0%—98%；均值 33.3%", "interpretation": "单次结果不可代表论文水平" },
+        { "priority": 3, "cause": "交通集协议重建", "evidence": "同检查点受控实测", "observed_impact": "SAC 成功率相差 8—16 个百分点", "interpretation": "必须分栏报告，但不解释 0%" },
+        { "priority": 4, "cause": "best-policy 选择规则未完整发布", "evidence": "源码/论文缺口", "observed_impact": "已有个案差 20 个百分点", "interpretation": "影响论文点估计的可比性" },
+        { "priority": 5, "cause": "PPO 配置、动力学与到达判据差异", "evidence": "结构核对", "observed_impact": "尚未独立量化", "interpretation": "剩余系统偏差，需消融而非猜测" }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "paper_protocol_source",
+      "label": "Scene-Rep Transformer 论文实验协议与 Table I",
+      "query": {
+        "engine": "PDF visual inspection",
+        "id": "scene_rep_transformer_arxiv_v3",
+        "description": "核对 100k 训练步、5 seeds、50 回合测试、到达目标成功定义、最高训练成功率策略选择及五场景参考值。",
+        "executed_at": "2026-08-04T16:30:00+08:00",
+        "metric_definitions": ["success_rate = reaches-target episodes / test episodes", "paper test grain = one selected policy over 50 episodes"],
+        "tables_used": ["Table I", "Table VI", "Experiment Settings"]
+      }
+    },
+    {
+      "id": "migrated_code_audit",
+      "label": "迁移版训练与最终评测代码审计",
+      "query": {
+        "engine": "local source audit",
+        "id": "train_sb3_env_factory_audit",
+        "description": "核对通用环境构造、周期评测的 env_factory 调用以及最终评测绕过 env_factory 的调用点。",
+        "executed_at": "2026-08-04T15:55:00+08:00",
+        "tables_used": ["train_sb3.py lines 99, 418, 484-486"]
+      }
+    },
+    {
+      "id": "controlled_reevaluation",
+      "label": "现有检查点的 50 回合受控复评",
+      "query": {
+        "engine": "local deterministic evaluation",
+        "id": "controlled_checkpoint_reevaluation",
+        "description": "同一检查点分别在正确 paper environment 的 frozen_80_20 与 source_all 下复评；固定确定性推理、评测 seed、控制代理和回合上限。",
+        "executed_at": "2026-08-04T15:40:00+08:00",
+        "metric_definitions": ["success_rate = successful episodes / 50", "collision_rate = collision episodes / 50", "timeout_rate = timeout episodes / 50"],
+        "tables_used": ["four SAC diagnostic JSONs", "three PPO diagnostic JSONs"]
+      }
+    },
+    {
+      "id": "matrix_summary_source",
+      "label": "v14 实验矩阵状态汇总",
+      "query": {
+        "engine": "static SQL reconciliation",
+        "id": "v14_matrix_summary",
+        "sql": "SELECT 6 AS valid_jobs, 3 AS contaminated_jobs, 2 AS recoverable_jobs, 39 AS pending_jobs",
+        "description": "由编排状态与逐回合 provenance 分类聚合得到四项互斥任务计数。",
+        "executed_at": "2026-08-04T16:20:00+08:00",
+        "tables_used": ["orchestrator state", "per-job detailed evaluation records"]
+      }
+    },
+    {
+      "id": "sac_reconciliation_source",
+      "label": "SAC 存储结果、受控复评与论文参考值联合核对",
+      "query": {
+        "engine": "reconciliation",
+        "id": "sac_reconciliation",
+        "sql": "SELECT * FROM (VALUES (1, '左转｜错误通用环境（无效）', 0.00, 0.08, 0.92, 50), (2, '左转｜正确论文环境 / frozen', 0.90, 0.10, 0.00, 50), (3, '左转｜正确论文环境 / source-all', 0.74, 0.26, 0.00, 50), (4, '左转｜论文 SAC', 0.68, 0.28, 0.00, 50), (5, '环岛 A｜错误通用环境（无效）', 0.00, 0.16, 0.84, 50), (6, '环岛 A｜正确论文环境 / frozen', 0.84, 0.16, 0.00, 50), (7, '环岛 A｜正确论文环境 / source-all', 0.76, 0.24, 0.00, 50), (8, '环岛 A｜论文 SAC', 0.76, 0.24, 0.00, 50)) AS t(order_id, case_label, success_rate, collision_rate, timeout_rate, episodes) ORDER BY order_id",
+        "description": "联合使用两份被污染的存储评测、四份正确环境受控复评，以及论文 Table I 的 SAC 左转/环岛 A 参考值。",
+        "executed_at": "2026-08-04T16:50:00+08:00",
+        "tables_used": ["stored detailed evaluations", "controlled diagnostic evaluations", "paper Table I"]
+      }
+    },
+    {
+      "id": "ppo_reconciliation_source",
+      "label": "PPO 左转三个 seed 与论文值联合核对",
+      "query": {
+        "engine": "reconciliation",
+        "id": "ppo_left_turn_seed_reconciliation",
+        "sql": "SELECT * FROM (VALUES (1, 'seed0', 50, 0.02, 0.98, 'source-all 单策略'), (2, 'seed1', 50, 0.98, 0.02, 'source-all 单策略'), (3, 'seed2', 50, 0.00, 1.00, 'source-all 单策略'), (4, '三 seed 等权均值', 150, 0.33333333333333331, 0.66666666666666663, '三策略等权汇总'), (5, '论文 PPO', 50, 0.36, 0.50, 'Table I 单个已选策略')) AS t(order_id, policy, episodes, success_rate, collision_rate, comparison) ORDER BY order_id",
+        "description": "三个 PPO 左转检查点各 50 回合 source-all 复评，计算策略等权均值并与论文 Table I 比较。",
+        "executed_at": "2026-08-04T16:45:00+08:00",
+        "metric_definitions": ["three-seed mean = arithmetic mean of the three per-policy success rates"],
+        "tables_used": ["PPO seed0 diagnostic", "PPO seed1 diagnostic", "PPO seed2 diagnostic", "paper Table I"]
+      }
+    },
+    {
+      "id": "matrix_audit",
+      "label": "v14 编排状态与逐回合 provenance 审计",
+      "query": {
+        "engine": "local artifact audit",
+        "id": "v14_matrix_quality",
+        "sql": "SELECT * FROM (VALUES (1, '论文场景评测可追溯', 6, '是', '逐回合记录含发布交通 XML 标识'), (2, '被通用环境污染', 3, '否', '被错误计为 complete；traffic_variant 为空'), (3, '训练后最终评测崩溃', 2, '模型可抢救', 'PPO Dict observation 与 Box space 不匹配'), (4, '尚未执行', 39, '否', '不能进入论文对照汇总')) AS t(order_id, status, jobs, usable, interpretation) ORDER BY order_id",
+        "description": "将编排器状态与每个详细评测的 traffic_variant 交叉核对，区分有效完成、污染完成、可抢救 partial 和 pending。",
+        "executed_at": "2026-08-04T16:20:00+08:00",
+        "tables_used": ["orchestrator state", "per-job detailed evaluation records", "orchestrator failure log"]
+      }
+    },
+    {
+      "id": "cause_audit",
+      "label": "论文、原始源码、迁移源码与结果矩阵综合诊断",
+      "query": {
+        "engine": "root-cause synthesis",
+        "id": "baseline_gap_root_causes",
+        "sql": "SELECT * FROM (VALUES (1, '最终评测绕过场景专用 env_factory', '已确认因果', 'SAC 0% 假异常；PPO 评测崩溃', '近期巨大差距的首要原因'), (2, 'PPO 单 seed 方差/双峰', '三 seed 实测', '单 seed 0%—98%；均值 33.3%', '单次结果不可代表论文水平'), (3, '交通集协议重建', '同检查点受控实测', 'SAC 成功率相差 8—16 个百分点', '必须分栏报告，但不解释 0%'), (4, 'best-policy 选择规则未完整发布', '源码/论文缺口', '已有个案差 20 个百分点', '影响论文点估计的可比性'), (5, 'PPO 配置、动力学与到达判据差异', '结构核对', '尚未独立量化', '剩余系统偏差，需消融而非猜测')) AS t(priority, cause, evidence, observed_impact, interpretation) ORDER BY priority",
+        "description": "按代码因果证据、同检查点反事实、seed 稳健性和协议差异对复现差距排序。",
+        "executed_at": "2026-08-04T16:55:00+08:00",
+        "tables_used": ["paper protocol", "released SMARTS source", "migrated SB3/SUMO source", "v14 result artifacts"]
+      }
+    }
+  ]
+}

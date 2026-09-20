@@ -1,0 +1,210 @@
+{
+  "directory": "results_topo_v4_7_1_dev",
+  "phase": "topo v4.7.1 工程补丁线（v4.7 开发线的元数据绑定修复）",
+  "purpose": "验证 v4.7.1 这个单点工程补丁：把 selector 在验证环境构建之前就已封存的 selected deployment 字段（selected_deployment_decoder / selected_source_checkpoint_sha256 / selected_model_policy_class / selected_model_parameter_state_sha256）绑定进 detailed evaluation，修掉父批次 G1 单元被判『detailed selected decoder mismatch』的缺陷。做法是在真实 SUMO cross 场景上跑一次 120 raw steps 的 smoke 训练（种子 43），再做 1 回合训练分区标定（98100）与 1 回合 validation 评估（99100），确认四处绑定一致、decoder 完整性校验全部通过；不产生任何新科学结论，也不触碰正式测试。",
+  "status": "engineering_only",
+  "protocol_files": [
+    "results_topo_v4_7_1_dev/preregistration_receipt.json",
+    "results_topo_v4_7_1_dev/engineering/engineering_receipt.json",
+    "results_topo_v4_7_1_dev/engineering/implementation_freeze.json",
+    "experiments/topo_scene_v4/experiment_contract_v4_7_1.yaml",
+    "experiments/topo_scene_v4/V4_7_1_METADATA_BINDING_PATCH.md",
+    "experiments/topo_scene_v4/experiment_contract_v4_7.yaml",
+    "results_topo_v4_7_1_dev/engineering/smoke/s1/arguments.json",
+    "results_topo_v4_7_1_dev/engineering/smoke/s1/selector/receipt.json"
+  ],
+  "rows": [
+    {
+      "batch": "results_topo_v4_7_1_dev",
+      "phase": "topo v4.7.1 工程补丁线（v4.7 开发线的元数据绑定修复）",
+      "variant": "v4_7_1",
+      "candidate": null,
+      "scenario": "cross",
+      "training_seed": 43,
+      "model_kind": "other:训练阶段运行产物(未做评估口径统计)",
+      "checkpoint_step": 120,
+      "episodes": null,
+      "eval_seed_start": null,
+      "decoder": null,
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "completed",
+      "evidence_kind": "smoke",
+      "artifact": "results_topo_v4_7_1_dev/engineering/smoke/s1/training_diagnostics.json",
+      "source_keys": {
+        "checkpoint_step": "同时见 results_topo_v4_7_1_dev/engineering/smoke/s1/checkpoint_audit.json:checkpoints[0].raw_step (=120)",
+        "training_raw_steps": "training_diagnostics.json:raw_steps (=120)",
+        "learner_updates": "training_diagnostics.json:learner_updates (=61)",
+        "训练损失统计": "training_diagnostics.json:statistics.*（41–102 个采样点的 mean/min/max/last）",
+        "性能开销": "results_topo_v4_7_1_dev/engineering/smoke/s1/performance_profile.json:end_to_end_training_wall_seconds / inference.mean_milliseconds_per_action",
+        "episodes": null,
+        "eval_seed_start": null,
+        "decoder": null,
+        "success_rate": null,
+        "collision_rate": null,
+        "timeout_rate": null,
+        "mean_return": null
+      },
+      "notes": "训练阶段行，不是评估结果。本批次唯一一次真实 SUMO 运行是 engineering/smoke/s1：cross 场景、120 raw steps（=40 决策步，action_repeat=3）、训练种子 43、checkpoint_freq=120，只落了 1 个检查点（raw 120）。方法为 topo_v4_7_horizon_correct_credit（implementation_id=full_decision_aligned_hybrid_factorized_entropy_horizon_correct_16_step_credit_joint_selector_v4_7，n_step 由父代 4 改为 16，bootstrap=gamma_power_actual_horizon），工程补丁本身不改科学协议。success_rate/collision_rate/timeout_rate/mean_return/episodes/eval_seed_start/decoder 七列在训练阶段没有对应产物，按规则记 null（不推算、不插补）。train_monitor.csv 只有表头一行、无回合数据行；best_training_success.json 在本批次不存在（方法元数据 checkpoint_candidates 含 highest_training_success，但 smoke 步数太短未产生，selector 记 training_best_missing_fallback_used=true）。"
+    },
+    {
+      "batch": "results_topo_v4_7_1_dev",
+      "phase": "topo v4.7.1 工程补丁线（v4.7 开发线的元数据绑定修复）",
+      "variant": "v4_7_1",
+      "candidate": null,
+      "scenario": "cross",
+      "training_seed": 43,
+      "model_kind": "exact_final",
+      "checkpoint_step": 120,
+      "episodes": 1,
+      "eval_seed_start": 98100,
+      "decoder": "target_critic",
+      "success_rate": 1.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_return": 1.0,
+      "status": "completed",
+      "evidence_kind": "smoke",
+      "artifact": "results_topo_v4_7_1_dev/engineering/smoke/s1/selector/cal/final/target_critic/detailed.json",
+      "source_keys": {
+        "success_rate": "detailed.json:summary.success_rate (=1.0)",
+        "collision_rate": "detailed.json:summary.collision_rate (=0.0)",
+        "timeout_rate": "detailed.json:summary.timeout_rate (=0.0)",
+        "mean_return": "detailed.json:summary.mean_return (=1.0)",
+        "episodes": "detailed.json:calibration_episodes (=summary.episodes=len(episode_records)=1)",
+        "eval_seed_start": "detailed.json:calibration_seed_start (=episode_records[0].seed=98100)",
+        "training_seed": "detailed.json:training_seed (=43)",
+        "model_kind": "detailed.json:checkpoint_kind (=exact_final)",
+        "checkpoint_step": "该目录无步数字段，step 取自 engineering/smoke/s1/checkpoint_audit.json:checkpoints[0].raw_step (=120) 与 paper_evaluation_detailed.json:trained_raw_steps (=120)",
+        "decoder": "detailed.json:deployment_decoder (=target_critic)"
+      },
+      "notes": "评估阶段行：检查点标定/选择（train 分区，traffic_811.rou.xml），1 回合、种子 98100。被标定对象是 final_model.zip（sha256 604b6ee1d5377a4f18a8c44595f3d7bf0f5c78383dd3951dea8f62353521c516），即精确终态模型；target_critic 是本批次最终被选中的部署解码器（selector/receipt.json:selected_deployment_decoder=target_critic）。decoder_integrity 全通过（exact_rule_match_rate / exact_action_match_rate / action_mask_feasible_rate / exact_target_critic_argmax_rate / target_keep_tie_rule_match_rate 均 1.0，122 条决策记录）。注意标定回合 122 决策步 / 364 raw steps 与验证回合 120/360 不是同一个 rollout，不可混用。标定回合数与协议默认不同：method_metadata.json 记 checkpoint_calibration_episodes=12，本 smoke 实际 calibration_episodes=1（arguments.json / receipt 均为 1），属 smoke 缩减口径，不能当协议默认值。"
+    },
+    {
+      "batch": "results_topo_v4_7_1_dev",
+      "phase": "topo v4.7.1 工程补丁线（v4.7 开发线的元数据绑定修复）",
+      "variant": "v4_7_1",
+      "candidate": null,
+      "scenario": "cross",
+      "training_seed": 43,
+      "model_kind": "other:exact_final×fusion_0_90(同一检查点的另一部署解码臂)",
+      "checkpoint_step": 120,
+      "episodes": 1,
+      "eval_seed_start": 98100,
+      "decoder": "fusion_0_90",
+      "success_rate": 1.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_return": 1.0,
+      "status": "completed",
+      "evidence_kind": "smoke",
+      "artifact": "results_topo_v4_7_1_dev/engineering/smoke/s1/selector/cal/final/fusion_0_90/detailed.json",
+      "source_keys": {
+        "success_rate": "detailed.json:summary.success_rate (=1.0)",
+        "collision_rate": "detailed.json:summary.collision_rate (=0.0)",
+        "timeout_rate": "detailed.json:summary.timeout_rate (=0.0)",
+        "mean_return": "detailed.json:summary.mean_return (=1.0)",
+        "episodes": "detailed.json:calibration_episodes (=summary.episodes=len(episode_records)=1)",
+        "eval_seed_start": "detailed.json:calibration_seed_start (=episode_records[0].seed=98100)",
+        "training_seed": "detailed.json:training_seed (=43)",
+        "model_kind": "detailed.json:checkpoint_kind (=exact_final)，解码臂见 deployment_decoder",
+        "checkpoint_step": "该目录无步数字段，step 取自 engineering/smoke/s1/checkpoint_audit.json:checkpoints[0].raw_step (=120)",
+        "decoder": "detailed.json:deployment_decoder (=fusion_0_90)"
+      },
+      "notes": "评估阶段行：同一 exact_final 检查点（final_model.zip，sha256 604b6ee1…）在另一部署解码臂 fusion_0_90 下的 train 分区标定，1 回合、种子 98100。批次把候选定义为 checkpoint×decoder 对（method_metadata.json:checkpoint_decoder_candidate_pairs=4），为满足『(变体,场景,种子,模型种类) 一行』的唯一性要求，本行 model_kind 用 other: 形式显式带上解码臂；它与上一行底层模型完全相同，只有部署解码器不同，切勿当成两个不同模型。fusion 臂 decoder_integrity 通过（exact_fusion_rule_match_rate / actor_override_predicate_valid_rate / target_fallback_rule_match_rate 均 1.0，actor_non_keep_confidence_threshold=0.9）。两条臂 outcome 数字完全相同（选择键仅在打平后才按 decoder 偏好区分），因此本批次的标定无法区分两个解码器优劣。"
+    },
+    {
+      "batch": "results_topo_v4_7_1_dev",
+      "phase": "topo v4.7.1 工程补丁线（v4.7 开发线的元数据绑定修复）",
+      "variant": "v4_7_1",
+      "candidate": null,
+      "scenario": "cross",
+      "training_seed": 43,
+      "model_kind": "selected",
+      "checkpoint_step": 120,
+      "episodes": 1,
+      "eval_seed_start": 99100,
+      "decoder": "target_critic",
+      "success_rate": 1.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_return": 1.0,
+      "status": "completed",
+      "evidence_kind": "smoke",
+      "artifact": "results_topo_v4_7_1_dev/engineering/smoke/s1/paper_evaluation_detailed.json",
+      "source_keys": {
+        "success_rate": "paper_evaluation_detailed.json:summary.success_rate (=1.0)",
+        "collision_rate": "paper_evaluation_detailed.json:summary.collision_rate (=0.0)",
+        "timeout_rate": "paper_evaluation_detailed.json:summary.timeout_rate (=0.0)",
+        "mean_return": "paper_evaluation_detailed.json:summary.mean_return (=1.0)",
+        "episodes": "paper_evaluation_detailed.json:evaluation_provenance.episodes (=summary.episodes=len(episode_records)=1)",
+        "eval_seed_start": "paper_evaluation_detailed.json:evaluation_seed_start (=evaluation_provenance.evaluation_seed_start=episode_records[0].seed=99100)",
+        "training_seed": "该文件无训练种子字段；取自同批次 selector/cal/final/*/detailed.json:training_seed (=43)",
+        "checkpoint_step": "paper_evaluation_detailed.json:trained_raw_steps (=120)，与 checkpoint_audit.json:checkpoints[0].raw_step 一致",
+        "model_kind": "paper_evaluation_detailed.json:selected_checkpoint_kind (=exact_final)；评估对象 selected_model.zip（sha256 d5a6da6ee4d10d2137702a3284f09ba8cb106b0d38b70dcbdf15113fdb24be1e）",
+        "decoder": "paper_evaluation_detailed.json:selected_deployment_decoder (=target_critic)"
+      },
+      "notes": "评估阶段行：selected_model.zip（exact_final × target_critic 物化的部署策略，policy_class=TargetCriticDecisionAlignedSACPolicyV43）在 validation 分区上 1 回合、种子 99100、traffic_276.rou.xml，回合时长 36.0 s（120 决策步 / 360 raw steps）。虽然 evaluation_split=validation，但它是 engineering smoke 环境下 episodes=1 的工程验证，不是正式测试证据（formal_test_accessed=false、formal_test_locked=true），不能进 gate。本行重点不是 1.0 成功率（单回合无统计意义），而是补丁验证：selected_deployment_decoder / selected_source_checkpoint_sha256 / selected_model_policy_class / selected_model_parameter_state_sha256 四个字段已由 selector receipt（封存于验证环境构建之前：14:14:00.315Z < 14:14:00.362Z）绑定进 detailed evaluation，且与 receipt 完全一致（implementation_freeze.json:all_four_bindings_match=true）。同一批数字还出现在 final_evaluation.json 与 action_diagnostics.json:outcomes，本表只取 paper_evaluation_detailed.json（含 provenance 与绑定校验，最权威）。"
+    },
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 开发线（被 v4.7.1 工程缺陷否决并隔离的单元，本批次只登记、不取数）",
+      "variant": "cand",
+      "candidate": "cand",
+      "scenario": "cross",
+      "training_seed": 6,
+      "model_kind": "other:补丁前旧实现的 detailed evaluation(工程否决,不可用)",
+      "checkpoint_step": 20000,
+      "episodes": null,
+      "eval_seed_start": null,
+      "decoder": null,
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "engineering_only",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v4_7_1_dev/engineering/logs/rejected_attempt_quarantine.json",
+      "source_keys": {
+        "训练配置": "该单元结果文件不在本批次目录，未取任何数值；身份信息见 results_topo_v4_7_1_dev/preregistration_receipt.json:rejected_attempt 与 engineering/logs/rejected_attempt_quarantine.json",
+        "success_rate": null,
+        "collision_rate": null,
+        "timeout_rate": null,
+        "mean_return": null,
+        "episodes": null,
+        "eval_seed_start": null,
+        "decoder": null
+      },
+      "notes": "这不是本批次产出的结果，而是被本批次补丁修复的缺陷单元登记：父批次单元 results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a 因 'detailed selected decoder mismatch' 被判 engineering_rejected_not_gate_eligible，checkpoint_eligible_for_retry=false、validation_outcome_gate_eligible=false、validation_outcome_inspected_for_patch_design=false（其 detailed sha256=6ef859c5737aa91d47523759095f5bb0bc37838f6983efc3a3555cbc2ad3364c，selector receipt sha256=ffdfa9540f5a35d20f9e5f43819e5336b2a52a903a40b53db5ea7fe2e50379c8）。该目录仍留在父批次且本身含数值，但按任务口径只抽取本批次目录内数值，且该单元已被官方判定不可用，故四列一律 null，绝不当作完成结果。batch 字段填其真实顶层目录 results_topo_v4_7_dev，以免把 v4.7 的单元误记到 v4.7.1 名下。"
+    }
+  ],
+  "missing": [
+    {
+      "unit": "(v4_7_1, cross, training_seed=43, highest_training_success × target_critic / fusion_0_90) 两条标定臂",
+      "reason": "120 raw steps 的 smoke 训练未产出 best_training_success 模型：selector/receipt.json:training_best_missing_fallback_used=true、fallback_reuses_exact_final_calibration=true，receipt 中两条 highest_training_success 候选的 calibration_result_sha256 与 exact_final 完全相同（9c837e4d… / a43fba4b…），磁盘上 selector/cal/final/ 只有 target_critic 与 fusion_0_90 两个目录，无独立来源，故不另立行。"
+    },
+    {
+      "unit": "任何 development 科学单元（left_turn / roundabout / carla 等场景、多训练种子）",
+      "reason": "本批次目录只有 engineering/ 一个子树，没有 development/ 或 formal_test/；只跑了 cross 一个场景、训练种子 43。"
+    },
+    {
+      "unit": "formal_test 正式测试证据",
+      "reason": "preregistration_receipt.json 与 engineering_receipt.json 均记 formal_test_accessed=false、formal_test_locked=true，全批次无正式测试产物。"
+    },
+    {
+      "unit": "训练阶段成功率（success_rate_last_20 / best_training_success）",
+      "reason": "engineering/smoke/s1/train_monitor.csv 只有表头（r,l,t,raw_simulation_steps,is_success,collision,off_route,max_time）无任何数据行，本批次未落 best_training_success.json，训练成功率不可得。"
+    },
+    {
+      "unit": "episodes>1 的评估/标定（含协议默认 12 回合检查点标定、多回合验证）",
+      "reason": "arguments.json 中 eval_episodes=1、calibration_episodes=1（method_metadata 的 checkpoint_calibration_episodes=12 未被执行），所有评估产物 episodes 均为 1，无法给出带方差的指标。"
+    },
+    {
+      "unit": "tensorboard 训练标量（engineering/smoke/s1/tensorboard/SAC_1/events.out.tfevents.*）",
+      "reason": "本批次未解析 tfevents（需 tensorboard 依赖）；训练标量已由 training_diagnostics.json:statistics 覆盖，故不重复解析。actions.json / decisions.jsonl 亦未逐条展开。"
+    }
+  ],
+  "notes": "批次性质：results_topo_v4_7_1_dev 是纯工程补丁批次，不是科学实验批次。它只做一件事——修复 v4.7 中 detailed evaluation 没有绑定已封存 selected deployment 字段这个工程缺陷（single_engineering_change=bind_sealed_selected_deployment_fields_into_detailed_evaluation），全过程 formal_test_accessed=false、scientific_protocol_changed=false，父批次 v4.7 的 16 个文件哈希保持不变（parent_v4_7_migration.json:parent_v4_7_files_unchanged=true）。因此顶层 status 只能是 engineering_only：本批次唯一真实 SUMO 运行是 engineering/smoke/s1（cross、120 raw steps、种子 43）。\n\n训练阶段 vs 评估阶段的区分：训练阶段证据在 training_diagnostics.json（120 raw steps、61 次学习器更新、41 次梯度统计的损失序列）与 performance_profile.json（端到端 25.62 s、策略参数 2087509、推理 48.43 ms/action、峰值显存 106 MB），第 1 行专门记录，但本表 schema 无损失类列，故四列与 episodes/eval_seed_start/decoder 全为 null，其数值位置写在 source_keys 中，绝不把训练阶段的数当成成功率。评估阶段证据三条：train 分区标定 2 条（种子 98100，1 回合，exact_final 的两个解码臂）+ validation 分区 1 条（种子 99100，1 回合，selected 模型）。都是 episodes=1，成功率 1.0 / 碰撞 0 / 超时 0 / 回报 1.0，只说明管线跑通与补丁生效，无统计效力，下游汇总不得据此比较方法优劣。\n\n口径坑（重要）：(1) 标定回合 122 决策步/364 raw steps 与验证回合 120/360 不是同一 rollout，不能混算；(2) smoke 把协议标定回合数从 12 压到 1（method_metadata 记 12，arguments/receipt 记 1），不能把 1 当默认口径；(3) 验证虽 evaluation_split=validation，但 formal_test 是锁的，它是 smoke 验证而非正式测试；(4) 两条标定臂 outcome 数字完全相同，标定结果无法区分 target_critic 与 fusion_0_90。\n\n重复来源与取舍：同一 exact_final 标定数字在 selector/receipt.json:candidates[].summary、selector/cal/final/<decoder>/detailed.json:summary、<decoder>/evaluation.json、<decoder>/actions.json:outcomes 四处重复，本表只保留 detailed.json（含 decoder_integrity、space contract、training_seed/scenario 等完整口径，最权威）；receipt 里 highest_training_success 两条是回退复用，未单列。验证数字在 paper_evaluation_detailed.json:summary、final_evaluation.json、action_diagnostics.json:outcomes 三处重复，只保留前者（含 evaluation_provenance 与四个封存绑定的校验）。\n\n唯一性处理：批次自身把候选定义为 checkpoint×decoder 对，所以两条标定行共享 (variant=v4_7_1, scenario=cross, training_seed=43)；为满足『一个 (变体,场景,种子,模型种类) 单元只出现一行』，fusion 臂 model_kind 记为 other:exact_final×fusion_0_90——两行底层是同一个 final_model.zip（sha256 604b6ee1…），只是部署解码器不同。\n\n另有一行是父批次被工程否决的单元（G1__cand__cross__s6，v4.7 开发线，20k steps、验证种子 67000），它不在本批次目录内且被判 not_gate_eligible，本表只登记身份、不取任何数值（四列 null），其 batch 字段如实写 results_topo_v4_7_dev，避免污染 v4.7.1 记录。\n\n可信度：表内每个非 null 数值都逐字来自上列 artifact 的真实文件，无推算、无插补。本批次未见中止或部分完成的运行（engineering_receipt.json:status=passed，targeted_tests 25/25 通过、full_regression 327/327 通过、failures=errors=skipped=0），但工程测试通过不等于科学证据。"
+}

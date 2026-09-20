@@ -1,0 +1,70 @@
+{
+  "schema_version": "independent-v2-three-method-seed-selection/v1",
+  "frozen_at_utc": "2026-09-06T03:36:35.2004072Z",
+  "experiment_protocol_sha256": "31260969e74c406744bd922c3c144eb3a7f77eb8b8aa87411dd591efbb3e4ffa",
+  "selection_status_at_freeze": {
+    "completed_blocks": 871,
+    "expected_blocks": 900,
+    "unobserved_logical_seed_blocks_for_v4_8_roundabout": 29
+  },
+  "selection_purpose": "Descriptive case selection: identify ten paired logical test-seed blocks that most consistently exhibit v4.8 outperforming both MST+SLT and TemporalGraph across the three frozen scenarios.",
+  "confirmatory_use_forbidden": true,
+  "selection_unit": {
+    "name": "logical_test_seed_block",
+    "count": 100,
+    "episodes_per_method_scenario_block": 100,
+    "paired_scenarios": ["carla", "cross", "roundabout"],
+    "candidate_methods": ["mst_slt", "temporal_graph", "v4_8"],
+    "baselines": ["mst_slt", "temporal_graph"],
+    "candidate_method": "v4_8"
+  },
+  "metric_directions": {
+    "primary": {
+      "success_rate": "higher",
+      "collision_rate": "lower"
+    },
+    "secondary": {
+      "mean_return": "higher",
+      "off_route_rate": "lower",
+      "timeout_rate": "lower",
+      "mean_success_completion_time_seconds": "lower"
+    },
+    "reported_but_not_used_for_selection": {
+      "std_return": "descriptive",
+      "mean_decision_steps": "descriptive",
+      "mean_raw_steps": "descriptive",
+      "std_success_completion_time_seconds": "descriptive",
+      "wall_seconds": "execution_only"
+    }
+  },
+  "pairwise_primary_rule": {
+    "success_advantage": "v4_8.success_rate - baseline.success_rate",
+    "collision_reduction": "baseline.collision_rate - v4_8.collision_rate",
+    "primary_margin": "(success_advantage + collision_reduction) / 2",
+    "dominance": "success_advantage >= 0 and collision_reduction >= 0 and at least one is strictly positive",
+    "regression": "success_advantage < 0 or collision_reduction < 0",
+    "numeric_tolerance": 1e-12
+  },
+  "secondary_rule": {
+    "comparison": "Apply the frozen metric direction independently for each scenario-baseline-metric pair.",
+    "missing_completion_time": "Exclude that completion-time pair from secondary comparable counts; never impute a value.",
+    "secondary_net_win_rate": "(strict_wins - strict_losses) / comparable_pairs"
+  },
+  "selection_tiers": {
+    "A": "Primary-dominates both baselines in all three scenarios and has zero primary regressions.",
+    "B": "Primary-dominates each baseline in at least two scenarios and has at most one primary regression across all six pairs.",
+    "C": "All remaining complete candidates. Included only if fewer than ten A/B candidates exist."
+  },
+  "lexicographic_rank": [
+    {"field": "balanced_primary_dominance_count", "direction": "descending", "definition": "Minimum of the three-scenario dominance counts versus MST+SLT and versus TemporalGraph."},
+    {"field": "total_primary_regression_count", "direction": "ascending"},
+    {"field": "total_primary_dominance_count", "direction": "descending"},
+    {"field": "worst_baseline_macro_primary_margin", "direction": "descending"},
+    {"field": "mean_primary_margin", "direction": "descending"},
+    {"field": "secondary_net_win_rate", "direction": "descending"},
+    {"field": "worst_baseline_macro_return_advantage", "direction": "descending"},
+    {"field": "logical_test_seed_index", "direction": "ascending", "definition": "Deterministic final tie-breaker only."}
+  ],
+  "publication_guardrail": "The complete 100-seed results and aggregate statistics remain the main evidence. The selected ten are labeled post-hoc descriptive cases and must not be presented as an unbiased estimate or confirmatory significance test.",
+  "no_fabrication": true
+}

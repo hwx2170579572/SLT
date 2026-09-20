@@ -1,0 +1,189 @@
+{
+  "model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\results_sb3_sumo_paper\\paper_source_audited_runs_v12_frozen\\paper__proposed__cross__seed0\\final_model.zip",
+  "algorithm": "scene_rep",
+  "scenario": "cross",
+  "evaluation_seed_start": 10000,
+  "trained_raw_steps": 100000,
+  "evaluation_provenance": {
+    "contract_version": 1,
+    "validated": true,
+    "environment_factory": "tools.eval_paper_sb3_sumo",
+    "environment_class": "envs.sumo.paper_env.PaperSumoSceneEnv",
+    "expected_environment_class": "envs.sumo.paper_env.PaperSumoSceneEnv",
+    "algorithm": "scene_rep",
+    "scenario": "cross",
+    "traffic_protocol": "source_all",
+    "traffic_partition": "all",
+    "episode_limit_profile": "source",
+    "uses_released_assets": true,
+    "evaluation_seed_start": 10000,
+    "episodes": 3,
+    "traffic_variant_episode_count": 3,
+    "traffic_variants_observed": [
+      "traffic_351.rou.xml",
+      "traffic_370.rou.xml",
+      "traffic_371.rou.xml"
+    ],
+    "model_environment_spaces_match": true,
+    "environment_observation_space": {
+      "type": "gymnasium.spaces.dict.Dict",
+      "shape": null,
+      "dtype": null,
+      "spaces": {
+        "map": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            12,
+            10,
+            5
+          ],
+          "dtype": "float32",
+          "low_sha256": "643546D53FB47BB2132495CF2224EF7CA1E0A15B253C368DA2C31F6CF63CA72C",
+          "high_sha256": "0FB41F94387C8BFA32CD5D7616EA95C17025AF23D3120E795281F763E89921C6",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        },
+        "trajectory": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            6,
+            10,
+            5
+          ],
+          "dtype": "float32",
+          "low_sha256": "70F2858B3D6DF76B0076A84D9D0642C3B309F85B9CBC45A5F196DD520A49A5C1",
+          "high_sha256": "4E84E0D6B17EBAC0F8F9B2E555AE43EF259B1688CE69AD824E743368704C636B",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        }
+      }
+    },
+    "model_observation_space": {
+      "type": "gymnasium.spaces.dict.Dict",
+      "shape": null,
+      "dtype": null,
+      "spaces": {
+        "map": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            12,
+            10,
+            5
+          ],
+          "dtype": "float32",
+          "low_sha256": "643546D53FB47BB2132495CF2224EF7CA1E0A15B253C368DA2C31F6CF63CA72C",
+          "high_sha256": "0FB41F94387C8BFA32CD5D7616EA95C17025AF23D3120E795281F763E89921C6",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        },
+        "trajectory": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            6,
+            10,
+            5
+          ],
+          "dtype": "float32",
+          "low_sha256": "70F2858B3D6DF76B0076A84D9D0642C3B309F85B9CBC45A5F196DD520A49A5C1",
+          "high_sha256": "4E84E0D6B17EBAC0F8F9B2E555AE43EF259B1688CE69AD824E743368704C636B",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        }
+      }
+    },
+    "environment_action_space": {
+      "type": "gymnasium.spaces.box.Box",
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low_sha256": "7C8E9E654585093FE245E490010889AF419E1023882A4110DDFC3D53CE48721E",
+      "high_sha256": "80B8FD6D60FA85FD14A38B5295CB92ABD80DFEC5CA406C9F969609A79D36809D",
+      "low_min_finite": -1.0,
+      "low_max_finite": -1.0,
+      "high_min_finite": 1.0,
+      "high_max_finite": 1.0
+    },
+    "model_action_space": {
+      "type": "gymnasium.spaces.box.Box",
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low_sha256": "7C8E9E654585093FE245E490010889AF419E1023882A4110DDFC3D53CE48721E",
+      "high_sha256": "80B8FD6D60FA85FD14A38B5295CB92ABD80DFEC5CA406C9F969609A79D36809D",
+      "low_min_finite": -1.0,
+      "low_max_finite": -1.0,
+      "high_min_finite": 1.0,
+      "high_max_finite": 1.0
+    }
+  },
+  "completion_time_population_std_ddof": 0,
+  "summary": {
+    "episodes": 3,
+    "mean_return": 1.0,
+    "std_return": 0.0,
+    "mean_decision_steps": 151.0,
+    "mean_raw_steps": 451.6666666666667,
+    "success_rate": 1.0,
+    "collision_rate": 0.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0
+  },
+  "successful_episodes": 3,
+  "mean_success_completion_time_seconds": 45.166666666666664,
+  "std_success_completion_time_seconds": 3.0922843048824338,
+  "sumo_step_seconds": 0.1,
+  "episode_records": [
+    {
+      "episode": 0,
+      "seed": 10000,
+      "episode_return": 1.0,
+      "decision_steps": 162,
+      "environment_steps": 162,
+      "raw_steps": 484,
+      "completion_time_seconds": 48.400000000000006,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_351.rou.xml"
+    },
+    {
+      "episode": 1,
+      "seed": 10001,
+      "episode_return": 1.0,
+      "decision_steps": 137,
+      "environment_steps": 137,
+      "raw_steps": 410,
+      "completion_time_seconds": 41.0,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_370.rou.xml"
+    },
+    {
+      "episode": 2,
+      "seed": 10002,
+      "episode_return": 1.0,
+      "decision_steps": 154,
+      "environment_steps": 154,
+      "raw_steps": 461,
+      "completion_time_seconds": 46.1,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_371.rou.xml"
+    }
+  ]
+}

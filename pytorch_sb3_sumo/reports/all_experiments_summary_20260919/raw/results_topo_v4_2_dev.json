@@ -1,0 +1,249 @@
+{
+  "directory": "results_topo_v4_2_dev",
+  "phase": "topo v4.2 开发线（factorized lane entropy，单变量：factorized_hybrid_entropy）",
+  "purpose": "该批次是 v4.2「factorized lane entropy」方法的工程冻结 + 开发验证目录。先做工程证据（迁移不变量、定向测试、全量回归、真实 SUMO 预检、端到端训练冒烟），再按预注册合同 evaluation/seeds 依次跑 development 的 F1-F4（carla/cross x seed 0/1）。实际只跑完 F1（carla, seed=1），F2-F4 因 F1 未通过原合同门禁而未启动；批次随后进入 post-hoc 事件级归因，结论是原门禁的测量粒度错误而非闭环失败。",
+  "status": "partial",
+  "protocol_files": [
+    "experiments/topo_scene_v4/experiment_contract_v4_2.yaml",
+    "experiments/topo_scene_v4/V4_2_FACTORIZED_LANE_ENTROPY.md",
+    "results_topo_v4_2_dev/engineering/implementation_freeze.json",
+    "results_topo_v4_2_dev/engineering/engineering_receipt.json",
+    "results_topo_v4_2_dev/engineering/migration_invariant.log.json",
+    "results_topo_v4_2_dev/development/stage_plan.json",
+    "results_topo_v4_2_dev/development/development_decision.json",
+    "results_topo_v4_2_dev/development/summary.json",
+    "results_topo_v4_2_dev/development/per_run.csv",
+    "results_topo_v4_2_dev/development/last_execution.json",
+    "results_topo_v4_2_dev/attribution/f1_event_gate/attribution_summary.json",
+    "results_topo_v4_2_dev/attribution/f1_event_gate/deep_attribution.md"
+  ],
+  "rows": [
+    {
+      "batch": "results_topo_v4_2_dev",
+      "phase": "topo v4.2 开发线（factorized lane entropy）",
+      "variant": "selected_v4_candidate",
+      "candidate": "factorized_entropy",
+      "scenario": "carla",
+      "training_seed": 1,
+      "model_kind": "exact_final",
+      "checkpoint_step": 20000,
+      "episodes": 12,
+      "eval_seed_start": 43000,
+      "decoder": "native",
+      "success_rate": 1.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 0.0,
+      "mean_return": 1.0,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_2_dev/development/runs/F1__cand__carla__s1__p91f2cf40/paper_evaluation_detailed.json",
+      "source_keys": {
+        "success_rate": "summary.success_rate",
+        "collision_rate": "summary.collision_rate",
+        "timeout_rate": "summary.timeout_rate",
+        "mean_return": "summary.mean_return",
+        "episodes": "summary.episodes (=12，与 episode_records 长度、evaluation_provenance.episodes 一致)",
+        "eval_seed_start": "evaluation_seed_start (=43000；episode_records[0].seed=43000、evaluation_provenance.evaluation_seed_start 一致)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=1)",
+        "checkpoint_step": "同目录 checkpoint_audit.json:checkpoints[0].raw_step (=20000)",
+        "model_kind": "final_model.zip sha256=8ccf0e2f… 与 checkpoints/topo_v4_2_factorized_entropy_raw_20000_steps.zip 逐字节一致，评估对象即 20000 原始步最终检查点",
+        "decoder": "同目录 method_metadata.json:lane_distribution=masked_categorical_exact_enumeration / speed_distribution=lane_conditioned_squashed_gaussian，actor 自解码；同目录 action_diagnostics.json:deterministic=true，无 target-critic 融合项"
+      },
+      "notes": "本批次唯一 development 科学单元。12/12 回合成功，碰撞/偏航/超时均为 0，mean_return=1.0（该环境的回合回报即 0/1 成功指示，不是累计奖励尺度）。同一个数值在 5 处重复出现且完全一致：本文件 summary、final_evaluation.json、development/summary.json:per_run[0]、development/per_run.csv（F1 行）、development_decision.json:jobs.F1.row、action_diagnostics.json:outcomes；本行只取 hash 绑定的 paper_evaluation_detailed.json:summary 作为权威源，其余为重复来源。注意：该单元在原 v4.2 合同下端到端 outcome 门禁通过，但机制门禁 5 项失败（lane_command_keep_rate=0.9823>0.90 上限、lane_change_applied_rate=0.01767<0.02 下限、route_window_match_rate=0.1667<0.80、route_minus_keep_probability_margin_mean=-0.5689<0.05、margin_minimum=-0.9166 非正），development_decision.json:decision=\"fail\"，故 F2-F4 未启动。后续 attribution/f1_event_gate 判定这是测量粒度错误（每个 episode 只需一次换道事件，分母随回合长度变长而稀释），科学方法与权重不变、拒绝原门禁并预注册 v4_2_r1 事件级门禁；本行仍按原合同记为 fail，不得据此行宣称 v4.2 通过。"
+    },
+    {
+      "batch": "results_topo_v4_2_dev",
+      "phase": "topo v4.2 开发线（factorized lane entropy）",
+      "variant": "selected_v4_candidate",
+      "candidate": "factorized_entropy",
+      "scenario": "carla",
+      "training_seed": 1,
+      "model_kind": "checkpoint",
+      "checkpoint_step": 9510,
+      "episodes": 20,
+      "eval_seed_start": null,
+      "decoder": "native",
+      "success_rate": 0.95,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_2_dev/development/runs/F1__cand__carla__s1__p91f2cf40/best_training_success.json",
+      "source_keys": {
+        "success_rate": "success_rate_last_20 (=0.95，训练期最高成功率的最后 20 回合窗口)",
+        "checkpoint_step": "clock_value (=9510，_raw_steps_seen 时钟，即选出该权重时的原始步数)",
+        "episodes": "fixed_denominator (=20，训练期固定窗口分母，不是评估回合数)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=1)",
+        "model_kind": "该文件指向 best_training_success_model.zip，sha256=e289497f…，与 20000 步 final_model.zip 不同"
+      },
+      "notes": "训练阶段指标，不是评估指标，务必与上一行区分。口径为「训练期最近 20 个 episode 的成功率」，窗口固定 20，与 evaluation 的 12 回合 validation 口径无关；本行无碰撞/超时/回报数据（文件未记录）故为 null。交叉核对：按 train_monitor.csv 自行重算最后 20 回合成功率为 0.85，与该文件 0.95 不同——原因是该 JSON 是训练过程中在 raw step 9510 处的快照（clock_value=9510，用 20000 步的最终权重反推会得到另一个窗口），本行只采信文件值，未做任何重算或插补。另注：best_training_success.json 记 episodes_completed=64，而 train_monitor.csv 实有 118 条 episode 记录（合计 raw_simulation_steps=19894，与 trained_raw_steps=20000 相符），两文件的 episode 计数口径不一致，属训练监控快照语义差异。"
+    },
+    {
+      "batch": "results_topo_v4_2_dev",
+      "phase": "topo v4.2 开发线（factorized lane entropy）",
+      "variant": "selected_v4_candidate",
+      "candidate": "factorized_entropy",
+      "scenario": "carla",
+      "training_seed": 0,
+      "model_kind": "exact_final",
+      "checkpoint_step": 60,
+      "episodes": 2,
+      "eval_seed_start": 44000,
+      "decoder": "native",
+      "success_rate": 0.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_return": 0.0,
+      "status": "completed",
+      "evidence_kind": "smoke",
+      "artifact": "results_topo_v4_2_dev/engineering/smoke/candidate_carla_e2e/paper_evaluation_detailed.json",
+      "source_keys": {
+        "success_rate": "summary.success_rate",
+        "collision_rate": "summary.collision_rate",
+        "timeout_rate": "summary.timeout_rate",
+        "mean_return": "summary.mean_return",
+        "episodes": "summary.episodes (=2)",
+        "eval_seed_start": "evaluation_seed_start (=44000；episode_records[0].seed=44000)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=0)",
+        "checkpoint_step": "同目录 checkpoint_audit.json:checkpoints[1].raw_step (=60，即 requested_raw_steps.max_steps)",
+        "model_kind": "final_model.zip sha256=0c331494… 与 checkpoints/topo_v4_2_factorized_entropy_raw_60_steps.zip 不同，但 engineering_receipt.json:engineering_evidence.end_to_end_smoke.final_model_sha256=0c331494… 与 final_model.zip 一致",
+        "decoder": "同目录 method_metadata.json（与 F1 相同的 v4_2 method metadata），actor 自解码"
+      },
+      "notes": "工程冒烟（end-to-end training smoke），60 原始步、2 回合全部 timeout、回报 0.0，数值本身无科学含义，仅证明训练-评估链路可跑通；禁止作为 v4.2 的性能证据。该目录的 arguments.json 记 implementation_freeze_sha256=null、formal_unlock=null，说明它跑在实现冻结之前，不属于冻结后的科学运行。重复来源：engineering_receipt.json 以 sha256 9ce6280e… 引用本文件，数值一致。附带异常：同目录 best/best_model.zip（sha256=79417399…）未被 engineering_receipt 的哈希清单引用，属未绑定的中间产物；evaluation/evaluations.npz 记 eval_freq=30 时 timesteps=[10,20] 的两次中期评估，successes 全 False、results 全 0.0、ep_lengths 全 101（这些是 learner timestep 而非原始步，故未单独成行以免伪造 checkpoint_step 语义）。"
+    },
+    {
+      "batch": "results_topo_v4_2_dev",
+      "phase": "topo v4.2 开发线（factorized lane entropy）",
+      "variant": "selected_v4_candidate",
+      "candidate": "factorized_entropy",
+      "scenario": "carla",
+      "training_seed": 0,
+      "model_kind": "other:check_only_preflight_未训练权重",
+      "checkpoint_step": null,
+      "episodes": null,
+      "eval_seed_start": 42000,
+      "decoder": "native",
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "engineering_only",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v4_2_dev/engineering/preflights/candidate_carla/check_result.json",
+      "source_keys": {
+        "eval_seed_start": "同目录 arguments.json:requested_raw_steps.evaluation_seed_start (=42000)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=0)",
+        "decoder": "同目录 check_result.json:exact_hybrid_lane_code=true，action=[-0.9152642488479614, 0.0]，由模型自身策略前向得到",
+        "success_rate": "无：check_only=true 的预检只做一次前向健康检查，不产生任何回合",
+        "collision_rate": "无（同上）",
+        "timeout_rate": "无（同上）",
+        "mean_return": "无（同上）"
+      },
+      "notes": "真实 SUMO 预检（check_only=true，requested max_steps=60、eval_freq=0、eval_episodes=1），只验证模型能构造、动作有限且混合离散泳道编码精确，不产生成功率/碰撞率等评估量，故这些字段全为 null 而非 0。status 记 engineering_only 以免被误读为完成一次实验。重复来源：method_metadata.json 与 F1/冒烟完全一致（同一 implementation_id），无重复数值冲突。"
+    },
+    {
+      "batch": "results_topo_v4_2_dev",
+      "phase": "topo v4.2 开发线（factorized lane entropy）",
+      "variant": "selected_v4_candidate",
+      "candidate": "factorized_entropy",
+      "scenario": "cross",
+      "training_seed": 0,
+      "model_kind": "other:check_only_preflight_未训练权重",
+      "checkpoint_step": null,
+      "episodes": null,
+      "eval_seed_start": 42000,
+      "decoder": "native",
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "engineering_only",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v4_2_dev/engineering/preflights/candidate_cross/check_result.json",
+      "source_keys": {
+        "eval_seed_start": "同目录 arguments.json:requested_raw_steps.evaluation_seed_start (=42000)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=0)",
+        "decoder": "同目录 check_result.json:exact_hybrid_lane_code=true，action=[0.17178857326507568, 0.0]",
+        "success_rate": "无：check_only=true 预检不产生回合",
+        "collision_rate": "无（同上）",
+        "timeout_rate": "无（同上）",
+        "mean_return": "无（同上）"
+      },
+      "notes": "cross 场景唯一真实存在的记录，但它只是工程预检（check_only=true），没有任何评估数值。切勿把本行当作 cross 场景的实验结果——development 的 cross 作业（F3/F4）从未运行，见 missing。"
+    },
+    {
+      "batch": "results_topo_v4_2_dev",
+      "phase": "topo v4.2 开发线（factorized lane entropy）",
+      "variant": "temporal_graph",
+      "candidate": "control",
+      "scenario": "carla",
+      "training_seed": 0,
+      "model_kind": "other:check_only_preflight_未训练权重",
+      "checkpoint_step": null,
+      "episodes": null,
+      "eval_seed_start": 42000,
+      "decoder": "native",
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "engineering_only",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v4_2_dev/engineering/preflights/temporal_graph_carla/check_result.json",
+      "source_keys": {
+        "eval_seed_start": "同目录 arguments.json:requested_raw_steps.evaluation_seed_start (=42000)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=0)",
+        "decoder": "同目录 check_result.json:model_class=SceneRepresentationSAC / policy_class=SceneRepSACPolicy / feature_extractor_class=TopoTemporalGraphExtractor，action=[-0.2889209985733032, -0.19659626483917236] 为连续动作",
+        "success_rate": "无：check_only=true 预检不产生回合",
+        "collision_rate": "无（同上）",
+        "timeout_rate": "无（同上）",
+        "mean_return": "无（同上）"
+      },
+      "notes": "v4.2 协议下的对照组（comparator）预检，implementation_id=temporal_vehicle_graph_slt_pytorch_v1_v4_2_protocol_control，algorithm=temporal_graph_v1_control，method_metadata 明确 comparator_implementation_unchanged=true 且忽略 v4.2 新增的 lane_action_mask 观测。arguments.json 记 hybrid_lane_actions=null、lane_action_mask=false、continuous_lateral_threshold=0.3333，与候选方法的混合离散泳道不同。同样只有 check_only 前向，无评估数值。"
+    }
+  ],
+  "missing": [
+    {
+      "unit": "selected_v4_candidate / carla / training_seed 0 / exact_final（作业 F2，role=successful_seed_preservation）",
+      "reason": "stage_plan.json 计划了该作业，但 development_decision.json:jobs.F2.accepted=false、reason=\"run directory is absent\"，development/runs/ 下无对应目录，未训练也未评估。by 合同 requires: F1_pass 条件未满足。"
+    },
+    {
+      "unit": "selected_v4_candidate / cross / training_seed 0 / exact_final（作业 F3，role=regression_guard）",
+      "reason": "同上，run directory is absent；requires F2_pass。因此本批次在 cross 场景上零评估数据。"
+    },
+    {
+      "unit": "selected_v4_candidate / cross / training_seed 1 / exact_final（作业 F4，role=stability_guard）",
+      "reason": "同上，run directory is absent；requires F3_pass。"
+    },
+    {
+      "unit": "development 阶段整体（expected_jobs=4）",
+      "reason": "development/summary.json 记 expected_jobs=4、accepted_jobs=1、complete=false，decision=fail；只有 F1 产出科学数据，不允许当作完整开发阶段。"
+    },
+    {
+      "unit": "formal_test 证据（任何场景/种子）",
+      "reason": "experiment_contract_v4_2.yaml:formal_test.locked=true、accessed=false；本批次没有 test split 的任何文件，formal_test 在 promotion 哈希绑定通过前保持锁定。"
+    },
+    {
+      "unit": "promotion 证据（temporal_graph vs selected_v4_candidate，scenarios cross/roundabout_medium/carla，seeds 0/1）",
+      "reason": "合同 promotion 段要求先过 development 门禁；development decision=fail，promotion 从未启动，本批次无 12 个 promotion 作业的任何目录。"
+    },
+    {
+      "unit": "left_turn / roundabout / roundabout_easy / roundabout_medium 场景",
+      "reason": "本批次（engineering + development）只涉及 carla 与 cross 两个场景，其余场景不在本批次范围内，无任何文件。"
+    },
+    {
+      "unit": "F1 训练期周期性评估曲线（中间检查点评估）",
+      "reason": "F1 的 arguments.json 记 eval_freq=0、checkpoint_freq=20000，只落一个 20000 步检查点；训练期唯一可得的成功率是 best_training_success.json 的单一标量快照，没有逐点曲线（train_monitor.csv 只有回合级 r/l/t/raw_steps 监控，无评估语义）。"
+    },
+    {
+      "unit": "F1 的碰撞/超时之外的训练期诊断聚合（如需按门禁口径的训练期指标）",
+      "reason": "training_diagnostics.json 只聚合损失与结构诊断量（如 entropy/lane_probability/route attention 等），不含 success/collision/timeout 训练期 rate 字段；训练期结果指标仅 best_training_success.json 一处。"
+    },
+    {
+      "unit": "engineering/pytest_full_001、pytest_targeted_002~006 六个目录的内容",
+      "reason": "文件系统返回 WinError 5（拒绝访问），本审计在只读约束下无法列举或读取；判断为 pytest 临时目录，非实验指标来源，但无法给出内容证明。"
+    }
+  ],
+  "notes": "口径与可信度总结：(1) 本批次是「工程 + 开发 + 事后归因」三段结构，没有任何 promotion 或 formal_test 数据；development 4 个计划作业只完成 F1，F2-F4 因依赖链断裂从未启动，因此批次状态必须记 partial，任何把 F2/F3/F4 当已完成的写法都是错的，cross 场景更是完全没有评估数值。(2) 训练阶段 vs 评估阶段严格分开：唯一的评估数值来自 paper_evaluation_detailed.json:summary（12 回合 carla validation seed 43000，success 1.0 / collision 0.0 / timeout 0.0 / return 1.0）；训练阶段唯一数值是 best_training_success.json 的 last-20 成功率 0.95（clock 9510），两者口径、分母、种子体系完全不同，不可拼接成同一列。(3) 重复来源：F1 的成绩在 paper_evaluation_detailed.json:summary、final_evaluation.json、development/summary.json:per_run[0]、development/per_run.csv、development_decision.json:jobs.F1.row、action_diagnostics.json:outcomes、attribution_summary.json:outcomes 共 7 处出现，数值完全一致，本报告只保留 hash 绑定的 paper_evaluation_detailed.json 一份作为权威源；smoke 的成功/超时数值在 paper_evaluation_detailed.json:summary 与 final_evaluation.json 中重复，同样只留一份。(4) evidence_kind 分级：development（F1 两个单元，真实科学运行，有实现冻结哈希 implementation_freeze_sha256=1d23146c…）> smoke（candidate_carla_e2e 60 步，implementation_freeze_sha256=null，属冻结前链路验证）> engineering（三个 check_only 预检，只做前向健康检查、无回合、无指标）。(5) 最需要注意的科学口径坑：F1 在原 v4.2 合同下 outcome 门禁通过但 mechanism 门禁 5 项失败，development_decision.json 记 decision=fail、stopped_after=F1；随后 attribution/f1_event_gate（post_hoc_pilot_attribution=true、formal_test_accessed=false）证明失败源于门禁粒度——每个 episode 只发生 1 次必需的换道事件（first_event_margin_mean=+0.9807 高置信），却被「每决策换道率」和「全窗口概率边际」按 50+ 决策的分母惩罚，于是协议结论为 retain_v4_2_factorized_entropy_unchanged + reject_original_v4_2_gate_and_preregister_v4_2_r1_event_gate。这意味着 F1 是 pilot/开发证据，不能直接改判为确认性通过，也不得当作 v4.2 已达标。(6) 工程证据本身可信：migration_invariant 111/111 unchanged、targeted_tests 11 passed、full_regression 237 passed、engineering_receipt.status=passed；但这些都是代码/环境健康度，与算法性能无关。(7) 数据完整度小瑕疵：best_training_success.json 的 episodes_completed=64 与 train_monitor.csv 的 118 条记录不一致（快照语义差异），smoke 目录的 best/best_model.zip 未被任何哈希清单引用，六个 pytest 目录权限拒绝无法核查。(8) 全部数值均直接取自上述真实文件，未做任何推算、插补或按印象填写；取不到的字段一律 null 并登记在 missing 中。"
+}

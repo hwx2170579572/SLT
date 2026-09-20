@@ -1,0 +1,160 @@
+{
+  "schema_version": "independent-v2-existing-models-evaluation/v1",
+  "experiment_id": "independent-v2-existing-3methods-100seeds-100episodes-v1",
+  "run_id_prefix": "iv2e3m100x100_v1",
+  "name": "Three existing independent-v2 methods by three scenarios by 100 test-seed blocks by 100 episodes",
+  "created_at_local": "2026-09-01T16:28:15+08:00",
+  "no_fabrication": true,
+  "scope": "Evaluate three already-trained independent-v2 deployments per scenario without retraining: MST+SLT, TemporalGraph, and v4.8 Tie-only Replicated Calibration. Every deployment is evaluated on 100 paired logical test-seed blocks with 100 deterministic episodes per block.",
+  "supersedes_formal_scope": {
+    "protocol_path": "experiments/independent_v2_existing_models_100seeds_100episodes_v1/protocol.json",
+    "reason": "The user reduced the comparison from six methods to three before any formal comparison block started.",
+    "superseded_formal_blocks_completed": 0,
+    "superseded_formal_episodes_completed": 0,
+    "old_protocol_is_preserved": true
+  },
+  "parent_v2": {
+    "protocol_path": "experiments/high_density_single_seed_100ep_v2/protocol.json",
+    "protocol_sha256": "d7ce3e5484817322c4f1d73ab0501be53419e524b63879fc2752feb76ea6cd95",
+    "result_root": "results_hd_ss100_v2",
+    "profile": "comparison",
+    "training_seed": 0,
+    "run_id_template": "hd_ss100_v2__comparison__{method}__{scenario}__seed0",
+    "model_selection_rule": "Use the model basename recorded by the completed parent paper_evaluation_detailed.json. This preserves selected_model.zip and its sealed deployment decoder for v4.8, and final_model.zip for MST+SLT and TemporalGraph.",
+    "training_is_forbidden": true
+  },
+  "matrix": {
+    "method_order": [
+      "mst_slt",
+      "temporal_graph",
+      "v4_8"
+    ],
+    "scenario_order": [
+      "carla",
+      "cross",
+      "roundabout"
+    ],
+    "method_scenario_jobs": 9,
+    "test_seed_blocks_per_job": 100,
+    "episodes_per_test_seed_block": 100,
+    "evaluation_blocks": 900,
+    "total_evaluation_episodes": 90000,
+    "pairing": "For a fixed scenario and logical test-seed index, all three methods use the identical ordered episode-seed block, physical held-out 20% traffic partition, density, reward, action interface, observation dimensions, and source episode limit.",
+    "aggregation": "Retain every episode, report each 100-episode logical test-seed block, aggregate 10,000 episodes per method-scenario cell, then compute an equal-weight three-scenario macro result per method. Variability is computed across the 100 logical test-seed blocks, not across training seeds.",
+    "primary_metrics": {
+      "success_rate": "higher",
+      "collision_rate": "lower"
+    },
+    "secondary_metrics": {
+      "mean_return": "higher",
+      "off_route_rate": "lower",
+      "timeout_rate": "lower",
+      "mean_success_completion_time_seconds": "lower"
+    }
+  },
+  "methods": {
+    "mst_slt": {
+      "display_label": "MST+SLT",
+      "adapter": "base",
+      "algorithm": "scene_rep",
+      "model_class": "algos.sb3_torch.sac.SceneRepresentationSAC"
+    },
+    "temporal_graph": {
+      "display_label": "TemporalGraph 时序车辆图基线",
+      "adapter": "base",
+      "algorithm": "temporal_graph",
+      "model_class": "algos.sb3_torch.sac.SceneRepresentationSAC"
+    },
+    "v4_8": {
+      "display_label": "v4.8 Tie-only Replicated Calibration",
+      "adapter": "v4_8",
+      "algorithm": "topo_v4_8_tie_only_replicated_calibration",
+      "model_class": "algos.sb3_torch.sac_v4_5.ConfidentActorFusionSACV45"
+    }
+  },
+  "scenarios": {
+    "carla": {
+      "scenario_id": "carla_iv2_existing_3methods_100s100e_v1",
+      "parent_scenario_id": "carla_high_density_single_seed_100ep_v2",
+      "vehicle_scale": 1.35,
+      "pedestrian_scale": 1.35,
+      "clone_depart_jitter_seconds": [0.8, 1.8]
+    },
+    "cross": {
+      "scenario_id": "cross_iv2_existing_3methods_100s100e_v1",
+      "parent_scenario_id": "cross_high_density_single_seed_100ep_v2",
+      "vehicle_scale": 1.5,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [8.0, 10.0]
+    },
+    "roundabout": {
+      "scenario_id": "roundabout_iv2_existing_3methods_100s100e_v1",
+      "parent_scenario_id": "roundabout_high_density_single_seed_100ep_v2",
+      "vehicle_scale": 1.25,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [1.5, 3.0]
+    }
+  },
+  "environment_contract": {
+    "parent_physics_reused_exactly": true,
+    "map_changed": false,
+    "ego_route_changed": false,
+    "traffic_density_changed": false,
+    "traffic_partition_changed": false,
+    "observation_changed": false,
+    "action_space_changed": false,
+    "reward_changed": false,
+    "episode_limit_changed": false,
+    "episode_limit_profile": "source",
+    "ego_control_profile": "direct",
+    "base_method_traffic_protocol": "frozen_80_20",
+    "v4_method_traffic_protocol": "frozen_60_20_20",
+    "v4_evaluation_split": "validation",
+    "physical_evaluation_partition": "evaluation",
+    "generated_overlay_suffix": "iv2e3m100x100_v1",
+    "artifact_namespace_only_change": true
+  },
+  "profiles": {
+    "smoke": {
+      "test_seed_index_start": 0,
+      "test_seed_count": 1,
+      "episodes_per_test_seed": 2,
+      "episode_seed_base": 910000,
+      "episode_seed_stride": 100,
+      "evidence_scope": "Engineering smoke only; never report as a method result."
+    },
+    "comparison": {
+      "test_seed_index_start": 0,
+      "test_seed_count": 100,
+      "episodes_per_test_seed": 100,
+      "episode_seed_base": 200000,
+      "episode_seed_stride": 100,
+      "evidence_scope": "Formal three-method existing-model evaluation: 9 deployments, 900 seed blocks, and 90,000 deterministic episodes."
+    }
+  },
+  "seed_contract": {
+    "logical_test_seed_definition": "A logical test-seed index identifies one paired, non-overlapping block of deterministic per-episode SUMO RNG seeds.",
+    "episode_seed_formula": "episode_seed_base + logical_test_seed_index * episode_seed_stride + episode_index",
+    "episode_index_start": 0,
+    "same_blocks_for_all_methods": true,
+    "same_blocks_for_all_scenarios": true,
+    "explicit_seed_on_every_episode_reset": true,
+    "overlap_forbidden": true
+  },
+  "artifact_contract": {
+    "result_root": "results_iv2_eval_3m_100s100e_v1",
+    "overlay_directory": "overlays_iv2e3m100x100_v1",
+    "block_filename_template": "test_seed_{index:03d}.json",
+    "per_block_atomic_write": true,
+    "resume_unit": "one 100-episode logical test-seed block",
+    "invalid_existing_block_policy": "refuse_without_overwrite",
+    "summary_files": [
+      "summary.json",
+      "test_seed_blocks.csv",
+      "method_scenario.csv",
+      "method_macro.csv"
+    ],
+    "missing_value_rule": "Missing or invalid blocks remain explicit and are never filled from the parent v2 result or the superseded six-method smoke run.",
+    "model_integrity_rule": "Every block binds the parent protocol hash, source run hashes, recorded deployment-model basename, and deployment-model SHA-256."
+  }
+}

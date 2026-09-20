@@ -1,0 +1,243 @@
+{
+  "directory": "results_topo_v4_7_dev",
+  "phase": "topo v4.7 开发线（horizon-correct 16 步终端信用；单变量：return estimator n_step 4→16，bootstrap 折扣改为 gamma_power_actual_horizon）",
+  "purpose": "该批次是 v4.7「16 步 horizon-correct 终端信用」方法的工程冻结 + 开发验证目录。先做工程证据（父目录迁移不变量、定向/全量回归测试、5 组真实 SUMO 预检、端到端 horizon-correct 训练冒烟），再由预注册合同规划 G1–G5 五个 development 单元（cross/cross/carla/roundabout_medium 四个场景 + 父方法配对控制）。实际只跑完 G1（candidate, cross, seed=6），且该 run 被外层验收器拒绝，G2–G5 从未启动，development 阶段 accepted_runs=0、decision=incomplete。",
+  "status": "aborted",
+  "protocol_files": [
+    "results_topo_v4_7_dev/preregistration_receipt.json",
+    "results_topo_v4_7_dev/engineering/implementation_freeze.json",
+    "results_topo_v4_7_dev/engineering/engineering_receipt.json",
+    "results_topo_v4_7_dev/engineering/logs/migration.json",
+    "results_topo_v4_7_dev/engineering/logs/targeted_tests.xml",
+    "results_topo_v4_7_dev/engineering/logs/full_regression.xml",
+    "results_topo_v4_7_dev/development/stage_plan.json",
+    "results_topo_v4_7_dev/development/development_decision.json",
+    "results_topo_v4_7_dev/development/summary.json",
+    "results_topo_v4_7_dev/development/per_run.json",
+    "results_topo_v4_7_dev/development/last_execution.json",
+    "experiments/topo_scene_v4/experiment_contract_v4_7.yaml",
+    "experiments/topo_scene_v4/V4_7_HORIZON_CORRECT_16_STEP_CREDIT.md"
+  ],
+  "rows": [
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 开发线（horizon-correct 16 步终端信用）",
+      "variant": "selected_v4_candidate",
+      "candidate": "horizon_correct_16_step_terminal_credit",
+      "scenario": "cross",
+      "training_seed": 6,
+      "model_kind": "selected",
+      "checkpoint_step": 14525,
+      "episodes": 12,
+      "eval_seed_start": 67000,
+      "decoder": "target_critic",
+      "success_rate": 0.6666666666666666,
+      "collision_rate": 0.3333333333333333,
+      "timeout_rate": 0.0,
+      "mean_return": 0.3333333333333333,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a/paper_evaluation_detailed.json",
+      "source_keys": {
+        "success_rate": "summary.success_rate (=0.6667，8/12 成功)",
+        "collision_rate": "summary.collision_rate (=0.3333，4/12 碰撞)",
+        "timeout_rate": "summary.timeout_rate (=0.0)",
+        "mean_return": "summary.mean_return (=0.3333；该环境回合回报为 0/1 成功指示尺度，不是累计奖励)",
+        "episodes": "summary.episodes (=12，与 episode_records 长度、evaluation_provenance.episodes 一致)",
+        "eval_seed_start": "evaluation_seed_start (=67000，validation 分区)",
+        "training_seed": "同 run 目录 arguments.json:requested_raw_steps.seed (=6)",
+        "model_kind": "selector/receipt.json:selected_checkpoint_kind=highest_training_success；selected_model.zip 由 best_training_success_model.zip 重封装（source_policy_parameter_state_sha256 与 selected_model_parameter_state_sha256 相同），故本行是「选择器选中的模型」而非 20000 步 final",
+        "checkpoint_step": "best_training_success.json:clock_value (=14525，clock_field=_raw_steps_seen)，即选出 best 权重时的原始步数；不是 checkpoint_audit.json 里的 20000 步检查点",
+        "decoder": "selector/receipt.json:selected_deployment_decoder=target_critic（被拒绝的 paper_evaluation_detailed.json 缺该字段，故 decoder 只能取自 selector 收据）"
+      },
+      "notes": "本批次唯一被完整执行的 development 科学单元（G1）。子进程返回码 0：训练 20000 原始步、四组合 train 分区校准、选择器封存、selected-model 重封装、12 个 validation 回合均已完成，数值真实。但外层验收器 tools/run_topo_v4_7_experiments.py 校验 paper_evaluation_detailed.json 时，因该文件缺少 selected_deployment_decoder（以及 selected_source_checkpoint_sha256 等）封存字段而以「detailed selected decoder mismatch」拒绝该目录，run 被标记 engineering_rejected_not_gate_eligible、validation_outcome_gate_eligible=false（见 development_decision.json、last_execution.json:failures、last_execution.json）。因此本行 status 记为 completed（评估本身跑完）但**非门禁合格、不得据此宣称 v4.7 通过**；批次整体 status 为 aborted。选择过程只在 train 分区（calibration_seed_start=76000）进行，validation（67000）未参与 checkpoint/decoder 选择（selector/receipt.json:validation_used_for_selection=false、formal_test_used_for_selection=false）。同单元（selected）的 train 分区校准口径为 success 0.8333 / collision 0.1667 / return 0.6667（artifact=.../selector/cal/best/target_critic/evaluation.json，与 selector/receipt.json:candidates[0].summary 一致）——与校验行同属（变体, 场景, 种子, 模型种类）=（selected_v4_candidate, cross, 6, selected）单元，按「一单元一行」规则只保留 validation 这一份更权威数值，训练分区校准值在此以文字留档。"
+    },
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 开发线（horizon-correct 16 步终端信用）",
+      "variant": "selected_v4_candidate",
+      "candidate": "horizon_correct_16_step_terminal_credit",
+      "scenario": "cross",
+      "training_seed": 6,
+      "model_kind": "checkpoint",
+      "checkpoint_step": 14525,
+      "episodes": 12,
+      "eval_seed_start": 76000,
+      "decoder": "fusion_0_90",
+      "success_rate": 0.5,
+      "collision_rate": 0.5,
+      "timeout_rate": 0.0,
+      "mean_return": 0.0,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a/selector/cal/best/fusion_0_90/evaluation.json",
+      "source_keys": {
+        "success_rate": "success_rate (=0.5，6/12)",
+        "collision_rate": "collision_rate (=0.5，6/12)",
+        "timeout_rate": "timeout_rate (=0.0)",
+        "mean_return": "mean_return (=0.0)",
+        "episodes": "episodes (=12)",
+        "eval_seed_start": "run 目录 arguments.json:requested_raw_steps.calibration_seed_start (=76000，train 分区校准)",
+        "training_seed": "同 run 目录 arguments.json:requested_raw_steps.seed (=6)",
+        "model_kind": "checkpoint_kind=highest_training_success（raw 时钟 14525）；目录名 cal/best 与 selector/receipt.json:candidates[1].summary 一致",
+        "decoder": "deployment_decoder=fusion_0_90（目录名与 selector/receipt.json:candidates[1].deployment_decoder 一致）"
+      },
+      "notes": "选择器 4 组合网格（2 检查点 × 2 解码器）中的「highest_training_success × fusion_0_90」组合，在 train 分区跑 12 回合校准，**未被选中**。属于选择过程的开发证据，不是方法效果结论。eval_seed_start=76000 是校准（train 分区）种子，与 validation 行(67000)不同，两者不可混用。decoder_integrity_passed=true（selector/receipt.json:candidates[1].decoder_integrity）。同网格的另外两行见本文件后续两行。"
+    },
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 开发线（horizon-correct 16 步终端信用）",
+      "variant": "selected_v4_candidate",
+      "candidate": "horizon_correct_16_step_terminal_credit",
+      "scenario": "cross",
+      "training_seed": 6,
+      "model_kind": "exact_final",
+      "checkpoint_step": 20000,
+      "episodes": 12,
+      "eval_seed_start": 76000,
+      "decoder": "target_critic",
+      "success_rate": 0.4166666666666667,
+      "collision_rate": 0.5833333333333334,
+      "timeout_rate": 0.0,
+      "mean_return": -0.16666666666666666,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a/selector/cal/final/target_critic/evaluation.json",
+      "source_keys": {
+        "success_rate": "success_rate (=0.4167，5/12)",
+        "collision_rate": "collision_rate (=0.5833，7/12)",
+        "timeout_rate": "timeout_rate (=0.0)",
+        "mean_return": "mean_return (=-0.1667)",
+        "episodes": "episodes (=12)",
+        "eval_seed_start": "run 目录 arguments.json:requested_raw_steps.calibration_seed_start (=76000，train 分区校准)",
+        "training_seed": "同 run 目录 arguments.json:requested_raw_steps.seed (=6)",
+        "model_kind": "checkpoint_kind=exact_final（20000 原始步最终检查点）；目录名 cal/final 与 selector/receipt.json:candidates[2].summary 一致；checkpoint_step 取自同 run 目录 checkpoint_audit.json:checkpoints[0].raw_step (=20000)",
+        "decoder": "deployment_decoder=target_critic（目录名与 selector/receipt.json:candidates[2].deployment_decoder 一致）"
+      },
+      "notes": "4 组合网格中的「exact_final × target_critic」组合，train 分区 12 回合校准，**未被选中**。注意这是 **train 分区校准**（76000），不是 validation；G1 的 validation 只对选择器选中的单一模型做过（见 selected 行），因此本组合没有 validation 数值（已记入 missing）。"
+    },
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 开发线（horizon-correct 16 步终端信用）",
+      "variant": "selected_v4_candidate",
+      "candidate": "horizon_correct_16_step_terminal_credit",
+      "scenario": "cross",
+      "training_seed": 6,
+      "model_kind": "other:exact_final 检查点配 fusion_0_90 解码器（train 分区校准，非选中）",
+      "checkpoint_step": 20000,
+      "episodes": 12,
+      "eval_seed_start": 76000,
+      "decoder": "fusion_0_90",
+      "success_rate": 0.25,
+      "collision_rate": 0.75,
+      "timeout_rate": 0.0,
+      "mean_return": -0.5,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a/selector/cal/final/fusion_0_90/evaluation.json",
+      "source_keys": {
+        "success_rate": "success_rate (=0.25，3/12)",
+        "collision_rate": "collision_rate (=0.75，9/12)",
+        "timeout_rate": "timeout_rate (=0.0)",
+        "mean_return": "mean_return (=-0.5)",
+        "episodes": "episodes (=12)",
+        "eval_seed_start": "run 目录 arguments.json:requested_raw_steps.calibration_seed_start (=76000，train 分区校准)",
+        "training_seed": "同 run 目录 arguments.json:requested_raw_steps.seed (=6)",
+        "model_kind": "checkpoint_kind=exact_final；model_kind 用 other:<说明> 是因为它与「exact_final × target_critic」共享同一检查点、仅解码器不同，为避免同一 (变体,场景,种子,模型种类) 键冲突而显式标注解码器；数值与 selector/receipt.json:candidates[3].summary 一致",
+        "decoder": "deployment_decoder=fusion_0_90（selector/receipt.json:candidates[3].deployment_decoder）"
+      },
+      "notes": "4 组合网格中的「exact_final × fusion_0_90」组合，train 分区 12 回合校准，**未被选中**，是 4 组合中表现最差的一组。其它 3 行覆盖同网格的另外 3 个组合。"
+    },
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 开发线（horizon-correct 16 步终端信用）",
+      "variant": "selected_v4_candidate",
+      "candidate": "horizon_correct_16_step_terminal_credit",
+      "scenario": "cross",
+      "training_seed": 6,
+      "model_kind": "other:训练期最近 20 回合窗口（best_training_success 选点权重）",
+      "checkpoint_step": 14525,
+      "episodes": 20,
+      "eval_seed_start": null,
+      "decoder": null,
+      "success_rate": 0.85,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a/best_training_success.json",
+      "source_keys": {
+        "success_rate": "success_rate_last_20 (=0.85，训练期最近 20 个 episode 窗口的成功率，用于选点)",
+        "episodes": "fixed_denominator (=20，训练期固定窗口分母，**不是**评估回合数)",
+        "checkpoint_step": "clock_value (=14525，clock_field=_raw_steps_seen)",
+        "training_seed": "同 run 目录 arguments.json:requested_raw_steps.seed (=6)",
+        "model_kind": "该文件指向 best_training_success_model.zip（selection_rule=highest_training_success_rate_last_20，paper_rule_reconstruction=true），即被 selector 选中的同一权重；model_kind 用 other:<说明> 是为了与「评估阶段 selected」行和「checkpoint 校准」行区分，明确这是训练阶段窗口指标"
+      },
+      "notes": "**训练阶段指标，不是评估指标，务必与前面各行区分。** 口径为「训练期最近 20 个 episode 的成功率」（滑动窗口，fixed_denominator=20），不是 12/20 回合评估。同 run 的 train_monitor.csv 显示训练全程共 44 个 episode、30 次成功（累计 0.682），与选点窗口 0.85 是不同口径（前者为全程累计，后者为选点时的最后 20 回合窗口，episodes_completed=32 是选点时刻的累计回合数）。checkpoint_audit.json 记录的 20000 步检查点与本次选点权重（14525 原始步）不是同一个模型。"
+    },
+    {
+      "batch": "results_topo_v4_7_dev",
+      "phase": "topo v4.7 工程证据（engineering smoke）",
+      "variant": "selected_v4_candidate",
+      "candidate": "horizon_correct_16_step_terminal_credit",
+      "scenario": "cross",
+      "training_seed": 42,
+      "model_kind": "exact_final",
+      "checkpoint_step": 120,
+      "episodes": 1,
+      "eval_seed_start": 99000,
+      "decoder": "target_critic",
+      "success_rate": 0.0,
+      "collision_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_return": -1.0,
+      "status": "engineering_only",
+      "evidence_kind": "smoke",
+      "artifact": "results_topo_v4_7_dev/engineering/smoke/s1/paper_evaluation_detailed.json",
+      "source_keys": {
+        "success_rate": "summary.success_rate (=0.0，0/1)",
+        "collision_rate": "summary.collision_rate (=1.0，1/1)",
+        "timeout_rate": "summary.timeout_rate (=0.0)",
+        "mean_return": "summary.mean_return (=-1.0)",
+        "episodes": "summary.episodes (=1)；同目录 arguments.json:requested_raw_steps.eval_episodes (=1)",
+        "eval_seed_start": "同目录 arguments.json:requested_raw_steps.evaluation_seed_start (=99000，validation 分区，仅 1 回合)",
+        "training_seed": "同目录 arguments.json:requested_raw_steps.seed (=42)",
+        "model_kind": "selector/receipt.json:selected_checkpoint_kind=exact_final；checkpoint_step 取自同目录 checkpoint_audit.json:checkpoints[0].raw_step (=120)",
+        "decoder": "selector/receipt.json:selected_deployment_decoder=target_critic"
+      },
+      "notes": "工程冒烟（engineering/smoke/s1），120 原始步、仅 1 个 validation 回合，用于验证 horizon-correct 记账链路与选择器端到端可跑通及 decoder 完整性（4 个组合的 decoder_integrity_passed 均为 true），**不是方法效果证据**。1 回合下 4 个 checkpoint×decoder 校准组合结果完全相同（success 0 / collision 1 / return -1.0），因此不逐组合出行。engineering_receipt.json 把该冒烟的 return_estimator_diagnostics（sampled_horizon_count=488、mean_sampled_actual_horizon=16.0、short_horizon_sample_rate=0.0）与 selector 收据哈希绑定为工程证据。"
+    }
+  ],
+  "missing": [
+    {
+      "unit": "G2（parent_v4_6_control, cross, seed 6，job=G2__p46__cross__s6__pe97ef91a）",
+      "reason": "development_decision.json:jobs.G2.accepted=false，reason=\"run directory is absent\"；development/runs 下只有 G1 一个目录。该单元是 v4.7 与 v4.6 父方法的配对因果控制（parent n_step=4 / single_gamma_source_equivalent），缺失导致 n_step 4→16 的单变量对比没有配对基线，return estimator 的因果门禁（paired_parent_causal_gate）只能为 null。"
+    },
+    {
+      "unit": "G3（selected_v4_candidate, cross, seed 8，独立种子稳定性守卫）",
+      "reason": "development_decision.json:jobs.G3.reason=\"run directory is absent\"，prerequisites.G3=false，从未启动。"
+    },
+    {
+      "unit": "G4（selected_v4_candidate, carla, seed 5，carla 保持性守卫）",
+      "reason": "development_decision.json:jobs.G4.reason=\"run directory is absent\"，prerequisites.G4=false；carla 仅有 engineering/preflight/candidate_carla 的 check-only 前向预检（无回合结果），无 development 数值。"
+    },
+    {
+      "unit": "G5（selected_v4_candidate, roundabout_medium, seed 3，第三场景回归守卫）",
+      "reason": "development_decision.json:jobs.G5.reason=\"run directory is absent\"，prerequisites.G5=false；roundabout_medium 仅有 engineering/preflight/candidate_roundabout_medium 的 check-only 前向预检（无回合结果），无 development 数值。"
+    },
+    {
+      "unit": "任何场景/种子的 formal_test（正式测试）证据",
+      "reason": "preregistration_receipt.json:formal_test_locked=true、formal_test_accessed=false；engineering_receipt.json/implementation_freeze.json 同样 formal_test_accessed=false；development_decision.json:formal_test_unlocked=false。本批次从未解锁正式测试，物理上不存在 formal_test 行。"
+    },
+    {
+      "unit": "G1 validation 阶段非选中组合（exact_final×target_critic、highest_training_success×fusion_0_90、exact_final×fusion_0_90）的 validation 数值",
+      "reason": "paper_evaluation_detailed.json 只对 selector 选中的单一模型（highest_training_success + target_critic）做 12 回合 validation 评估；其余 3 个 checkpoint×decoder 组合只有 train 分区校准数值（已在本文件 rows 中给出），不存在 validation 数值，属客观缺失，不得换算或插补。"
+    },
+    {
+      "unit": "development/summary.json 的 per_run / aggregate 聚合结果",
+      "reason": "accepted_runs=0、expected_runs=5、complete=false、per_run=[]、aggregate=[]；development/per_run.json 内容为 []。没有任何被接受的 run 进入聚合，故无聚合数值可取。"
+    }
+  ],
+  "notes": "【批次性质】results_topo_v4_7_dev 是 v4.7「horizon-correct 16 步终端信用」的单变量开发批次（父方法 v4.6 为 n_step=4 的 single_gamma_source_equivalent）。顶层 status 记为 aborted：工程证据部分完整且通过，但 development 阶段在唯一一个单元被验收器拒绝后中止，5 个计划单元中 0 个被接受（accepted_runs=0 / complete=false / decision=incomplete），随后被 v4.7.1 工程补丁线取代（results_topo_v4_7_1_dev/engineering/logs/rejected_attempt_quarantine.json 明确隔离本次尝试）。\n【关键坑 1：G1 数值真实但非门禁合格】G1 子进程 returncode=0，训练/校准/选择/validation 全部跑完，12 回合 validation 数值真实（success 0.6667 / collision 0.3333 / return 0.3333）。但外层验收器 run_topo_v4_7_experiments.py 第 531 行要求 paper_evaluation_detailed.json 携带 selected_deployment_decoder 并与 selector 收据一致，而该文件缺此字段（也缺 selected_source_checkpoint_sha256），故以「detailed selected decoder mismatch」拒绝整个目录。实验记录把这次拒绝定性为**工程元数据绑定缺陷，不是科学失败**（V4_7_1_METADATA_BINDING_PATCH.md），并且 validation_outcome_inspected_for_patch_design=false、validation_outcome_gate_eligible=false、checkpoint_eligible_for_retry=false——即 patch 设计时**刻意没有看**验证结果。因此本文件该行的 success/collision 只能当作「开发期参考数值」，绝不可当作门禁通过或正式结论。\n【关键坑 2：训练阶段与评估阶段口径】best_training_success.json 的 0.85 是训练期最近 20 回合窗口成功率（fixed_denominator=20），与 validation 的 12 回合 0.6667 不是同一口径；train_monitor.csv 的 44 回合 30 成功是全程累计。三者不可互换。mean_return 在本环境中是 0/1 成功指示尺度（成功=+1 量级、碰撞=-1），不是累计奖励。\n【关键坑 3：checkpoint 与 decoder 网格】G1 实际评估了 4 个 (checkpoint × decoder) 组合：highest_training_success(raw 14525)×target_critic、×fusion_0_90，exact_final(raw 20000)×target_critic、×fusion_0_90，均在 train 分区（calibration_seed_start=76000）12 回合。选择结果：highest_training_success + target_critic（train 校准 success 0.8333），并把该权重重封装为 selected_model.zip（policy_parameter_state 哈希保持一致）后做 validation。被选中的 best 权重是 14525 原始步，**不是** checkpoint_audit.json 记录的 20000 步检查点。四组合网格中同单元的重复来源（cal/best|final × 两种 decoder 的 evaluation.json 与 selector/receipt.json:candidates[].summary、以及 paper_evaluation_detailed.json 中的同名字段）数值完全一致；本文件按「一个 (变体,场景,种子,模型种类) 单元一行」取值，被选中单元的 train 校准值与 validation 值同键，故只保留 validation 一份，校准值仅以文字留档。\n【关键坑 4：formal_test 不适用】全程 formal_test_locked=true / accessed=false，本批次没有任何正式测试证据；formal_test_unlocked=false。\n【工程证据口径】engineering_receipt.json status=passed：定向测试 18 项 0 失败、全量回归 320 项 0 失败；父目录迁移不变量 34 个文件未变；5 组真实 SUMO 预检（candidate_cross / candidate_carla / candidate_roundabout_medium / parent_cross / temporal_cross）均 status=ok、action_finite=true，其中三个 v4.7 candidate 预检 mark exact_hybrid_lane_code=true 且 n_step=16、return_estimator_changed=true，两个对照预检（parent_v4_6、temporal_graph）n_step=4、return_estimator_changed=false——这些是 check-only 单步前向预检，无回合级 success/collision/return 数值，故不单独出行，仅在此留档。preflight/temporal_cross 的 temporal_graph_v1_control 与 parent_cross 的 v4_6 matched control 都只是**控制器/父方法可用性预检**，其在线训练单元（G2 与任何 temporal 单元）从未启动。\n【可信度】工程证据：高（哈希绑定、测试全绿、预检通过）。G1 development 数值：数值本身可信（有模型哈希、selector 收据、selector 收据先于 validation 环境构造的时间戳证据），但**未通过验收门禁、未解锁正式测试**，只能作为参考，不能作为 v4.7 的任何结论性证据。G2–G5：完全不存在。"
+}

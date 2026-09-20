@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="carla_moderate" accel="2.4" decel="4.5" sigma="0.35" length="4.7" minGap="2.5" maxSpeed="10.0" speedFactor="normc(0.85,0.08,0.65,1.0)"/>
+    <vType id="carla_aggressive" accel="2.8" decel="4.5" sigma="0.55" length="4.7" minGap="1.8" maxSpeed="10.0" speedFactor="normc(0.98,0.04,0.8,1.05)" impatience="0.8" jmIgnoreFoeProb="0.15"/>
+    <vType id="carla_patient" accel="2.0" decel="4.5" sigma="0.15" length="4.7" minGap="3.5" maxSpeed="10.0" speedFactor="normc(0.72,0.06,0.55,0.9)"/>
+    <vType id="carla_pedestrian" vClass="pedestrian" width="0.5" length="0.5" minGap="0.25" maxSpeed="1.6" color="1,0.2,0.2"/>
+    <route id="west_east" edges="west_in east_out"/>
+    <route id="east_west" edges="east_in west_out"/>
+    <route id="right_turn" edges="west_in north_upper wrong_out"/>
+    <vehicle id="carla_bg_0" type="carla_moderate" route="west_east" depart="0" departLane="best" departPos="8" departSpeed="7"/>
+    <vehicle id="carla_bg_1" type="carla_aggressive" route="east_west" depart="0" departLane="best" departPos="12" departSpeed="8"/>
+    <personFlow id="ped_west_east" type="carla_pedestrian" begin="0" end="4000" period="12" departPos="random">
+        <walk edges="west_in east_out"/>
+    </personFlow>
+    <vehicle id="carla_bg_2" type="carla_patient" route="right_turn" depart="1" departLane="best" departPos="0" departSpeed="6"/>
+    <flow id="west_east_flow" type="carla_moderate" route="west_east" begin="2" end="4000" vehsPerHour="360" departLane="best" departSpeed="random"/>
+    <flow id="east_west_flow" type="carla_aggressive" route="east_west" begin="3" end="4000" vehsPerHour="300" departLane="best" departSpeed="random"/>
+    <personFlow id="ped_east_west" type="carla_pedestrian" begin="4" end="4000" period="14" departPos="random">
+        <walk edges="east_in west_out"/>
+    </personFlow>
+    <flow id="right_turn_flow" type="carla_patient" route="right_turn" begin="5" end="4000" vehsPerHour="180" departLane="best" departSpeed="random"/>
+</routes>

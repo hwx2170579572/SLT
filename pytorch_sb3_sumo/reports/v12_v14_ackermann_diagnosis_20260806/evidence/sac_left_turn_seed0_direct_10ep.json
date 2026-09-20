@@ -1,0 +1,288 @@
+{
+  "model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\results_sb3_sumo_paper\\paper_baselines_sac_ppo_v14_frozen\\paper__sac__left_turn__seed0\\final_model.zip",
+  "algorithm": "sac",
+  "scenario": "left_turn",
+  "evaluation_seed_start": 10000,
+  "trained_raw_steps": 100000,
+  "evaluation_provenance": {
+    "contract_version": 1,
+    "validated": true,
+    "environment_factory": "tools.eval_paper_sb3_sumo",
+    "environment_class": "envs.sumo.paper_env.PaperSumoSceneEnv",
+    "expected_environment_class": "envs.sumo.paper_env.PaperSumoSceneEnv",
+    "algorithm": "sac",
+    "scenario": "left_turn",
+    "traffic_protocol": "frozen_80_20",
+    "traffic_partition": "evaluation",
+    "episode_limit_profile": "paper",
+    "uses_released_assets": true,
+    "evaluation_seed_start": 10000,
+    "episodes": 10,
+    "traffic_variant_episode_count": 10,
+    "traffic_variants_observed": [
+      "traffic_319.rou.xml",
+      "traffic_39.rou.xml",
+      "traffic_489.rou.xml",
+      "traffic_572.rou.xml",
+      "traffic_641.rou.xml",
+      "traffic_737.rou.xml",
+      "traffic_76.rou.xml",
+      "traffic_811.rou.xml",
+      "traffic_866.rou.xml",
+      "traffic_937.rou.xml"
+    ],
+    "model_environment_spaces_match": true,
+    "environment_observation_space": {
+      "type": "gymnasium.spaces.dict.Dict",
+      "shape": null,
+      "dtype": null,
+      "spaces": {
+        "state_lstm": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10,
+            30
+          ],
+          "dtype": "float32",
+          "low_sha256": "70F2858B3D6DF76B0076A84D9D0642C3B309F85B9CBC45A5F196DD520A49A5C1",
+          "high_sha256": "4E84E0D6B17EBAC0F8F9B2E555AE43EF259B1688CE69AD824E743368704C636B",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        },
+        "state_lstm_mask": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10
+          ],
+          "dtype": "float32",
+          "low_sha256": "2C34CE1DF23B838C5ABF2A7F6437CCA3D3067ED509FF25F11DF6B11B582B51EB",
+          "high_sha256": "00E1A993EFD5074E1FC9C7FF6FC46A151EE4ED93935D05EE2AB229DED34975C1",
+          "low_min_finite": 0.0,
+          "low_max_finite": 0.0,
+          "high_min_finite": 1.0,
+          "high_max_finite": 1.0
+        }
+      }
+    },
+    "model_observation_space": {
+      "type": "gymnasium.spaces.dict.Dict",
+      "shape": null,
+      "dtype": null,
+      "spaces": {
+        "state_lstm": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10,
+            30
+          ],
+          "dtype": "float32",
+          "low_sha256": "70F2858B3D6DF76B0076A84D9D0642C3B309F85B9CBC45A5F196DD520A49A5C1",
+          "high_sha256": "4E84E0D6B17EBAC0F8F9B2E555AE43EF259B1688CE69AD824E743368704C636B",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        },
+        "state_lstm_mask": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10
+          ],
+          "dtype": "float32",
+          "low_sha256": "2C34CE1DF23B838C5ABF2A7F6437CCA3D3067ED509FF25F11DF6B11B582B51EB",
+          "high_sha256": "00E1A993EFD5074E1FC9C7FF6FC46A151EE4ED93935D05EE2AB229DED34975C1",
+          "low_min_finite": 0.0,
+          "low_max_finite": 0.0,
+          "high_min_finite": 1.0,
+          "high_max_finite": 1.0
+        }
+      }
+    },
+    "environment_action_space": {
+      "type": "gymnasium.spaces.box.Box",
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low_sha256": "7C8E9E654585093FE245E490010889AF419E1023882A4110DDFC3D53CE48721E",
+      "high_sha256": "80B8FD6D60FA85FD14A38B5295CB92ABD80DFEC5CA406C9F969609A79D36809D",
+      "low_min_finite": -1.0,
+      "low_max_finite": -1.0,
+      "high_min_finite": 1.0,
+      "high_max_finite": 1.0
+    },
+    "model_action_space": {
+      "type": "gymnasium.spaces.box.Box",
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low_sha256": "7C8E9E654585093FE245E490010889AF419E1023882A4110DDFC3D53CE48721E",
+      "high_sha256": "80B8FD6D60FA85FD14A38B5295CB92ABD80DFEC5CA406C9F969609A79D36809D",
+      "low_min_finite": -1.0,
+      "low_max_finite": -1.0,
+      "high_min_finite": 1.0,
+      "high_max_finite": 1.0
+    }
+  },
+  "completion_time_population_std_ddof": 0,
+  "summary": {
+    "episodes": 10,
+    "mean_return": 0.8,
+    "std_return": 0.6000000000000001,
+    "mean_decision_steps": 45.9,
+    "mean_raw_steps": 136.1,
+    "success_rate": 0.9,
+    "collision_rate": 0.1,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0
+  },
+  "successful_episodes": 9,
+  "mean_success_completion_time_seconds": 14.744444444444447,
+  "std_success_completion_time_seconds": 0.7833136325339807,
+  "sumo_step_seconds": 0.1,
+  "episode_records": [
+    {
+      "episode": 0,
+      "seed": 10000,
+      "episode_return": 1.0,
+      "decision_steps": 53,
+      "environment_steps": 53,
+      "raw_steps": 159,
+      "completion_time_seconds": 15.9,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_319.rou.xml"
+    },
+    {
+      "episode": 1,
+      "seed": 10001,
+      "episode_return": 1.0,
+      "decision_steps": 51,
+      "environment_steps": 51,
+      "raw_steps": 151,
+      "completion_time_seconds": 15.100000000000001,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_39.rou.xml"
+    },
+    {
+      "episode": 2,
+      "seed": 10002,
+      "episode_return": 1.0,
+      "decision_steps": 50,
+      "environment_steps": 50,
+      "raw_steps": 148,
+      "completion_time_seconds": 14.8,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_489.rou.xml"
+    },
+    {
+      "episode": 3,
+      "seed": 10003,
+      "episode_return": 1.0,
+      "decision_steps": 44,
+      "environment_steps": 44,
+      "raw_steps": 131,
+      "completion_time_seconds": 13.100000000000001,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_572.rou.xml"
+    },
+    {
+      "episode": 4,
+      "seed": 10004,
+      "episode_return": 1.0,
+      "decision_steps": 51,
+      "environment_steps": 51,
+      "raw_steps": 151,
+      "completion_time_seconds": 15.100000000000001,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_641.rou.xml"
+    },
+    {
+      "episode": 5,
+      "seed": 10005,
+      "episode_return": -1.0,
+      "decision_steps": 12,
+      "environment_steps": 12,
+      "raw_steps": 34,
+      "completion_time_seconds": null,
+      "success": false,
+      "collision": true,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_737.rou.xml"
+    },
+    {
+      "episode": 6,
+      "seed": 10006,
+      "episode_return": 1.0,
+      "decision_steps": 49,
+      "environment_steps": 49,
+      "raw_steps": 145,
+      "completion_time_seconds": 14.5,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_76.rou.xml"
+    },
+    {
+      "episode": 7,
+      "seed": 10007,
+      "episode_return": 1.0,
+      "decision_steps": 50,
+      "environment_steps": 50,
+      "raw_steps": 149,
+      "completion_time_seconds": 14.9,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_811.rou.xml"
+    },
+    {
+      "episode": 8,
+      "seed": 10008,
+      "episode_return": 1.0,
+      "decision_steps": 47,
+      "environment_steps": 47,
+      "raw_steps": 139,
+      "completion_time_seconds": 13.9,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_866.rou.xml"
+    },
+    {
+      "episode": 9,
+      "seed": 10009,
+      "episode_return": 1.0,
+      "decision_steps": 52,
+      "environment_steps": 52,
+      "raw_steps": 154,
+      "completion_time_seconds": 15.4,
+      "success": true,
+      "collision": false,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_937.rou.xml"
+    }
+  ]
+}

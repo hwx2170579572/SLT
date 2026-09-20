@@ -1,0 +1,75 @@
+{
+  "directory": "results_topo_v4_8_1_dev",
+  "phase": "topo v4.8.1 运行时诊断验收集成补丁线（仅工程验收层，未产生独立科学结果）",
+  "purpose": "这是 v4.8 科学批次之上的一个\"只改验收、不改科学\"的工程补丁批次：目的是把冻结的 v4.8 runner 对 H1 的拒收理由从\"return estimator 变了\"修正为接受 H1 自己实际写出的遗留字段，从而原地采纳 H1、避免重跑。批次的唯一实质产出是一次 H1 采纳预检（preflight），预检在 selector_mode 门禁上失败，补丁被判定 do_not_freeze_or_use，未冻结任何实现、未启动任何科学 job，随后由 v4.8.2 selector-gate-interface 补丁线取代。",
+  "status": "aborted",
+  "protocol_files": [
+    "results_topo_v4_8_1_dev/preregistration_receipt.json",
+    "results_topo_v4_8_1_dev/engineering/preflight_failure.json",
+    "experiments/topo_scene_v4/experiment_contract_v4_8_1.yaml",
+    "experiments/topo_scene_v4/V4_8_1_RUNTIME_DIAGNOSTIC_ACCEPTANCE_PATCH.md",
+    "tools/run_topo_v4_8_1_experiments.py"
+  ],
+  "rows": [
+    {
+      "batch": "results_topo_v4_8_1_dev",
+      "phase": "topo v4.8.1 运行时诊断验收集成（工程补丁线）",
+      "variant": "v4_8",
+      "candidate": "tie_only_replicated_calibration",
+      "scenario": "cross",
+      "training_seed": 8,
+      "model_kind": "exact_final",
+      "checkpoint_step": 20000,
+      "episodes": 12,
+      "eval_seed_start": 68100,
+      "decoder": "other:fusion_0_90",
+      "success_rate": 0.6666666666666666,
+      "collision_rate": 0.3333333333333333,
+      "timeout_rate": 0.0,
+      "mean_return": 0.3333333333333333,
+      "status": "aborted",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v4_8_1_dev/engineering/preflight_failure.json",
+      "source_keys": {
+        "success_rate": "preflight.outcome_rates.success_rate",
+        "collision_rate": "preflight.outcome_rates.collision_rate",
+        "timeout_rate": "preflight.outcome_rates.timeout_rate",
+        "off_route_rate": "preflight.outcome_rates.off_route_rate（该指标不在本表字段集内，值为 0.0，仅记录于备注）",
+        "variant": "experiments/topo_scene_v4/experiment_contract_v4_8_1.yaml::parent_scientific_protocol.version（v4.8_tie_only_replicated_train_calibration）",
+        "candidate": "configs/sb3_configs_v4_8.py::V48_CANDIDATE（topo_v4_8_tie_only_replicated_calibration）+ 作业名标签 H1__cand__… 中的 cand",
+        "scenario": "由本批次协议链锚定的触发作业名 H1__cand__cross__s8__p42f54135（见 experiment_contract_v4_8_1.yaml::trigger.job 与 tools/run_topo_v4_8_1_experiments.py::H1_RUN）",
+        "training_seed": "同上，作业名中的 s8（8）",
+        "model_kind": "results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json::selected_checkpoint_kind",
+        "checkpoint_step": "results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json::trained_raw_steps",
+        "episodes": "results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json::summary.episodes",
+        "eval_seed_start": "results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json::evaluation_seed_start",
+        "decoder": "results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json::selected_deployment_decoder",
+        "mean_return": "results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json::summary.mean_return（v4.8.1 预检文件本身未记录 mean_return）"
+      },
+      "notes": "重要口径警告：这一行不是 v4.8.1 新产生的科学证据，而是 H1 结果的\"转述\"。v4.8.1 的预检代码（tools/run_topo_v4_8_1_experiments.py::h1_adoption_preflight，第230/253-256行）直接读取父批次 results_topo_v4_8_dev/development/runs/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json 的 summary 并复述为 h1_success_rate/h1_collision_rate/h1_off_route_rate/h1_timeout_rate；preflight_failure.json 的 preflight.outcome_rates 与之逐位一致（0.6667/0.3333/0.0/0.0）。因此本行的成功率/碰撞率/超时率数值同时存在于父批次结果文件，属于跨批次重复来源，聚合统计时不可与 results_topo_v4_8_dev 的行重复计数；按\"保留最权威一份\"原则，正式数值应归 results_topo_v4_8_dev 批次，本行仅作为\"v4.8.1 预检确实跑过、跑了什么、以及它为何中止\"的工程证据。另外：v4.8.1 自身的预检并未独立评估任何模型（新训练的或新选择的），episodes=12/eval_seed_start=68100/checkpoint_step=20000 等均继承自该 H1 评估。gate 失败细节：继承候选门禁未通过，failed_gate_checks=[selector_mode]，observed_selector_mode=tie_only_replicated_joint_checkpoint_decoder 与 inherited_expected_selector_mode=joint_checkpoint_decoder 不一致。status=aborted 反映批次结局（补丁被判 do_not_freeze_or_use_v4_8_1_runner，科学 job 从未启动）。"
+    }
+  ],
+  "missing": [
+    {
+      "unit": "development 阶段全部科学结果（H1 之后的 H2/H3/H4，以及 H1 在 v4.8.1 协议下的任何新跑）",
+      "reason": "v4.8.1 只改验收层（acceptance_only=true、scientific_protocol_changed=false、h1_rerun_forbidden=true），且预检在 selector_mode 门禁失败后决策为 do_not_freeze_or_use_v4_8_1_runner；preflight_failure.json 明确 scientific_job_started_under_patch=false，故批次目录内不存在任何 development 结果文件。"
+    },
+    {
+      "unit": "formal_test（正式测试）结果",
+      "reason": "预登记与失败记录均声明 formal_test_locked=true 且 formal_test_accessed=false，从未运行。"
+    },
+    {
+      "unit": "engineering/implementation_freeze.json 与 engineering/engineering_receipt.json",
+      "reason": "runner 从未被冻结（运行流程在 validate_implementation_freeze 前的预检阶段即中止），工程目录内仅有 preflight_failure.json。对比后继批次 results_topo_v4_8_2_dev/engineering/ 存在 implementation_freeze.json 与 engineering_receipt.json，可确认该缺失是中止所致而非路径差异。"
+    },
+    {
+      "unit": "results_topo_v4_8_1_dev/engineering/implementation_freeze.json 对应的 patch runner 冻结哈希对象",
+      "reason": "tools/freeze_v4_8_1.py（预登记时列为 planned_patch_files_absent_at_receipt 的待实现文件）在本仓库中不存在，说明该补丁线未推进到冻结步骤。"
+    },
+    {
+      "unit": "v4.8.1 批次目录内的 episode 级原始记录（episode_*.json / per_run.csv / summary.json）",
+      "reason": "该批次未使用 development 结果根目录（合同 single_engineering_change.result_root_changed=false，科学输出会写回父批次根 results_topo_v4_8_dev），且科学 job 未启动，故目录内无 episode 级数据。"
+    }
+  ],
+  "notes": "口径与可信度说明。1) 目录实况：results_topo_v4_8_1_dev 下只有 2 个文件（preregistration_receipt.json 1476B、engineering/preflight_failure.json 1308B），没有任何 runs/ development/ 评估结果目录，不是被截断或遗漏，而是批次本身未产出科学结果。2) 批次性质：这是一个 preregistration 先于实现、且实现后仅改验收不改科学的工程补丁（patch_id=v4_8_1_accept_emitted_runtime_diagnostic_interface）；scientific_protocol_changed=false、formal_test_locked=true、h1_will_not_be_rerun=true，父科学实现冻结在 results_topo_v4_8_dev 的 freeze 哈希 5827ca63…。3) 中止原因（来自 preflight_failure.json）：补丁验收本身通过（patched_acceptance=true），但继承候选门禁失败，failed_gate_checks=[selector_mode]，observed_selector_mode=tie_only_replicated_joint_checkpoint_decoder 与期望的 joint_checkpoint_decoder 不一致，故 decision=do_not_freeze_or_use_v4_8_1_runner; preregister_v4_8_2_gate_interface_patch。后继批次 results_topo_v4_8_2_dev 已存在工程收据与实现冻结，佐证 v4.8.1 是被取代而非待续。4) 唯一的数值证据是 preflight.outcome_rates，它是父批次 H1（cross/seed 8）评估 summary 的逐位复述，已与 results_topo_v4_8_dev/…/H1__cand__cross__s8__p42f54135/paper_evaluation_detailed.json 的 summary 逐字段核对一致（episodes=12, success=0.6666666666666666, collision=0.3333333333333333, off_route=0.0, timeout=0.0, mean_return=0.3333333333333333）；因此本表只保留 1 行工程证据行，并在 source_keys/notes 中标注跨批次重复来源，正式口径请以 results_topo_v4_8_dev 为准。5) 未做任何推算或插补：凡本批次文件未承载的字段要么按其真实来源文件（父 H1 评估文件）填写并标注路径，要么留空；mean_return 之所以有值，是因为它取自该被复述的父评估文件（已注明），而非 v4.8.1 预检文件本身。6) 本表未把中止批次写成完成：批次顶层与行级 status 均为 aborted，evidence_kind 为 engineering。7) 未修改任何既有文件，本次只写入了 reports/all_experiments_summary_20260919/raw/results_topo_v4_8_1_dev.json。"
+}

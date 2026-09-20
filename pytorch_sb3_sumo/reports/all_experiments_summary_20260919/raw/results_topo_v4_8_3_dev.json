@@ -1,0 +1,73 @@
+{
+  "directory": "results_topo_v4_8_3_dev",
+  "phase": "topo v4.8.3 开发线（控制组次级种子验收工程补丁线）",
+  "purpose": "本批次是纯工程验收批次，不产出任何新的强化学习训练/评估单元。它修复 v4.8.2 冻结验收栈对 TemporalGraph 控制组（control）的误拒：控制组本来就没有次级校准轮，其 requested_raw_steps 不含 secondary_calibration_seed_start，但继承来的验收表却要求 calibration_seed_start + 100，导致已完成的晋级任务 P__tg__cross__s0__p42f54135 被以 'argument secondary_calibration_seed_start mismatch' 拒绝。v4.8.3 只对控制组补充一次只读归一化视图，其余冻结的溯源/选择器/模型/trace/回报估计/训练/评估/有限值检查全部原样运行，磁盘上的 JSON 从不改写；随后原地采纳该已完成晋级任务，并把后续任务排为 P__tg__cross__s1__p42f54135。批次内不包含 episode 级或 summary 级评估产物。",
+  "status": "engineering_only",
+  "protocol_files": [
+    "results_topo_v4_8_3_dev/preregistration_receipt.json",
+    "results_topo_v4_8_3_dev/engineering/implementation_freeze.json",
+    "results_topo_v4_8_3_dev/engineering/engineering_receipt.json",
+    "results_topo_v4_8_3_dev/engineering/promotion_adoption_preflight.json",
+    "results_topo_v4_8_3_dev/engineering/full_regression_state_exception.json",
+    "results_topo_v4_8_3_dev/engineering/logs/targeted_tests.xml",
+    "results_topo_v4_8_3_dev/engineering/logs/full_regression_final.xml",
+    "experiments/topo_scene_v4/experiment_contract_v4_8_3.yaml",
+    "experiments/topo_scene_v4/V4_8_3_CONTROL_SECONDARY_SEED_ACCEPTANCE_PATCH.md"
+  ],
+  "rows": [
+    {
+      "batch": "results_topo_v4_8_3_dev",
+      "phase": "topo v4.8.3 开发线（控制组次级种子验收工程补丁）",
+      "variant": "temporal_graph",
+      "candidate": "control",
+      "scenario": "cross",
+      "training_seed": 0,
+      "model_kind": "selected",
+      "checkpoint_step": null,
+      "episodes": 30,
+      "eval_seed_start": null,
+      "decoder": "other:parent_control",
+      "success_rate": 0.8333333333333334,
+      "collision_rate": 0.16666666666666666,
+      "timeout_rate": 0.0,
+      "mean_return": null,
+      "status": "completed",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v4_8_3_dev/engineering/promotion_adoption_preflight.json",
+      "source_keys": {
+        "episodes": "validation_episodes",
+        "success_rate": "validation_success_rate",
+        "collision_rate": "validation_collision_rate",
+        "timeout_rate": "validation_timeout_rate"
+      },
+      "notes": "重要口径警告：这一行不是本批次自己跑出来的实验，而是本批次对“已完成的晋级任务 P__tg__cross__s0__p42f54135”做原地采纳（adoption）时，在仅限本目录内的预检文件 promotion_adoption_preflight.json 中留下的验证集回显。该单元的训练/评估产物真实存在于批次目录之外：results_topo_v4_8_promotion/runs/P__tg__cross__s0__p42f54135/（final_evaluation.json 给出 episodes=30、success_rate=0.8333333333333334、collision_rate=0.16666666666666666、timeout_rate=0.0、mean_return=0.6666666666666666、evaluation_seed_start=92000）。同一 (variant, scenario, seed, model_kind) 单元若在 results_topo_v4_8_promotion 的审计中再次出现，属于跨批次重复来源，应只保留晋级批次那一份，本行仅作本目录证据的忠实转录。另外：evaluation_split 为 validation（非 formal test）。model_kind=selected 与 decoder=parent_control 并非取自本行源文件的字段，而是依据本批次自带协议 experiment_contract_v4_8_3.yaml 中 trigger.selector_mode = checkpoint_only_parent_control（控制组无次级校准臂、磁盘 JSON 不被改写）以及冻结验收要求 selected_model.zip 哈希一致推定，其中 decoder=parent_control 的显式字段值可在外批的 arguments.json/selector receipt 中查证。"
+    }
+  ],
+  "missing": [
+    {
+      "unit": "全部开发阶段训练/评估单元（variant × scenario × training_seed × model_kind）",
+      "reason": "本批次目录下不存在任何训练或评估产物：无 episode_*.json、无 summary.json、无 per_run.csv/json、无 checkpoint 目录、无 selected_model/final_model。全目录仅 9 个文件（preregistration_receipt.json + 4 个 engineering JSON + 4 个 JUnit XML），总计约 490KB，全部为工程证据。v4.8.3 明确为 acceptance-only、control-only 的工程补丁，未改变训练、回报估计、检查点、选择器、解码器、指标、阈值、种子、交通、结果根目录或科学门，因此本批次按定义不产生开发单元。"
+    },
+    {
+      "unit": "H1–H4 开发前置条件各单元的具体指标",
+      "reason": "批次只在 engineering/full_regression_state_exception.json 中断言 development_prerequisites = {H1:true, H2:true, H3:true, H4:true}、development_complete = true、development_decision = pass、next_job = null、formal_test_unlocked = false，这是布尔状态而非结果数值；H1–H4 的实际产物属于父级 v4.8 / v4.8.2 批次，不在本目录内。"
+    },
+    {
+      "unit": "trigger 单元的 mean_return / eval_seed_start / checkpoint_step",
+      "reason": "本批次内的源文件 promotion_adoption_preflight.json 只记录 validation_episodes 与四个率值（success / collision / off_route / timeout），没有 mean_return、没有评估种子起点、没有检查点步数，故一律置 null；其权威值在批次外的 results_topo_v4_8_promotion/runs/P__tg__cross__s0__p42f54135/（mean_return=0.6666666666666666、evaluation_seed_start=92000、checkpoint_audit 记录唯一检查点 raw_step=50000）。本批次不越界取数。"
+    },
+    {
+      "unit": "正式测试（formal test）证据",
+      "reason": "preregistration_receipt.json 与 implementation_freeze.json 均记录 formal_test_locked = true、formal_test_accessed = false；experiment_contract_v4_8_3.yaml 亦为 formal_test_locked: true。本批次不存在任何 formal_test 证据，且不得据此宣称正式测试已完成。"
+    },
+    {
+      "unit": "晋升阶段其余任务（如 P__tg__cross__s1__p42f54135、其余场景/种子）",
+      "reason": "批次只记录 next_promotion_job = P__tg__cross__s1__p42f54135 的排期，本目录内没有任何该任务的执行或评估证据；其运行产物应出现在 results_topo_v4_8_promotion/runs/ 下。"
+    },
+    {
+      "unit": "本批次自有的成功/中止状态判定所需的运行日志",
+      "reason": "目录内没有批次级 stdout/stderr 运行日志或 run receipt；可用的批次级结论仅来自 engineering_receipt.json（status: passed）与四个 XML 测试报告。"
+    }
+  ],
+  "notes": "一、目录性质与结论：results_topo_v4_8_3_dev 是一个纯工程验收批次（engineering-only），不是实验批次。全目录 9 个文件：preregistration_receipt.json、engineering/{engineering_receipt,implementation_freeze,promotion_adoption_preflight,full_regression_state_exception}.json、engineering/logs/{full_regression,full_regression_pass,full_regression_final,targeted_tests}.xml。没有任何 episode_*.json / summary / per_run / checkpoint / 模型权重，故不存在可按 (variant, scenario, seed, model_kind) 提取的开发评估指标，rows 本应为空。唯一例外是上文保留的 1 行：它是晋级触发任务的 30 回合验证集回显，物理上写在本目录的 promotion_adoption_preflight.json 里，但归属单元在批次之外。若下游口径要求“rows 只统计本批次自己产生的实验单元”，应把该行剔除并把本文件视为 rows=0、status=engineering_only。\n\n二、口径与证据分级：(1) 本批次所有证据都是工程/验收证据（evidence_kind=engineering），没有 development，更没有 formal_test。formal_test_accessed 在所有回执中均为 false，formal_test_locked 为 true，因此绝不能把本批次写成正式测试完成或解锁。(2) 保留的那一行是评估阶段（evaluation）指标、validation 划分，不是训练阶段指标；同文件里的 validation_off_route_rate=0.0 因不在要求的字段表内，仅在此备注，未单列字段。(3) engineering_receipt.json 的 status: passed 指的是“工程补丁验收通过”，不等于科学结论通过，也不等于实验完成。\n\n三、坑与异常：(1) 工程回归曾两次失败并被有意保留为证据——首次整套回归 full_regression.xml 出现 50 个 setup error，原因是 pytest 试图在不可访问的 C:/Users/hewenxiang/AppData/Local/Temp/pytest-of-hewenxiang 下创建 tmp_path（沙箱不可达），另有 1 个失败是 v4.8.2 冻结的 H1 采纳测试的历史状态断言（断言“开发未完成、下一个任务是 H2”），而 H1–H4 实际已全部完成并通过，该断言已不可能为真。第二次 full_regression_pass.xml 把 basetemp 移到结果树内，清除了权限错误（354 通过），但 3 个建文件测试触发 Windows 路径长度错误 206。最终 full_regression_final.xml 使用工作区根的短路径，357 tests / 0 failures / 0 errors，其做法是取消选择（deselect）那 1 个过时状态快照 test_v4_8_2_h1_preflight_reproduces_both_bugs_and_adopts_in_place，并新增替代测试 test_v4_8_3_completed_development_supersedes_h1_only_snapshot。文档声明未删除任何科学/机制测试、未降低阈值、未减少执行测试数（executed_test_count_not_reduced: true）。审计应把这 3 份 XML 理解为“2 份保留的失败证据 + 1 份最终通过证据”，不要把 full_regression.xml 的 50 errors 误读为当前代码健康度。(2) 目录内存在 engineering/pytest_tmp_full_pass_20260824T1000 子目录，因 Windows 权限被拒绝而无法枚举；从命名与上文可知它是 pytest 的 basetemp 临时目录，不是结果产物，未纳入取数。(3) 跨批次重复风险：保留行的同一单元在 results_topo_v4_8_promotion 中另有权威产物（selected_model.zip / final_evaluation.json / selector/receipt.json 等 13 个必查工件），若两个批次都被审计，必须去重并保留晋级批次那一份。\n\n四、可信度：高。本批次自校验强度较大——preregistration_receipt 在补丁实现之前封存且声明 planned_patch_files_absent_at_receipt 三项文件当时不存在；implementation_freeze 给出 7 个补丁文件的 SHA256 与 13 个晋级工件的 SHA256，并声明 promotion_job_rerun=false、promotion_artifacts_modified=false、source_json_rewritten=false；promotion_adoption_preflight 同时证明“冻结 v4.8.2 拒绝可复现”与“打补丁后同样工件被接受”，并证明非空控制组变体被拒、空候选变体被拒。保留行的数值即来自该预检文件，未经推算或插补。\n\n五、本文件为只读审计产物，未修改、删除或移动任何既有文件；唯一写入路径即本 JSON。"
+}

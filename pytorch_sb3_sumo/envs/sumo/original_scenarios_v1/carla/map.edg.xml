@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <edge id="ego_approach" from="start" to="bend" priority="4" numLanes="1" speed="10.0" shape="0,-64.5 -8,-64.58 -16,-64.66 -24,-64.74 -32,-64.83 -40.6,-63.1 -46.5,-56.4 -50.55,-50"/>
+    <edge id="north_lower" from="bend" to="cross" priority="4" numLanes="2" speed="10.0" spreadType="center"/>
+    <edge id="north_upper" from="cross" to="split" priority="4" numLanes="2" speed="10.0" spreadType="center"/>
+    <edge id="goal_out" from="split" to="goal" priority="4" numLanes="1" speed="10.0" shape="-52.30,-25 -52.30,-3"/>
+    <edge id="wrong_out" from="split" to="wrong" priority="2" numLanes="1" speed="10.0" shape="-48.80,-25 -48.80,-3"/>
+    <edge id="west_in" from="west" to="cross" priority="3" numLanes="1" speed="10.0"/>
+    <edge id="west_out" from="cross" to="west" priority="3" numLanes="1" speed="10.0"/>
+    <edge id="east_in" from="east" to="cross" priority="3" numLanes="1" speed="10.0"/>
+    <edge id="east_out" from="cross" to="east" priority="3" numLanes="1" speed="10.0"/>
+</edges>

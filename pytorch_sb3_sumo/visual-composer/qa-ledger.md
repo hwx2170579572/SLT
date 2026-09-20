@@ -1,0 +1,19 @@
+# Figure QA ledger
+
+| Issue | Artifact | Severity | Fix | Owner | Status |
+| --- | --- | --- | --- | --- | --- |
+| Reference-style mean + band requested | `outputs/iv2e3m100x100_training_curves_v2/success_curves_by_scenario.*` | Medium | Added one scenario panel per column, mean line, translucent rolling SE band, and yellow panel labels | ccf-visual-composer | Pass |
+| One seed per method×scenario; cross-seed CI unavailable | v2 composite and individual panels | High | Label band as descriptive rolling SE (SD/√n) within training seed 0; do not call it a confidence interval | ccf-visual-composer | Pass |
+| Long method names risk legend clipping | composite and individual panels | Low | Use compact legend labels (`MST+SLT`, `TemporalGraph`, `v4.8`) and keep full protocol labels in the manifest | ccf-visual-composer | Pass |
+| Four parent runs lack TensorBoard event files | source audit | Medium | Use the consistently present `train_monitor.csv` logs for all nine panels; record event coverage (5/9) in the manifest | ccf-visual-composer | Pass |
+| Raster/vector render quality | all v2 PNG/SVG outputs | Medium | Rendered composite and individual PNGs with no clipping/overlap; exported editable SVGs | ccf-visual-composer | Pass |
+| User requested time-step x-axis and EMA smoothing | `outputs/iv2e3m100x100_training_curves_v3` | Medium | Switched to cumulative raw simulation time steps; 2,000-step rolling aggregation; EMA α=0.999 per time step; sampled every 100 steps for rendering | ccf-visual-composer | Pass |
+| Source success labels are episode-level | v3 time-step transform | High | Held each logged episode outcome over its logged raw steps and documented this descriptive proxy in the contract/manifest | ccf-visual-composer | Pass |
+| Focal v4.8 comparison could hide unfavorable intervals | `outputs/iv2e3m100x100_training_curves_v4_focal` | High | Retained full time range, both baselines, and a signed `v4.8 − best baseline` row with positive/negative shading; no interval selection | ccf-visual-composer | Pass |
+| Pointwise margin alignment | v4 focal aligned data | Medium | Used the intersection of the three methods' existing v3 time-step samples per scenario; no interpolation | ccf-visual-composer | Pass |
+| User requested scene-specific episode lengths and a 20-episode window | `outputs/iv2e3m100x100_training_curves_v5_episode20_ema999` | High | Recomputed from unchanged parent-v2 monitor logs; each method×scenario uses its observed per-episode raw steps, exactly 20 success slots, and explicit zero padding for the missing prefix | ccf-visual-composer | Pass |
+| EMA definition and x-axis traceability | v5 composite and aligned CSV | Medium | Applied EMA α=0.999 at every raw simulation step from an explicit zero state at t=0; sampled every 100 steps only for rendering and documented the recurrence | ccf-visual-composer | Pass |
+| Focal comparison could overstate v4.8 | v5 top/bottom dashboard | High | Kept all three methods, full common support, negative margins, and scene summaries; no selective interval or data modification | ccf-visual-composer | Pass |
+| Render-visible QA | v5 PNG/SVG exports | Medium | Inspected composite and Cross per-scenario renders; labels, legends, bands, zero line, and 0–50,000 time-step frame are visible without clipping | ccf-visual-composer | Pass |
+| Path privacy in new artifact metadata | v5 manifest/README/contract | Low | Stored repository-relative provenance paths; path privacy checker passed with no reported leaks | ccf-visual-composer | Pass |
+| Complete 3-method × 3-scenario × 100-seed × 100-episode matrix | `outputs/iv2e3m100x100_complete_systematic_matrix_v1` | High | Reconciled all 900 blocks to 90,000 episode records; exported three scene CSVs plus workbook summaries; no retraining/fabrication; rendered sheet previews and formula scan pass | ccf-visual-composer | Pass |

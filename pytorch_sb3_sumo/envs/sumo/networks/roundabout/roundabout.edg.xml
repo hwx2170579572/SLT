@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <edge id="north_in" from="N" to="RN" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="north_out" from="RN" to="N" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="east_in" from="E" to="RE" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="east_out" from="RE" to="E" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="south_in" from="S" to="RS" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="south_out" from="RS" to="S" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="west_in" from="W" to="RW" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="west_out" from="RW" to="W" priority="2" numLanes="2" speed="11.11"/>
+    <edge id="ring_nw" from="RN" to="RW" priority="5" numLanes="2" speed="8.33" shape="0,30 -21.21,21.21 -30,0"/>
+    <edge id="ring_ws" from="RW" to="RS" priority="5" numLanes="2" speed="8.33" shape="-30,0 -21.21,-21.21 0,-30"/>
+    <edge id="ring_se" from="RS" to="RE" priority="5" numLanes="2" speed="8.33" shape="0,-30 21.21,-21.21 30,0"/>
+    <edge id="ring_en" from="RE" to="RN" priority="5" numLanes="2" speed="8.33" shape="30,0 21.21,21.21 0,30"/>
+</edges>

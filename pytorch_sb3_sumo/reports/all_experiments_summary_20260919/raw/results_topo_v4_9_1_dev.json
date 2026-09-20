@@ -1,0 +1,42 @@
+{
+  "directory": "results_topo_v4_9_1_dev",
+  "phase": "topo v4.9.1 开发线（只读 selector 元数据验收补丁线，parent = topo v4.9 开发线）",
+  "purpose": "本批次不是训练/评估批次，而是 topo v4.9 之上的一次工程验收补丁批次：因父批次 v4.9 的结构化验收失败（reason: 'parent structural acceptance failed: metadata selector partition drifted'），本批次以只读归一化视图（read_only_normalized_view=true）从既有 v4.9 证据中派生 selector 元数据（checkpoint_calibration_partition=train、validation_used_for_checkpoint_selection=false），从而在不重跑、不修改已完成 run 产物的前提下重新通过 M1/M2 的验收。它只完成工程冻结、定向测试与全量回归，并规划后续 M3/M4 与 12 个 promotion 作业；正式测试处于锁定状态（formal_test_locked=true, accessed=false）。",
+  "status": "engineering_only",
+  "protocol_files": [
+    "results_topo_v4_9_1_dev/preregistration_receipt.json",
+    "results_topo_v4_9_1_dev/engineering/implementation_freeze.json",
+    "results_topo_v4_9_1_dev/engineering/acceptance_preflight.json",
+    "results_topo_v4_9_1_dev/engineering/engineering_receipt.json",
+    "results_topo_v4_9_1_dev/engineering/logs/targeted_tests.xml",
+    "results_topo_v4_9_1_dev/engineering/logs/full_regression_current_state.xml"
+  ],
+  "rows": [],
+  "missing": [
+    {
+      "unit": "M1 / variant=selected_v4_candidate / scenario=cross / training_seed=10 / model_kind=selected / decoder=target_critic（20 回合，evaluation_split=validation，eval_seed_start=141000）",
+      "reason": "该单元已完成（accepted=true，kind=fresh_learned_collision_model），但其真实评估数值不在本批次目录内。数值物理位置为父批次 results_topo_v4_9_dev/development/runs/M1__cand__cross__s10__p4a8f39b7/final_evaluation.json，键路径为 episodes / mean_return / std_return / success_rate / collision_rate / off_route_rate / timeout_rate。本批次只做只读采纳（completed_jobs_adopted_without_rerun=[M1,M2]），engineering_receipt.json 与 acceptance_preflight.json 仅登记该 run 各文件的 sha256（completed_run_artifact_hashes_before 与 _after 完全一致），不含任何指标数值。按'数值只能来自本批次目录内真实文件'的口径，本批次无可登记行；如需该单元数值，应到父批次文件取值，不得记入 results_topo_v4_9_1_dev。"
+    },
+    {
+      "unit": "M2 / variant=selected_v4_candidate / scenario=cross / training_seed=11 / model_kind=selected / decoder=target_critic（20 回合，evaluation_split=validation）",
+      "reason": "与 M1 同因：单元已完成（accepted=true），数值物理位置为父批次 results_topo_v4_9_dev/development/runs/M2__cand__cross__s11__p4a8f39b7/final_evaluation.json，键路径同上。本批次仅以哈希方式登记其产物，未复制数值。注意 M1 与 M2 的 method_metadata.json 哈希相同（143339280e2256f8fa539546c22e8b461a5d05668f9aebe3faa0b03ef11cf6d6），属共享元数据，不是重复来源。"
+    },
+    {
+      "unit": "M3 / scenario=roundabout(ram) / training_seed=12 / protocol_tag=4a8f39b7（中断后重跑单元）",
+      "reason": "M3 在本批次中未产出任何结果。父批次的首次尝试已被中止并归档为 results_topo_v4_9_dev/development/interrupted_attempts/M3__cand__ram__s12__p4a8f39b7__attempt1（该目录在父批次内，不在本批次），interruption_receipt sha256=6e7cae33...，且 interrupted_attempt_counted_for_gate=false。本批次 recovery 计划为 'rerun_M3_from_scratch_with_identical_frozen_settings: true'，但本批次目录内不存在任何 M3 的 run 目录或 stage results，故本批次对该单元只能标记为未执行/未产出（部分完成风险：不得当作 completed）。"
+    },
+    {
+      "unit": "M4 / scenario=carla / training_seed=13 / protocol_tag=4a8f39b7",
+      "reason": "M4 在 engineering_receipt.json 的 next_jobs 中列出（next_jobs=[M3,M4]），本批次目录内无任何 M4 执行产物或数值，属未启动。"
+    },
+    {
+      "unit": "正式测试（formal test）阶段证据",
+      "reason": "contract 明确 formal_test.locked=true、formal_test.accessed=false、promotion.formal_stage_launched=false，engineering_receipt.json 亦记录 formal_test_locked=true、formal_test_accessed=false。本批次无任何 formal_test 证据；promotion 规划的 12 个作业全部未启动。故不得在此登记任何正式测试指标，也不得与开发证据混用。"
+    },
+    {
+      "unit": "本批次自有的逐回合/逐 run 数值文件（episode_*.json、summary.json、per_run.csv、per_run.json、final_evaluation.json 等）",
+      "reason": "全目录递归仅 6 个文件（preregistration_receipt.json、engineering/implementation_freeze.json、engineering/acceptance_preflight.json、engineering/engineering_receipt.json、engineering/logs/targeted_tests.xml、engineering/logs/full_regression_current_state.xml），无任何训练或评估 rollout 产物、无 checkpoint、无 summary/per_run 聚合文件，因此不存在可抽取的 success_rate / collision_rate / timeout_rate / mean_return 数值，rows 必然为空。"
+    }
+  ],
+  "notes": "口径与可信度说明：(1) 批次性质——results_topo_v4_9_1_dev 是纯工程补丁/验收批次，不是训练或评估批次。它只包含 6 个工程与协议文件（合计约 102KB），无 episode 级或 run 级数值文件，因此 rows=[] ，status=engineering_only（既不能写成 completed，也不能写成 aborted）。(2) 唯一'结果类'内容是两个 JUnit XML：engineering/logs/targeted_tests.xml（8 项，0 失败/0 错误/0 跳过，用时 6.294s，均为 test_v4_9_1_* 补丁自身的验收测试）与 engineering/logs/full_regression_current_state.xml（432 项，0 失败/0 错误/0 跳过，用时 148.493s）。它们是测试证据，不含任何 RL 指标数值；其中测试名里出现的 success_rate 等字样只是历史测试用例名，切勿当作实验结果指标。(3) 关键坑——M1/M2 的评估数值确实存在，但物理上属于父批次 results_topo_v4_9_dev，本批次只做只读采纳（adopted without rerun、completed_run_artifacts_modified=false、completed_jobs_rerun=false）。本文件严格遵守'数值只来自本批次目录'，未把这些父批次数值写入 rows；如需 M1/M2 数值，请到 results_topo_v4_9_dev/development/runs/<run>/final_evaluation.json 单独抽取并归到父批次名下，避免把父批次结果错记到 v4_9_1。(4) 中止/部分完成的区分——M3 的首次尝试是 interrupted/aborted（已归档、且明确不计入 gate），本批次只规划重跑但未执行；M4 与 12 个 promotion 作业未启动；正式测试全程锁定未访问。因此本批次对 M3/M4 只能记 missing，绝不能写成已完成。(5) 完整性校验——已实测并全部通过：implementation_freeze.json、logs/targeted_tests.xml、logs/full_regression_current_state.xml、acceptance_preflight.json、preregistration_receipt.json 五个文件的 sha256 与其上位 receipt 中登记的值逐一吻合；acceptance_preflight.json 中 M1/M2 的 completed_run_artifact_hashes_before 与 _after 完全相同，佐证'未修改既有产物'的声明。(6) 本批次声明的科学性变更全部为 false（scientific_protocol_changed/model_changed/training_changed/selection_changed/evaluation_changed/gate_thresholds_changed 均为 false），补丁仅新增一个只读派生视图，可信度较高；但注意 acceptance_preflight.json 记录补丁前 M1/M2 的 accepted=false（reason=metadata selector partition drifted）、补丁后 accepted=true，即本批次的'M1/M2 通过'是元数据归一化后重新判定所得，不是新增实验证据。(7) 本文件为只读审计产物，未修改/删除/移动批次目录内任何既有文件。"
+}

@@ -1,0 +1,1051 @@
+{
+  "diagnostic_only": true,
+  "weights_updated": false,
+  "model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\results_sb3_sumo_paper\\paper_baselines_sac_ppo_v14_frozen\\paper__sac__cross__seed0\\final_model.zip",
+  "algorithm": "sac",
+  "scenario": "cross",
+  "traffic_protocol": "source_all",
+  "episode_limit_profile": "source",
+  "evaluation_seed_start": 10000,
+  "episodes": 3,
+  "environment_class": "envs.sumo.paper_env.PaperSumoSceneEnv",
+  "max_episode_steps": 600,
+  "model_environment_space_contract": {
+    "model_environment_spaces_match": true,
+    "environment_observation_space": {
+      "type": "gymnasium.spaces.dict.Dict",
+      "shape": null,
+      "dtype": null,
+      "spaces": {
+        "state_lstm": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10,
+            30
+          ],
+          "dtype": "float32",
+          "low_sha256": "70F2858B3D6DF76B0076A84D9D0642C3B309F85B9CBC45A5F196DD520A49A5C1",
+          "high_sha256": "4E84E0D6B17EBAC0F8F9B2E555AE43EF259B1688CE69AD824E743368704C636B",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        },
+        "state_lstm_mask": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10
+          ],
+          "dtype": "float32",
+          "low_sha256": "2C34CE1DF23B838C5ABF2A7F6437CCA3D3067ED509FF25F11DF6B11B582B51EB",
+          "high_sha256": "00E1A993EFD5074E1FC9C7FF6FC46A151EE4ED93935D05EE2AB229DED34975C1",
+          "low_min_finite": 0.0,
+          "low_max_finite": 0.0,
+          "high_min_finite": 1.0,
+          "high_max_finite": 1.0
+        }
+      }
+    },
+    "model_observation_space": {
+      "type": "gymnasium.spaces.dict.Dict",
+      "shape": null,
+      "dtype": null,
+      "spaces": {
+        "state_lstm": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10,
+            30
+          ],
+          "dtype": "float32",
+          "low_sha256": "70F2858B3D6DF76B0076A84D9D0642C3B309F85B9CBC45A5F196DD520A49A5C1",
+          "high_sha256": "4E84E0D6B17EBAC0F8F9B2E555AE43EF259B1688CE69AD824E743368704C636B",
+          "low_min_finite": -1000.0,
+          "low_max_finite": -1000.0,
+          "high_min_finite": 1000.0,
+          "high_max_finite": 1000.0
+        },
+        "state_lstm_mask": {
+          "type": "gymnasium.spaces.box.Box",
+          "shape": [
+            10
+          ],
+          "dtype": "float32",
+          "low_sha256": "2C34CE1DF23B838C5ABF2A7F6437CCA3D3067ED509FF25F11DF6B11B582B51EB",
+          "high_sha256": "00E1A993EFD5074E1FC9C7FF6FC46A151EE4ED93935D05EE2AB229DED34975C1",
+          "low_min_finite": 0.0,
+          "low_max_finite": 0.0,
+          "high_min_finite": 1.0,
+          "high_max_finite": 1.0
+        }
+      }
+    },
+    "environment_action_space": {
+      "type": "gymnasium.spaces.box.Box",
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low_sha256": "7C8E9E654585093FE245E490010889AF419E1023882A4110DDFC3D53CE48721E",
+      "high_sha256": "80B8FD6D60FA85FD14A38B5295CB92ABD80DFEC5CA406C9F969609A79D36809D",
+      "low_min_finite": -1.0,
+      "low_max_finite": -1.0,
+      "high_min_finite": 1.0,
+      "high_max_finite": 1.0
+    },
+    "model_action_space": {
+      "type": "gymnasium.spaces.box.Box",
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low_sha256": "7C8E9E654585093FE245E490010889AF419E1023882A4110DDFC3D53CE48721E",
+      "high_sha256": "80B8FD6D60FA85FD14A38B5295CB92ABD80DFEC5CA406C9F969609A79D36809D",
+      "low_min_finite": -1.0,
+      "low_max_finite": -1.0,
+      "high_min_finite": 1.0,
+      "high_max_finite": 1.0
+    }
+  },
+  "episode_reports": [
+    {
+      "episode": 0,
+      "seed": 10000,
+      "traffic_variant": "traffic_351.rou.xml",
+      "success": false,
+      "collision": false,
+      "off_route": false,
+      "timeout": true,
+      "raw_steps": 600,
+      "decision_steps": 200,
+      "initial_state": {
+        "speed_mps": 0.0,
+        "distance_m": 0.0,
+        "road_id": "gneE17",
+        "route_index": 0,
+        "lane_index": 0,
+        "lane_position_m": 10.0,
+        "position_xy": [
+          18.684507422402156,
+          66.3997705802969
+        ]
+      },
+      "final_state": {
+        "speed_mps": 0.10502815246582031,
+        "distance_m": 7.431485742330551,
+        "road_id": "gneE17",
+        "route_index": 0,
+        "lane_index": 0,
+        "lane_position_m": 17.43148574233055,
+        "position_xy": [
+          24.826264330098823,
+          62.21567361443954
+        ]
+      },
+      "distance_travelled_m": 7.431485742330551,
+      "requested_speed_mps": {
+        "min": 0.07430523633956909,
+        "mean": 0.12394561916589737,
+        "max": 0.2024206519126892
+      },
+      "effective_target_speed_mps": {
+        "min": 0.07430523633956909,
+        "mean": 0.12394561916589737,
+        "max": 0.2024206519126892
+      },
+      "actual_speed_mps": {
+        "min": 0.07430523633956909,
+        "mean": 0.12394561916589737,
+        "max": 0.2024206519126892
+      },
+      "lane_command_counts": {
+        "-1": 38,
+        "0": 162
+      },
+      "road_decision_counts": {
+        "gneE17": 200
+      },
+      "sampled_trace": [
+        {
+          "decision": 0,
+          "raw_steps": 3,
+          "action": [
+            -0.9628074765205383,
+            -0.5379757285118103
+          ],
+          "requested_speed_mps": 0.18596261739730835,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.18596261739730835,
+          "vehicle_state": {
+            "speed_mps": 0.18596261739730835,
+            "distance_m": 0.04649065434932709,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 10.046490654349327,
+            "position_xy": [
+              18.722929658196392,
+              66.37359527531102
+            ]
+          }
+        },
+        {
+          "decision": 20,
+          "raw_steps": 63,
+          "action": [
+            -0.9791749119758606,
+            -0.2978583574295044
+          ],
+          "requested_speed_mps": 0.10412544012069702,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.10412544012069702,
+          "vehicle_state": {
+            "speed_mps": 0.10412544012069702,
+            "distance_m": 0.7303011268377304,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 10.73030112683773,
+            "position_xy": [
+              19.288065330736067,
+              65.98859429134049
+            ]
+          }
+        },
+        {
+          "decision": 40,
+          "raw_steps": 123,
+          "action": [
+            -0.9731365442276001,
+            -0.09692192077636719
+          ],
+          "requested_speed_mps": 0.1343172788619995,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.1343172788619995,
+          "vehicle_state": {
+            "speed_mps": 0.1343172788619995,
+            "distance_m": 1.4896398186683655,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 11.489639818668365,
+            "position_xy": [
+              19.91562135621121,
+              65.56106918711411
+            ]
+          }
+        },
+        {
+          "decision": 60,
+          "raw_steps": 183,
+          "action": [
+            -0.9724088311195374,
+            -0.005992710590362549
+          ],
+          "requested_speed_mps": 0.13795584440231323,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.13795584440231323,
+          "vehicle_state": {
+            "speed_mps": 0.13795584440231323,
+            "distance_m": 2.2742652744054794,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 12.27426527440548,
+            "position_xy": [
+              20.56407564648572,
+              65.1193070546802
+            ]
+          }
+        },
+        {
+          "decision": 80,
+          "raw_steps": 243,
+          "action": [
+            -0.9693764448165894,
+            0.07867217063903809
+          ],
+          "requested_speed_mps": 0.15311777591705322,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.15311777591705322,
+          "vehicle_state": {
+            "speed_mps": 0.15311777591705322,
+            "distance_m": 3.1176183819770813,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 13.117618381977081,
+            "position_xy": [
+              21.26106544820886,
+              64.64447990693544
+            ]
+          }
+        },
+        {
+          "decision": 100,
+          "raw_steps": 303,
+          "action": [
+            -0.9721229672431946,
+            -0.034771084785461426
+          ],
+          "requested_speed_mps": 0.1393851637840271,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.1393851637840271,
+          "vehicle_state": {
+            "speed_mps": 0.1393851637840271,
+            "distance_m": 3.94946052134037,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 13.94946052134037,
+            "position_xy": [
+              21.94854200171234,
+              64.17613369837625
+            ]
+          }
+        },
+        {
+          "decision": 120,
+          "raw_steps": 363,
+          "action": [
+            -0.9702220559120178,
+            -0.009954571723937988
+          ],
+          "requested_speed_mps": 0.1488897204399109,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.1488897204399109,
+          "vehicle_state": {
+            "speed_mps": 0.1488897204399109,
+            "distance_m": 4.7831757217645645,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 14.783175721764565,
+            "position_xy": [
+              22.637566547919864,
+              63.706732913468045
+            ]
+          }
+        },
+        {
+          "decision": 140,
+          "raw_steps": 423,
+          "action": [
+            -0.9652499556541443,
+            -0.09571754932403564
+          ],
+          "requested_speed_mps": 0.17375022172927856,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.17375022172927856,
+          "vehicle_state": {
+            "speed_mps": 0.17375022172927856,
+            "distance_m": 5.6375003308057785,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 15.637500330805779,
+            "position_xy": [
+              23.343623755176058,
+              63.22572855868803
+            ]
+          }
+        },
+        {
+          "decision": 160,
+          "raw_steps": 483,
+          "action": [
+            -0.9788476824760437,
+            -0.3141437768936157
+          ],
+          "requested_speed_mps": 0.1057615876197815,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.1057615876197815,
+          "vehicle_state": {
+            "speed_mps": 0.1057615876197815,
+            "distance_m": 6.296881899237633,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 16.296881899237633,
+            "position_xy": [
+              23.88857014182608,
+              62.85448160814853
+            ]
+          }
+        },
+        {
+          "decision": 180,
+          "raw_steps": 543,
+          "action": [
+            -0.981842577457428,
+            -0.40480804443359375
+          ],
+          "requested_speed_mps": 0.09078711271286011,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.09078711271286011,
+          "vehicle_state": {
+            "speed_mps": 0.09078711271286011,
+            "distance_m": 6.882345303893089,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 16.88234530389309,
+            "position_xy": [
+              24.372426807158064,
+              62.52485227964346
+            ]
+          }
+        },
+        {
+          "decision": 199,
+          "raw_steps": 600,
+          "action": [
+            -0.9789943695068359,
+            -0.31443917751312256
+          ],
+          "requested_speed_mps": 0.10502815246582031,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.10502815246582031,
+          "vehicle_state": {
+            "speed_mps": 0.10502815246582031,
+            "distance_m": 7.431485742330551,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 17.43148574233055,
+            "position_xy": [
+              24.826264330098823,
+              62.21567361443954
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "episode": 1,
+      "seed": 10001,
+      "traffic_variant": "traffic_370.rou.xml",
+      "success": false,
+      "collision": false,
+      "off_route": false,
+      "timeout": true,
+      "raw_steps": 600,
+      "decision_steps": 200,
+      "initial_state": {
+        "speed_mps": 0.0,
+        "distance_m": 0.0,
+        "road_id": "gneE17",
+        "route_index": 0,
+        "lane_index": 0,
+        "lane_position_m": 10.0,
+        "position_xy": [
+          18.684507422402156,
+          66.3997705802969
+        ]
+      },
+      "final_state": {
+        "speed_mps": 0.09719491004943848,
+        "distance_m": 7.044590204954147,
+        "road_id": "gneE17",
+        "route_index": 0,
+        "lane_index": 0,
+        "lane_position_m": 17.044590204954147,
+        "position_xy": [
+          24.506514226064667,
+          62.43350467812838
+        ]
+      },
+      "distance_travelled_m": 7.044590204954147,
+      "requested_speed_mps": {
+        "min": 0.04943937063217163,
+        "mean": 0.11749083250761032,
+        "max": 0.2627536654472351
+      },
+      "effective_target_speed_mps": {
+        "min": 0.04943937063217163,
+        "mean": 0.11749083250761032,
+        "max": 0.2627536654472351
+      },
+      "actual_speed_mps": {
+        "min": 0.04943937063217163,
+        "mean": 0.11749083250761032,
+        "max": 0.2627536654472351
+      },
+      "lane_command_counts": {
+        "-1": 57,
+        "0": 143
+      },
+      "road_decision_counts": {
+        "gneE17": 200
+      },
+      "sampled_trace": [
+        {
+          "decision": 0,
+          "raw_steps": 3,
+          "action": [
+            -0.9677690863609314,
+            -0.5368502140045166
+          ],
+          "requested_speed_mps": 0.16115456819534302,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.16115456819534302,
+          "vehicle_state": {
+            "speed_mps": 0.16115456819534302,
+            "distance_m": 0.040288642048835754,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 10.040288642048836,
+            "position_xy": [
+              18.71780400052727,
+              66.37708715052257
+            ]
+          }
+        },
+        {
+          "decision": 20,
+          "raw_steps": 63,
+          "action": [
+            -0.9717956781387329,
+            -0.20491844415664673
+          ],
+          "requested_speed_mps": 0.14102160930633545,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.14102160930633545,
+          "vehicle_state": {
+            "speed_mps": 0.14102160930633545,
+            "distance_m": 0.6681836843490601,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 10.66818368434906,
+            "position_xy": [
+              19.23672832428524,
+              66.02356783655813
+            ]
+          }
+        },
+        {
+          "decision": 40,
+          "raw_steps": 123,
+          "action": [
+            -0.9816734194755554,
+            -0.18970996141433716
+          ],
+          "requested_speed_mps": 0.0916329026222229,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.0916329026222229,
+          "vehicle_state": {
+            "speed_mps": 0.0916329026222229,
+            "distance_m": 1.4033269435167313,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 11.403326943516731,
+            "position_xy": [
+              19.844288016477257,
+              65.6096653160119
+            ]
+          }
+        },
+        {
+          "decision": 60,
+          "raw_steps": 183,
+          "action": [
+            -0.9688221216201782,
+            -0.10629957914352417
+          ],
+          "requested_speed_mps": 0.1558893918991089,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.1558893918991089,
+          "vehicle_state": {
+            "speed_mps": 0.1558893918991089,
+            "distance_m": 2.1397651731967926,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 12.139765173196793,
+            "position_xy": [
+              20.452917938010415,
+              65.19503369735803
+            ]
+          }
+        },
+        {
+          "decision": 80,
+          "raw_steps": 243,
+          "action": [
+            -0.9742161631584167,
+            -0.09803742170333862
+          ],
+          "requested_speed_mps": 0.12891918420791626,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.12891918420791626,
+          "vehicle_state": {
+            "speed_mps": 0.12891918420791626,
+            "distance_m": 2.8246047347784042,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 12.824604734778404,
+            "position_xy": [
+              21.018904101995,
+              64.80945331261869
+            ]
+          }
+        },
+        {
+          "decision": 100,
+          "raw_steps": 303,
+          "action": [
+            -0.9762471914291382,
+            -0.1927700638771057
+          ],
+          "requested_speed_mps": 0.11876404285430908,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.11876404285430908,
+          "vehicle_state": {
+            "speed_mps": 0.11876404285430908,
+            "distance_m": 3.594472050666809,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 13.594472050666809,
+            "position_xy": [
+              21.655161516637456,
+              64.37600035150041
+            ]
+          }
+        },
+        {
+          "decision": 120,
+          "raw_steps": 363,
+          "action": [
+            -0.9678019285202026,
+            0.23560583591461182
+          ],
+          "requested_speed_mps": 0.16099035739898682,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.16099035739898682,
+          "vehicle_state": {
+            "speed_mps": 0.16099035739898682,
+            "distance_m": 4.63640433549881,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 14.63640433549881,
+            "position_xy": [
+              22.516267226800906,
+              63.78936857116045
+            ]
+          }
+        },
+        {
+          "decision": 140,
+          "raw_steps": 423,
+          "action": [
+            -0.981018602848053,
+            -0.37728095054626465
+          ],
+          "requested_speed_mps": 0.09490698575973511,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.09490698575973511,
+          "vehicle_state": {
+            "speed_mps": 0.09490698575973511,
+            "distance_m": 5.297118201851845,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 15.297118201851845,
+            "position_xy": [
+              23.062314692056773,
+              63.41737150632579
+            ]
+          }
+        },
+        {
+          "decision": 160,
+          "raw_steps": 483,
+          "action": [
+            -0.9812547564506531,
+            -0.3900498151779175
+          ],
+          "requested_speed_mps": 0.09372621774673462,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.09372621774673462,
+          "vehicle_state": {
+            "speed_mps": 0.09372621774673462,
+            "distance_m": 5.882926985621452,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 15.882926985621452,
+            "position_xy": [
+              23.546456796214002,
+              63.08754772145578
+            ]
+          }
+        },
+        {
+          "decision": 180,
+          "raw_steps": 543,
+          "action": [
+            -0.9789394736289978,
+            -0.317588746547699
+          ],
+          "requested_speed_mps": 0.10530263185501099,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.10530263185501099,
+          "vehicle_state": {
+            "speed_mps": 0.10530263185501099,
+            "distance_m": 6.479233726859093,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 16.479233726859093,
+            "position_xy": [
+              24.039274945112695,
+              62.75181334568743
+            ]
+          }
+        },
+        {
+          "decision": 199,
+          "raw_steps": 600,
+          "action": [
+            -0.9805610179901123,
+            -0.3065440058708191
+          ],
+          "requested_speed_mps": 0.09719491004943848,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.09719491004943848,
+          "vehicle_state": {
+            "speed_mps": 0.09719491004943848,
+            "distance_m": 7.044590204954147,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 17.044590204954147,
+            "position_xy": [
+              24.506514226064667,
+              62.43350467812838
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "episode": 2,
+      "seed": 10002,
+      "traffic_variant": "traffic_371.rou.xml",
+      "success": false,
+      "collision": false,
+      "off_route": false,
+      "timeout": true,
+      "raw_steps": 600,
+      "decision_steps": 200,
+      "initial_state": {
+        "speed_mps": 0.0,
+        "distance_m": 0.0,
+        "road_id": "gneE17",
+        "route_index": 0,
+        "lane_index": 0,
+        "lane_position_m": 10.0,
+        "position_xy": [
+          18.684507422402156,
+          66.3997705802969
+        ]
+      },
+      "final_state": {
+        "speed_mps": 0.10166078805923462,
+        "distance_m": 7.304788663983345,
+        "road_id": "gneE17",
+        "route_index": 0,
+        "lane_index": 0,
+        "lane_position_m": 17.304788663983345,
+        "position_xy": [
+          24.72155543565911,
+          62.28700697622962
+        ]
+      },
+      "distance_travelled_m": 7.304788663983345,
+      "requested_speed_mps": {
+        "min": 0.06620079278945923,
+        "mean": 0.12183119505643844,
+        "max": 0.27145951986312866
+      },
+      "effective_target_speed_mps": {
+        "min": 0.06620079278945923,
+        "mean": 0.12183119505643844,
+        "max": 0.27145951986312866
+      },
+      "actual_speed_mps": {
+        "min": 0.06620079278945923,
+        "mean": 0.12183119505643844,
+        "max": 0.27145951986312866
+      },
+      "lane_command_counts": {
+        "-1": 60,
+        "0": 140
+      },
+      "road_decision_counts": {
+        "gneE17": 200
+      },
+      "sampled_trace": [
+        {
+          "decision": 0,
+          "raw_steps": 3,
+          "action": [
+            -0.9676496982574463,
+            -0.5392672419548035
+          ],
+          "requested_speed_mps": 0.16175150871276855,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.16175150871276855,
+          "vehicle_state": {
+            "speed_mps": 0.16175150871276855,
+            "distance_m": 0.04043787717819214,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 10.040437877178192,
+            "position_xy": [
+              18.717927336010696,
+              66.377003127721
+            ]
+          }
+        },
+        {
+          "decision": 20,
+          "raw_steps": 63,
+          "action": [
+            -0.9726580381393433,
+            0.03001999855041504
+          ],
+          "requested_speed_mps": 0.1367098093032837,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.1367098093032837,
+          "vehicle_state": {
+            "speed_mps": 0.1367098093032837,
+            "distance_m": 0.7014321088790894,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 10.70143210887909,
+            "position_xy": [
+              19.264206509416404,
+              66.00484821076336
+            ]
+          }
+        },
+        {
+          "decision": 40,
+          "raw_steps": 123,
+          "action": [
+            -0.9698309898376465,
+            -0.07707762718200684
+          ],
+          "requested_speed_mps": 0.15084505081176758,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.15084505081176758,
+          "vehicle_state": {
+            "speed_mps": 0.15084505081176758,
+            "distance_m": 1.4475868940353394,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 11.44758689403534,
+            "position_xy": [
+              19.880866685434874,
+              65.58474594845946
+            ]
+          }
+        },
+        {
+          "decision": 60,
+          "raw_steps": 183,
+          "action": [
+            -0.9815852642059326,
+            -0.18542039394378662
+          ],
+          "requested_speed_mps": 0.09207367897033691,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.09207367897033691,
+          "vehicle_state": {
+            "speed_mps": 0.09207367897033691,
+            "distance_m": 2.1342590749263763,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 12.134259074926376,
+            "position_xy": [
+              20.44836741900798,
+              65.19813375700501
+            ]
+          }
+        },
+        {
+          "decision": 80,
+          "raw_steps": 243,
+          "action": [
+            -0.9653949737548828,
+            -0.02378106117248535
+          ],
+          "requested_speed_mps": 0.17302513122558594,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.17302513122558594,
+          "vehicle_state": {
+            "speed_mps": 0.17302513122558594,
+            "distance_m": 2.9062781035900116,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 12.906278103590012,
+            "position_xy": [
+              21.08640311827061,
+              64.76346933222976
+            ]
+          }
+        },
+        {
+          "decision": 100,
+          "raw_steps": 303,
+          "action": [
+            -0.9721551537513733,
+            -0.5472164154052734
+          ],
+          "requested_speed_mps": 0.13922423124313354,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.13922423124313354,
+          "vehicle_state": {
+            "speed_mps": 0.13922423124313354,
+            "distance_m": 3.8388901203870773,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 13.838890120387077,
+            "position_xy": [
+              21.85716101177469,
+              64.2383873708158
+            ]
+          }
+        },
+        {
+          "decision": 120,
+          "raw_steps": 363,
+          "action": [
+            -0.9821977615356445,
+            -0.3459159731864929
+          ],
+          "requested_speed_mps": 0.08901119232177734,
+          "lane_command": -1,
+          "effective_target_speed_mps": 0.08901119232177734,
+          "vehicle_state": {
+            "speed_mps": 0.08901119232177734,
+            "distance_m": 4.934250473976135,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 14.934250473976135,
+            "position_xy": [
+              22.762422389018873,
+              63.62167436202046
+            ]
+          }
+        },
+        {
+          "decision": 140,
+          "raw_steps": 423,
+          "action": [
+            -0.979396402835846,
+            -0.28280603885650635
+          ],
+          "requested_speed_mps": 0.10301798582077026,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.10301798582077026,
+          "vehicle_state": {
+            "speed_mps": 0.10301798582077026,
+            "distance_m": 5.544929012656212,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 15.544929012656212,
+            "position_xy": [
+              23.267118120581195,
+              63.27784833457467
+            ]
+          }
+        },
+        {
+          "decision": 160,
+          "raw_steps": 483,
+          "action": [
+            -0.9844689965248108,
+            -0.2844736576080322
+          ],
+          "requested_speed_mps": 0.07765501737594604,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.07765501737594604,
+          "vehicle_state": {
+            "speed_mps": 0.07765501737594604,
+            "distance_m": 6.106974020600319,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 16.10697402060032,
+            "position_xy": [
+              23.73162063456901,
+              62.96140410068225
+            ]
+          }
+        },
+        {
+          "decision": 180,
+          "raw_steps": 543,
+          "action": [
+            -0.9793455004692078,
+            -0.29925787448883057
+          ],
+          "requested_speed_mps": 0.10327249765396118,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.10327249765396118,
+          "vehicle_state": {
+            "speed_mps": 0.10327249765396118,
+            "distance_m": 6.726340487599373,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 16.726340487599373,
+            "position_xy": [
+              24.243496510939078,
+              62.61268657027469
+            ]
+          }
+        },
+        {
+          "decision": 199,
+          "raw_steps": 600,
+          "action": [
+            -0.9796678423881531,
+            -0.30477797985076904
+          ],
+          "requested_speed_mps": 0.10166078805923462,
+          "lane_command": 0,
+          "effective_target_speed_mps": 0.10166078805923462,
+          "vehicle_state": {
+            "speed_mps": 0.10166078805923462,
+            "distance_m": 7.304788663983345,
+            "road_id": "gneE17",
+            "route_index": 0,
+            "lane_index": 0,
+            "lane_position_m": 17.304788663983345,
+            "position_xy": [
+              24.72155543565911,
+              62.28700697622962
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

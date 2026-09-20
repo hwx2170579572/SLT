@@ -1,0 +1,34 @@
+{
+  "directory": "results_topo_v4_8_2_dev",
+  "phase": "topo v4.8.2 选择器门接口工程补丁线（selector-gate interface patch）",
+  "purpose": "本批次不是科研实验批次，而是 v4.8.2 单点工程补丁的冻结与验收存档。它把候选门控（candidate gate）期望的 selector_mode 从 joint_checkpoint_decoder 对齐为冻结 v4.8 实际使用的 tie_only_replicated_joint_checkpoint_decoder，消除 v4.8.1 预检中唯一失败的 selector_mode 检查，并把已完成的 H1 产物原地采纳（H1 不重跑、不修改）。补丁通过 21 项定向测试与 352 项全量回归后冻结，下一开发任务标记为 H2（本批次未执行 H2，也未启动任何科研训练/评估作业）。",
+  "status": "engineering_only",
+  "protocol_files": [
+    "results_topo_v4_8_2_dev/preregistration_receipt.json",
+    "results_topo_v4_8_2_dev/engineering/implementation_freeze.json",
+    "results_topo_v4_8_2_dev/engineering/h1_adoption_preflight.json",
+    "results_topo_v4_8_2_dev/engineering/engineering_receipt.json",
+    "results_topo_v4_8_2_dev/engineering/logs/targeted_tests.xml",
+    "results_topo_v4_8_2_dev/engineering/logs/full_regression.xml"
+  ],
+  "rows": [],
+  "missing": [
+    {
+      "unit": "全部（变体 × 场景 × 训练种子 × 模型种类）实验单元",
+      "reason": "本批次目录下不存在任何训练或评估产物：无 episode_*.json、无 summary.json、无 per_run.csv/json、无 checkpoint、无评估明细文件。仅有 4 个工程/预注册 JSON 与 2 个 JUnit XML 测试报告，因此不存在可抽取的 success_rate / collision_rate / timeout_rate / mean_return 等指标，一律无行。"
+    },
+    {
+      "unit": "H2 开发作业（contract 中声明 next_job_after_adoption: H2）",
+      "reason": "v4_8_2 契约仅规划 H2 为补丁采纳后的下一开发任务，本批次未产生 H2 的任何执行记录、stage_plan 或 summary；H2 数据若存在应位于其它批次目录（如 results_topo_v4_8_dev/development/），不属于本批次证据，故不在此登记。"
+    },
+    {
+      "unit": "H1 科研产物（return_estimator_diagnostics.json / training_diagnostics.json / paper_evaluation_detailed.json / selector/receipt.json）",
+      "reason": "本批次仅记录 H1 产物的 SHA256 采纳校验值（h1_artifacts_will_not_be_modified: true、h1_rerun: false），H1 实体文件不在本批次目录内，无法也不应从本批次读取数值。"
+    },
+    {
+      "unit": "正式测试（formal test）证据",
+      "reason": "preregistration_receipt 与 implementation_freeze 均声明 formal_test_locked: true、formal_test_accessed: false，正式测试未访问，本批次不含任何 formal_test 证据。"
+    }
+  ],
+  "notes": "口径与可信度说明。(1) 批次性质：results_topo_v4_8_2_dev 是纯工程补丁批次，不是科研结果批次。全目录仅 6 个文件、总计约 76KB：preregistration_receipt.json、engineering/implementation_freeze.json、engineering/h1_adoption_preflight.json、engineering/engineering_receipt.json、engineering/logs/targeted_tests.xml、engineering/logs/full_regression.xml。未发现任何 episode_*.json、summary、per_run、checkpoint 或评估明细，故 rows 为空数组，status 记为 engineering_only（既非 completed 也非 aborted——它按工程目的已完整收尾，但按实验口径无指标）。(2) 陷阱提示：full_regression.xml 中出现的字符串 success_rate 仅存在于 pytest 用例名（如 test_figure9_early_success_rate_keeps_source_denominator_20），是对历史实验逻辑的单元测试名称，不是本批次的实验结果数值，切勿误当作指标抽取；这属于典型“同名不同义”陷阱。(3) 唯一科学改动：align_candidate_gate_selector_mode_with_frozen_v4_8_selector，旧期望 joint_checkpoint_decoder → 新期望 tie_only_replicated_joint_checkpoint_decoder；契约显式声明 training_changed / return_estimator_changed / selector_changed / decoder_changed / thresholds_changed / seeds_or_traffic_changed / result_root_changed 均为 false，即科学协议未变。(4) 验收证据（工程口径，非实验指标）：定向测试 21 项 0 失败 0 错误 0 跳过；全量回归 352 项 0 失败 0 错误 0 跳过；patched_gate_passed: true；engineering_receipt.status = passed。(5) 就绪状态：contract 声明 development_order_unchanged: [H1, H2, H3, H4]、next_job_after_adoption: H2，即补丁采纳后下一步是 H2，本批次不构成任何 go/no-go 科学结论。(6) 可信度：本批次为强可审计的哈希链（preregistration → freeze → receipt 逐级 SHA256 绑定，含 parent_v4_8_freeze_sha256 与 v4_8_1_runner_sha256），且 no_fabrication: true，元数据可信度高；但因不含实验数值，对本汇总表的指标贡献为零。"
+}

@@ -1,0 +1,124 @@
+{
+  "directory": "results_topo_v3_dev",
+  "phase": "topo v3 开发线",
+  "purpose": "v3 bounded action-calibration 诊断批次：把冻结的 v2 candidate 模型（CARLA、训练种子 0 的 final_model）的确定性横向动作输出整体乘以 5.0 并裁剪到 [-1,1]，在 CARLA 校验分区用全新种子 20000–20009 跑 10 个回合，检验『CARLA 上退化为 keep、动作幅度不足』这一假设。Stage A 门禁失败（成功率 0、超时率 1、应用变道率 0），按预注册协议立即终止：不执行 Stage B cross guard、不做任何训练、不解锁 120 作业的正式测试；产物判定为 development 诊断证据。",
+  "status": "partial",
+  "protocol_files": [
+    "experiments/topo_scene_v3/action_calibration_diagnostic_contract.yaml",
+    "results_topo_v3_dev/offline_scale_selection.json",
+    "results_topo_v3_dev/stage_A_carla_activity/receipt.json",
+    "results_topo_v3_dev/stage_A_carla_activity/gate.json",
+    "results_topo_v3_dev/deep_attribution.md",
+    "results_topo_v3_dev/completion_receipt.json"
+  ],
+  "rows": [
+    {
+      "batch": "results_topo_v3_dev",
+      "phase": "topo v3 开发线",
+      "variant": "topo_v3_lateral_scale5",
+      "candidate": "lateral_scale5",
+      "scenario": "carla",
+      "training_seed": 0,
+      "model_kind": "exact_final",
+      "checkpoint_step": 50000,
+      "episodes": 10,
+      "eval_seed_start": 20000,
+      "decoder": "native",
+      "success_rate": 0.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_return": 0.0,
+      "status": "completed",
+      "evidence_kind": "development",
+      "artifact": "results_topo_v3_dev/stage_A_carla_activity/evaluation.json",
+      "source_keys": {
+        "success_rate": "summary.success_rate",
+        "collision_rate": "summary.collision_rate",
+        "timeout_rate": "summary.timeout_rate",
+        "mean_return": "summary.mean_return",
+        "episodes": "episodes（与 summary.episodes、len(episode_records) 一致）",
+        "eval_seed_start": "evaluation_seed_start（与 episode_records[0].seed=20000 一致）",
+        "training_seed": "results_topo_v2_fast/candidate_validation/runs/cv__cand__carla__s0__p42b6b32c/arguments.json:requested_raw_steps.seed (=0)",
+        "checkpoint_step": "results_topo_v2_fast/candidate_validation/runs/cv__cand__carla__s0__p42b6b32c/arguments.json:requested_raw_steps.max_steps (=50000)",
+        "model_kind": "source_model + source_model_sha256（final_model.zip，0612a96c2f6d4f74c4dcd9efb726cac3cc3c1ccc2b38e2e2719af3dad686fff2）"
+      },
+      "notes": "唯一的在线评估单元（Stage A carla activity），10/10 回合跑完，是终局否定结论而非中止：门禁 fail（success_rate 0.0 < 0.30、timeout_rate 1.0 > 0.70、lane_change_applied_rate 0.0 < 0.02），按预注册 on_fail=stop_without_cross_or_training 终止后续阶段。被评估对象是冻结的 v2 candidate 运行（results_topo_v2_fast/candidate_validation/runs/cv__cand__carla__s0__p42b6b32c）的 final_model.zip（sha256 0612a96c…，implementation_id=soft_balanced_gated_topology_temporal_graph_v2，即 v2『soft』候选），推理期只把确定性横向动作输出整体 ×5.0 并 clip 到 [-1,1]，模型权重、纵向动作、环境、奖励、流量资产均未改动；故本行是『策略 + 推理期标定干预』的结果，不等于该策略原始表现。重复来源警告：同一单元在 action_diagnostics.json:outcomes、gate.json:observed、completion_receipt.json:stage_A_carla_activity.observed 各有一份数值完全相同的副本，本行只取 evaluation.json（主评估产物，sha256 e6a33bdc…）为唯一权威来源，未另立行。辅助量（未单列字段）：mean_decision_steps 101、mean_raw_steps 302、off_route_rate 0.0、lane_command negative 0.150495 / keep 0.824752 / positive 0.024752、mean_speed 2.514305 m/s；已用 action_decisions.jsonl 的 1010 条原始记录独立复核（833 keep / 152 negative / 25 positive、应用变道 0、177 个非 keep 全部落在 decision 0–31 且车速>0.01 m/s），与 deep_attribution.md 的归因一致。checkpoint_step=50000 只由源运行 arguments.json 支撑（v3 产物内未直接记录步数；final_model.zip 与 50000 步检查点字节数相同但 SHA 不同，故不推断其为该检查点副本）。本批次 training_jobs=0，无训练阶段指标。"
+    },
+    {
+      "batch": "results_topo_v3_dev",
+      "phase": "topo v3 开发线",
+      "variant": "topo_v3_lateral_scale5",
+      "candidate": "lateral_scale5",
+      "scenario": "carla",
+      "training_seed": 0,
+      "model_kind": "other:offline_counterfactual_trace_selection",
+      "checkpoint_step": null,
+      "episodes": null,
+      "eval_seed_start": null,
+      "decoder": "other:offline_counterfactual_threshold_pm_1_3",
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "engineering_only",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v3_dev/offline_scale_selection.json",
+      "source_keys": {
+        "training_seed": "source_traces[0].training_seed (=0)",
+        "non_keep_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_0.non_keep (=0.18745874587458747)",
+        "negative_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_0.negative (=0.14323432343234323)",
+        "keep_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_0.keep (=0.8125412541254126)",
+        "positive_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_0.positive (=0.04422442244224422)",
+        "threshold": "threshold (=0.3333333333333333)",
+        "selected_lateral_scale": "selected_lateral_scale (=5.0)"
+      },
+      "notes": "离线尺度选择证据，不是在线评估（无回合、无 success/collision/timeout/return，四个指标字段一律 null）。数据来自 v2 candidate promotion 校验回合的既有动作轨迹（computed_from_real_traces=true，3030 条记录，非新 rollout），做反事实命令判定（阈值 ±1/3）后按 non_keep 率选定 lateral_scale=5.0：本单元 non_keep=0.187459、negative=0.143234、keep=0.812541、positive=0.044224。依据是『5.0–5.5 之间观测到阈值悬崖，5.0 是悬崖以下最大的已检整数尺度』，并明令禁止在线尺度扫描。该单元与 Stage A 在线单元共享场景与训练种子空间，但 model_kind 不同、证据类型为工程/选参，不应与在线结果一起统计成功率。"
+    },
+    {
+      "batch": "results_topo_v3_dev",
+      "phase": "topo v3 开发线",
+      "variant": "topo_v3_lateral_scale5",
+      "candidate": "lateral_scale5",
+      "scenario": "carla",
+      "training_seed": 1,
+      "model_kind": "other:offline_counterfactual_trace_selection",
+      "checkpoint_step": null,
+      "episodes": null,
+      "eval_seed_start": null,
+      "decoder": "other:offline_counterfactual_threshold_pm_1_3",
+      "success_rate": null,
+      "collision_rate": null,
+      "timeout_rate": null,
+      "mean_return": null,
+      "status": "engineering_only",
+      "evidence_kind": "engineering",
+      "artifact": "results_topo_v3_dev/offline_scale_selection.json",
+      "source_keys": {
+        "training_seed": "source_traces[1].training_seed (=1)",
+        "non_keep_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_1.non_keep (=0.06336633663366337)",
+        "negative_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_1.negative (=0.06336633663366337)",
+        "keep_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_1.keep (=0.9366336633663367)",
+        "positive_counterfactual_rate": "selected_counterfactual_command_rates.training_seed_1.positive (=0.0)",
+        "cliff_probe_lateral_scale": "cliff_probe.lateral_scale (=5.5)",
+        "cliff_probe_positive_rate": "cliff_probe.training_seed_1_positive_rate (=0.7257425742574257)",
+        "cliff_probe_non_keep_rate": "cliff_probe.training_seed_1_non_keep_rate (=0.7900990099009901)"
+      },
+      "notes": "同上的离线尺度选择证据（工程/选参，非在线评估），对应训练种子 1：non_keep=0.063367、negative=0.063367、keep=0.936634、positive=0.0。5.5 的悬崖探针（cliff_probe）显示 seed 1 的 positive 率从 0.0 跳到 0.725743、non_keep 跳到 0.790099，这是拒绝 5.5、选定 5.0 的直接依据；该探针同为离线反事实计算，无回合级结果，故四个指标字段为 null。种子 1 在本批次内没有任何在线评估产物。"
+    }
+  ],
+  "missing": [
+    {
+      "unit": "topo_v3_lateral_scale5 / cross / training_seed 0 / exact_final（Stage B cross guard）",
+      "reason": "预注册合同 experiments/topo_scene_v3/action_calibration_diagnostic_contract.yaml 的 stages[1] 声明了该单元（source_model=results_topo_v2_fast/candidate_validation/runs/cv__cand__cross__s0__p42b6b32c/final_model.zip），但 prerequisite（Stage A 通过）未满足，on_fail=stop_without_cross_or_training；completion_receipt.json 记 stage_B_cross_guard.executed=false、directory_exists=false，磁盘上无任何产物。"
+    },
+    {
+      "unit": "topo_v3_lateral_scale5 / carla / training_seed 1 / exact_final（在线评估）",
+      "reason": "合同只声明了 carla 训练种子 0 的 Stage A；种子 1 的 carla 模型（cv__cand__carla__s1__p42b6b32c）只以离线反事实轨迹形式参与 offline_scale_selection.json，没有任何 v3 在线评估产物。"
+    },
+    {
+      "unit": "正式测试（120 作业，test 分区）",
+      "reason": "completion_receipt.json 记 formal_test.unlocked=false、accessed=false、stage_directory_exists=false、root_directory_exists=false；v2 promotion 与 v3 salvage 门禁均失败，正式测试分区从未解锁也从未访问，无结果可抽。"
+    }
+  ],
+  "notes": "【口径】本批次只有 1 个在线评估单元（Stage A、CARLA、训练种子 0、final_model），training_jobs=0，因此全部数值都是评估期数值，不存在训练阶段指标（无 reward 曲线、无 best_training_success 类字段）；所有数值取自磁盘真实文件，未插补、未推算，取不到的一律 null。【证据等级】所有产物 evidence_role=development_diagnostic_only，属开发/诊断证据，既不是 promotion 也不是正式测试证据（formal_test_accessed=false），故 evidence_kind=development，不可作为正式测试结果引用。【状态判定】批次 status=partial：Stage A 已完整执行（10/10 回合、门禁已判定）并按设计终止，但合同声明的 Stage B cross guard 与 120 作业正式测试均未执行——既不是『跑完』，也不是崩溃中止，而是预注册的失败即停；对应 Stage A 行 status=completed（该单元数据本身完整，fail 是结论而非缺失），两条离线尺度选择行 status=engineering_only。【重复来源】同一 (carla, seed 0) 单元的成功/碰撞/超时/回报在 4 个文件里重复出现：evaluation.json:summary（选为唯一权威）、action_diagnostics.json:outcomes、gate.json:observed、completion_receipt.json:stage_A_carla_activity.observed，四份数值完全一致（已逐个比对），只保留 evaluation.json 一行；批次外副本 results_topo_v2_fast/bounded_final_summary.json:bounded_v3_salvage.observed 数值亦一致，未计入本批次行。【哈希校验】实测 evaluation.json=e6a33bdc…、action_diagnostics.json=a1128311…、action_decisions.jsonl=f6197f43…（1010 行）、gate.json=8f803102…、receipt.json=3eed7825…、offline_scale_selection.json=814fdf85…、deep_attribution.md=a92d1991…、completion_receipt.json=01dfc05d…，与各产物内部自述及 completion_receipt 的 artifact_sha256 全部一致；源模型 final_model.zip 实测 sha256=0612a96c… 与合同一致；预注册合同文件实测 sha256=d9b630d4… 与合同自述一致。【坑与可信度】(1) checkpoint_step=50000 仅由源运行 arguments.json 与 checkpoint_audit.json 支撑，属跨目录引用而非本批次内证据；(2) 在线行是推理期 ×5.0 干预后的结果，不能当作原始 v2 候选性能；(3) mean_return 精确等于 0.0（10 个回合全 timeout、回报恒 0），是真实值而非缺失；(4) 该批次结论为否定（reject_topo_v3_lateral_scale5，formal_test 目录不存在），任何汇总中若出现 v3 的正式测试成功率，均属伪造。"
+}

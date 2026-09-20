@@ -1,0 +1,75 @@
+{
+  "schema_version": "ccfa.systematic-matrix-data-quality/v1",
+  "as_of": "2026-08-14",
+  "dataset": "Frozen 6-method × 6-scenario × 3-seed paper matrix",
+  "grain": "one trained policy per method/scenario/training-seed; 50 paired deterministic held-out episodes per policy",
+  "status": "ready",
+  "checks": {
+    "run_rows": 108,
+    "unique_run_keys": 108,
+    "duplicate_run_keys": 0,
+    "missing_run_keys": [],
+    "unexpected_run_keys": [],
+    "total_test_episodes": 5400,
+    "runs_with_50_episodes": 108,
+    "runs_with_100k_trained_raw_steps": 108,
+    "runs_with_10_checkpoints": 108,
+    "runs_with_checkpoint_audit_passed": 108,
+    "runs_with_finite_metrics": 108,
+    "runs_with_validated_evaluation_provenance": 108,
+    "evaluation_pairing_errors": [],
+    "episode_summary_mismatches": [],
+    "outcome_partition_min": 1,
+    "outcome_partition_max": 2,
+    "multi_flag_episode_records": 2,
+    "zero_flag_episode_records": 0,
+    "success_timeout_overlap_records": 2,
+    "success_timeout_overlap_fraction": 0.00037037037037037035,
+    "off_route_nonzero_runs": 0
+  },
+  "protocol_sha256": "0CA2FA9E2D2CDC63AF9288AE51210D1B14CF5B95D9A351F874C56BBC7769181A",
+  "protocol_hash_matches_frozen_contract": true,
+  "summary_protocol_hash_matches": true,
+  "official_analysis_complete": true,
+  "official_analysis_errors": [],
+  "retry_archive_manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\_retry5_evidence_20260813_161903\\archive_manifest.json",
+  "retry_archive_manifest_sha256": "95F44AB0CDBB08794F71E99DB274DFD85A9CCD5146FDC368E1DF06B6C15C1701",
+  "retry_archive_hash_matches": true,
+  "severity_findings": [
+    {
+      "severity": "medium",
+      "finding": "Off-route rate is identically zero across all 108 runs; it is valid but non-discriminating in this matrix."
+    },
+    {
+      "severity": "low",
+      "finding": "Two held-out episodes are simultaneously success=true and timeout=true. The evaluator records is_success and max_time as independent final-step events, so arrival exactly at the time boundary is a valid overlap rather than a missing or fabricated outcome. Primary success/collision estimates are retained exactly as frozen.",
+      "records": [
+        {
+          "method": "temporal_graph",
+          "scenario": "cross",
+          "training_seed": 2,
+          "episode": 15,
+          "evaluation_seed": 10017,
+          "traffic_variant": "traffic_820.rou.xml",
+          "raw_steps": 600
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "cross",
+          "training_seed": 2,
+          "episode": 16,
+          "evaluation_seed": 10018,
+          "traffic_variant": "traffic_86.rou.xml",
+          "raw_steps": 600
+        }
+      ]
+    }
+  ],
+  "interpretation_limits": [
+    "SUMO equivalence is not bitwise SMARTS or CARLA physics equivalence.",
+    "The released repository omits a complete selectable plain-SAC entry point; SAC uses the audited v2 reconstruction.",
+    "SAC-on-CARLA and MST-on-CARLA are controlled extensions absent from the paper tables.",
+    "TemporalGraph versus Full+BalancedSlots jointly changes topology query and slot normalization, so that contrast alone cannot attribute a gain to topology.",
+    "The three training seeds are user-requested and do not reproduce the paper's five-seed sampling uncertainty."
+  ]
+}

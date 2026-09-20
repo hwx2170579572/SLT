@@ -1,0 +1,1814 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "冻结系统性实验矩阵：结果聚合与深层归因",
+    "description": "108 项正式训练模型的完整性审计、场景等权聚合、预声明统计、稳健性与联合组件归因边界。",
+    "generatedAt": "2026-08-14T00:00:00+08:00",
+    "cards": [
+      {
+        "id": "accepted_runs",
+        "description": "正式合同中的全部训练模型均通过完整性审计。",
+        "dataset": "quality",
+        "sourceId": "src_quality",
+        "metrics": [
+          {
+            "label": "接受模型",
+            "field": "accepted_runs",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "test_episodes",
+        "description": "108 项 × 50 个确定性测试回合。",
+        "dataset": "quality",
+        "sourceId": "src_quality",
+        "metrics": [
+          {
+            "label": "测试回合",
+            "field": "deterministic_test_episodes",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "best_success",
+        "description": "MST+SLT 在 6 场景等权宏平均上的成功率。",
+        "dataset": "method_macro",
+        "filter": {
+          "method": "mst_slt"
+        },
+        "sourceId": "src_method_macro",
+        "metrics": [
+          {
+            "label": "最佳宏成功率",
+            "field": "success_rate",
+            "format": "percent"
+          },
+          {
+            "label": "碰撞率",
+            "field": "collision_rate",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "holm_significant",
+        "description": "3 个训练种子下，Holm 校正后的主指标对比无一达到 0.05。",
+        "dataset": "quality",
+        "sourceId": "src_quality",
+        "metrics": [
+          {
+            "label": "Holm 显著主对比",
+            "field": "holm_significant_primary_contrasts",
+            "format": "number"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "method_success_chart",
+        "title": "MST+SLT 的总体成功率最高",
+        "subtitle": "每方法 18 项；先对 3 训练种子取均值，再对 6 场景等权平均。",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "在同一冻结预算下，哪种方法的跨场景成功率最高？",
+        "rationale": "6 个方法属于少量离散类别，横向条形图直接显示排序与幅度。",
+        "comparisonContext": {
+          "grain": "method",
+          "normalization": "equal-weight over six scenarios",
+          "unit": "rate"
+        },
+        "type": "horizontalBar",
+        "dataset": "method_macro",
+        "sourceId": "src_method_macro",
+        "encodings": {
+          "x": {
+            "field": "method_label",
+            "type": "nominal",
+            "label": "方法"
+          },
+          "y": {
+            "field": "success_rate",
+            "type": "quantitative",
+            "format": "percent",
+            "label": "场景等权成功率"
+          },
+          "tooltip": [
+            {
+              "field": "collision_rate",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "碰撞率"
+            },
+            {
+              "field": "mean_return",
+              "type": "quantitative",
+              "format": "number",
+              "label": "平均回报"
+            },
+            {
+              "field": "mean_scenario_rank",
+              "type": "quantitative",
+              "format": "number",
+              "label": "平均场景名次"
+            }
+          ]
+        },
+        "valueFormat": "percent",
+        "layout": "full",
+        "palette": {
+          "kind": "sequential",
+          "name": "blue"
+        },
+        "labels": {
+          "values": "all"
+        },
+        "settings": {
+          "sort": "descending",
+          "orientation": "horizontal",
+          "showValues": true
+        },
+        "surface": {
+          "surface": "card",
+          "showControls": false,
+          "viewMode": "both"
+        }
+      },
+      {
+        "id": "scenario_success_chart",
+        "title": "完整方法的场景表现并不均匀",
+        "subtitle": "每格 3 训练种子、150 个确定性回合；分组仅用于显示场景异质性。",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "总体排名是否由少数场景驱动，Full+BalancedSlots 在哪里失速？",
+        "rationale": "分组柱形图保留方法与场景两个离散维度，避免把异质性压成单一总体均值。",
+        "comparisonContext": {
+          "grain": "method by scenario",
+          "denominator": "150 deterministic episodes per cell",
+          "unit": "rate"
+        },
+        "type": "bar",
+        "dataset": "cell_success",
+        "sourceId": "src_cell_success",
+        "encodings": {
+          "x": {
+            "field": "scenario_label",
+            "type": "nominal",
+            "label": "场景"
+          },
+          "y": {
+            "field": "success_rate",
+            "type": "quantitative",
+            "format": "percent",
+            "label": "成功率"
+          },
+          "color": {
+            "field": "method_label",
+            "type": "nominal",
+            "label": "方法"
+          },
+          "tooltip": [
+            {
+              "field": "collision_rate",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "碰撞率"
+            },
+            {
+              "field": "timeout_rate",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "超时率"
+            },
+            {
+              "field": "success_ci_low",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "成功率 CI 下界"
+            },
+            {
+              "field": "success_ci_high",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "成功率 CI 上界"
+            }
+          ]
+        },
+        "valueFormat": "percent",
+        "layout": "full",
+        "palette": {
+          "kind": "categorical",
+          "name": "method"
+        },
+        "legend": {
+          "position": "bottom",
+          "sort": "spec",
+          "title": "方法"
+        },
+        "labels": {
+          "values": "none"
+        },
+        "settings": {
+          "groupMode": "grouped",
+          "categoryLabelPolicy": "wrap",
+          "showValues": false
+        },
+        "surface": {
+          "surface": "card",
+          "showControls": false,
+          "viewMode": "both"
+        }
+      },
+      {
+        "id": "contrast_chart",
+        "title": "后续复杂组件未延续 MST+SLT 的增益方向",
+        "subtitle": "条形为左方法减右方法的 6 场景等权宏差；PPO−SAC 仅作跨家族描述。",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "冻结消融链中，各增量对成功率与碰撞率的方向是什么？",
+        "rationale": "同一零基线上的双指标分组条形图清楚显示有利与不利方向。",
+        "comparisonContext": {
+          "baseline": "right method in each named contrast",
+          "grain": "predeclared contrast",
+          "normalization": "equal-weight over six scenarios",
+          "unit": "percentage-point delta"
+        },
+        "type": "bar",
+        "dataset": "macro_contrasts",
+        "sourceId": "src_macro_contrasts",
+        "encodings": {
+          "x": {
+            "field": "comparison_label",
+            "type": "nominal",
+            "label": "对比（左 − 右）"
+          },
+          "y": {
+            "fields": [
+              "success_delta",
+              "collision_delta"
+            ],
+            "type": "quantitative",
+            "format": "percent",
+            "label": "宏差"
+          },
+          "tooltip": [
+            {
+              "field": "success_holm_p",
+              "type": "quantitative",
+              "format": "number",
+              "label": "成功率 Holm p"
+            },
+            {
+              "field": "collision_holm_p",
+              "type": "quantitative",
+              "format": "number",
+              "label": "碰撞率 Holm p"
+            },
+            {
+              "field": "return_delta",
+              "type": "quantitative",
+              "format": "number",
+              "label": "回报差"
+            }
+          ]
+        },
+        "valueFormat": "percent",
+        "layout": "full",
+        "palette": {
+          "kind": "semantic",
+          "name": "primary-outcomes",
+          "midpoint": 0
+        },
+        "legend": {
+          "position": "bottom",
+          "sort": "spec",
+          "title": "指标"
+        },
+        "labels": {
+          "values": "none"
+        },
+        "referenceLines": [
+          {
+            "axis": "y",
+            "value": 0,
+            "label": "无差异",
+            "color": "neutral"
+          }
+        ],
+        "settings": {
+          "groupMode": "grouped",
+          "categoryLabelPolicy": "wrap",
+          "showValues": false
+        },
+        "surface": {
+          "surface": "card",
+          "showControls": false,
+          "viewMode": "both"
+        }
+      },
+      {
+        "id": "full_scenario_chart",
+        "title": "Full 相对 MST+SLT 的损失集中于中型环岛与 CARLA",
+        "subtitle": "成功率差为 Full+BalancedSlots − MST+SLT；正值有利于 Full。",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Full 的总体劣势主要来自哪些场景？",
+        "rationale": "单系列零中心条形图直接暴露场景级贡献和反例。",
+        "comparisonContext": {
+          "baseline": "MST+SLT",
+          "grain": "scenario",
+          "unit": "percentage-point success delta"
+        },
+        "type": "bar",
+        "dataset": "full_scenario",
+        "sourceId": "src_full_scenario",
+        "encodings": {
+          "x": {
+            "field": "scenario_label",
+            "type": "nominal",
+            "label": "场景"
+          },
+          "y": {
+            "field": "success_delta",
+            "type": "quantitative",
+            "format": "percent",
+            "label": "成功率差"
+          },
+          "tooltip": [
+            {
+              "field": "success_ci_low",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "CI 下界"
+            },
+            {
+              "field": "success_ci_high",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "CI 上界"
+            },
+            {
+              "field": "collision_delta",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "碰撞率差"
+            },
+            {
+              "field": "timeout_delta",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "超时率差"
+            }
+          ]
+        },
+        "valueFormat": "percent",
+        "layout": "full",
+        "palette": {
+          "kind": "diverging",
+          "name": "delta",
+          "midpoint": 0
+        },
+        "labels": {
+          "values": "all"
+        },
+        "referenceLines": [
+          {
+            "axis": "y",
+            "value": 0,
+            "label": "无差异",
+            "color": "neutral"
+          }
+        ],
+        "settings": {
+          "sort": "none",
+          "categoryLabelPolicy": "wrap",
+          "showValues": true
+        },
+        "surface": {
+          "surface": "card",
+          "showControls": false,
+          "viewMode": "both"
+        }
+      },
+      {
+        "id": "stability_chart",
+        "title": "MST+SLT 最稳定，Full 与 PPO 对训练种子更敏感",
+        "subtitle": "每个场景内的 3 种子成功率标准差，再对 6 场景平均；越低越稳定。",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "总体均值之外，哪种方法对训练种子最稳健？",
+        "rationale": "横向条形图适合少量方法的非负离散度比较，并突出低值更优。",
+        "comparisonContext": {
+          "grain": "method",
+          "normalization": "mean of six within-scenario seed standard deviations",
+          "unit": "rate standard deviation"
+        },
+        "type": "horizontalBar",
+        "dataset": "stability",
+        "sourceId": "src_stability",
+        "encodings": {
+          "x": {
+            "field": "method_label",
+            "type": "nominal",
+            "label": "方法"
+          },
+          "y": {
+            "field": "mean_seed_std",
+            "type": "quantitative",
+            "format": "percent",
+            "label": "平均种子标准差"
+          },
+          "tooltip": [
+            {
+              "field": "max_seed_std",
+              "type": "quantitative",
+              "format": "percent",
+              "label": "最大场景标准差"
+            },
+            {
+              "field": "max_std_scenario_label",
+              "type": "nominal",
+              "label": "最不稳定场景"
+            }
+          ]
+        },
+        "valueFormat": "percent",
+        "layout": "full",
+        "palette": {
+          "kind": "sequential",
+          "name": "stability"
+        },
+        "labels": {
+          "values": "all"
+        },
+        "settings": {
+          "sort": "ascending",
+          "orientation": "horizontal",
+          "showValues": true
+        },
+        "surface": {
+          "surface": "card",
+          "showControls": false,
+          "viewMode": "both"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "method_detail_table",
+        "title": "总体表现与运行成本",
+        "subtitle": "效率来自冻结运行的 performance_profile；仅作观察性成本比较。",
+        "showDescription": true,
+        "dataset": "method_macro",
+        "sourceId": "src_method_macro",
+        "defaultSort": {
+          "field": "success_rate",
+          "direction": "desc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "method_label",
+            "label": "方法",
+            "type": "text"
+          },
+          {
+            "field": "success_rate",
+            "label": "成功率",
+            "format": "percent"
+          },
+          {
+            "field": "collision_rate",
+            "label": "碰撞率",
+            "format": "percent"
+          },
+          {
+            "field": "timeout_rate",
+            "label": "超时率",
+            "format": "percent"
+          },
+          {
+            "field": "mean_return",
+            "label": "平均回报",
+            "format": "number"
+          },
+          {
+            "field": "parameters",
+            "label": "参数",
+            "format": "compact"
+          },
+          {
+            "field": "learner_update_ms",
+            "label": "更新 ms",
+            "format": "number"
+          },
+          {
+            "field": "inference_ms",
+            "label": "推理 ms",
+            "format": "number"
+          },
+          {
+            "field": "peak_gpu_mb",
+            "label": "峰值 GPU MB",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "contrast_detail_table",
+        "title": "预声明对比的统计明细",
+        "subtitle": "PPO−SAC 不属于 Holm 家族；空 p 值表示未做该家族校正。",
+        "showDescription": true,
+        "dataset": "macro_contrasts",
+        "sourceId": "src_macro_contrasts",
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "comparison_label",
+            "label": "对比",
+            "type": "text"
+          },
+          {
+            "field": "success_delta",
+            "label": "成功率差",
+            "format": "percent",
+            "movement": true
+          },
+          {
+            "field": "success_signflip_p",
+            "label": "成功率原始 p",
+            "format": "number"
+          },
+          {
+            "field": "success_holm_p",
+            "label": "成功率 Holm p",
+            "format": "number"
+          },
+          {
+            "field": "collision_delta",
+            "label": "碰撞率差",
+            "format": "percent",
+            "movement": true
+          },
+          {
+            "field": "collision_signflip_p",
+            "label": "碰撞率原始 p",
+            "format": "number"
+          },
+          {
+            "field": "collision_holm_p",
+            "label": "碰撞率 Holm p",
+            "format": "number"
+          },
+          {
+            "field": "return_delta",
+            "label": "回报差",
+            "format": "number",
+            "movement": true
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "src_quality",
+        "label": "冻结矩阵完整性审计"
+      },
+      {
+        "id": "src_method_macro",
+        "label": "方法级场景等权聚合"
+      },
+      {
+        "id": "src_cell_success",
+        "label": "方法×场景正式单元聚合"
+      },
+      {
+        "id": "src_macro_contrasts",
+        "label": "预声明场景级消融统计"
+      },
+      {
+        "id": "src_full_scenario",
+        "label": "Full 与 MST+SLT 的逐场景对比"
+      },
+      {
+        "id": "src_stability",
+        "label": "训练种子稳定性聚合"
+      },
+      {
+        "id": "src_diagnostics",
+        "label": "训练诊断与成功率的描述性关联"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "layout": "full",
+        "body": "# 冻结系统性实验矩阵：结果聚合与深层归因"
+      },
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 技术摘要\n\n冻结的 **108/108** 项正式矩阵已通过完整性门槛：每项 100,000 raw SUMO steps、10 个经 CRC/SHA 与时钟审计的 checkpoint、50 个确定性测试回合，共 5,400 回合。在 6 场景等权汇总下，**MST+SLT 成功率最高（94.0%）、碰撞率最低（6.0%），且训练种子内最稳定**；其相对 MST 的方向为成功率 **+5.11pp**、碰撞率 **−4.67pp**。但 Full+BalancedSlots 相对 MST+SLT 的成功率为 **−13.11pp**、碰撞率为 **+7.44pp**，损失主要集中于 roundabout_medium 与 CARLA。三训练种子限制了场景级精确检验的分辨率，**所有 Holm 校正后的主指标对比均未达到 0.05**，因此结论应表述为预声明消融方向和稳健性诊断，而不是确定性因果。"
+      },
+      {
+        "id": "headline_metrics",
+        "type": "metric-strip",
+        "layout": "full",
+        "cardIds": [
+          "accepted_runs",
+          "test_episodes",
+          "best_success",
+          "holm_significant"
+        ]
+      },
+      {
+        "id": "overall_heading",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 总体结果：MST+SLT 是当前冻结协议下的最佳且最稳定方案\n\n总体值先在每个场景内对 3 个训练种子取均值，再对 6 个场景等权平均。MST+SLT 不仅成功率最高，也以 2.45pp 的平均场景内种子标准差优于其他方法。"
+      },
+      {
+        "id": "method_success",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "method_success_chart"
+      },
+      {
+        "id": "method_detail",
+        "type": "table",
+        "layout": "full",
+        "tableId": "method_detail_table"
+      },
+      {
+        "id": "scenario_heading",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 场景异质性：完整方法的损失并非均匀分布\n\nFull+BalancedSlots 在 left_turn 略优于 MST+SLT，但在 roundabout_medium 与 CARLA 分别落后 26.67pp 和 31.33pp。中型环岛的分层 bootstrap 95% 区间低于 0；CARLA 则因 3 种子表现极端离散而仍跨 0。"
+      },
+      {
+        "id": "scenario_success",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "scenario_success_chart"
+      },
+      {
+        "id": "full_scenario",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "full_scenario_chart"
+      },
+      {
+        "id": "ablation_heading",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 归因边界：SLT 增益可单独识别，后续组件只能联合解释\n\n**MST+SLT−MST** 是唯一在编码器保持不变时只增加 SLT 的单组件对比，并且 leave-one-scenario-out 后 success/collision 差的符号都保持。TemporalGraph−MST+SLT 同时改变时序汇聚位置与 Graph-SLT 结构；Full−TemporalGraph 又同时改变 topology query 与 slot normalization，均不能拆成单因素效应。PPO−SAC 是跨算法家族描述，不是消融。"
+      },
+      {
+        "id": "contrast",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "contrast_chart"
+      },
+      {
+        "id": "contrast_detail",
+        "type": "table",
+        "layout": "full",
+        "tableId": "contrast_detail_table"
+      },
+      {
+        "id": "stability_heading",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 稳定性与成本：Full 更昂贵，却没有带来总体收益\n\nFull+BalancedSlots 的平均场景内种子标准差为 14.95pp，CARLA 单场景达到 47.14pp；MST+SLT 分别只有 2.45pp 与 4.32pp。Full 相比 TemporalGraph 约增加 40% 参数、47% learner-update 时间、87% 推理时间和 52% 峰值 GPU 内存。"
+      },
+      {
+        "id": "stability",
+        "type": "chart",
+        "layout": "full",
+        "chartId": "stability_chart"
+      },
+      {
+        "id": "scope_data_metrics",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 范围、数据与指标定义\n\n- **范围：** SAC、PPO、MST、MST+SLT、TemporalGraph、Full+BalancedSlots；left_turn、cross、roundabout_easy、roundabout_medium、roundabout、CARLA；训练种子 0/1/2。\n- **成功率：** 每个已训练策略在 50 个确定性测试回合中的成功比例；同一场景/种子下各方法共享 evaluation seed 与 traffic variant 配对。\n- **碰撞/超时/off-route：** 评估器独立记录终止事件比例。off-route 在全部 108 项中为 0，故不具区分力。\n- **宏平均：** 每个场景先对 3 个训练种子平均，再对 6 场景等权平均。\n- **效率：** `performance_profile` 中的模型参数、learner update wall time、推理时间与峰值 GPU 内存，只作观察性对照。"
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 统计与验证方法\n\n官方聚合器要求完整 108 项后才输出，单元不完整会失败。区间采用 **10,000 次分层训练种子/回合 bootstrap**（固定分析种子 20260806）；预声明对比在同一场景/训练种子下配对，场景级推断采用 6 场景精确 sign-flip。5 个 MST 家族对比分别在 success 与 collision 上做 Holm 校正；PPO−SAC 不进入该家族。伴随审计独立重算 5,400 个回合率，验证与汇总 JSON 一致，并核对协议与重跑证据归档哈希。训练诊断相关仅为 n=18 的描述性线索，未作机制因果检验。"
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 局限性、敏感性与稳健性\n\n- **训练种子只有 3 个。** 回合级 bootstrap 不能创造新的训练重复，Holm 校正后无主指标显著对比。\n- **两类联合改动不可拆分。** TemporalGraph 与 Full 的对比必须保留联合组件措辞。\n- **2/5,400 success+timeout 重叠。** 代码确认这是恰在 600 raw-step 边界到达时独立事件同时成立；将其保守地仅计 timeout 不改变任何对比符号。\n- **leave-one-scenario-out。** 六个预声明对比的 success/collision 宏差在每次剔除一个场景后均保持原符号，但这不等于统计显著。\n- **仿真等价边界。** SUMO 重建不是 SMARTS/CARLA 物理的 bitwise 等价；SAC 使用审计过的 v2 重建，部分 CARLA 组合为受控扩展。"
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 建议的下一步\n\n1. 以 **MST+SLT 为冻结矩阵的主表现基准**，把 Full 的场景依赖和种子不稳定作为负结果如实呈现。\n2. 直接从现有冻结结果生成论文主表、逐场景图和失败案例索引；不选择性删除种子、不回写训练或测试文件。\n3. 在新增计算前先做功效/种子预算评估；若未来确需区分 topology query 与 balanced slots，应另立预注册正交消融，而不是从本矩阵事后拆分。\n4. 保留本报告、artifact.json、执行过的 notebook 与哈希清单，作为论文数字的审计入口。"
+      },
+      {
+        "id": "further_questions",
+        "type": "markdown",
+        "layout": "full",
+        "body": "## 待进一步回答的问题\n\n- Full 在 CARLA 的 47.14pp 种子标准差由哪些具体交通变体与交互序列触发？\n- roundabout_medium 中 Full 的失败增加主要来自碰撞还是时间预算分配？\n- 需要多少额外、预注册训练种子才能使 5 个主对比达到有意义的检验分辨率？\n- topology-attention entropy 的负相关是否能在独立消融与更多种子上复现，还是仅为共同场景/种子驱动？"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-14T00:00:00+08:00",
+    "status": "ready",
+    "datasets": {
+      "quality": [
+        {
+          "accepted_runs": 108,
+          "deterministic_test_episodes": 5400,
+          "audited_checkpoints_runs": 108,
+          "holm_significant_primary_contrasts": 0,
+          "success_timeout_boundary_overlaps": 2
+        }
+      ],
+      "method_macro": [
+        {
+          "method": "mst_slt",
+          "success_rate": 0.94,
+          "collision_rate": 0.06,
+          "timeout_rate": 0.0,
+          "mean_return": 0.88,
+          "mean_scenario_rank": 1.8333333333333333,
+          "scenario_wins": 2,
+          "parameters": 1270909.3333333333,
+          "learner_update_ms": 161.1241335643249,
+          "inference_ms": 8.049933722294453,
+          "peak_gpu_mb": 109.72981770833333,
+          "method_label": "MST+SLT"
+        },
+        {
+          "method": "temporal_graph",
+          "success_rate": 0.9066666666666667,
+          "collision_rate": 0.08777777777777779,
+          "timeout_rate": 0.007777777777777778,
+          "mean_return": 0.8188888888888889,
+          "mean_scenario_rank": 2.8333333333333335,
+          "scenario_wins": 1,
+          "parameters": 1438248.0,
+          "learner_update_ms": 257.8370764625869,
+          "inference_ms": 13.971926000020984,
+          "peak_gpu_mb": 196.94759114583334,
+          "method_label": "TemporalGraph"
+        },
+        {
+          "method": "mst",
+          "success_rate": 0.8888888888888888,
+          "collision_rate": 0.10666666666666666,
+          "timeout_rate": 0.0044444444444444444,
+          "mean_return": 0.7822222222222223,
+          "mean_scenario_rank": 2.3333333333333335,
+          "scenario_wins": 3,
+          "parameters": 1086674.6666666667,
+          "learner_update_ms": 116.4555181803346,
+          "inference_ms": 7.942497777856058,
+          "peak_gpu_mb": 103.58699544270833,
+          "method_label": "MST"
+        },
+        {
+          "method": "full_balanced",
+          "success_rate": 0.8088888888888889,
+          "collision_rate": 0.13444444444444445,
+          "timeout_rate": 0.05666666666666667,
+          "mean_return": 0.6744444444444444,
+          "mean_scenario_rank": 4.0,
+          "scenario_wins": 1,
+          "parameters": 2016680.0,
+          "learner_update_ms": 379.73484595817126,
+          "inference_ms": 26.114494221983477,
+          "peak_gpu_mb": 299.1647135416667,
+          "method_label": "Full+BalancedSlots"
+        },
+        {
+          "method": "sac",
+          "success_rate": 0.8055555555555556,
+          "collision_rate": 0.15,
+          "timeout_rate": 0.044444444444444446,
+          "mean_return": 0.6555555555555556,
+          "mean_scenario_rank": 4.333333333333333,
+          "scenario_wins": 0,
+          "parameters": 792872.0,
+          "learner_update_ms": 108.90777888373091,
+          "inference_ms": 6.844758666637871,
+          "peak_gpu_mb": 30.58740234375,
+          "method_label": "SAC"
+        },
+        {
+          "method": "ppo",
+          "success_rate": 0.5077777777777778,
+          "collision_rate": 0.2411111111111111,
+          "timeout_rate": 0.2511111111111111,
+          "mean_return": 0.26666666666666666,
+          "mean_scenario_rank": 5.666666666666667,
+          "scenario_wins": 0,
+          "parameters": 565368.3333333334,
+          "learner_update_ms": 4243.350627245017,
+          "inference_ms": 8.352544222208154,
+          "peak_gpu_mb": 36.87627495659722,
+          "method_label": "PPO"
+        }
+      ],
+      "cell_success": [
+        {
+          "method": "mst",
+          "scenario": "carla",
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": 1.0,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 1.0,
+          "success_ci_high": 1.0,
+          "method_label": "MST",
+          "scenario_label": "CARLA"
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "carla",
+          "success_rate": 1.0,
+          "collision_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": 1.0,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 1.0,
+          "success_ci_high": 1.0,
+          "method_label": "TemporalGraph",
+          "scenario_label": "CARLA"
+        },
+        {
+          "method": "mst_slt",
+          "scenario": "carla",
+          "success_rate": 0.98,
+          "collision_rate": 0.02,
+          "timeout_rate": 0.0,
+          "mean_return": 0.96,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.9333333333333333,
+          "success_ci_high": 1.0,
+          "method_label": "MST+SLT",
+          "scenario_label": "CARLA"
+        },
+        {
+          "method": "sac",
+          "scenario": "carla",
+          "success_rate": 0.9133333333333333,
+          "collision_rate": 0.08,
+          "timeout_rate": 0.006666666666666667,
+          "mean_return": 0.8333333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8533333333333334,
+          "success_ci_high": 0.9666666666666667,
+          "method_label": "SAC",
+          "scenario_label": "CARLA"
+        },
+        {
+          "method": "full_balanced",
+          "scenario": "carla",
+          "success_rate": 0.6666666666666666,
+          "collision_rate": 0.013333333333333334,
+          "timeout_rate": 0.32,
+          "mean_return": 0.6533333333333333,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.0,
+          "success_ci_high": 1.0,
+          "method_label": "Full+BalancedSlots",
+          "scenario_label": "CARLA"
+        },
+        {
+          "method": "ppo",
+          "scenario": "carla",
+          "success_rate": 0.10666666666666667,
+          "collision_rate": 0.05333333333333334,
+          "timeout_rate": 0.84,
+          "mean_return": 0.05333333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.0,
+          "success_ci_high": 0.30666666666666664,
+          "method_label": "PPO",
+          "scenario_label": "CARLA"
+        },
+        {
+          "method": "mst_slt",
+          "scenario": "cross",
+          "success_rate": 0.8666666666666667,
+          "collision_rate": 0.13333333333333333,
+          "timeout_rate": 0.0,
+          "mean_return": 0.7333333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8,
+          "success_ci_high": 0.9333333333333333,
+          "method_label": "MST+SLT",
+          "scenario_label": "Cross"
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "cross",
+          "success_rate": 0.8266666666666667,
+          "collision_rate": 0.14,
+          "timeout_rate": 0.04666666666666667,
+          "mean_return": 0.6866666666666666,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.66,
+          "success_ci_high": 0.96,
+          "method_label": "TemporalGraph",
+          "scenario_label": "Cross"
+        },
+        {
+          "method": "mst",
+          "scenario": "cross",
+          "success_rate": 0.7866666666666666,
+          "collision_rate": 0.21333333333333332,
+          "timeout_rate": 0.0,
+          "mean_return": 0.5733333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.7198333333333334,
+          "success_ci_high": 0.8533333333333334,
+          "method_label": "MST",
+          "scenario_label": "Cross"
+        },
+        {
+          "method": "full_balanced",
+          "scenario": "cross",
+          "success_rate": 0.7733333333333333,
+          "collision_rate": 0.22666666666666666,
+          "timeout_rate": 0.0,
+          "mean_return": 0.5466666666666666,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.64,
+          "success_ci_high": 0.8866666666666667,
+          "method_label": "Full+BalancedSlots",
+          "scenario_label": "Cross"
+        },
+        {
+          "method": "ppo",
+          "scenario": "cross",
+          "success_rate": 0.41333333333333333,
+          "collision_rate": 0.2533333333333333,
+          "timeout_rate": 0.3333333333333333,
+          "mean_return": 0.16,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.0,
+          "success_ci_high": 0.8333333333333334,
+          "method_label": "PPO",
+          "scenario_label": "Cross"
+        },
+        {
+          "method": "sac",
+          "scenario": "cross",
+          "success_rate": 0.37333333333333335,
+          "collision_rate": 0.36666666666666664,
+          "timeout_rate": 0.26,
+          "mean_return": 0.006666666666666672,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.0,
+          "success_ci_high": 0.8666666666666667,
+          "method_label": "SAC",
+          "scenario_label": "Cross"
+        },
+        {
+          "method": "full_balanced",
+          "scenario": "left_turn",
+          "success_rate": 0.98,
+          "collision_rate": 0.02,
+          "timeout_rate": 0.0,
+          "mean_return": 0.96,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.9333333333333333,
+          "success_ci_high": 1.0,
+          "method_label": "Full+BalancedSlots",
+          "scenario_label": "Left turn"
+        },
+        {
+          "method": "mst_slt",
+          "scenario": "left_turn",
+          "success_rate": 0.9733333333333333,
+          "collision_rate": 0.02666666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.9466666666666667,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.94,
+          "success_ci_high": 0.9933333333333333,
+          "method_label": "MST+SLT",
+          "scenario_label": "Left turn"
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "left_turn",
+          "success_rate": 0.9533333333333334,
+          "collision_rate": 0.04666666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.9066666666666666,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.9066666666666666,
+          "success_ci_high": 0.9933333333333333,
+          "method_label": "TemporalGraph",
+          "scenario_label": "Left turn"
+        },
+        {
+          "method": "sac",
+          "scenario": "left_turn",
+          "success_rate": 0.9333333333333333,
+          "collision_rate": 0.06666666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.8666666666666667,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.86,
+          "success_ci_high": 1.0,
+          "method_label": "SAC",
+          "scenario_label": "Left turn"
+        },
+        {
+          "method": "mst",
+          "scenario": "left_turn",
+          "success_rate": 0.72,
+          "collision_rate": 0.26,
+          "timeout_rate": 0.02,
+          "mean_return": 0.46,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.22,
+          "success_ci_high": 1.0,
+          "method_label": "MST",
+          "scenario_label": "Left turn"
+        },
+        {
+          "method": "ppo",
+          "scenario": "left_turn",
+          "success_rate": 0.5866666666666667,
+          "collision_rate": 0.41333333333333333,
+          "timeout_rate": 0.0,
+          "mean_return": 0.17333333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.0,
+          "success_ci_high": 0.9266666666666666,
+          "method_label": "PPO",
+          "scenario_label": "Left turn"
+        },
+        {
+          "method": "mst",
+          "scenario": "roundabout",
+          "success_rate": 0.9266666666666666,
+          "collision_rate": 0.07333333333333333,
+          "timeout_rate": 0.0,
+          "mean_return": 0.8533333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8733333333333333,
+          "success_ci_high": 0.9733333333333334,
+          "method_label": "MST",
+          "scenario_label": "Roundabout"
+        },
+        {
+          "method": "mst_slt",
+          "scenario": "roundabout",
+          "success_rate": 0.9066666666666667,
+          "collision_rate": 0.09333333333333334,
+          "timeout_rate": 0.0,
+          "mean_return": 0.8133333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8533333333333334,
+          "success_ci_high": 0.9533333333333334,
+          "method_label": "MST+SLT",
+          "scenario_label": "Roundabout"
+        },
+        {
+          "method": "sac",
+          "scenario": "roundabout",
+          "success_rate": 0.8533333333333334,
+          "collision_rate": 0.14666666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.7066666666666667,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.7733333333333333,
+          "success_ci_high": 0.9266666666666666,
+          "method_label": "SAC",
+          "scenario_label": "Roundabout"
+        },
+        {
+          "method": "full_balanced",
+          "scenario": "roundabout",
+          "success_rate": 0.8333333333333334,
+          "collision_rate": 0.16,
+          "timeout_rate": 0.006666666666666667,
+          "mean_return": 0.6733333333333333,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.7533333333333333,
+          "success_ci_high": 0.9133333333333333,
+          "method_label": "Full+BalancedSlots",
+          "scenario_label": "Roundabout"
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "roundabout",
+          "success_rate": 0.8133333333333334,
+          "collision_rate": 0.18666666666666668,
+          "timeout_rate": 0.0,
+          "mean_return": 0.6266666666666667,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.7333333333333333,
+          "success_ci_high": 0.8933333333333333,
+          "method_label": "TemporalGraph",
+          "scenario_label": "Roundabout"
+        },
+        {
+          "method": "ppo",
+          "scenario": "roundabout",
+          "success_rate": 0.38,
+          "collision_rate": 0.2866666666666667,
+          "timeout_rate": 0.3333333333333333,
+          "mean_return": 0.09333333333333334,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.0,
+          "success_ci_high": 0.6533333333333333,
+          "method_label": "PPO",
+          "scenario_label": "Roundabout"
+        },
+        {
+          "method": "mst_slt",
+          "scenario": "roundabout_easy",
+          "success_rate": 0.9933333333333333,
+          "collision_rate": 0.006666666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.9866666666666667,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.9733333333333334,
+          "success_ci_high": 1.0,
+          "method_label": "MST+SLT",
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "method": "mst",
+          "scenario": "roundabout_easy",
+          "success_rate": 0.9666666666666667,
+          "collision_rate": 0.02666666666666667,
+          "timeout_rate": 0.006666666666666667,
+          "mean_return": 0.9400000000000001,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.92,
+          "success_ci_high": 1.0,
+          "method_label": "MST",
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "roundabout_easy",
+          "success_rate": 0.9666666666666667,
+          "collision_rate": 0.03333333333333333,
+          "timeout_rate": 0.0,
+          "mean_return": 0.9333333333333333,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.9333333333333333,
+          "success_ci_high": 0.9933333333333333,
+          "method_label": "TemporalGraph",
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "method": "full_balanced",
+          "scenario": "roundabout_easy",
+          "success_rate": 0.9466666666666667,
+          "collision_rate": 0.04,
+          "timeout_rate": 0.013333333333333334,
+          "mean_return": 0.9066666666666666,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8866666666666667,
+          "success_ci_high": 0.9933333333333333,
+          "method_label": "Full+BalancedSlots",
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "method": "sac",
+          "scenario": "roundabout_easy",
+          "success_rate": 0.92,
+          "collision_rate": 0.08,
+          "timeout_rate": 0.0,
+          "mean_return": 0.84,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.86,
+          "success_ci_high": 0.9733333333333334,
+          "method_label": "SAC",
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "method": "ppo",
+          "scenario": "roundabout_easy",
+          "success_rate": 0.86,
+          "collision_rate": 0.14,
+          "timeout_rate": 0.0,
+          "mean_return": 0.72,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.7733333333333333,
+          "success_ci_high": 0.9466666666666667,
+          "method_label": "PPO",
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "method": "mst",
+          "scenario": "roundabout_medium",
+          "success_rate": 0.9333333333333333,
+          "collision_rate": 0.06666666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.8666666666666667,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.88,
+          "success_ci_high": 0.9733333333333334,
+          "method_label": "MST",
+          "scenario_label": "Roundabout medium"
+        },
+        {
+          "method": "mst_slt",
+          "scenario": "roundabout_medium",
+          "success_rate": 0.92,
+          "collision_rate": 0.08,
+          "timeout_rate": 0.0,
+          "mean_return": 0.84,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8533333333333334,
+          "success_ci_high": 0.98,
+          "method_label": "MST+SLT",
+          "scenario_label": "Roundabout medium"
+        },
+        {
+          "method": "temporal_graph",
+          "scenario": "roundabout_medium",
+          "success_rate": 0.88,
+          "collision_rate": 0.12000000000000001,
+          "timeout_rate": 0.0,
+          "mean_return": 0.76,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.8133333333333334,
+          "success_ci_high": 0.9333333333333333,
+          "method_label": "TemporalGraph",
+          "scenario_label": "Roundabout medium"
+        },
+        {
+          "method": "sac",
+          "scenario": "roundabout_medium",
+          "success_rate": 0.84,
+          "collision_rate": 0.16,
+          "timeout_rate": 0.0,
+          "mean_return": 0.68,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.76,
+          "success_ci_high": 0.9133333333333333,
+          "method_label": "SAC",
+          "scenario_label": "Roundabout medium"
+        },
+        {
+          "method": "ppo",
+          "scenario": "roundabout_medium",
+          "success_rate": 0.7000000000000001,
+          "collision_rate": 0.3,
+          "timeout_rate": 0.0,
+          "mean_return": 0.4,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.6066666666666667,
+          "success_ci_high": 0.8,
+          "method_label": "PPO",
+          "scenario_label": "Roundabout medium"
+        },
+        {
+          "method": "full_balanced",
+          "scenario": "roundabout_medium",
+          "success_rate": 0.6533333333333333,
+          "collision_rate": 0.3466666666666667,
+          "timeout_rate": 0.0,
+          "mean_return": 0.30666666666666664,
+          "seeds_completed": 3,
+          "episodes_total": 150,
+          "success_ci_low": 0.37333333333333335,
+          "success_ci_high": 0.88,
+          "method_label": "Full+BalancedSlots",
+          "scenario_label": "Roundabout medium"
+        }
+      ],
+      "macro_contrasts": [
+        {
+          "comparison": "mst_minus_sac",
+          "left": "mst",
+          "right": "sac",
+          "success_delta": 0.08333333333333331,
+          "collision_delta": -0.043333333333333335,
+          "timeout_delta": -0.04,
+          "return_delta": 0.12666666666666668,
+          "success_signflip_p": 0.4375,
+          "success_holm_p": 0.75,
+          "collision_signflip_p": 0.40625,
+          "collision_holm_p": 1.0,
+          "scenarios": 6,
+          "comparison_label": "MST − SAC"
+        },
+        {
+          "comparison": "mst_slt_minus_mst",
+          "left": "mst_slt",
+          "right": "mst",
+          "success_delta": 0.05111111111111112,
+          "collision_delta": -0.04666666666666666,
+          "timeout_delta": -0.0044444444444444444,
+          "return_delta": 0.09777777777777776,
+          "success_signflip_p": 0.375,
+          "success_holm_p": 0.75,
+          "collision_signflip_p": 0.4375,
+          "collision_holm_p": 1.0,
+          "scenarios": 6,
+          "comparison_label": "MST+SLT − MST"
+        },
+        {
+          "comparison": "temporal_graph_minus_mst_slt",
+          "left": "temporal_graph",
+          "right": "mst_slt",
+          "success_delta": -0.03333333333333333,
+          "collision_delta": 0.02777777777777778,
+          "timeout_delta": 0.007777777777777778,
+          "return_delta": -0.061111111111111095,
+          "success_signflip_p": 0.09375,
+          "success_holm_p": 0.375,
+          "collision_signflip_p": 0.125,
+          "collision_holm_p": 0.625,
+          "scenarios": 6,
+          "comparison_label": "TemporalGraph − MST+SLT"
+        },
+        {
+          "comparison": "full_balanced_minus_temporal_graph",
+          "left": "full_balanced",
+          "right": "temporal_graph",
+          "success_delta": -0.09777777777777778,
+          "collision_delta": 0.04666666666666666,
+          "timeout_delta": 0.04888888888888889,
+          "return_delta": -0.14444444444444446,
+          "success_signflip_p": 0.21875,
+          "success_holm_p": 0.65625,
+          "collision_signflip_p": 0.40625,
+          "collision_holm_p": 1.0,
+          "scenarios": 6,
+          "comparison_label": "Full − TemporalGraph"
+        },
+        {
+          "comparison": "full_balanced_minus_mst_slt",
+          "left": "full_balanced",
+          "right": "mst_slt",
+          "success_delta": -0.13111111111111112,
+          "collision_delta": 0.07444444444444444,
+          "timeout_delta": 0.05666666666666667,
+          "return_delta": -0.20555555555555555,
+          "success_signflip_p": 0.0625,
+          "success_holm_p": 0.3125,
+          "collision_signflip_p": 0.125,
+          "collision_holm_p": 0.625,
+          "scenarios": 6,
+          "comparison_label": "Full − MST+SLT"
+        },
+        {
+          "comparison": "ppo_minus_sac",
+          "left": "ppo",
+          "right": "sac",
+          "success_delta": -0.29777777777777775,
+          "collision_delta": 0.09111111111111111,
+          "timeout_delta": 0.20666666666666667,
+          "return_delta": -0.38888888888888884,
+          "success_signflip_p": 0.0625,
+          "success_holm_p": null,
+          "collision_signflip_p": 0.25,
+          "collision_holm_p": null,
+          "scenarios": 6,
+          "comparison_label": "PPO − SAC（描述）"
+        }
+      ],
+      "full_scenario": [
+        {
+          "scenario": "left_turn",
+          "success_delta": 0.006666666666666672,
+          "success_ci_low": -0.04,
+          "success_ci_high": 0.04,
+          "collision_delta": -0.006666666666666668,
+          "collision_ci_low": -0.04,
+          "collision_ci_high": 0.04,
+          "timeout_delta": 0.0,
+          "return_delta": 0.013333333333333345,
+          "scenario_label": "Left turn"
+        },
+        {
+          "scenario": "cross",
+          "success_delta": -0.09333333333333334,
+          "success_ci_low": -0.2733333333333333,
+          "success_ci_high": 0.05333333333333334,
+          "collision_delta": 0.09333333333333332,
+          "collision_ci_low": -0.06,
+          "collision_ci_high": 0.28,
+          "timeout_delta": 0.0,
+          "return_delta": -0.18666666666666668,
+          "scenario_label": "Cross"
+        },
+        {
+          "scenario": "roundabout_easy",
+          "success_delta": -0.04666666666666667,
+          "success_ci_low": -0.11333333333333333,
+          "success_ci_high": 0.0,
+          "collision_delta": 0.03333333333333333,
+          "collision_ci_low": -0.02,
+          "collision_ci_high": 0.10666666666666667,
+          "timeout_delta": 0.013333333333333334,
+          "return_delta": -0.08,
+          "scenario_label": "Roundabout easy"
+        },
+        {
+          "scenario": "roundabout_medium",
+          "success_delta": -0.26666666666666666,
+          "success_ci_low": -0.6,
+          "success_ci_high": -0.006666666666666667,
+          "collision_delta": 0.26666666666666666,
+          "collision_ci_low": 0.006666666666666667,
+          "collision_ci_high": 0.5866666666666667,
+          "timeout_delta": 0.0,
+          "return_delta": -0.5333333333333333,
+          "scenario_label": "Roundabout medium"
+        },
+        {
+          "scenario": "roundabout",
+          "success_delta": -0.07333333333333336,
+          "success_ci_low": -0.16,
+          "success_ci_high": 0.006666666666666667,
+          "collision_delta": 0.06666666666666667,
+          "collision_ci_low": -0.006833333333333182,
+          "collision_ci_high": 0.14666666666666667,
+          "timeout_delta": 0.006666666666666667,
+          "return_delta": -0.13999999999999999,
+          "scenario_label": "Roundabout"
+        },
+        {
+          "scenario": "carla",
+          "success_delta": -0.3133333333333333,
+          "success_ci_low": -1.0,
+          "success_ci_high": 0.06,
+          "collision_delta": -0.006666666666666665,
+          "collision_ci_low": -0.06666666666666667,
+          "collision_ci_high": 0.04666666666666667,
+          "timeout_delta": 0.32,
+          "return_delta": -0.3066666666666667,
+          "scenario_label": "CARLA"
+        }
+      ],
+      "stability": [
+        {
+          "method": "mst_slt",
+          "mean_seed_std": 0.024485655427235464,
+          "max_seed_std": 0.043204937989385725,
+          "max_std_scenario": "roundabout_medium",
+          "mean_collision_seed_std": 0.02448565542723545,
+          "method_label": "MST+SLT",
+          "max_std_scenario_label": "Roundabout medium"
+        },
+        {
+          "method": "temporal_graph",
+          "mean_seed_std": 0.03908651820222389,
+          "max_seed_std": 0.12472191289246469,
+          "max_std_scenario": "cross",
+          "mean_collision_seed_std": 0.031907809068941875,
+          "method_label": "TemporalGraph",
+          "max_std_scenario_label": "Cross"
+        },
+        {
+          "method": "mst",
+          "mean_seed_std": 0.07797258279384978,
+          "max_seed_std": 0.36805796644912697,
+          "max_std_scenario": "left_turn",
+          "mean_collision_seed_std": 0.07224886559396294,
+          "method_label": "MST",
+          "max_std_scenario_label": "Left turn"
+        },
+        {
+          "method": "sac",
+          "mean_seed_std": 0.09684324705933248,
+          "max_seed_std": 0.3714236873915765,
+          "max_std_scenario": "cross",
+          "mean_collision_seed_std": 0.06874679430984827,
+          "method_label": "SAC",
+          "max_std_scenario_label": "Cross"
+        },
+        {
+          "method": "full_balanced",
+          "mean_seed_std": 0.1494526289421358,
+          "max_seed_std": 0.4714045207910317,
+          "max_std_scenario": "carla",
+          "mean_collision_seed_std": 0.07444918018187634,
+          "method_label": "Full+BalancedSlots",
+          "max_std_scenario_label": "CARLA"
+        },
+        {
+          "method": "ppo",
+          "mean_seed_std": 0.21708266860564623,
+          "max_seed_std": 0.41611964091539294,
+          "max_std_scenario": "left_turn",
+          "mean_collision_seed_std": 0.1789321217196588,
+          "method_label": "PPO",
+          "max_std_scenario_label": "Left turn"
+        }
+      ],
+      "diagnostics": [
+        {
+          "association_scope": "paired_method_delta",
+          "method_or_comparison": "full_balanced_minus_temporal_graph",
+          "diagnostic": "diagnostic_graph_mean_edge_weight_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": null,
+          "scenario_residual_pearson_r": null,
+          "paired_delta_pearson_r": -0.002620070865775478,
+          "interpretation": "descriptive paired run-level co-movement; topology query and balanced slots remain jointly changed"
+        },
+        {
+          "association_scope": "paired_method_delta",
+          "method_or_comparison": "full_balanced_minus_temporal_graph",
+          "diagnostic": "diagnostic_slot_scale_ratio_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": null,
+          "scenario_residual_pearson_r": null,
+          "paired_delta_pearson_r": -0.02213450739742226,
+          "interpretation": "descriptive paired run-level co-movement; topology query and balanced slots remain jointly changed"
+        },
+        {
+          "association_scope": "paired_method_delta",
+          "method_or_comparison": "full_balanced_minus_temporal_graph",
+          "diagnostic": "diagnostic_topology_attention_entropy_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": null,
+          "scenario_residual_pearson_r": null,
+          "paired_delta_pearson_r": -0.47655828889794744,
+          "interpretation": "descriptive paired run-level co-movement; topology query and balanced slots remain jointly changed"
+        },
+        {
+          "association_scope": "within_method",
+          "method_or_comparison": "full_balanced",
+          "diagnostic": "diagnostic_graph_mean_edge_weight_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": 0.11423442892666907,
+          "scenario_residual_pearson_r": -0.31380669715175713,
+          "paired_delta_pearson_r": null,
+          "interpretation": "descriptive seed-level association after scenario de-meaning; not a causal component estimate"
+        },
+        {
+          "association_scope": "within_method",
+          "method_or_comparison": "full_balanced",
+          "diagnostic": "diagnostic_slot_scale_ratio_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": 0.2120679868746153,
+          "scenario_residual_pearson_r": 0.3105079672502084,
+          "paired_delta_pearson_r": null,
+          "interpretation": "descriptive seed-level association after scenario de-meaning; not a causal component estimate"
+        },
+        {
+          "association_scope": "within_method",
+          "method_or_comparison": "full_balanced",
+          "diagnostic": "diagnostic_topology_attention_entropy_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": -0.3661348228612479,
+          "scenario_residual_pearson_r": -0.4574179740771384,
+          "paired_delta_pearson_r": null,
+          "interpretation": "descriptive seed-level association after scenario de-meaning; not a causal component estimate"
+        },
+        {
+          "association_scope": "within_method",
+          "method_or_comparison": "temporal_graph",
+          "diagnostic": "diagnostic_graph_mean_edge_weight_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": -0.2654903704982404,
+          "scenario_residual_pearson_r": 0.48782379998648095,
+          "paired_delta_pearson_r": null,
+          "interpretation": "descriptive seed-level association after scenario de-meaning; not a causal component estimate"
+        },
+        {
+          "association_scope": "within_method",
+          "method_or_comparison": "temporal_graph",
+          "diagnostic": "diagnostic_slot_scale_ratio_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": 0.38317267997884896,
+          "scenario_residual_pearson_r": 0.045094106375397,
+          "paired_delta_pearson_r": null,
+          "interpretation": "descriptive seed-level association after scenario de-meaning; not a causal component estimate"
+        },
+        {
+          "association_scope": "within_method",
+          "method_or_comparison": "temporal_graph",
+          "diagnostic": "diagnostic_topology_attention_entropy_mean",
+          "outcome": "success_rate",
+          "observations": 18,
+          "raw_pearson_r": null,
+          "scenario_residual_pearson_r": null,
+          "paired_delta_pearson_r": null,
+          "interpretation": "descriptive seed-level association after scenario de-meaning; not a causal component estimate"
+        }
+      ]
+    },
+    "accessIssues": []
+  },
+  "sources": [
+    {
+      "id": "src_quality",
+      "label": "冻结矩阵完整性审计",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  108 AS accepted_runs,\n  5400 AS deterministic_test_episodes,\n  108 AS audited_checkpoints_runs,\n  0 AS holm_significant_primary_contrasts,\n  2 AS success_timeout_boundary_overlaps",
+        "description": "从已通过的只读审计中提取矩阵、测试回合、checkpoint 与检验门槛摘要。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "data_quality_report"
+        ],
+        "filters": [
+          "frozen protocol hash matched",
+          "accepted runs only"
+        ],
+        "metric_definitions": [
+          "Accepted run: exact frozen method/scenario/seed key with 100k clock, 10 audited checkpoints and 50 deterministic episodes."
+        ]
+      }
+    },
+    {
+      "id": "src_method_macro",
+      "label": "方法级场景等权聚合",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  method,\n  success_rate_macro_mean AS success_rate,\n  collision_rate_macro_mean AS collision_rate,\n  timeout_rate_macro_mean AS timeout_rate,\n  mean_return_macro_mean AS mean_return,\n  success_rate_mean_scenario_rank AS mean_scenario_rank,\n  success_rate_scenario_wins_including_ties AS scenario_wins,\n  parameter_count_mean AS parameters,\n  wall_ms_per_learner_update_mean AS learner_update_ms,\n  inference_ms_per_action_mean AS inference_ms,\n  peak_gpu_memory_mb_mean AS peak_gpu_mb\nFROM method_macro_summary\nORDER BY success_rate DESC",
+        "description": "每个方法先在场景内聚合 3 个训练种子，再对 6 个场景等权平均，并保留效率与排名字段。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "method_macro_summary"
+        ],
+        "filters": [
+          "6 frozen methods",
+          "6 equally weighted scenarios",
+          "3 seeds per scenario"
+        ],
+        "metric_definitions": [
+          "Success rate: successful deterministic episodes / 50 per run.",
+          "Macro mean: equal mean over 6 scenario-level seed means."
+        ]
+      }
+    },
+    {
+      "id": "src_cell_success",
+      "label": "方法×场景正式单元聚合",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  method,\n  scenario,\n  success_rate_mean AS success_rate,\n  collision_rate_mean AS collision_rate,\n  timeout_rate_mean AS timeout_rate,\n  mean_return_mean AS mean_return,\n  seeds_completed,\n  episodes_total,\n  success_rate_bootstrap95_low AS success_ci_low,\n  success_rate_bootstrap95_high AS success_ci_high\nFROM cell_metrics\nORDER BY scenario, success_rate DESC",
+        "description": "读取官方聚合器输出的 36 个方法×场景单元及分层 bootstrap 区间。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "cell_metrics"
+        ],
+        "filters": [
+          "accepted complete cells only",
+          "150 episodes per method×scenario cell"
+        ],
+        "metric_definitions": [
+          "Cell success rate: mean of 3 training-seed run success rates; 150 held-out episodes per cell."
+        ]
+      }
+    },
+    {
+      "id": "src_macro_contrasts",
+      "label": "预声明场景级消融统计",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  comparison,\n  left,\n  right,\n  success_rate_macro_delta AS success_delta,\n  collision_rate_macro_delta AS collision_delta,\n  timeout_rate_macro_delta AS timeout_delta,\n  mean_return_macro_delta AS return_delta,\n  success_rate_scenario_sign_flip_p AS success_signflip_p,\n  success_rate_holm_adjusted_p AS success_holm_p,\n  collision_rate_scenario_sign_flip_p AS collision_signflip_p,\n  collision_rate_holm_adjusted_p AS collision_holm_p,\n  scenarios\nFROM macro_comparisons\nORDER BY CASE comparison\n  WHEN 'mst_minus_sac' THEN 1\n  WHEN 'mst_slt_minus_mst' THEN 2\n  WHEN 'temporal_graph_minus_mst_slt' THEN 3\n  WHEN 'full_balanced_minus_temporal_graph' THEN 4\n  WHEN 'full_balanced_minus_mst_slt' THEN 5\n  ELSE 6 END",
+        "description": "读取 6 个预声明对比的场景等权效应、精确 sign-flip 与 Holm 校正结果。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "macro_comparisons"
+        ],
+        "filters": [
+          "6 frozen scenarios",
+          "5 MST-family contrasts in Holm family",
+          "PPO−SAC descriptive"
+        ],
+        "metric_definitions": [
+          "Macro delta: equal mean of 6 scenario deltas (left minus right).",
+          "Holm p: family-wise adjusted exact scenario sign-flip p over 5 MST-family contrasts, separately per primary metric."
+        ]
+      }
+    },
+    {
+      "id": "src_full_scenario",
+      "label": "Full 与 MST+SLT 的逐场景对比",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  scenario,\n  success_delta,\n  success_ci_low,\n  success_ci_high,\n  collision_delta,\n  collision_ci_low,\n  collision_ci_high,\n  timeout_delta,\n  return_delta\nFROM scenario_attribution\nWHERE comparison = 'full_balanced_minus_mst_slt'\nORDER BY CASE scenario\n  WHEN 'left_turn' THEN 1 WHEN 'cross' THEN 2 WHEN 'roundabout_easy' THEN 3\n  WHEN 'roundabout_medium' THEN 4 WHEN 'roundabout' THEN 5 ELSE 6 END",
+        "description": "限制为 Full+BalancedSlots 减 MST+SLT，展示差异集中在哪些场景。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "scenario_attribution"
+        ],
+        "filters": [
+          "comparison = full_balanced_minus_mst_slt"
+        ],
+        "metric_definitions": [
+          "Scenario delta: Full+BalancedSlots metric minus MST+SLT metric for the same scenario."
+        ]
+      }
+    },
+    {
+      "id": "src_stability",
+      "label": "训练种子稳定性聚合",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  method,\n  mean_within_scenario_seed_std_success_rate AS mean_seed_std,\n  max_within_scenario_seed_std_success_rate AS max_seed_std,\n  max_std_scenario_success_rate AS max_std_scenario,\n  mean_within_scenario_seed_std_collision_rate AS mean_collision_seed_std\nFROM seed_stability\nORDER BY mean_seed_std ASC",
+        "description": "在每个场景内计算 3 个训练种子成功率标准差，再跨 6 场景平均。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "seed_stability"
+        ],
+        "filters": [
+          "3 training seeds in every method×scenario cell"
+        ],
+        "metric_definitions": [
+          "Mean seed std: population standard deviation across 3 training-seed run rates within each scenario, averaged over 6 scenarios."
+        ]
+      }
+    },
+    {
+      "id": "src_diagnostics",
+      "label": "训练诊断与成功率的描述性关联",
+      "query": {
+        "engine": "sqlite",
+        "sql": "SELECT\n  association_scope,\n  method_or_comparison,\n  diagnostic,\n  outcome,\n  observations,\n  raw_pearson_r,\n  scenario_residual_pearson_r,\n  paired_delta_pearson_r,\n  interpretation\nFROM diagnostic_associations\nWHERE outcome = 'success_rate'\n  AND diagnostic IN (\n    'diagnostic_topology_attention_entropy_mean',\n    'diagnostic_slot_scale_ratio_mean',\n    'diagnostic_graph_mean_edge_weight_mean'\n  )\nORDER BY association_scope, method_or_comparison, diagnostic",
+        "description": "筛选 topology entropy、slot-scale ratio 与 edge weight 的小样本描述性相关，禁止机制因果解释。",
+        "executed_at": "2026-08-14T00:00:00+08:00",
+        "tables_used": [
+          "diagnostic_associations"
+        ],
+        "filters": [
+          "outcome = success_rate",
+          "selected structural diagnostics",
+          "n = 18 runs per within-method estimate"
+        ],
+        "metric_definitions": [
+          "Scenario-residual Pearson r: within-method diagnostic and success deviations after subtracting each scenario mean.",
+          "Paired-delta Pearson r: correlation between Full−TemporalGraph diagnostic and success deltas over 18 paired runs."
+        ]
+      }
+    }
+  ],
+  "package_info": {
+    "mode": "portable_html",
+    "researchMethodModified": false,
+    "protocolSha256": "0CA2FA9E2D2CDC63AF9288AE51210D1B14CF5B95D9A351F874C56BBC7769181A",
+    "retryArchiveSha256": "95F44AB0CDBB08794F71E99DB274DFD85A9CCD5146FDC368E1DF06B6C15C1701"
+  }
+}

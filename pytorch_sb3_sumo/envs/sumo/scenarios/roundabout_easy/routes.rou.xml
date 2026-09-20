@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="ego_type" accel="2.4" decel="4.5" emergencyDecel="8" sigma="0" length="4.7" minGap="2" maxSpeed="10" color="0,0.35,1"/>
+    <vType id="traffic" accel="2.2" decel="4.5" sigma="0.35" length="4.7" minGap="2.5" maxSpeed="11.11"/>
+    <route id="ego_route" edges="south_in ring_se ring_en north_out"/>
+    <route id="west_east" edges="west_in ring_ws ring_se east_out"/>
+    <route id="east_west" edges="east_in ring_en ring_nw west_out"/>
+    <vehicle id="ego" type="ego_type" route="ego_route" depart="0" departLane="best" departSpeed="0"/>
+    <flow id="west_east_flow" type="traffic" route="west_east" begin="0" end="4000" vehsPerHour="180" departLane="random" departSpeed="random"/>
+    <flow id="east_west_flow" type="traffic" route="east_west" begin="0" end="4000" vehsPerHour="180" departLane="random" departSpeed="random"/>
+</routes>

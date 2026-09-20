@@ -1,0 +1,92 @@
+schema_version: topology-temporal-v3-action-calibration-diagnostic/v1
+status: preregistered
+evidence_role: development_diagnostic_only
+created_at_local: '2026-08-17T19:39:50+08:00'
+
+lineage:
+  v2_fast_protocol_sha256: 42b6b32c343125ca4e97cbdb26019fa0bbf63b785edd13612b996a8710090455
+  v2_candidate_selection_sha256: 424b60ea7397e602da7b768ccffd3d981fe7c844268eabf80f3c9302416b7b04
+  v2_promotion_gate_sha256: 4527894a32365d372bd5706d0b90a3412f9dae2349397495be60a6d558c6da8c
+  v2_promotion_decision: fail
+  formal_test_unlocked: false
+
+hypothesis:
+  observation: >-
+    The v2 candidate passes localisation and representation-balance checks but
+    collapses to keep-lane actions on CARLA.
+  intervention: >-
+    Apply a fixed factor of 5.0 to only the deterministic lateral actor output,
+    then clip to [-1, 1]. Do not alter longitudinal action, representation,
+    training weights, environment thresholds, rewards, or traffic assets.
+  falsifier: >-
+    Reject the intervention immediately if a fresh-seed CARLA diagnostic does
+    not improve activity and success while respecting collision and off-route
+    limits.
+
+offline_selection:
+  source: accepted promotion validation action traces only
+  selected_lateral_scale: 5.0
+  reason: >-
+    It is the largest inspected integer scale below the observed seed-1
+    threshold cliff between 5.0 and 5.5. Online scale sweeps are prohibited.
+  receipt: results_topo_v3_dev/offline_scale_selection.json
+
+locked_runtime:
+  environment: llm_pipeline
+  device: cuda
+  traffic_protocol: frozen_60_20_20
+  evaluation_split: validation
+  episode_limit_profile: source
+  action_repeat: 3
+  evaluation_seed_start: 20000
+  episodes_per_stage: 10
+  lateral_scale: 5.0
+  online_scale_count: 1
+  training_jobs: 0
+  formal_test_access: prohibited
+
+stages:
+  - id: A_carla_activity
+    order: 1
+    scenario: carla
+    source_training_seed: 0
+    source_model: results_topo_v2_fast/candidate_validation/runs/cv__cand__carla__s0__p42b6b32c/final_model.zip
+    source_model_sha256: 0612a96c2f6d4f74c4dcd9efb726cac3cc3c1ccc2b38e2e2719af3dad686fff2
+    gate_all_required:
+      finite: true
+      success_rate_min: 0.30
+      collision_rate_max: 0.10
+      off_route_rate_max: 0.00
+      timeout_rate_max: 0.70
+      lane_command_keep_rate_max: 0.90
+      lane_change_applied_rate_min: 0.02
+    on_fail: stop_without_cross_or_training
+    on_pass: run_B_cross_guard
+
+  - id: B_cross_guard
+    order: 2
+    scenario: cross
+    source_training_seed: 0
+    source_model: results_topo_v2_fast/candidate_validation/runs/cv__cand__cross__s0__p42b6b32c/final_model.zip
+    source_model_sha256: be20ff53809344c59f0b4a76562a92644d11c58f3d89ca617a5bc1f36511158d
+    prerequisite: A_carla_activity_passed
+    gate_all_required:
+      finite: true
+      success_rate_min: 0.50
+      collision_rate_max: 0.45
+      off_route_rate_max: 0.00
+      timeout_rate_max: 0.30
+      lane_command_keep_rate_max: 0.80
+    on_fail: reject_v3_calibration
+    on_pass: allow_new_promotion_preregistration_only
+
+decision_policy:
+  no_gate_compensation: true
+  both_stages_must_pass: true
+  passing_does_not_unlock_formal_test: true
+  next_if_pass: >-
+    Freeze a separate v3 promotion contract before any additional validation.
+  next_if_fail: >-
+    Reject action scaling and retain the v2 negative result; do not launch a
+    new training matrix or formal test.
+

@@ -1,0 +1,221 @@
+{
+  "schema_version": "independent-v2-five-method-six-scenario-comparison/v1",
+  "experiment_id": "independent-v2-five-methods-six-scenarios-100ep-v1",
+  "run_id_prefix": "i5m6s100_v1",
+  "name": "Independent-v2 extension: five methods by six scenarios by 100 evaluation episodes",
+  "created_at_local": "2026-09-05T00:00:00+08:00",
+  "no_fabrication": true,
+  "formal_test_accessed": false,
+  "scope": "Extend the completed independent-v2 single-seed comparison to five methods and all six released/reconstructed scenarios. Reuse the 12 already-complete parent cells byte-for-byte and execute only the 18 missing method-scenario cells.",
+  "matrix": {
+    "method_order": [
+      "mst_slt",
+      "temporal_graph",
+      "full_balanced",
+      "v4_8",
+      "v4_13"
+    ],
+    "scenario_order": [
+      "left_turn",
+      "cross",
+      "roundabout_easy",
+      "roundabout_medium",
+      "roundabout",
+      "carla"
+    ],
+    "method_scenario_cells": 30,
+    "reused_parent_cells": 12,
+    "fresh_cells": 18,
+    "training_seed": 0,
+    "evaluation_episodes_per_cell": 100,
+    "total_evaluation_episodes": 3000,
+    "pairing": "Within every scenario, all methods use training seed 0, evaluation episode seeds 10000-10099, the same ordered physical 80/20 traffic partition, deterministic actions, reward, action interface, observation dimensions, and source episode limit.",
+    "aggregation": "Report every 100-episode method-scenario cell, then an equal-weight six-scenario descriptive macro average. A single training seed cannot estimate cross-training-seed variance or significance.",
+    "primary_metrics": {
+      "success_rate": "higher",
+      "collision_rate": "lower"
+    },
+    "secondary_metrics": {
+      "mean_return": "higher",
+      "off_route_rate": "lower",
+      "timeout_rate": "lower",
+      "mean_success_completion_time_seconds": "lower"
+    }
+  },
+  "methods": {
+    "mst_slt": {
+      "display_label": "MST+SLT",
+      "trainer_adapter": "base",
+      "cli_algorithm": "scene_rep",
+      "implementation_id": "released_scene_rep_pytorch_port_v1"
+    },
+    "temporal_graph": {
+      "display_label": "TemporalGraph",
+      "trainer_adapter": "base",
+      "cli_algorithm": "temporal_graph",
+      "implementation_id": "temporal_vehicle_graph_slt_pytorch_v1"
+    },
+    "full_balanced": {
+      "display_label": "Full+BalancedSlots",
+      "trainer_adapter": "base",
+      "cli_algorithm": "topo_scene_balanced",
+      "implementation_id": "topo_temporal_graph_slt_balanced_slots_v1"
+    },
+    "v4_8": {
+      "display_label": "v4.8 Tie-only Replicated Calibration",
+      "trainer_adapter": "v4_8",
+      "cli_algorithm": "topo_v4_8_tie_only_replicated_calibration",
+      "implementation_id": "full_decision_aligned_hybrid_factorized_entropy_horizon_correct_16_step_credit_tie_only_replicated_joint_selector_v4_8"
+    },
+    "v4_13": {
+      "display_label": "v4.13 Gradient-Isolated Tempered Joint Support",
+      "trainer_adapter": "v4_13",
+      "cli_algorithm": "topo_v4_13_gradient_isolated_tempered_joint_support_prcr_full",
+      "implementation_id": "gradient_isolated_tempered_joint_lane_speed_support_proper_calibrated_ranked_risk_v4_13"
+    }
+  },
+  "scenarios": {
+    "left_turn": {
+      "display_label": "Unprotected Left Turn (high traffic)",
+      "scenario_id": "left_turn_high_density_i5m6s100_v1",
+      "traffic_mode": "high_density_calibrated_v1",
+      "vehicle_scale": 1.3,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [4.0, 6.0],
+      "source_traffic_files": 59,
+      "source_explicit_vehicles_per_file": 500,
+      "source_explicit_vehicles_first_150_seconds_mean": 40.0,
+      "target_explicit_vehicles_first_150_seconds_estimate": 52.0,
+      "rationale": "Apply a moderate 30% increase. The native active-window load is lower than Roundabout-B, so this adds about 12 vehicles in the first 150 seconds while the 4-6 second clone jitter avoids exact departure duplication."
+    },
+    "cross": {
+      "display_label": "Double Merging (high traffic)",
+      "scenario_id": "cross_high_density_single_seed_100ep_v2",
+      "traffic_mode": "high_density_v2",
+      "vehicle_scale": 1.5,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [8.0, 10.0],
+      "rationale": "Inherited exactly from independent v2: 50% additional social vehicles with delayed clones so ego can depart before merge pressure builds."
+    },
+    "roundabout_easy": {
+      "display_label": "Roundabout-A (high traffic)",
+      "scenario_id": "roundabout_easy_high_density_i5m6s100_v1",
+      "traffic_mode": "high_density_calibrated_v1",
+      "vehicle_scale": 1.25,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [2.0, 4.0],
+      "source_traffic_files": 30,
+      "source_explicit_vehicles_per_file": 820,
+      "source_explicit_vehicles_first_150_seconds_mean": 44.0,
+      "target_explicit_vehicles_first_150_seconds_estimate": 55.0,
+      "rationale": "Apply a 25% increase, matching the inherited Roundabout-C multiplier. This adds about 11 vehicles in the first 150 seconds; a 2-4 second jitter distributes clones across the native departure spacing."
+    },
+    "roundabout_medium": {
+      "display_label": "Roundabout-B (high traffic)",
+      "scenario_id": "roundabout_medium_high_density_i5m6s100_v1",
+      "traffic_mode": "high_density_calibrated_v1",
+      "vehicle_scale": 1.2,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [1.5, 3.0],
+      "source_traffic_files": 40,
+      "source_explicit_vehicles_per_file": 952,
+      "source_explicit_vehicles_first_150_seconds_mean": 76.0,
+      "target_explicit_vehicles_first_150_seconds_estimate": 91.2,
+      "rationale": "Apply a conservative 20% increase because this scene already has the largest active-window demand. It still adds about 15 vehicles in the first 150 seconds while limiting insertion-gridlock risk; the jitter matches the inherited roundabout stress convention."
+    },
+    "roundabout": {
+      "display_label": "Roundabout-C (high traffic)",
+      "scenario_id": "roundabout_high_density_single_seed_100ep_v2",
+      "traffic_mode": "high_density_v2",
+      "vehicle_scale": 1.25,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [1.5, 3.0],
+      "rationale": "Inherited exactly from independent v2: a 25% additive increase on the already demanding Roundabout-C task."
+    },
+    "carla": {
+      "display_label": "CARLA Town-10 SUMO reconstruction (high traffic)",
+      "scenario_id": "carla_high_density_single_seed_100ep_v2",
+      "traffic_mode": "high_density_v2",
+      "vehicle_scale": 1.35,
+      "pedestrian_scale": 1.35,
+      "clone_depart_jitter_seconds": [0.8, 1.8],
+      "rationale": "Inherited exactly from independent v2: motor and pedestrian demand are both scaled by 1.35."
+    }
+  },
+  "parent_v2_reuse": {
+    "enabled": true,
+    "training_and_evaluation_rerun_forbidden": true,
+    "protocol_path": "experiments/high_density_single_seed_100ep_v2/protocol.json",
+    "protocol_sha256": "d7ce3e5484817322c4f1d73ab0501be53419e524b63879fc2752feb76ea6cd95",
+    "summary_path": "results_hd_ss100_v2/comparison/summary/summary.json",
+    "summary_sha256": "809b62ce6fba7683c1bfd9f538fe66052433ec52da6d3c91d716d6ef87f39ffd",
+    "result_root": "results_hd_ss100_v2",
+    "profile": "comparison",
+    "methods": ["mst_slt", "temporal_graph", "full_balanced", "v4_8"],
+    "scenarios": ["cross", "roundabout", "carla"],
+    "run_id_template": "hd_ss100_v2__comparison__{method}__{scenario}__seed0",
+    "required_evaluation_episodes": 100,
+    "adoption_rule": "Reference validated parent artifacts by path and SHA-256; do not copy, retrain, or reevaluate these 12 cells."
+  },
+  "v4_13_lineage": {
+    "architecture_contract_path": "experiments/topo_scene_v4/experiment_contract_v4_13.yaml",
+    "architecture_contract_sha256": "64705b16ec83b62b2dd9113d9c21bc4aa70033bc9402ef7d5cca69447a24a2fd",
+    "implementation_freeze_path": "results_topo_v4_13_dev/engineering/implementation_freeze.json",
+    "implementation_freeze_sha256": "157317f7e01ea564075220df0af97f3e4f4b09203e28366b9dc979965ddcacd4",
+    "stage0_results_sha256": "3a39ef71c61b94500c5c9d6a58fd6ddf812da0720769d4489e07205b1ef283a6",
+    "attribution_sha256": "40c32791653d52756fb3e5e7c4a86d8b04be5b24bae6f32dbad71b5e15eff0b2",
+    "evidence_scope": "Fresh independent-v2-compatible extension only. The v4.13 formal/test partition remains locked and untouched."
+  },
+  "environment_contract": {
+    "map_changed": false,
+    "ego_route_changed": false,
+    "observation_changed_within_method": false,
+    "action_space_changed": false,
+    "reward_changed": false,
+    "episode_limit_profile": "source",
+    "ego_control_profile": "direct",
+    "physical_traffic_partition": "matched_frozen_80_20",
+    "base_contract_label": "frozen_80_20/evaluation",
+    "v4_contract_label": "frozen_60_20_20/validation mapped to the same physical v2 80/20 holdout",
+    "evaluation_seed_start": 10000,
+    "evaluation_seed_end": 10099,
+    "formal_test_accessed": false,
+    "high_density_overlay_suffix": "_i5m6s100_v1.rou.xml",
+    "density_design": "All six scenarios use additive high-traffic overlays. The three newly calibrated multipliers decrease as native active-window demand rises: Left-turn 1.30x, Roundabout-A 1.25x, Roundabout-B 1.20x."
+  },
+  "profiles": {
+    "smoke": {
+      "raw_training_steps": 60,
+      "learning_starts_raw_steps": 0,
+      "checkpoint_frequency_raw_steps": 30,
+      "evaluation_episodes": 2,
+      "calibration_episodes": 2,
+      "seeds": [0],
+      "evaluation_seed_start": 910000,
+      "calibration_seed_start": 920000,
+      "evidence_scope": "Engineering smoke only; never report as a method result."
+    },
+    "comparison": {
+      "raw_training_steps": 50000,
+      "learning_starts_raw_steps": 5000,
+      "checkpoint_frequency_raw_steps": 10000,
+      "evaluation_episodes": 100,
+      "calibration_episodes": 12,
+      "seeds": [0],
+      "evaluation_seed_start": 10000,
+      "calibration_seed_start": 80000,
+      "evidence_scope": "Single-training-seed comparison with 12 adopted parent cells, 18 fresh 50k-step cells, and 3,000 deterministic evaluation episodes in the complete matrix."
+    }
+  },
+  "artifact_contract": {
+    "result_root": "results_iv2_5m6s100e_v1",
+    "fresh_run_directory": "comparison/runs",
+    "adoption_receipt": "comparison/adoption/parent_v2_adoption.json",
+    "overlay_directory": "overlays_i5m6s100_v1",
+    "fresh_job_receipt": "i5m6s100_job_receipt.json",
+    "summary_directory": "comparison/summary",
+    "summary_files": ["summary.json", "method_scenario.csv", "method_macro.csv"],
+    "missing_value_rule": "Missing or invalid fresh cells remain explicit with null metrics. Parent values are accepted only through the hash-bound adoption audit.",
+    "single_seed_uncertainty_rule": "Cross-training-seed standard deviations and significance remain null/not claimed."
+  }
+}

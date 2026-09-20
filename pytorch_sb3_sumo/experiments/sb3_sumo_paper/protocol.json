@@ -1,0 +1,276 @@
+{
+  "name": "Scene-Rep Transformer PyTorch-SB3-SUMO reproduction",
+  "version": 12,
+  "evidence_priority": [
+    "released_source_code",
+    "paper_experiment_text_and_tables"
+  ],
+  "environment_assets": {
+    "left_turn_cross_roundabouts": "Authors' v1.0.0 map.net.xml and traffic/*.rou.xml loaded directly by SUMO; ego missions transcribed from scenario.py; SMARTS v0.4.17 source contract uses 1 m waypoints, no neighborhood radius filter, and north-zero headings.",
+    "carla": "SUMO network reconstructed from released carla_env.py; exact wp.npy/wp2.npy tensors, 2.5 m downsampled paths, source history ordering, and actor-selection behavior are reused without CARLA import or installation."
+  },
+  "profiles": {
+    "paper": {
+      "raw_training_steps": 100000,
+      "seeds": [0, 1, 2, 3, 4],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 20000,
+      "evaluation_frequency_raw_steps": 0,
+      "description": "Paper Section IV-E and Tables I/III: 100k steps, five random seeds, 50 test episodes."
+    },
+    "source_release": {
+      "raw_training_steps": 1000000,
+      "seeds": [0],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 20000,
+      "evaluation_frequency_raw_steps": 0,
+      "description": "Defaults exposed by configs/init_configs.py; retained as a separate profile because they conflict with the paper."
+    }
+  },
+  "compatible_predecessor_results": [],
+  "diagnostic_predecessor_results": [
+    {
+      "root": "results_sb3_sumo_paper/paper_source_exact_runs_v9_fresh",
+      "protocol_version": 9,
+      "protocol_sha256": "15673A105A24BD6791EDE9B203A2135ED557F88178B5339FEE5A747990538701",
+      "methods": ["proposed"],
+      "reason": "v9 is retained as near-equivalent diagnostic evidence. At a nonterminal 100k budget boundary it inserted the final incomplete held-action transition before the last source-clock update, whereas the released runner updates without appending that partial transition."
+    },
+    {
+      "root": "results_sb3_sumo_paper/paper_source_exact_runs_v10_frozen",
+      "protocol_version": 10,
+      "protocol_sha256": "18FB82C4E527FFE8F5297D0629866A2BA40C52E17F0D8EFF1409BC40D2DB9534",
+      "methods": ["mst"],
+      "reason": "v10 is retained as diagnostic evidence. In addition to its initially narrow training matrix, its running MST task predates the source-budget partial-transition replay fix and therefore cannot be imported into formal aggregates."
+    },
+    {
+      "root": "results_sb3_sumo_paper/paper_source_audited_runs_v11_frozen",
+      "protocol_version": 11,
+      "protocol_sha256": "6FBE05B930CED861135E31D52F758920087DA80E0F736324A5E1943AB8D90240",
+      "methods": ["proposed"],
+      "reason": "v11 is retained as diagnostic evidence. Its first 20k checkpoints were delayed to the next SB3 rollout boundary when 20k fell inside a three-step held action; loaded raw clocks were 20002, 20000, and 20002 instead of always 20000."
+    }
+  ],
+  "common_hyperparameters": {
+    "off_policy_action_repeat": 3,
+    "history_steps": 10,
+    "neighbors": 5,
+    "path_length": 10,
+    "learning_rate": 0.0001,
+    "discount": 0.99,
+    "batch_size": 32,
+    "learning_starts_raw_steps": 5000,
+    "replay_buffer_capacity": 20000,
+    "n_step": 4,
+    "polyak_tau": 0.005,
+    "speed_limit_mps": 10
+  },
+  "source_compatibility_contract": {
+    "future_prediction_horizon": 1,
+    "action_hold_and_raw_clock": "One policy action is held for three 0.1 s simulator steps; replay insertion occurs after the held-action boundary, while eligible updates occur once per raw step.",
+    "n_step_replay": "cpprb-compatible four-transition reward aggregation and episode-tail flushing with a 20,000 finalized-transition global capacity; Proposed also preserves the released make_predictions=1 trainer's duplicate insertion of the final episode transition.",
+    "bootstrap_discount": "The released algos/sac.py applies one gamma after cpprb's N-step reward instead of gamma**4; this released-source behavior is preserved.",
+    "time_limit_bootstrap": "The SMARTS runner rewrites max-step done to false; the CARLA runner stores carla_env.py max_time done unchanged. SUMO Gymnasium truncated/terminated values preserve that distinction.",
+    "random_rotation": "Enabled during source-equivalent action collection and gradient updates, disabled during formal test episodes as in set_configs(test=True).",
+    "tensorflow_attention": "Finite -1e9 attention masking, padded-query max pooling, and rank-three Keras MultiHeadAttention Glorot fan calculations are reproduced in PyTorch.",
+    "neighbor_history_gaps": "SMARTS NeighbourAgentBuffer component-wise linear interpolation for temporarily missing/reappearing actors is preserved before ten-step history truncation.",
+    "traffic_variations": "Released traffic route files use SMARTS v0.4.17 lexicographic discovery order and its seed-42 np.roll start, then cycle once per episode; preflight validation uses a separate environment and cannot advance the formal training cycle.",
+    "endless_traffic": "SMARTS v0.4.17's default endless_traffic behavior is reproduced in TraCI: non-loop social vehicles are reinserted on their original route after arrival, while directly looping routes are extended.",
+    "external_ego_control": "SMARTS v0.4.17 external ego settings are reproduced: speedMode=0b00000, tau=4, decel=6, and passenger dimensions 3.68 x 1.47 x 1.4 m. SUMO safe-speed, right-of-way, and explicit lane-change safety overrides are disabled so they cannot replace the learned policy.",
+    "source_pose_and_collision": "TraCI vehicle positions are converted from front-bumper to provider-center coordinates using SMARTS v0.4.17 vehicle-class dimensions. Collision events combine SUMO reports with a source-dimension oriented-box contact test and the source Bullet sensor's 0.05 m leeway.",
+    "source_waypoint_paths": "SMARTS v0.4.17 behavior is preserved, including its internal-edge route-filter TODO/bug: the fixed-route ego rejects a valid internal junction edge absent from the route list and therefore truncates that candidate at the junction. Sensors attached to social vehicles use mission=None/EndlessMission, so their paths are unconstrained on ordinary edges and constrained to the current internal plus outgoing edge inside a junction. Expansion is limited to the ten-waypoint horizon, paths are stable-sorted by starting lane index, and the adapter retains only the first two; duplication is based on there being exactly one candidate, not on whether a second candidate becomes all-zero after current-waypoint removal and padding.",
+    "ppo_raw_clock": "SMARTS PPO observes and chooses an action every 0.1 s raw step. CARLA PPO also stores one transition per raw step but reuses the selected action, value, and collection log-probability for three raw steps, including across 512-step rollout boundaries.",
+    "ppo_rollout_quirks": "The released 512-step current-state bootstrap bug, no time-limit bootstrap, rollout-wide advantage normalization, training-mode CARLA attention dropout during collection, tanh collection Jacobian, and asymmetric unsquashed update log-probability are preserved.",
+    "ppo_shared_encoder_gradient": "GaussianActorCritic.compute_log_probs and compute_entropy stop gradients at the shared encoded state. The shared CNN/GRU encoder is therefore updated only by the value loss, while the actor MLP remains trainable from the policy loss; v12 preserves that split.",
+    "off_policy_budget_end": "If max_steps is reached between three-step held-action boundaries without an episode event, the released runner performs the eligible raw-step updates but does not append an incomplete replay transition. v12 skips only that budget-partial replay insertion.",
+    "off_policy_checkpoint_clock": "The released runner saves immediately after the eligible update at each exact raw-step multiple. If a threshold lies inside a three-step held action, v12 splits the pre-transition updates and serializes the learner at that exact raw step; a threshold on the held-action boundary is saved only after replay insertion and the boundary update.",
+    "checkpoint_artifact_audit": "Every formal run must read every periodic SB3 ZIP after training, pass member CRC validation, verify the internal _raw_steps_seen or num_timesteps clock against its exact threshold, and record size plus SHA-256 in checkpoint_audit.json. The orchestrator rejects runs without this audit or with any clock mismatch.",
+    "ppo_budget_and_test_checkpoint": "The requested paper budget is 100000, the released on-policy runners finish the crossing 512-step horizon at 100352, and tools/test.py restores the latest periodic checkpoint at 100000 before the final horizon update. final_model is therefore the 100000 checkpoint; post_horizon_model preserves the 100352 learner for audit.",
+    "ppo_evaluation_api_repair": "The released tf2rl-1.1.5 VPG passes test as the second positional GaussianActorCritic argument, which binds to mask rather than test; SMARTS evaluation consequently samples with training semantics. The CARLA evaluator additionally calls get_action, whose two-value unpack is incompatible with GaussianActorCritic's three outputs and is not runnable. The migration applies the smallest coherent intended repair for both branches: deterministic mean action with evaluation-mode dropout. This repair is explicit and is not claimed to be literal execution of the broken release path.",
+    "test_policy_selection_limit": "The paper says to test the policy with highest training success. The release has no one-shot training entry, no on-policy best-policy saver, and only a commented off-policy saver whose condition tracks mean return rather than success. Formal outputs therefore retain source-selected latest periodic policies for every seed and report all-seed statistics; they do not claim to reconstruct the unpublished best-policy selection.",
+    "completion_time_reporting": "The paper defines completion time over successful trials. Released runner return values use inconsistent counters and leave their successful full_step lists unused. Detailed SUMO evaluation therefore records every episode and computes raw_steps*0.1 only over successful episodes, following the paper's explicit metric definition rather than the broken runner aggregate."
+  },
+  "environment_equivalence_limitations": {
+    "smarts": "The authors' exact SUMO networks and route traffic are reused, but SMARTS vehicle controllers and waypoint-provider internals are replaced by direct SUMO/TraCI equivalents.",
+    "carla": "No CARLA map/physics asset was released for direct SUMO use. The source route, waypoint tensors, success box, history/actor contract, required lane change, vehicles, and pedestrians are reconstructed, but CARLA physics and sensor timing cannot be bitwise reproduced in SUMO."
+  },
+  "scenario_order": [
+    "left_turn",
+    "cross",
+    "roundabout_easy",
+    "roundabout_medium",
+    "roundabout",
+    "carla"
+  ],
+  "scenario_labels": {
+    "left_turn": "Unprotected Left Turn",
+    "cross": "Double Merging",
+    "roundabout_easy": "Roundabout-A",
+    "roundabout_medium": "Roundabout-B",
+    "roundabout": "Roundabout-C",
+    "carla": "CARLA Town-10 task recreated in SUMO"
+  },
+  "supported_methods": {
+    "proposed": {
+      "train_cli_algorithm": "scene_rep",
+      "paper_label": "Proposed",
+      "fidelity": "MST + SLT + released-source SAC",
+      "scenarios": ["left_turn", "cross", "roundabout_easy", "roundabout_medium", "roundabout", "carla"],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    },
+    "mst": {
+      "train_cli_algorithm": "mst",
+      "paper_label": "MST",
+      "fidelity": "MST + released-source SAC with SLT disabled before construction; no auxiliary RNG consumption or terminal duplicate insertion",
+      "scenarios": ["left_turn", "cross", "roundabout_easy", "roundabout_medium", "roundabout", "carla"],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    },
+    "ppo": {
+      "train_cli_algorithm": "ppo",
+      "paper_label": "PPO",
+      "fidelity": "Released-source PPO training data flow and policy: SMARTS RGB CNN; CARLA vector GRU/attention with three-raw-step cached action/value/log-probability; actor gradients stop at the shared encoder. Evaluation uses the declared minimal repair for the broken release test API.",
+      "scenarios": ["left_turn", "cross", "roundabout_easy", "roundabout_medium", "roundabout", "carla"],
+      "environment_action_repeat": 1,
+      "policy_action_hold": {
+        "default": 1,
+        "carla": 3
+      },
+      "learning_rate": 0.0005,
+      "learning_starts_raw_steps": 0,
+      "expected_collected_raw_steps": 100352,
+      "source_test_checkpoint_raw_steps": 100000
+    }
+  },
+  "not_faithfully_integrated": {
+    "plain_sac": "The paper uses an LSTM state encoder, while the released generic config leaves use_hier enabled; there is no unambiguous one-shot source configuration.",
+    "drq": "The paper says stacked raster images, but the released test/config path selects a CNN over vector trajectories and applies a same-size random crop.",
+    "dt": "configs/init_configs.py and tools/test.py explicitly raise NotImplementedError; the paper trains DT separately from 500 successful trajectories.",
+    "rdm": "The released rule-based implementation delegates behavior to SMARTS; there is no simulator-independent policy contract to transfer exactly to SUMO."
+  },
+  "paper_reference_percent": {
+    "left_turn": {
+      "RDM": [2, 54, 44],
+      "PPO": [36, 50, 10],
+      "SAC": [68, 28, 0],
+      "DrQ": [78, 20, 0],
+      "DT": [66, 32, 0],
+      "MST": [88, 12, 0],
+      "Proposed": [94, 4, 0]
+    },
+    "cross": {
+      "RDM": [0, 100, 0],
+      "PPO": [36, 64, 0],
+      "SAC": [62, 22, 0],
+      "DrQ": [76, 14, 0],
+      "DT": [70, 30, 0],
+      "MST": [92, 4, 0],
+      "Proposed": [96, 2, 0]
+    },
+    "roundabout_easy": {
+      "RDM": [68, 30, 0],
+      "PPO": [66, 34, 0],
+      "SAC": [76, 24, 0],
+      "DrQ": [80, 20, 0],
+      "DT": [76, 22, 0],
+      "MST": [84, 16, 0],
+      "Proposed": [88, 12, 0]
+    },
+    "roundabout_medium": {
+      "RDM": [2, 98, 0],
+      "PPO": [42, 58, 0],
+      "SAC": [48, 52, 0],
+      "DrQ": [72, 28, 0],
+      "DT": [68, 32, 0],
+      "MST": [76, 24, 0],
+      "Proposed": [82, 18, 0]
+    },
+    "roundabout": {
+      "RDM": [0, 100, 0],
+      "PPO": [38, 50, 12],
+      "SAC": [46, 48, 6],
+      "DrQ": [68, 30, 2],
+      "DT": [66, 30, 0],
+      "MST": [66, 34, 0],
+      "Proposed": [76, 24, 0]
+    },
+    "carla": {
+      "PPO": [56, 38, 6],
+      "DrQ": [84, 10, 4],
+      "DT": [70, 18, 8],
+      "Proposed": [88, 6, 2]
+    }
+  },
+  "known_source_paper_conflicts": [
+    {
+      "field": "training steps",
+      "paper": 100000,
+      "source_default": 1000000
+    },
+    {
+      "field": "number of experiments/seeds",
+      "paper": 5,
+      "source_default": 1
+    },
+    {
+      "field": "global predictive horizon",
+      "paper": 3,
+      "source_default": 1
+    },
+    {
+      "field": "Double Merging episode limit",
+      "paper": 400,
+      "source_test_path": 600
+    },
+    {
+      "field": "Roundabout-C episode limit",
+      "paper": 800,
+      "source_test_path": 1000
+    },
+    {
+      "field": "ego starting position",
+      "paper": "random along starting route",
+      "source_scenarios": "fixed lane/position and delayed mission start"
+    },
+    {
+      "field": "PPO learning rate",
+      "paper": 0.0001,
+      "source_set_on_policy_configs": 0.0005
+    },
+    {
+      "field": "SMARTS PPO image history",
+      "paper": "same stacked rasterized image scheme as DrQ",
+      "source_runner": "one current 80x80x3 top_down_rgb frame"
+    },
+    {
+      "field": "CARLA PPO scene encoder",
+      "paper": "directly employ MST as scene encoding for all baselines",
+      "source_set_on_policy_configs": "Ego_Neighbours_Encoder over (6,10,5) trajectories without candidate-route map input"
+    },
+    {
+      "field": "CARLA candidate route count",
+      "paper_table_vii": 2,
+      "source_carla_env": 3
+    },
+    {
+      "field": "test policy selection",
+      "paper": "policy network with highest success rate during training",
+      "source_release": "no one-shot trainer; on-policy has no best saver; off-policy best saver is commented and conditioned on mean return; tools/test.py loads latest periodic checkpoint"
+    },
+    {
+      "field": "PPO evaluation call",
+      "paper": "subsequent testing phase",
+      "source_release": "SMARTS test flag binds to mask and remains stochastic; CARLA get_action path fails by unpacking three actor-critic outputs into two"
+    },
+    {
+      "field": "completion-time aggregation",
+      "paper": "mean and standard deviation over successful testing trials",
+      "source_release": "successful full_step lists are unused and returned step counters are inconsistent across runners"
+    }
+  ]
+}

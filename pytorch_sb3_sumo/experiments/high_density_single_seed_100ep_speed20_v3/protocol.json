@@ -1,0 +1,204 @@
+{
+  "schema_version": "same-scene-high-density-comparison/v1",
+  "run_id_prefix": "hd_ss100_s20_v3",
+  "name": "Independent-v2 six-method comparison with ego speed control interval [0, 20] m/s",
+  "created_at_local": "2026-08-30T00:00:00+08:00",
+  "no_fabrication": true,
+  "scope": "Repeat the independent v2 matrix with seed 0 and 100 deterministic evaluation episodes per method-scenario job. The sole experimental-variable change from v2 is the ego longitudinal speed-control interval, raised from [0, 10] to [0, 20] m/s.",
+  "parent_v2_contract": {
+    "protocol_path": "experiments/high_density_single_seed_100ep_v2/protocol.json",
+    "protocol_sha256": "d7ce3e5484817322c4f1d73ab0501be53419e524b63879fc2752feb76ea6cd95",
+    "experiment_namespace": "high-density-single-seed-100ep-v2",
+    "only_experimental_variable_changed": "ego_speed_control_interval_mps"
+  },
+  "matrix": {
+    "method_order": [
+      "mst_slt",
+      "temporal_graph",
+      "initial_full",
+      "full_balanced",
+      "v4_1",
+      "v4_8"
+    ],
+    "scenario_order": [
+      "carla",
+      "cross",
+      "roundabout"
+    ],
+    "primary_metrics": {
+      "success_rate": "higher",
+      "collision_rate": "lower"
+    },
+    "secondary_metrics": {
+      "mean_return": "higher",
+      "off_route_rate": "lower",
+      "timeout_rate": "lower",
+      "mean_success_completion_time_seconds": "lower"
+    },
+    "pairing": "For each scenario, all six methods use training seed 0, the same ordered source-traffic partition, density multiplier, 100-episode evaluation seed block, reward, normalized action space, observation dimensions, source episode limit, and [0, 20] m/s longitudinal mapping.",
+    "aggregation": "Report the single seed-0 result for every scenario and an equal-weight three-scenario macro average. Cross-training-seed standard deviation and significance are not estimable and must remain null/not claimed."
+  },
+  "methods": {
+    "mst_slt": {
+      "display_label": "MST+SLT",
+      "role": "requested baseline",
+      "trainer_adapter": "base",
+      "cli_algorithm": "scene_rep",
+      "implementation_id": "released_scene_rep_pytorch_port_v1"
+    },
+    "temporal_graph": {
+      "display_label": "TemporalGraph",
+      "role": "requested baseline",
+      "trainer_adapter": "base",
+      "cli_algorithm": "temporal_graph",
+      "implementation_id": "temporal_vehicle_graph_slt_pytorch_v1"
+    },
+    "initial_full": {
+      "display_label": "Initial Full",
+      "role": "requested initial complete-method baseline",
+      "trainer_adapter": "base",
+      "cli_algorithm": "topo_scene",
+      "implementation_id": "topo_temporal_graph_slt_v1"
+    },
+    "full_balanced": {
+      "display_label": "Full+BalancedSlots",
+      "role": "selected iteration 2 of 3",
+      "trainer_adapter": "base",
+      "cli_algorithm": "topo_scene_balanced",
+      "implementation_id": "topo_temporal_graph_slt_balanced_slots_v1"
+    },
+    "v4_1": {
+      "display_label": "v4.1 Decision-Aligned Hybrid",
+      "role": "selected iteration 3 of 3",
+      "trainer_adapter": "v4_1",
+      "cli_algorithm": "topo_v4_da_hybrid",
+      "implementation_id": "full_decision_aligned_hybrid_action_v4_1"
+    },
+    "v4_8": {
+      "display_label": "v4.8 Tie-only Replicated Calibration",
+      "role": "selected iteration 1 of 3",
+      "trainer_adapter": "v4_8",
+      "cli_algorithm": "topo_v4_8_tie_only_replicated_calibration",
+      "implementation_id": "full_decision_aligned_hybrid_factorized_entropy_horizon_correct_16_step_credit_tie_only_replicated_joint_selector_v4_8"
+    }
+  },
+  "iteration_selection": {
+    "status": "inherited_from_existing_real_closed_loop_screen_frozen_in_v1",
+    "selection_is_not_a_cross_protocol_significance_claim": true,
+    "eligibility": "An iteration must have real closed-loop evidence on at least CARLA and Cross. Rank eligible variants by equal-weight observed target-scenario success, then collision, then target coverage.",
+    "selected": [
+      {
+        "rank": 1,
+        "method": "v4_8",
+        "evidence": "results_topo_v4_8_promotion/summary.json",
+        "macro_success_rate": 0.8333333333333334,
+        "macro_collision_rate": 0.15555555555555556,
+        "boundary": "Historical promotion failed the Cross collision noninferiority gate; v2 will generate fresh matched evidence."
+      },
+      {
+        "rank": 2,
+        "method": "full_balanced",
+        "evidence": "results_systematic_matrix/selected/summary/summary.json",
+        "macro_success_rate": 0.7577777777777778,
+        "macro_collision_rate": 0.13333333333333333,
+        "boundary": "Historical evidence used a different budget and is used only for candidate screening."
+      },
+      {
+        "rank": 3,
+        "method": "v4_1",
+        "evidence": "results_topo_v4_dev/development/summary.json",
+        "macro_success_rate": 0.6666666666666667,
+        "macro_collision_rate": 0.041666666666666664,
+        "boundary": "Historical seed instability remains a known limitation; v2 itself has only one training seed."
+      }
+    ]
+  },
+  "density": {
+    "carla": {
+      "scenario_id": "carla_high_density_single_seed_100ep_speed20_v3",
+      "vehicle_scale": 1.35,
+      "pedestrian_scale": 1.35,
+      "clone_depart_jitter_seconds": [0.8, 1.8],
+      "rationale": "The reconstructed urban task has 840 motor vehicles/hour plus two pedestrian streams; 1.35x raises motor demand to 1134 vehicles/hour while retaining feasible insertion."
+    },
+    "cross": {
+      "scenario_id": "cross_high_density_single_seed_100ep_speed20_v3",
+      "vehicle_scale": 1.5,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [8.0, 10.0],
+      "rationale": "The double-merge corridor receives 50% more social vehicles. Clones are offset 8-10 seconds so the unchanged ego can depart at 5 seconds before the added batch applies merge pressure."
+    },
+    "roundabout": {
+      "scenario_id": "roundabout_high_density_single_seed_100ep_speed20_v3",
+      "vehicle_scale": 1.25,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [1.5, 3.0],
+      "rationale": "Roundabout-C is already the high-traffic source task with a large initial batch; 1.25x avoids reducing the study to entry gridlock."
+    }
+  },
+  "environment_contract": {
+    "experiment_namespace": "high-density-single-seed-100ep-speed20-v3",
+    "parent_experiment_namespace": "high-density-single-seed-100ep-v2",
+    "generated_overlay_suffix": "ss100_s20_v3",
+    "only_change_from_parent_v2": "ego_speed_control_interval_mps",
+    "parent_ego_speed_control_interval_mps": [0.0, 10.0],
+    "ego_speed_control_interval_mps": [0.0, 20.0],
+    "normalized_longitudinal_action_interval": [-1.0, 1.0],
+    "longitudinal_action_mapping": "clip((action[0] + 1) * 10, 0, 20)",
+    "runtime_ego_max_speed_mps": 20.0,
+    "map_changed": false,
+    "ego_route_changed": false,
+    "traffic_density_changed_from_parent_v2": false,
+    "traffic_partition_changed_from_parent_v2": false,
+    "observation_changed": false,
+    "action_space_changed": false,
+    "action_semantics_changed": true,
+    "lateral_action_changed": false,
+    "reward_changed": false,
+    "episode_limit_profile": "source",
+    "ego_control_profile": "direct",
+    "source_ego_xml_changed": false,
+    "runtime_override_only": true,
+    "traffic_implementation": "Load frozen source traffic first, the speed20-v3-namespaced additive social-demand overlay second, and the unchanged source ego route last.",
+    "traffic_partition": "matched_frozen_80_20",
+    "evaluation_partition_rule": "Lexicographic source traffic index modulo five equals zero.",
+    "training_partition_rule": "All remaining source traffic files.",
+    "carla_partition_boundary": "CARLA has one reconstructed traffic file, so source-file train/evaluation disjointness is impossible; episode RNG seeds remain paired."
+  },
+  "profiles": {
+    "smoke": {
+      "raw_training_steps": 60,
+      "learning_starts_raw_steps": 0,
+      "checkpoint_frequency_raw_steps": 30,
+      "evaluation_episodes": 2,
+      "calibration_episodes": 2,
+      "seeds": [0],
+      "evidence_scope": "Engineering smoke only; never report as a method result."
+    },
+    "comparison": {
+      "raw_training_steps": 50000,
+      "learning_starts_raw_steps": 5000,
+      "checkpoint_frequency_raw_steps": 10000,
+      "evaluation_episodes": 100,
+      "calibration_episodes": 12,
+      "seeds": [0],
+      "evaluation_seed_start": 10000,
+      "evidence_scope": "Single-training-seed speed-range comparison: 18 fresh 50k-step jobs and 1800 deterministic evaluation episodes. No cross-seed variance or significance claim."
+    }
+  },
+  "artifact_contract": {
+    "result_root": "results_hd_ss100_s20_v3",
+    "per_run_required": [
+      "arguments.json",
+      "final_model.zip",
+      "paper_evaluation_detailed.json",
+      "high_density_job_receipt.json"
+    ],
+    "summary_required": [
+      "summary.json",
+      "aggregate.csv"
+    ],
+    "missing_value_rule": "Missing or failed jobs remain explicit with null metrics; no value may be copied from independent v2, v1, or normal-density evidence.",
+    "single_seed_uncertainty_rule": "Population standard deviations remain null because one training seed cannot estimate cross-seed variability."
+  }
+}

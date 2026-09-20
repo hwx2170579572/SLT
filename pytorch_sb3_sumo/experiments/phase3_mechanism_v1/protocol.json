@@ -1,0 +1,2056 @@
+{
+  "schema": "phase3-mechanism-v1",
+  "original_frozen_protocol_sha256": "feb09ad21e530611edb07d7426a65a84d269637f4c625d3566ed3d0dda1b0f4b",
+  "scope": "Selection, factorial ablation, decoder diagnosis, gradient/risk and traffic robustness; all development evidence.",
+  "multiseed_confirmation_deferred_by_user": true,
+  "new_training_seeds": [
+    0
+  ],
+  "gpu_workers": 3,
+  "cpu_workers": 0,
+  "efficiency_veto": false,
+  "timeout_remains_task_failure": true,
+  "sources": {
+    "mst_slt__left_turn__control": {
+      "id": "mst_slt__left_turn__control",
+      "method": "mst_slt",
+      "candidate": "control",
+      "scenario": "left_turn",
+      "decoder": "native_deterministic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/arguments.json",
+      "arguments_sha256": "60fb6593d33a1d076d9f04fbc7078c8e92fee75a4f7b4be3f855bbb5a8420023",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/checkpoints/scene_rep_raw_10000_steps.zip",
+          "sha256": "8ff3d2cf2a94b27b3d01dc576c898b5bee69ad1975959ced506d6bd77f92a259",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/checkpoints/scene_rep_raw_20000_steps.zip",
+          "sha256": "cf90a7ea666394328e19b6f713ffb5972fdc45c7acc3402eef8ade34ddae5cc7",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/checkpoints/scene_rep_raw_30000_steps.zip",
+          "sha256": "b620f927f318c7849c8ed5224d8da1521de6fecc5338485b3638856dc94042ed",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/checkpoints/scene_rep_raw_40000_steps.zip",
+          "sha256": "0df17c66b0fcb4f4692cb0675860be9b0b613ab2506149d3818e0567b2979a95",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/final_model.zip",
+          "sha256": "be3c1305112c9e6874eff52d6d83cefbbd6dd1728cc15f66a6b248f98deae53a",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/mst_slt__left_turn__exact_final/result.json",
+      "legacy_evaluation_sha256": "07a8d472fd0349a5d8cdbacd55ed137982a63618072e4fabb566232da1396a4b",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__left_turn__seed0/final_model.zip",
+        "sha256": "be3c1305112c9e6874eff52d6d83cefbbd6dd1728cc15f66a6b248f98deae53a",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "mst_slt__cross__control": {
+      "id": "mst_slt__cross__control",
+      "method": "mst_slt",
+      "candidate": "control",
+      "scenario": "cross",
+      "decoder": "native_deterministic",
+      "arguments": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/arguments.json",
+      "arguments_sha256": "b027c2e333d1bcf4399c7b280bc23a7adff362899b1072e2ecd05c0c161f7a9e",
+      "checkpoints": {
+        "10000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/checkpoints/scene_rep_raw_10000_steps.zip",
+          "sha256": "2a69f3a9b5d3c9948a4f5373bb39e0d675537330eff301ee17f348bff1e50a23",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/checkpoints/scene_rep_raw_20000_steps.zip",
+          "sha256": "2d31e4d851cb2c42989da9198391c5c8caed734be99e1b619a6f6234f4cc8f51",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/checkpoints/scene_rep_raw_30000_steps.zip",
+          "sha256": "477cbbd3ac85a38fd8124b275bf18b1c94235abe7e29ae356a33fa3b145210d1",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/checkpoints/scene_rep_raw_40000_steps.zip",
+          "sha256": "3ea6fbe16277a5fb3418a89ba0e35041388b5b09c6ecd73eb833a461e13b00de",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/final_model.zip",
+          "sha256": "ba37f92cc6d666c41d4eec9f2c7810654394343decf8e737d5106fab65514c8e",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/mst_slt__cross__exact_final/result.json",
+      "legacy_evaluation_sha256": "fe1df65e0f08dbc4429d078e00fc4480b598ea5673fdcce86b4d82c760fe1490",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__cross__seed0/final_model.zip",
+        "sha256": "ba37f92cc6d666c41d4eec9f2c7810654394343decf8e737d5106fab65514c8e",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "mst_slt__roundabout_easy__control": {
+      "id": "mst_slt__roundabout_easy__control",
+      "method": "mst_slt",
+      "candidate": "control",
+      "scenario": "roundabout_easy",
+      "decoder": "native_deterministic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/arguments.json",
+      "arguments_sha256": "8f94c6cf24ed1d7e3ed663d6693fb31637c341d7a45763b02fab16a940cc3793",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/checkpoints/scene_rep_raw_10000_steps.zip",
+          "sha256": "f96f78b4a6afe0c3e70fc2e3c12eb7cc33718b15b3fa1c1bfb9799d849fa7fc1",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/checkpoints/scene_rep_raw_20000_steps.zip",
+          "sha256": "ad104e81f50842bce9d8db5b701b9496ab556e8a29d91165dc8b00fced98f4ca",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/checkpoints/scene_rep_raw_30000_steps.zip",
+          "sha256": "7d7367a6ba00490846ea3e5774411ea502c9148844db2386dd451d08ee726ebc",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/checkpoints/scene_rep_raw_40000_steps.zip",
+          "sha256": "d4a34ccb84ade2c804d26aaa21cb737c654361ed4c4f7f5a113c607138473735",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/final_model.zip",
+          "sha256": "cd81a50ca9991f48739eca2e2a05afbea5d761b8bf834cbafbf1548c342886ba",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/mst_slt__roundabout_easy__exact_final/result.json",
+      "legacy_evaluation_sha256": "778ff376877a5e0ae08a2a80b62752d97bc7dd86963a9f9280f49f373204bfb3",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_easy__seed0/final_model.zip",
+        "sha256": "cd81a50ca9991f48739eca2e2a05afbea5d761b8bf834cbafbf1548c342886ba",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "mst_slt__roundabout_medium__control": {
+      "id": "mst_slt__roundabout_medium__control",
+      "method": "mst_slt",
+      "candidate": "control",
+      "scenario": "roundabout_medium",
+      "decoder": "native_deterministic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/arguments.json",
+      "arguments_sha256": "dbb247dc5ea5e56b6b68ae90a145d09891c66726c03da280ebbfd89043ca8c4c",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/checkpoints/scene_rep_raw_10000_steps.zip",
+          "sha256": "d648cc169518e567b55e4a5327df4e227b5ef09ea8bb06d695bfc28387d17881",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/checkpoints/scene_rep_raw_20000_steps.zip",
+          "sha256": "7345ebe39c2c4238df526ebf29ef2cd12b4aa87786309263123cce23f355234b",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/checkpoints/scene_rep_raw_30000_steps.zip",
+          "sha256": "3f5591e3bbbcead9b4ed7937c48d610ecc90128c21313a5e8f02cad654b6f0d6",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/checkpoints/scene_rep_raw_40000_steps.zip",
+          "sha256": "175c643036447869799814cd5bd111f1b14deadf06a5c87bb78fefa6c9863bfa",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/final_model.zip",
+          "sha256": "6163b4da160769ee191d079e9302981408efb63b6ed43011c3ffa62f046480d7",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/mst_slt__roundabout_medium__exact_final/result.json",
+      "legacy_evaluation_sha256": "c1cf442219045f47cd1292005f396b3cc902b52b6efbaa77afe93e47f4096f6e",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__mst_slt__roundabout_medium__seed0/final_model.zip",
+        "sha256": "6163b4da160769ee191d079e9302981408efb63b6ed43011c3ffa62f046480d7",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "mst_slt__roundabout__control": {
+      "id": "mst_slt__roundabout__control",
+      "method": "mst_slt",
+      "candidate": "control",
+      "scenario": "roundabout",
+      "decoder": "native_deterministic",
+      "arguments": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/arguments.json",
+      "arguments_sha256": "b09637ebb0273fa88d363088d82b46adad924800bd994a89e5aba71a13d8fa9f",
+      "checkpoints": {
+        "10000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/checkpoints/scene_rep_raw_10000_steps.zip",
+          "sha256": "4944442e4982f2a5ca0fe570b180b32da5acbee5f054d8fb6760d204c6e14f4f",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/checkpoints/scene_rep_raw_20000_steps.zip",
+          "sha256": "0e584cd608a14272c3d2704816067f180db55fcde69f5f0bac41c15c0d821ccb",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/checkpoints/scene_rep_raw_30000_steps.zip",
+          "sha256": "a58736c78539d99e8e05af0b68ff1e881de910c4926f5f72270c4c9b0e9b15d0",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/checkpoints/scene_rep_raw_40000_steps.zip",
+          "sha256": "7ed794564ec5b5667e232b442c79ba1e8521ea3b279c8ceb4dd126d68cad9aeb",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/final_model.zip",
+          "sha256": "e84f0a592977570e8d10e6fc1ae24930eab454cde38c8af0b4e782fd5e61e197",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/mst_slt__roundabout__exact_final/result.json",
+      "legacy_evaluation_sha256": "f8b8ac5c5c39dd79af353fa2eb7a8b860cb90fc4b46479f2c7bd10e80985c115",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__roundabout__seed0/final_model.zip",
+        "sha256": "e84f0a592977570e8d10e6fc1ae24930eab454cde38c8af0b4e782fd5e61e197",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "mst_slt__carla__control": {
+      "id": "mst_slt__carla__control",
+      "method": "mst_slt",
+      "candidate": "control",
+      "scenario": "carla",
+      "decoder": "native_deterministic",
+      "arguments": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/arguments.json",
+      "arguments_sha256": "49e2661f688f04884aa4db8682c0605a262f04df4ce1429a7aa6cd1beb769cff",
+      "checkpoints": {
+        "10000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/checkpoints/scene_rep_raw_10000_steps.zip",
+          "sha256": "141ee4911f976042fabb94c48f67539ff84b496028ac02c8bc410bc2fe1a14e0",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/checkpoints/scene_rep_raw_20000_steps.zip",
+          "sha256": "4dcbb4768563b4facd35ab0b7dc36f47b8b0efe82ac646966812caa74628be89",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/checkpoints/scene_rep_raw_30000_steps.zip",
+          "sha256": "9cb73dfa77c670dc26616258eba0c989091580ea8230e0ac24632ab84af30551",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/checkpoints/scene_rep_raw_40000_steps.zip",
+          "sha256": "a131d0c54c86500c681a75eccecd92c4402a2f58a10905725e6bf357ea913603",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/final_model.zip",
+          "sha256": "37394b167883b842b3682cf9a1e12108b2e81ffe447a8cc58e169610828b86a4",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/mst_slt__carla__exact_final/result.json",
+      "legacy_evaluation_sha256": "4515bda54ffea0d1c59b2d5cc3de74429b0ddfa5fc3856ad340e18a9cf18cc8e",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__mst_slt__carla__seed0/final_model.zip",
+        "sha256": "37394b167883b842b3682cf9a1e12108b2e81ffe447a8cc58e169610828b86a4",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_8__left_turn__control": {
+      "id": "v4_8__left_turn__control",
+      "method": "v4_8",
+      "candidate": "control",
+      "scenario": "left_turn",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/arguments.json",
+      "arguments_sha256": "4d090ba7df2100956d139c79900b271a173c670e9a7c71c6c1024e1211bbfeda",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "897ec44d70c338a14db7f06ede261df7ab65f9debc4a135b52ef49d43bd65396",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "ffeb89327c26cc6c9309f710058e2867d6e7c1f24c4b978f89f23e1341de90e8",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "4e203af6620a5ac18f1ccf2d85b236ee761a35e860922fe9cd29ec9ab34b873f",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "eba3f431f1692572ea945ce179a8dd6a045054c1e4f5de9650d9fcf8f75e2043",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/final_model.zip",
+          "sha256": "7966e5e9d201644e34f7f9dc6f42e53ccf4286435303e7557fa1220c1ff24a10",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_8__left_turn__exact_final/result.json",
+      "legacy_evaluation_sha256": "484a4d2aafac858054585791ee1e032512de2174e8c6e7bb703d02e841317516",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__left_turn__seed0/selected_model.zip",
+        "sha256": "84b85d75d24ebecb01e528ad158deaea0460ae0e1858ddc68a3f99199f471728",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_8__cross__control": {
+      "id": "v4_8__cross__control",
+      "method": "v4_8",
+      "candidate": "control",
+      "scenario": "cross",
+      "decoder": "fusion_0_90",
+      "arguments": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/arguments.json",
+      "arguments_sha256": "4e34c9310249fe8299a0081b1db01873ed0f5a12d5ffc96bedabe844dfe09593",
+      "checkpoints": {
+        "10000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_10000_steps.zip",
+          "sha256": "6f6d61d3e3a80059f5356e84f6c8b7c67e42c5615b838809e68ae90e969fdb70",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_20000_steps.zip",
+          "sha256": "2b93d006f78787d0a65c95352f9ed08a351bb282e05b34359243ed85f89d01ae",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_30000_steps.zip",
+          "sha256": "4a54e39ffb905b4adb7721690ead0aec30a6595f1d5b2b126a72b4bc91ea49a5",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_40000_steps.zip",
+          "sha256": "e18ebe218ed9fe567e10ec999ec12fad3b1e5583c50d6bf6b816bf4f6d74162c",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/final_model.zip",
+          "sha256": "a2971182de3fe4bb1455932168105a4be423660b477379738691d2520d99e693",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_8__cross__exact_final/result.json",
+      "legacy_evaluation_sha256": "ef2ab228b2f4f708e0d91c6d2b280ec1c7ce1573ec6437e259b85d3be27e7c71",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__cross__seed0/selected_model.zip",
+        "sha256": "6a18e3d0d7df990a255e8c04e312d02f3cd46e9c2e3e3fe3545951f762c00742",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_8__roundabout_easy__control": {
+      "id": "v4_8__roundabout_easy__control",
+      "method": "v4_8",
+      "candidate": "control",
+      "scenario": "roundabout_easy",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/arguments.json",
+      "arguments_sha256": "6ffbfb10d8bf1c26f1cafca241af90196c7728b18b6d4766f88631f6febf120b",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "6465779fc51c25734744c22cbbebb5d2e8633b0a98bcf2a2aae2b9addd5bfc90",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "7ddf57e1f0e6448f75cd0f76f7b0cb47e025e10327ac320f7498ac418567647f",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "da0d699996d8fbe4e894a30e2bdaf109e86c8a68949628adba402510da34226f",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "18217aea95f3f058af794b617f4d57cc9f9dc945f50b7ebb120bc3e1388c064c",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/final_model.zip",
+          "sha256": "83e72cc6aa808019a9b75498900ea60b748033b1acb480f5f306103817e0e720",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_8__roundabout_easy__exact_final/result.json",
+      "legacy_evaluation_sha256": "eb594dfe06df5cbbeebbf7c19f8bcfd3ad109ef9d5795a0a3b87ec4e9cf0225b",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_easy__seed0/selected_model.zip",
+        "sha256": "798cd176cd18ee5e84d3bffaa9b1038bdb57d97cb4427a0102a20d8203185276",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_8__roundabout_medium__control": {
+      "id": "v4_8__roundabout_medium__control",
+      "method": "v4_8",
+      "candidate": "control",
+      "scenario": "roundabout_medium",
+      "decoder": "fusion_0_90",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/arguments.json",
+      "arguments_sha256": "cb995c5d404eec04c4f2d2b12db2e6907e82985ec192306c82385357055bd702",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "e176a66aa2b5e5e5f5df43959f3b73bece4a27eb67fb9668265aa7baff2256eb",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "eeded693e1efd7f03939fcdb1205d720ec667f03bad5e61ced836f2d5801c144",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "ebd375e17259530a9e4e47008d9cb62bedc71bec09337dfccb861aeda6d96188",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "1d6f376200f73009bfc06813c16630853a7b93ebc19c93446092ed4c32e5a153",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/final_model.zip",
+          "sha256": "5f0b564ea9fc600978ad00fd967f36cdb8b115224acdbb689e957bfe4b16f292",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_8__roundabout_medium__exact_final/result.json",
+      "legacy_evaluation_sha256": "f53e9363f3607897c67159b38c53d37fd5e66abcd722500dddca76e14b963876",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_8__roundabout_medium__seed0/selected_model.zip",
+        "sha256": "7eb0091385b0a1409c73a06a37a95cd03e4110906967e06934295e89b52def56",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_8__roundabout__control": {
+      "id": "v4_8__roundabout__control",
+      "method": "v4_8",
+      "candidate": "control",
+      "scenario": "roundabout",
+      "decoder": "fusion_0_90",
+      "arguments": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/arguments.json",
+      "arguments_sha256": "bb01842fe59a80becab0f6188cfae2f59d446025a69e3dab3baef728f4aa7a05",
+      "checkpoints": {
+        "10000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_10000_steps.zip",
+          "sha256": "55a76db724ea6c0042dc05086cd078eb80ea88b26a5407442a557f6b6f5dbb3e",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_20000_steps.zip",
+          "sha256": "59284ca4dfd622563f172319bfe346dddc1720013e47b865ca43f87ec5eafea5",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_30000_steps.zip",
+          "sha256": "4d91f35878970b4bcee760d4201a97bbf0fcf3c2a99c21ef37c9befea33f5221",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_40000_steps.zip",
+          "sha256": "6fa392e1c292e9f5289c0ce52000ede7301952c52428208848bdb454320a7e63",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/final_model.zip",
+          "sha256": "b72c0f84f59be21a225358fdfc6f53077af72ee6c9fee8ca646d80516ade526c",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_8__roundabout__exact_final/result.json",
+      "legacy_evaluation_sha256": "ddb66177c762d254d8ddc9f56d286d55c183371b7354e0e4c87629074567c57c",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__roundabout__seed0/selected_model.zip",
+        "sha256": "80d1b3902c398c9db4716458e6bc415a2e6a416912d7e7dda5f7b22d2a4e6c15",
+        "raw_steps": 27656
+      },
+      "historical_selected_kind": "highest_training_success"
+    },
+    "v4_8__carla__control": {
+      "id": "v4_8__carla__control",
+      "method": "v4_8",
+      "candidate": "control",
+      "scenario": "carla",
+      "decoder": "target_critic",
+      "arguments": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/arguments.json",
+      "arguments_sha256": "37c6ecf569d7b4492cee3e21e34974ceda40be18c1618c1c38d4b8f478a54452",
+      "checkpoints": {
+        "10000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_10000_steps.zip",
+          "sha256": "29283c9b6e837343300afed0f0b47c70db0adf674e7198d8e4f274dff35d1d0e",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_20000_steps.zip",
+          "sha256": "452dea4f16f3fc7042c0dcd9bc1edc50b9e6e5831f514f7350d5f8d552ff2ac3",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_30000_steps.zip",
+          "sha256": "eeb23e4ebc494f6199cb9650ec83a6ee4214c753012bb8b99004ef920a16cbec",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/checkpoints/topo_v4_8_tie_only_replicated_calibration_raw_40000_steps.zip",
+          "sha256": "a9480e0fa9495eee915fc04b5ac5c6dd5958156bcdcb2beea056bfcf3d98ed4b",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/final_model.zip",
+          "sha256": "277f8f49d29ef06ad68de5bd724b94e7c4db31fe3cf25bb3c8f26c73c34db326",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_8__carla__exact_final/result.json",
+      "legacy_evaluation_sha256": "80d5025a4696321971ae0a6bd0c3e2a52c33ba29ae1ea375ce1867ace7d9eedb",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_hd_ss100_v2/comparison/runs/hd_ss100_v2__comparison__v4_8__carla__seed0/selected_model.zip",
+        "sha256": "7ee15a14c80851ea9f3ebe2fd1bc8e5dc03aa566c37e3b44ebeb973513246faa",
+        "raw_steps": 28374
+      },
+      "historical_selected_kind": "highest_training_success"
+    },
+    "v4_13__left_turn__control": {
+      "id": "v4_13__left_turn__control",
+      "method": "v4_13",
+      "candidate": "control",
+      "scenario": "left_turn",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/arguments.json",
+      "arguments_sha256": "97badeee10ab633bbaa7c6759a85478764eaf5c7dade6e2ef8b625968f3ce458",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "de15786cd534d86d7e8a94e2abcc9b877bd352d7665c9a61899f8abc56c7a7ea",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "459307353014998494ee62b5f8b9b9d33cc9d05d14dc57b0844781dfa3a0ef6d",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "1eb7abac8d3ca5352e532c76f713869af8e3feb15b1ff80117834d035d2fd7dc",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "322dfa0f77a83f383af1139b5bfb2bc7179c6e3a2ef7fa84e0008d8500732ead",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/final_model.zip",
+          "sha256": "69764eb3cdc59e52a39121cb51a7912bf40dca730f8bd34f1676033a81858ad7",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_13__left_turn__exact_final/result.json",
+      "legacy_evaluation_sha256": "d8cab62d2d857b36e09cfb4166e93ec0c160f05f2a597f480793c5e45f0cb008",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__left_turn__seed0/selected_model.zip",
+        "sha256": "cf66cbd9f7f39a641c8bd95105d5156ad74155fd29f992592ac81f476cb2885d",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_13__cross__control": {
+      "id": "v4_13__cross__control",
+      "method": "v4_13",
+      "candidate": "control",
+      "scenario": "cross",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/arguments.json",
+      "arguments_sha256": "635f095bfc1628383fdf9fce9dc3f7854c522e1d840f993e2dbc0f5885ab247d",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "de5d07e891a32adf722f205c70d2eb0b33563e4185a4ac7291f9dee228513b5c",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "ae46658abebb4d53a4f7b7c6f495329f02365efbcd9c0d343579f75d379e2c89",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "3eb2153e4f2c08d0ebb6d0b84c9cce84f1e3265673e6f66cfc58f42a171a6504",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "df9501c5b7757b6c52ad4801ebda7b499720c0823cd0a95e75c5bbe218d36c25",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/final_model.zip",
+          "sha256": "f9f21c86962e83e17ba12fdfd98bea0b9132e296cf1023aa241b3f50b1fe4518",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_13__cross__exact_final/result.json",
+      "legacy_evaluation_sha256": "cefcc25ec4e679ee8d38bcef0d5f98fe2dc3b5f16b522470a52e7929a531a72f",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__cross__seed0/selected_model.zip",
+        "sha256": "7efa626d304702a896ccfc0a309f47d06cf75e32062264b1a35d082771bb2f2a",
+        "raw_steps": 11374
+      },
+      "historical_selected_kind": "highest_training_success"
+    },
+    "v4_13__roundabout_easy__control": {
+      "id": "v4_13__roundabout_easy__control",
+      "method": "v4_13",
+      "candidate": "control",
+      "scenario": "roundabout_easy",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/arguments.json",
+      "arguments_sha256": "54e962449a7fc837145e59a16eb4649a3f3571379cd75a5b0496c1f140b1a084",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "0a9c387c300987e3d192694a8bb63e44f2547f57851e81b4005e759912817ed4",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "09690fb18d52484b0d1694763fb9c585e8c602a271a0625837105c54f7a6f82f",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "ce81e1513f3ea4bc1fc98d53d745924a1b4b2f84075a38ebb097d12b116b0b63",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "814c286e3c8a86c7a9debd3aecb7d377f61b6860ab46c0790028e05e73fa0f75",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/final_model.zip",
+          "sha256": "af20229042313745077229dd555a2efe4234b733a0a873afd0c3101a1b276cb0",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_13__roundabout_easy__exact_final/result.json",
+      "legacy_evaluation_sha256": "f1da8f0a560ff3ae81774cf57d671d4c4fb004cfc65559188f1c826d0becf6c1",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_easy__seed0/selected_model.zip",
+        "sha256": "42416df3f0621fc158f49b049ebbba355eeb252081c47cd70a41c98a43a47bd1",
+        "raw_steps": 20221
+      },
+      "historical_selected_kind": "highest_training_success"
+    },
+    "v4_13__roundabout_medium__control": {
+      "id": "v4_13__roundabout_medium__control",
+      "method": "v4_13",
+      "candidate": "control",
+      "scenario": "roundabout_medium",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/arguments.json",
+      "arguments_sha256": "ab841004b8b0400ff625453cac53046e11dd338ce93e71d29f1b7b667546eff1",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "d8c44f590e4d3eb1e7c331410ef1c812ebdeaf27232bf4f61b2a349234a17fa1",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "82e7eed7bb837d5c59f02daec71167aa6fadda82c3bbefbdc3e749783cd40b8c",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "0bd3953fd1455ae93c6abbaa1b31c7a57117226309517431f7b9f25fb0a032b0",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "4c5f7f1a9038358e36094771fa6ed754b824b00e3ae48585579756abe5b1d10a",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/final_model.zip",
+          "sha256": "408d41d181d5cc4c2448cc8a38c7be939c7e2018070a9d9dde96f3f153f407f6",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_13__roundabout_medium__exact_final/result.json",
+      "legacy_evaluation_sha256": "99619dd40a4f3e6092e9d0f07816a66ad79db60a237c5c9adf7cb3024c7cb968",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout_medium__seed0/selected_model.zip",
+        "sha256": "e200f840406d92cba866bf141def9ab0a01e10ca83b36289ed14fd9e244501f4",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_13__roundabout__control": {
+      "id": "v4_13__roundabout__control",
+      "method": "v4_13",
+      "candidate": "control",
+      "scenario": "roundabout",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/arguments.json",
+      "arguments_sha256": "f00d6ba291d131aabfc511637b3e4c4f6b8a34856fc32e3aabe5f3c92fdfc9d5",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "0d03ab4236aab21cdac3c25fa5239b1040d4684c484459dfc55dee59cc060505",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "fbb9a2777cf6b457cf2eda03998d866974e9243e7cda83913519a30923bb9e46",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "f219b1d0a642d6ac92dee7801ce23fb98110d0f81d46bfaf5e2ac2fed9fd2279",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "ab22802eaec5e5f9712be997a7bb6e57db54c1441ee21e92d749a15c21213804",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/final_model.zip",
+          "sha256": "3bd1aa15667efaee00809844e71ab7f78ae13b19997ddb4e1423c44fd90fbca3",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_13__roundabout__exact_final/result.json",
+      "legacy_evaluation_sha256": "77a35a4af013cc10be3227bd0754d3002c1c5612dd3269ddbfbd9024d24e1075",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__roundabout__seed0/selected_model.zip",
+        "sha256": "bdbd925e23da46fc6acc5423d8e566a835c03eba779abad29b4fc28d1a76e96b",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_13__carla__control": {
+      "id": "v4_13__carla__control",
+      "method": "v4_13",
+      "candidate": "control",
+      "scenario": "carla",
+      "decoder": "target_critic",
+      "arguments": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/arguments.json",
+      "arguments_sha256": "1ca41f4475bbce9285864949746560b95f68b658b0a388502b27f26ba746ea51",
+      "checkpoints": {
+        "10000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "482ede3b4321fc8ec7761c1651d67ddaead6c8a37f10b9561d532174f004ec5c",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "ce623a04436813ab10a3a8b3693e094e786f16831df7fc5d04a87a344f26f8a8",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "47bd45792bc024837b72c4f2ebde8733a19935b961ba6afc0513291dd7773a49",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "39e4140b1383e0ef0ee8786cbe34f6121dd9a38408eba28db46deef5a41a4713",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/final_model.zip",
+          "sha256": "11501528701d46d8eda6bfd10d8061139391be050de9bafa965e4273be4feef5",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase1_checkpoint_diagnostics_v1/jobs/v4_13__carla__exact_final/result.json",
+      "legacy_evaluation_sha256": "1a8a6d732e030748b9470b96d952431370efb769265af705daaa36824eff580c",
+      "training_seed": 0,
+      "new_training": false,
+      "historical_selected": {
+        "path": "results_iv2_5m6s100e_v1/comparison/runs/i5m6s100_v1__comparison__v4_13__carla__seed0/selected_model.zip",
+        "sha256": "f6e2545df22cd81835bd90eb5f7f94fdbbe30b4273e1518442b0c4b7e7b57c9f",
+        "raw_steps": 50000
+      },
+      "historical_selected_kind": "exact_final"
+    },
+    "v4_8__left_turn__lr_half": {
+      "id": "v4_8__left_turn__lr_half",
+      "method": "v4_8",
+      "candidate": "lr_half",
+      "scenario": "left_turn",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/arguments.json",
+      "arguments_sha256": "ce696bf08d31dde8c3457824ca0f166b9d13119614cf6be5b17408d62c8bb913",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "fbfc0c9a9cc58c792d159452194c41b703e5b62bdc1c59dda0bb444b7bd0f8eb",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "b3e616f3c7073dda8e209059bb37f9f6e20938affa567ad420c97374a5d787a0",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "e22c329bea30eebad9d8dd73431a9103766c2f68230b97699bfbcacd885a8ac1",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "37081522a2668bc7d2cf7c463925fbb82676d38ff321dfa73a70d7a1ad316e4f",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/final_model.zip",
+          "sha256": "34a94df7ca993e4472f3ea802edb14c5e42dcaec98623fa630ac226de2d0af8e",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_8__left_turn__lr_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "ebaa97ea62b769f1e501add853aa119631800925e04f052ffb1d6b45039af8ba",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_8__cross__lr_half": {
+      "id": "v4_8__cross__lr_half",
+      "method": "v4_8",
+      "candidate": "lr_half",
+      "scenario": "cross",
+      "decoder": "fusion_0_90",
+      "arguments": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/arguments.json",
+      "arguments_sha256": "536cdf3841c92d4df7504e298bab0549d799c9e69a469fc7da1d4d25a78652f0",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "faf7c704e17420060dcb55281971a5ae9966a5b488e34a2b1c5d6f002e7faec6",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "2db50b6bf1cabcd3e9acbc409ea6772a4cca5a711c8829a85c74b7b100dc561d",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "a8ff4a51b58eeb0d8abc886afe17bfefbc326ea1633e3928a8f7e00b180e25f5",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "1a657e3b76081f0a93567beef4cee09bda6508343bb171ee49332643733cd8c4",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/final_model.zip",
+          "sha256": "6323b5e06d53793f5ff559b23fd6657ba134d9d58e0ebb2e1fa6e2b7668acb08",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_8__cross__lr_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "df3fe0e448f981052bc70f7eb8728ba2e0bdc8dccc4836751045859a7c249a83",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_8__roundabout_easy__lr_half": {
+      "id": "v4_8__roundabout_easy__lr_half",
+      "method": "v4_8",
+      "candidate": "lr_half",
+      "scenario": "roundabout_easy",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/arguments.json",
+      "arguments_sha256": "f729b80f4ff5d57551c41f15ce13f76482a5a403f0a1ff83183b4e92bd20bf6d",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "0bca176f6d10294ca1fffd856fb2160c341f3d0c625fab3aeaf086c4a1b956eb",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "62aee81b7a6edc9c2f7a7de43d500c40bbf0034450469486d0ed44488797e81f",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "5454e127c6764fa09150e75ee484684e4ce4b9d27ce8e926bd843d60dc63f7fb",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "1a198976ce47d0b4a1eb910217404f62cf3332009a9aa25923270a48b2813152",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/final_model.zip",
+          "sha256": "f71165946ad488659eb5b55b8058d1a55d9be7273bbf69527949717efeda52a1",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_8__roundabout_easy__lr_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "f9beab7c420aa02bc28f479271f78ac5e6ba8ae96e31aa47e5a0ced7e14cc296",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_8__roundabout_medium__lr_half": {
+      "id": "v4_8__roundabout_medium__lr_half",
+      "method": "v4_8",
+      "candidate": "lr_half",
+      "scenario": "roundabout_medium",
+      "decoder": "fusion_0_90",
+      "arguments": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/arguments.json",
+      "arguments_sha256": "e806bd43b9d03f430f83f4a0ee109b1a763331d857588f329b54810611a9bfb4",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "511c5fdafcef697c959d17bfebe314ef90728e5ab28a8f863c9358aedda2e447",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "428a70da199999392c3567720006a48d184f6f475ce622dcb2cdb80529323731",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "c8c7e16c2110b8746ad18dcd8ad1863854188e0a71652aea92ca7aabe2f6015a",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "f247988a48c1f8653c8e7805829d8a3e54f15f3925475b291c5168a05841018f",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/final_model.zip",
+          "sha256": "c28fd761f159a52ebaa16dc3528c04889345e70071e369e7fb570f7669456aee",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_8__roundabout_medium__lr_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "3ae0ae5b53340a535e9759bd5856dfa8e22de45fbad085b61e11a041b732e183",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_8__roundabout__lr_half": {
+      "id": "v4_8__roundabout__lr_half",
+      "method": "v4_8",
+      "candidate": "lr_half",
+      "scenario": "roundabout",
+      "decoder": "fusion_0_90",
+      "arguments": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/arguments.json",
+      "arguments_sha256": "dbf88ecda211e6652d78a64b686a2da4d6a8b4a8947e797da15ba82f1ff9755c",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "f75ac4284e6e85fdb1b8aa80d503c6ddc7732b9038f5f44251ca85b61f927be9",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "ddda3182ea308d2355dd26b7f586230d5353293367d795220f7329a5dad6fc84",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "ba709e4dbeff47f1ffd42f4bc06efe3bf021df8c79dd77cd89316977b5d0ac41",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "4ee64af9467b150bd4c17a2e8c81ddf6664a0325c83eb449b1441edc8e9f52b3",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/final_model.zip",
+          "sha256": "11b61ac211cb255200ee5f5f9577185d20b23a69ce96250982c04316134fa95b",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_8__roundabout__lr_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "c67f51f29e8ef8955434ad1e34698ff5e9624c4b8cbb32809b1d42ac514e20aa",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_8__carla__lr_half": {
+      "id": "v4_8__carla__lr_half",
+      "method": "v4_8",
+      "candidate": "lr_half",
+      "scenario": "carla",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/arguments.json",
+      "arguments_sha256": "525815a1d37ca7985c0d8993fd4c31e1a2f0d7625667c80fe157e3ec025d8ada",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "cfaa63ae002cf67c4e2f0c5cf16903bc3f1ce7a36abafae224557413bd3b35a5",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "c16f2b5110323f5e992a2acb63f281d7440f1a28e4c4c3028e0b157f7478b229",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "34b8f43054bfdda82fd3654f80bc4ce1eed5223bec8a4ceaec472b45b47e9ca9",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "a60571ae39d88fa5bcd5b29d26740ef4e55b19f4b86c247675e40be5f726baa3",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/final_model.zip",
+          "sha256": "4dc9a4907ee912039d17feee4607eb471e39cbd9a08948041fd23917570db2e2",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_8__carla__lr_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "2a8c65797bb98c480d1a9bac4da310fc129834aec287893e54cb94c1c6f03687",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_13__left_turn__tau_half": {
+      "id": "v4_13__left_turn__tau_half",
+      "method": "v4_13",
+      "candidate": "tau_half",
+      "scenario": "left_turn",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/arguments.json",
+      "arguments_sha256": "f14ce126779ad45a0a46699ae9086c91a2fb93a6f03cf7eb0f1fc5123c6e10bc",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "bd1c449a10ef5d27344610332a925e6787e53c94689b4f7033c5c2b1aa52c1aa",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "680e494539b7fd3bac5323973061cf112731df8bd558dada441a89a9b0a109f5",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "b34f4f6448d77805408d465ed91a74362759da105439b3a39c4d1670edfde90c",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "9f933d81436920b64c66a9c0ec9d6143232e97f77bc9a24360a0de490913c6e7",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/final_model.zip",
+          "sha256": "bbfa894528a4c61a178786a72422471f9801de1a40842bfc298dc31f79ad0bcc",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_13__left_turn__tau_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "a16d84a25dc1f04597b2ece7b5a421f9f81caaae2411cf481ddfb157d67ac1b8",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_13__cross__tau_half": {
+      "id": "v4_13__cross__tau_half",
+      "method": "v4_13",
+      "candidate": "tau_half",
+      "scenario": "cross",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/arguments.json",
+      "arguments_sha256": "11ca204cf30d099896981c8adaa0b326809654ada7707cc1c4e35a4af40c996a",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "91e6354486a182fcfc7d40fb22fd23577a36e064c53ab1113ef669629136802e",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "3f2a102d87db967747e7a6e874687f1f293a903207d678eb7aeaf6707e3734ff",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "f22dae8195a63ef428867710e20966c0f28231befbeaf7b892bdd0844f7682bf",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "9154eb44479a24211da59fbdb3ff933d90b974cf0eb32bdbe142daedd6924425",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/final_model.zip",
+          "sha256": "f492704c712c0754b6c2a15ffef37dd34766f999454091e5132c234147922ea5",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "03430c800137d55518d36645290c69d4f10ff8fc27dfc72cbf835ff4b8a04f1f",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_13__roundabout_easy__tau_half": {
+      "id": "v4_13__roundabout_easy__tau_half",
+      "method": "v4_13",
+      "candidate": "tau_half",
+      "scenario": "roundabout_easy",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/arguments.json",
+      "arguments_sha256": "2234c2783da60e1bac8e54165105fc1ce7900153e204532deb1d16863e983f8c",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "5956fbb672edcd6b048609062eca06f66cda8db5a0c3f1054467a7c47eb4e830",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "e84ab841ccd4fcafec082b52ace02a4f0fda1cc4ba890cc78b5c59b264a09b95",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "e0a09ab9092caaa26e3c23d97105abdbe9b7444ac29d3644f3dea5ed462e04de",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "b47dab05a8663ae38e187b2cef2626394a31584c3da2d142f7cdd47304a97a7e",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/final_model.zip",
+          "sha256": "79b7db61409c42321431bbe3e876182cf80699fb4e77780ae15e4ae798590ae6",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_13__roundabout_easy__tau_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "4c7c5ed86e829653e1c25918a1a8ac686f153cfb47a64de151e73a782c9dedf2",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_13__roundabout_medium__tau_half": {
+      "id": "v4_13__roundabout_medium__tau_half",
+      "method": "v4_13",
+      "candidate": "tau_half",
+      "scenario": "roundabout_medium",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/arguments.json",
+      "arguments_sha256": "07f810fca5975f317c0103ccaef1f8e836010af840ca87e87496ce3e78f11eb6",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "a14d317255db9384a64667d687701015c9ec8e8a2fef67c3e67437d0d17bf4de",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "e92cb7a94c33071bd7b319ffa280be21ea5a931d0bd57d2221d88bee517ba3ba",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "c59c840c4cc1bd32c3e70f06b820c255220c8514f9f1ba3f3643216f147f6d20",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "463ca91b377813ec1633db4c2075723f8ed21b9492f41c90b21c21a31d49a1fc",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/final_model.zip",
+          "sha256": "0976f12a49944dc22dd6cc8712c5be3efe50aeaec11b5128b73993ac4ff4ffdf",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "c9414b81c4f23b4cd6dfbd8da2f6833b01eb6118f4b27377b609a911b59117f3",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_13__roundabout__tau_half": {
+      "id": "v4_13__roundabout__tau_half",
+      "method": "v4_13",
+      "candidate": "tau_half",
+      "scenario": "roundabout",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/arguments.json",
+      "arguments_sha256": "78d0574a18c9d8de49973500e0adda44f255b6a7c401b036fdf207d6b938b73a",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "81a73ae0597753c6dd73ddfd855033c987319ac5ecc5710eeac7d7f91bd45fdb",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "2a3d6a40b337167f96f477cf9f833dac0034c30052cc12be1488a3ceada1920e",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "2edf8b5eebd9398bd1447d1d82fb96a59d96d3ff958a9b7c1fe95b1d6b3e2ff4",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "d190d45344ffe4b614ecf34c7b196bd31b0a8587390aa35996f417c202132fe3",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/final_model.zip",
+          "sha256": "fe43d47a8dc6958139dc3c351c244616d642f69b3f2ff5529620b32f9b6e6b80",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_13__roundabout__tau_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "77ccd886381751d6f35d5f83331006430c77c6f26c3da71c4ffebcd6472a74b8",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "v4_13__carla__tau_half": {
+      "id": "v4_13__carla__tau_half",
+      "method": "v4_13",
+      "candidate": "tau_half",
+      "scenario": "carla",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/arguments.json",
+      "arguments_sha256": "f520d8e1d0cf857b2e490ca5b67278ec3f9a01ff45d42b414b7866e8582fcf1b",
+      "checkpoints": {
+        "10000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/checkpoints/ckpt_raw_10000_steps.zip",
+          "sha256": "5e56ef38922365b3704f016ac04da625aa967649ace0bf08771471b0eb818ce2",
+          "raw_steps": 10000
+        },
+        "20000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/checkpoints/ckpt_raw_20000_steps.zip",
+          "sha256": "762d92781897426a0cf6d5bacde7bafd9a06d6e7bbf1bc0cc1cd807736bc4235",
+          "raw_steps": 20000
+        },
+        "30000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/checkpoints/ckpt_raw_30000_steps.zip",
+          "sha256": "4e81f9ce6ca5768cfd2c96644c1f8020d5398f1eab03a261048d8147be32d427",
+          "raw_steps": 30000
+        },
+        "40000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/checkpoints/ckpt_raw_40000_steps.zip",
+          "sha256": "184ed2361937eca9fdffb6e1f2dc40672869d50da67c12327f6558be3fabbe52",
+          "raw_steps": 40000
+        },
+        "50000": {
+          "path": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/final_model.zip",
+          "sha256": "2b04126980a0b649f6dd46a9776c0e49f275db8daa29cc311d43216ca4d5fb12",
+          "raw_steps": 50000
+        }
+      },
+      "legacy_evaluation": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/evaluation.json",
+      "legacy_evaluation_sha256": "a64c3d71484bcc3fb8d291193572f46c7b9310d808107f4c886efffdf1bceee5",
+      "training_seed": 0,
+      "new_training": false
+    },
+    "g0_s025__cross": {
+      "id": "g0_s025__cross",
+      "method": "v4_13",
+      "candidate": "g0_s025",
+      "scenario": "cross",
+      "variant": "g0_s025",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/arguments.json",
+      "arguments_sha256": "11ca204cf30d099896981c8adaa0b326809654ada7707cc1c4e35a4af40c996a",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s025__cross/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s025__cross/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s025__cross/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s025__cross/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s025__cross/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__cross__tau_half"
+    },
+    "g1_s1__cross": {
+      "id": "g1_s1__cross",
+      "method": "v4_13",
+      "candidate": "g1_s1",
+      "scenario": "cross",
+      "variant": "g1_s1",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/arguments.json",
+      "arguments_sha256": "11ca204cf30d099896981c8adaa0b326809654ada7707cc1c4e35a4af40c996a",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g1_s1__cross/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g1_s1__cross/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g1_s1__cross/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g1_s1__cross/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g1_s1__cross/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__cross__tau_half"
+    },
+    "g0_s1__cross": {
+      "id": "g0_s1__cross",
+      "method": "v4_13",
+      "candidate": "g0_s1",
+      "scenario": "cross",
+      "variant": "g0_s1",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/arguments.json",
+      "arguments_sha256": "11ca204cf30d099896981c8adaa0b326809654ada7707cc1c4e35a4af40c996a",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s1__cross/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s1__cross/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s1__cross/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s1__cross/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s1__cross/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__cross__tau_half"
+    },
+    "g0_s1_lowall__cross": {
+      "id": "g0_s1_lowall__cross",
+      "method": "v4_13",
+      "candidate": "g0_s1_lowall",
+      "scenario": "cross",
+      "variant": "g0_s1_lowall",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__cross__tau_half__seed0/arguments.json",
+      "arguments_sha256": "11ca204cf30d099896981c8adaa0b326809654ada7707cc1c4e35a4af40c996a",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s1_lowall__cross/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s1_lowall__cross/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s1_lowall__cross/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s1_lowall__cross/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s1_lowall__cross/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__cross__tau_half"
+    },
+    "g0_s025__roundabout_medium": {
+      "id": "g0_s025__roundabout_medium",
+      "method": "v4_13",
+      "candidate": "g0_s025",
+      "scenario": "roundabout_medium",
+      "variant": "g0_s025",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/arguments.json",
+      "arguments_sha256": "07f810fca5975f317c0103ccaef1f8e836010af840ca87e87496ce3e78f11eb6",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s025__roundabout_medium/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s025__roundabout_medium/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s025__roundabout_medium/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s025__roundabout_medium/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s025__roundabout_medium/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__roundabout_medium__tau_half"
+    },
+    "g1_s1__roundabout_medium": {
+      "id": "g1_s1__roundabout_medium",
+      "method": "v4_13",
+      "candidate": "g1_s1",
+      "scenario": "roundabout_medium",
+      "variant": "g1_s1",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/arguments.json",
+      "arguments_sha256": "07f810fca5975f317c0103ccaef1f8e836010af840ca87e87496ce3e78f11eb6",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g1_s1__roundabout_medium/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g1_s1__roundabout_medium/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g1_s1__roundabout_medium/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g1_s1__roundabout_medium/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g1_s1__roundabout_medium/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__roundabout_medium__tau_half"
+    },
+    "g0_s1__roundabout_medium": {
+      "id": "g0_s1__roundabout_medium",
+      "method": "v4_13",
+      "candidate": "g0_s1",
+      "scenario": "roundabout_medium",
+      "variant": "g0_s1",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/arguments.json",
+      "arguments_sha256": "07f810fca5975f317c0103ccaef1f8e836010af840ca87e87496ce3e78f11eb6",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s1__roundabout_medium/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s1__roundabout_medium/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s1__roundabout_medium/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s1__roundabout_medium/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s1__roundabout_medium/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__roundabout_medium__tau_half"
+    },
+    "g0_s1_lowall__roundabout_medium": {
+      "id": "g0_s1_lowall__roundabout_medium",
+      "method": "v4_13",
+      "candidate": "g0_s1_lowall",
+      "scenario": "roundabout_medium",
+      "variant": "g0_s1_lowall",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__roundabout_medium__tau_half__seed0/arguments.json",
+      "arguments_sha256": "07f810fca5975f317c0103ccaef1f8e836010af840ca87e87496ce3e78f11eb6",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s1_lowall__roundabout_medium/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s1_lowall__roundabout_medium/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s1_lowall__roundabout_medium/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s1_lowall__roundabout_medium/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s1_lowall__roundabout_medium/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__roundabout_medium__tau_half"
+    },
+    "g0_s025__carla": {
+      "id": "g0_s025__carla",
+      "method": "v4_13",
+      "candidate": "g0_s025",
+      "scenario": "carla",
+      "variant": "g0_s025",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/arguments.json",
+      "arguments_sha256": "f520d8e1d0cf857b2e490ca5b67278ec3f9a01ff45d42b414b7866e8582fcf1b",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s025__carla/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s025__carla/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s025__carla/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s025__carla/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s025__carla/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__carla__tau_half"
+    },
+    "g1_s1__carla": {
+      "id": "g1_s1__carla",
+      "method": "v4_13",
+      "candidate": "g1_s1",
+      "scenario": "carla",
+      "variant": "g1_s1",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/arguments.json",
+      "arguments_sha256": "f520d8e1d0cf857b2e490ca5b67278ec3f9a01ff45d42b414b7866e8582fcf1b",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g1_s1__carla/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g1_s1__carla/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g1_s1__carla/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g1_s1__carla/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g1_s1__carla/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__carla__tau_half"
+    },
+    "g0_s1__carla": {
+      "id": "g0_s1__carla",
+      "method": "v4_13",
+      "candidate": "g0_s1",
+      "scenario": "carla",
+      "variant": "g0_s1",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/arguments.json",
+      "arguments_sha256": "f520d8e1d0cf857b2e490ca5b67278ec3f9a01ff45d42b414b7866e8582fcf1b",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s1__carla/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s1__carla/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s1__carla/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s1__carla/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s1__carla/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__carla__tau_half"
+    },
+    "g0_s1_lowall__carla": {
+      "id": "g0_s1_lowall__carla",
+      "method": "v4_13",
+      "candidate": "g0_s1_lowall",
+      "scenario": "carla",
+      "variant": "g0_s1_lowall",
+      "decoder": "target_critic",
+      "arguments": "results_phase2_runtime_v2/screen/v4_13__carla__tau_half__seed0/arguments.json",
+      "arguments_sha256": "f520d8e1d0cf857b2e490ca5b67278ec3f9a01ff45d42b414b7866e8582fcf1b",
+      "checkpoints": {
+        "10000": {
+          "path": "r3m1/train/g0_s1_lowall__carla/checkpoints/ckpt_raw_10000_steps.zip",
+          "raw_steps": 10000,
+          "sha256": null
+        },
+        "20000": {
+          "path": "r3m1/train/g0_s1_lowall__carla/checkpoints/ckpt_raw_20000_steps.zip",
+          "raw_steps": 20000,
+          "sha256": null
+        },
+        "30000": {
+          "path": "r3m1/train/g0_s1_lowall__carla/checkpoints/ckpt_raw_30000_steps.zip",
+          "raw_steps": 30000,
+          "sha256": null
+        },
+        "40000": {
+          "path": "r3m1/train/g0_s1_lowall__carla/checkpoints/ckpt_raw_40000_steps.zip",
+          "raw_steps": 40000,
+          "sha256": null
+        },
+        "50000": {
+          "path": "r3m1/train/g0_s1_lowall__carla/final_model.zip",
+          "raw_steps": 50000,
+          "sha256": null
+        }
+      },
+      "training_seed": 0,
+      "new_training": true,
+      "parent": "v4_13__carla__tau_half"
+    }
+  },
+  "training_jobs": [
+    {
+      "id": "g0_s025__cross",
+      "variant": "g0_s025",
+      "source": "v4_13__cross__tau_half",
+      "scenario": "cross",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g1_s1__cross",
+      "variant": "g1_s1",
+      "source": "v4_13__cross__tau_half",
+      "scenario": "cross",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s1__cross",
+      "variant": "g0_s1",
+      "source": "v4_13__cross__tau_half",
+      "scenario": "cross",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s1_lowall__cross",
+      "variant": "g0_s1_lowall",
+      "source": "v4_13__cross__tau_half",
+      "scenario": "cross",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s025__roundabout_medium",
+      "variant": "g0_s025",
+      "source": "v4_13__roundabout_medium__tau_half",
+      "scenario": "roundabout_medium",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g1_s1__roundabout_medium",
+      "variant": "g1_s1",
+      "source": "v4_13__roundabout_medium__tau_half",
+      "scenario": "roundabout_medium",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s1__roundabout_medium",
+      "variant": "g0_s1",
+      "source": "v4_13__roundabout_medium__tau_half",
+      "scenario": "roundabout_medium",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s1_lowall__roundabout_medium",
+      "variant": "g0_s1_lowall",
+      "source": "v4_13__roundabout_medium__tau_half",
+      "scenario": "roundabout_medium",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s025__carla",
+      "variant": "g0_s025",
+      "source": "v4_13__carla__tau_half",
+      "scenario": "carla",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g1_s1__carla",
+      "variant": "g1_s1",
+      "source": "v4_13__carla__tau_half",
+      "scenario": "carla",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s1__carla",
+      "variant": "g0_s1",
+      "source": "v4_13__carla__tau_half",
+      "scenario": "carla",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    },
+    {
+      "id": "g0_s1_lowall__carla",
+      "variant": "g0_s1_lowall",
+      "source": "v4_13__carla__tau_half",
+      "scenario": "carla",
+      "raw_budget": 50000,
+      "seed": 0,
+      "learning_rate": 0.0001,
+      "tau": 0.0025
+    }
+  ],
+  "reuse_notes": [
+    {
+      "variant": "g1_s025",
+      "scenario": "cross",
+      "source": "v4_13__cross__tau_half",
+      "reason": "Matched seed-0 50k tau=.0025 full model already complete"
+    },
+    {
+      "variant": "g1_s025",
+      "scenario": "roundabout_medium",
+      "source": "v4_13__roundabout_medium__tau_half",
+      "reason": "Matched seed-0 50k tau=.0025 full model already complete"
+    },
+    {
+      "variant": "g1_s025",
+      "scenario": "carla",
+      "source": "v4_13__carla__tau_half",
+      "reason": "Matched seed-0 50k tau=.0025 full model already complete"
+    }
+  ],
+  "selection": {
+    "steps": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "episodes_per_checkpoint": 100,
+    "seed_start": 310000,
+    "order": [
+      "success_desc",
+      "collision_asc",
+      "timeout_asc",
+      "later_checkpoint"
+    ],
+    "historical_best_not_in_common_candidate_set": true
+  },
+  "score": {
+    "episodes": 100,
+    "seed_start": 320000,
+    "weights": [
+      "selected",
+      "exact_final",
+      "historical_selected_if_available"
+    ],
+    "seal_selection_before_scoring": true
+  },
+  "robustness": {
+    "modes": [
+      "robust_lower",
+      "robust_higher"
+    ],
+    "episodes": 100,
+    "vehicle_multipliers_relative_to_frozen_density": [
+      0.9,
+      1.1
+    ],
+    "methods": [
+      "mst_slt/control",
+      "v4_8/lr_half",
+      "v4_13/tau_half"
+    ]
+  },
+  "mechanism": {
+    "scenes": [
+      "cross",
+      "roundabout_medium",
+      "carla"
+    ],
+    "variants": {
+      "g1_s025": {
+        "isolate": true,
+        "lane_scale": 0.25,
+        "support_coef": 0.05
+      },
+      "g0_s025": {
+        "isolate": false,
+        "lane_scale": 0.25,
+        "support_coef": 0.05
+      },
+      "g1_s1": {
+        "isolate": true,
+        "lane_scale": 1.0,
+        "support_coef": 0.05
+      },
+      "g0_s1": {
+        "isolate": false,
+        "lane_scale": 1.0,
+        "support_coef": 0.05
+      },
+      "g0_s1_lowall": {
+        "isolate": false,
+        "lane_scale": 1.0,
+        "support_coef": 0.0125
+      }
+    },
+    "bank_episodes": 32,
+    "bank_seed_start": 350000,
+    "batch_size": 32,
+    "maximum_bank_samples": 4096,
+    "checkpoint_steps": [
+      10000,
+      30000,
+      50000
+    ],
+    "collection_policy": "full_tau_half_stochastic_actor",
+    "bank_is_original_training_replay": false
+  },
+  "decoder_interventions": [
+    "actor_deterministic",
+    "actor_stochastic",
+    "no_risk_score",
+    "no_support_prior"
+  ],
+  "traffic": {
+    "new_departure_jitter_seconds": [
+      -0.75,
+      0.75
+    ],
+    "split_unit": "new social traffic realization and simulation seed",
+    "carla_single_template_shared_with_training": true,
+    "no_new_map_generalization_claim": true,
+    "formal_test_accessed": false
+  },
+  "scientific_caveats": [
+    "single training seed",
+    "historical code equivalence not fully established",
+    "new traffic realizations retain source route templates",
+    "risk critic is discounted collision-return estimator, not certified probability"
+  ]
+}

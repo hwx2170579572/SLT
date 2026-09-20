@@ -1,0 +1,400 @@
+{
+  "schema_version": "ccfa.systematic-matrix-protocol/v1",
+  "name": "Six-method six-scenario PyTorch-SB3-SUMO systematic matrix",
+  "version": 16,
+  "scope": "Matched comparison of SAC, PPO, MST, MST+SLT, TemporalGraph, and Full+BalancedSlots over all six released or reconstructed SUMO scenarios, with three training seeds and 50 deterministic held-out episodes per trained policy.",
+  "no_fabrication": true,
+  "matrix_contract": {
+    "method_order": [
+      "sac",
+      "ppo",
+      "mst",
+      "mst_slt",
+      "temporal_graph",
+      "full_balanced"
+    ],
+    "scenario_order": [
+      "left_turn",
+      "cross",
+      "roundabout_easy",
+      "roundabout_medium",
+      "roundabout",
+      "carla"
+    ],
+    "training_seeds": [0, 1, 2],
+    "test_episodes_per_policy": 50,
+    "expected_method_scenario_cells": 36,
+    "expected_training_runs": 108,
+    "expected_test_episodes_per_method_scenario": 150,
+    "primary_reference_method": "mst_slt",
+    "budget_rule": "A result root contains one explicitly selected profile. Profiles may never be pooled or substituted for one another.",
+    "evaluation_pairing": "For a fixed scenario and training seed, every method uses the same evaluation seed start (training_seed + 10000), ordered held-out traffic partition, episode limit, and deterministic action rule.",
+    "predeclared_comparisons": [
+      {
+        "id": "mst_minus_sac",
+        "left": "mst",
+        "right": "sac",
+        "interpretation": "Effect of the released hierarchical scene encoder relative to the reconstructed recurrent SAC baseline under the same off-policy clock."
+      },
+      {
+        "id": "mst_slt_minus_mst",
+        "left": "mst_slt",
+        "right": "mst",
+        "interpretation": "Effect of the one-step SLT auxiliary objective with the MST encoder held fixed."
+      },
+      {
+        "id": "temporal_graph_minus_mst_slt",
+        "left": "temporal_graph",
+        "right": "mst_slt",
+        "interpretation": "Effect of delaying temporal pooling until after per-frame vehicle interaction, together with structured Graph-SLT."
+      },
+      {
+        "id": "full_balanced_minus_temporal_graph",
+        "left": "full_balanced",
+        "right": "temporal_graph",
+        "interpretation": "Joint incremental effect of topology query and balanced latent slots. This comparison does not identify either component alone."
+      },
+      {
+        "id": "full_balanced_minus_mst_slt",
+        "left": "full_balanced",
+        "right": "mst_slt",
+        "interpretation": "End-to-end comparison of the retained stabilized full method against the closest released MST+SLT baseline."
+      },
+      {
+        "id": "ppo_minus_sac",
+        "left": "ppo",
+        "right": "sac",
+        "interpretation": "Cross-family on-policy versus off-policy baseline comparison; not a single-component ablation."
+      }
+    ]
+  },
+  "profiles": {
+    "development_50k": {
+      "raw_training_steps": 50000,
+      "seeds": [0, 1, 2],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 10000,
+      "evaluation_frequency_raw_steps": 0,
+      "evidence_scope": "Systematic development screen only; it cannot be relabeled as a 100k paper-budget or 1M source-budget result."
+    },
+    "paper": {
+      "raw_training_steps": 100000,
+      "seeds": [0, 1, 2],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 10000,
+      "evaluation_frequency_raw_steps": 0,
+      "evidence_scope": "Three-seed controlled matrix at the paper's 100k raw-step budget with the user-selected 10k checkpoint interval; seed count intentionally follows the requested matrix rather than the paper's five-seed report."
+    },
+    "source_release_1m": {
+      "raw_training_steps": 1000000,
+      "seeds": [0, 1, 2],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 100000,
+      "evaluation_frequency_raw_steps": 0,
+      "evidence_scope": "Three-seed confirmation at the released configuration's 1M raw-step default. The 100k checkpoint interval is storage-aware and does not alter optimization or final-policy selection."
+    }
+  },
+  "environment_protocol": {
+    "ego_control_profile": "direct",
+    "traffic_protocol": "frozen_80_20",
+    "episode_limit_profile": "source"
+  },
+  "environment_anchor": {
+    "method": "full_balanced",
+    "run_arguments_path": "results_topo_scene/iteration/runs/iteration__topo_scene_balanced__left_turn__seed0/arguments.json",
+    "run_arguments_sha256": "B7E2C9397A4D291D0DD61EF8478AFC87B521A84B2A8D2AED2002ABF84F75014F",
+    "locked_environment_fields": {
+      "ego_control_profile": "direct",
+      "traffic_protocol": "frozen_80_20",
+      "episode_limit_profile": "source",
+      "discount": 0.99,
+      "neighbors": 5,
+      "history_steps": 10,
+      "path_length": 10
+    },
+    "algorithm_clock_exception": "PPO retains the audited released-source raw-tick rollout clock (environment_action_repeat=1); forcing 3 would define a different PPO baseline. All off-policy methods use Full+BalancedSlots action_repeat=3."
+  },
+  "environment_protocol_rationale": {
+    "ego_control_profile": "Matches the completed topology-development experiments and preserves their direct TraCI action semantics.",
+    "traffic_protocol": "Every fifth released traffic XML is frozen for evaluation and excluded from training; all methods receive the same ordered partitions.",
+    "episode_limit_profile": "Matches the source-limit contract used by the topology-development experiments.",
+    "carla_extension": "The CARLA task is a SUMO reconstruction. SAC-on-CARLA and MST-on-CARLA are controlled matrix extensions because the paper did not report those two cells."
+  },
+  "common_hyperparameters": {
+    "off_policy_action_repeat": 3,
+    "history_steps": 10,
+    "neighbors": 5,
+    "path_length": 10,
+    "learning_rate": 0.0001,
+    "discount": 0.99,
+    "batch_size": 32,
+    "learning_starts_raw_steps": 5000,
+    "replay_buffer_capacity": 20000,
+    "n_step": 4,
+    "polyak_tau": 0.005,
+    "speed_limit_mps": 10
+  },
+  "scenario_order": [
+    "left_turn",
+    "cross",
+    "roundabout_easy",
+    "roundabout_medium",
+    "roundabout",
+    "carla"
+  ],
+  "scenario_labels": {
+    "left_turn": "Unprotected Left Turn",
+    "cross": "Double Merging",
+    "roundabout_easy": "Roundabout-A",
+    "roundabout_medium": "Roundabout-B",
+    "roundabout": "Roundabout-C",
+    "carla": "CARLA Town-10 task recreated in SUMO"
+  },
+  "supported_methods": {
+    "sac": {
+      "train_cli_algorithm": "sac",
+      "paper_label": "SAC",
+      "display_label": "SAC",
+      "implementation_id": "paper_sac_lstm_reconstruction_v2",
+      "role": "simple off-policy baseline",
+      "fidelity": "Transparent reconstruction of the dormant released STATE_LSTM contract using GRU(256)+Dense(256); it does not consume candidate maps, MST, or SLT.",
+      "reconstruction_required": true,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000,
+      "carla_evidence_class": "controlled_extension_not_reported_in_paper"
+    },
+    "ppo": {
+      "train_cli_algorithm": "ppo",
+      "paper_label": "PPO",
+      "display_label": "PPO",
+      "implementation_id": "released_source_ppo_pytorch_port_v1",
+      "role": "simple on-policy baseline",
+      "fidelity": "Released-source PPO data flow: SMARTS tasks use a current RGB frame and CNN; CARLA uses the vector GRU/relation-attention policy with a three-tick internal action hold.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 1,
+      "policy_action_hold": {
+        "default": 1,
+        "carla": 3
+      },
+      "learning_rate": 0.0005,
+      "learning_starts_raw_steps": 0
+    },
+    "mst": {
+      "train_cli_algorithm": "mst",
+      "paper_label": "MST",
+      "display_label": "MST",
+      "implementation_id": "released_mst_pytorch_port_v1",
+      "role": "released representation baseline without SLT",
+      "fidelity": "Released hierarchical scene representation and source SAC with SLT disabled before construction.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000,
+      "carla_evidence_class": "controlled_extension_not_reported_in_paper"
+    },
+    "mst_slt": {
+      "train_cli_algorithm": "scene_rep",
+      "paper_label": "Proposed",
+      "display_label": "MST+SLT",
+      "implementation_id": "released_scene_rep_pytorch_port_v1",
+      "role": "closest released baseline",
+      "fidelity": "Released MST hierarchical scene representation, one-step SLT auxiliary objective, and source SAC.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    },
+    "temporal_graph": {
+      "train_cli_algorithm": "temporal_graph",
+      "paper_label": "TemporalGraph",
+      "display_label": "TemporalGraph",
+      "implementation_id": "temporal_vehicle_graph_slt_pytorch_v1",
+      "role": "mechanism ablation",
+      "fidelity": "Per-frame vehicle interaction and structured Graph-SLT without topology query.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    },
+    "full_balanced": {
+      "train_cli_algorithm": "topo_scene_balanced",
+      "paper_label": "Full+BalancedSlots",
+      "display_label": "Full+BalancedSlots",
+      "implementation_id": "topo_temporal_graph_slt_balanced_slots_v1",
+      "role": "stabilized complete method",
+      "fidelity": "Topology query, per-frame temporal vehicle graph, structured Graph-SLT, and non-affine normalization of the 32/64/32 latent slots.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    }
+  },
+  "fairness_contract": {
+    "off_policy_controls_held_fixed": [
+      "SAC actor and twin critics",
+      "entropy coefficient",
+      "reward",
+      "action space",
+      "four-transition N-step replay",
+      "raw-step update clock",
+      "batch size",
+      "replay capacity",
+      "discount",
+      "learning rate"
+    ],
+    "ppo_exception": "PPO retains its released on-policy optimizer, 512-step rollout, RGB/vector observation branch, and one-raw-step environment clock; it is a baseline, not a single-variable ablation.",
+    "final_checkpoint_rule": "Use the source-recoverable last periodic checkpoint at the requested raw-step budget. Never select a checkpoint by held-out test performance.",
+    "deterministic_evaluation": true,
+    "traffic_pairing": true,
+    "latent_width_for_mst_family": 128
+  },
+  "statistics": {
+    "seed_aggregation": "mean_and_population_std_over_three_training_seeds",
+    "episode_rate_interval": "paired_hierarchical_bootstrap_95_percent",
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 20260806,
+    "learning_curve_clock": "raw_sumo_steps",
+    "scenario_aggregation": "equal_weight_macro_average_with_per_scenario_results_primary",
+    "multiplicity": "Holm correction over the five predeclared comparisons against or within the MST family for each primary metric; PPO-minus-SAC remains descriptive.",
+    "primary_metrics": {
+      "success_rate": "higher",
+      "collision_rate": "lower"
+    },
+    "secondary_metrics": {
+      "mean_return": "higher",
+      "off_route_rate": "lower",
+      "timeout_rate": "lower",
+      "successful_completion_time_seconds": "lower"
+    },
+    "efficiency_metrics": [
+      "parameter_count",
+      "end_to_end_wall_ms_per_learner_update",
+      "inference_ms_per_action",
+      "peak_gpu_memory_mb"
+    ]
+  },
+  "artifact_contract": {
+    "run_required": [
+      "arguments.json",
+      "final_model.zip",
+      "checkpoint_audit.json",
+      "final_evaluation.json",
+      "paper_evaluation_detailed.json",
+      "training_diagnostics.json",
+      "performance_profile.json"
+    ],
+    "matrix_required": [
+      "protocol.snapshot.json",
+      "_preflight/preflight_report.json",
+      "orchestrator_state.json",
+      "summary/summary.json",
+      "summary/aggregate.csv",
+      "systematic_analysis/systematic_summary.json",
+      "systematic_analysis/attribution.json",
+      "systematic_analysis/FINAL_REPORT.md"
+    ],
+    "unknown_cell_rule": "An incomplete cell is emitted as TBD with its machine status; no metric is imputed from another profile, seed, method, or predecessor run."
+  },
+  "policy_selection_artifacts": {
+    "primary": "Last periodic checkpoint at the selected profile budget.",
+    "secondary": "A prospectively captured latest-20 training-success checkpoint may be retained but cannot replace the primary matrix result.",
+    "reporting": "Primary and secondary selections must be labeled and analyzed separately."
+  },
+  "paper_reference_percent": {
+    "left_turn": {
+      "PPO": [36, 50, 10],
+      "SAC": [68, 28, 0],
+      "MST": [88, 12, 0],
+      "Proposed": [94, 4, 0]
+    },
+    "cross": {
+      "PPO": [36, 64, 0],
+      "SAC": [62, 22, 0],
+      "MST": [92, 4, 0],
+      "Proposed": [96, 2, 0]
+    },
+    "roundabout_easy": {
+      "PPO": [66, 34, 0],
+      "SAC": [76, 24, 0],
+      "MST": [84, 16, 0],
+      "Proposed": [88, 12, 0]
+    },
+    "roundabout_medium": {
+      "PPO": [42, 58, 0],
+      "SAC": [48, 52, 0],
+      "MST": [76, 24, 0],
+      "Proposed": [82, 18, 0]
+    },
+    "roundabout": {
+      "PPO": [38, 50, 12],
+      "SAC": [46, 48, 6],
+      "MST": [66, 34, 0],
+      "Proposed": [76, 24, 0]
+    },
+    "carla": {
+      "PPO": [56, 38, 6],
+      "Proposed": [88, 6, 2]
+    }
+  },
+  "known_limits": [
+    "SUMO equivalence is not bitwise SMARTS or CARLA physics equivalence.",
+    "The released repository omits a complete selectable plain-SAC entry point; SAC uses the audited v2 reconstruction.",
+    "SAC-on-CARLA and MST-on-CARLA are controlled extensions absent from the paper tables.",
+    "TemporalGraph versus Full+BalancedSlots jointly changes topology query and slot normalization, so that contrast alone cannot attribute a gain to topology.",
+    "The three training seeds are user-requested and do not reproduce the paper's five-seed sampling uncertainty."
+  ]
+}

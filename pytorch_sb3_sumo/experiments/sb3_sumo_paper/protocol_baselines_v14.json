@@ -1,0 +1,171 @@
+{
+  "name": "Paper baselines: PyTorch + SB3 + SUMO corrected STATE_LSTM protocol",
+  "version": 14,
+  "scope": "Prioritized reproduction of the paper SAC and PPO baselines after auditing both Proposed-result inflation and the dormant released SAC STATE_LSTM contract.",
+  "evidence_priority": [
+    "released_source_code",
+    "paper_experiment_text_and_tables",
+    "explicit_minimal_reconstruction_where_the_release_is_incomplete"
+  ],
+  "profiles": {
+    "paper": {
+      "raw_training_steps": 100000,
+      "seeds": [0, 1, 2, 3, 4],
+      "test_episodes": 50,
+      "checkpoint_frequency_raw_steps": 20000,
+      "evaluation_frequency_raw_steps": 0,
+      "description": "Paper budget, five seeds, and 50 deterministic test episodes per trained seed."
+    }
+  },
+  "environment_protocol": {
+    "ego_control_profile": "smarts_ackermann_proxy",
+    "traffic_protocol": "frozen_80_20",
+    "episode_limit_profile": "paper"
+  },
+  "environment_protocol_rationale": {
+    "ego_control_profile": "Curve-speed and per-tick acceleration/deceleration limits proxy the released SMARTS Bullet/Ackermann controller instead of teleporting directly to every requested speed.",
+    "traffic_protocol": "The release does not publish the paper's held-out traffic assets. Every fifth lexicographically ordered released traffic XML is frozen for evaluation and excluded from training; this is deterministic and disjoint, but is an explicit reconstruction rather than an unpublished original split.",
+    "episode_limit_profile": "Uses paper Table VI limits, including 400 rather than released tools/test.py's 600 for Double Merging and 800 rather than 1000 for Roundabout-C."
+  },
+  "compatible_predecessor_results": [],
+  "diagnostic_predecessor_results": [
+    {
+      "root": "results_sb3_sumo_paper/paper_baselines_sac_ppo_v13_frozen",
+      "protocol_version": 13,
+      "protocol_sha256": "2E0850E4A1CFE4297E2C52A6CFF35D6E1C3710D0B84EE87A63863EDDE718141B",
+      "methods": ["sac"],
+      "reason": "Stopped at about 25.9k raw steps: the GRU was correct and Transformer-free, but its input flattened Proposed [x,y,heading,vx,vy] fields rather than the released STATE_LSTM ego/social field semantics. The root carries NOT_FORMAL_SOURCE_FIDELITY.md and cannot be imported."
+    }
+  ],
+  "common_hyperparameters": {
+    "off_policy_action_repeat": 3,
+    "history_steps": 10,
+    "neighbors": 5,
+    "path_length": 10,
+    "learning_rate": 0.0001,
+    "discount": 0.99,
+    "batch_size": 32,
+    "learning_starts_raw_steps": 5000,
+    "replay_buffer_capacity": 20000,
+    "n_step": 4,
+    "polyak_tau": 0.005,
+    "speed_limit_mps": 10
+  },
+  "scenario_order": [
+    "left_turn",
+    "cross",
+    "roundabout_easy",
+    "roundabout_medium",
+    "roundabout",
+    "carla"
+  ],
+  "scenario_labels": {
+    "left_turn": "Unprotected Left Turn",
+    "cross": "Double Merging",
+    "roundabout_easy": "Roundabout-A",
+    "roundabout_medium": "Roundabout-B",
+    "roundabout": "Roundabout-C",
+    "carla": "CARLA Town-10 task recreated in SUMO"
+  },
+  "supported_methods": {
+    "sac": {
+      "train_cli_algorithm": "sac",
+      "paper_label": "SAC",
+      "implementation_id": "paper_sac_lstm_reconstruction_v2",
+      "fidelity": "The paper's LSTM baseline is reconstructed from dormant released components. RLEncoder actually uses GRU(256, return_sequences=True)+Dense(256,relu). STATE_LSTM is generated before interpolation with ego [x,y,speed,0,heading], social [x,y,speed,distance_to_ego,heading], component-wise gap interpolation, [time,actors*5] flattening, and the runner's explicit valid-time mask. Candidate maps, Proposed trajectory semantics, MST, and hierarchical Transformer are not consumed.",
+      "reconstruction_required": true,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout"
+      ],
+      "environment_action_repeat": 3,
+      "policy_action_hold": 3,
+      "learning_rate": 0.0001,
+      "learning_starts_raw_steps": 5000
+    },
+    "ppo": {
+      "train_cli_algorithm": "ppo",
+      "paper_label": "PPO",
+      "implementation_id": "released_source_ppo_pytorch_port_v1",
+      "fidelity": "Released-source PPO data flow: SMARTS tasks use the current 80x80x3 RGB frame and CNN; the CARLA-equivalent task uses the vector GRU/attention encoder and reuses action/value/log-probability for three raw ticks. Evaluation applies the documented deterministic repair for the broken original test API.",
+      "reconstruction_required": false,
+      "scenarios": [
+        "left_turn",
+        "cross",
+        "roundabout_easy",
+        "roundabout_medium",
+        "roundabout",
+        "carla"
+      ],
+      "environment_action_repeat": 1,
+      "policy_action_hold": {
+        "default": 1,
+        "carla": 3
+      },
+      "learning_rate": 0.0005,
+      "learning_starts_raw_steps": 0,
+      "expected_collected_raw_steps": 100352,
+      "source_test_checkpoint_raw_steps": 100000
+    }
+  },
+  "policy_selection_artifacts": {
+    "primary": "Source-recoverable latest periodic checkpoint.",
+    "secondary": "best_training_success_model.zip is captured prospectively after episode 20 whenever source-style latest-20 success strictly improves; exact rule and clock are recorded in best_training_success.json.",
+    "reporting": "Evaluate and report primary and reconstructed secondary selection separately."
+  },
+  "baseline_reconstruction_limits": {
+    "sac": "The repository exposes no selectable sac CLI value and no complete baseline configuration. v14 directly composes the released STATE_LSTM adapter semantics and GRU branch, but cannot be claimed bitwise identical to an unpublished entry point.",
+    "ppo": "Paper text says Adam at 1e-4 and stacked raster images; released executable configuration says source optimizer behavior at 5e-4 and one current RGB frame. Source is primary and the discrepancy remains explicit.",
+    "environment": "SUMO traffic assets are original for five SMARTS scenarios, but Bullet/Ackermann dynamics and unpublished held-out traffic are approximated. The CARLA task remains a SUMO reconstruction and is not physics-equivalent to CARLA."
+  },
+  "paper_reference_percent": {
+    "left_turn": {
+      "PPO": [36, 50, 10],
+      "SAC": [68, 28, 0]
+    },
+    "cross": {
+      "PPO": [36, 64, 0],
+      "SAC": [62, 22, 0]
+    },
+    "roundabout_easy": {
+      "PPO": [66, 34, 0],
+      "SAC": [76, 24, 0]
+    },
+    "roundabout_medium": {
+      "PPO": [42, 58, 0],
+      "SAC": [48, 52, 0]
+    },
+    "roundabout": {
+      "PPO": [38, 50, 12],
+      "SAC": [46, 48, 6]
+    },
+    "carla": {
+      "PPO": [56, 38, 6]
+    }
+  },
+  "known_source_paper_conflicts": [
+    {
+      "field": "SAC recurrent layer",
+      "paper": "LSTM",
+      "released_RLEncoder": "GRU(256, return_sequences=True) followed by Dense(256,relu)"
+    },
+    {
+      "field": "PPO learning rate",
+      "paper": 0.0001,
+      "released_set_on_policy_configs": 0.0005
+    },
+    {
+      "field": "SMARTS PPO image history",
+      "paper": "stacked rasterized images",
+      "released_runner": "one current 80x80x3 top_down_rgb frame"
+    },
+    {
+      "field": "test policy selection",
+      "paper": "highest training-success policy",
+      "released_source": "no executable best-success saver; latest periodic checkpoint is recoverable"
+    }
+  ]
+}

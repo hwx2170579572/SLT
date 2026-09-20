@@ -1,0 +1,2014 @@
+{
+  "contract": "full-balanced-scenario-diagnosis/rollout-trace-v1",
+  "read_only_checkpoint_use": true,
+  "runs": [
+    {
+      "run": "paper__full_balanced__carla__seed0",
+      "algorithm": "topo_scene_balanced",
+      "scenario": "carla",
+      "training_seed": 0,
+      "evaluation_seed": 10000,
+      "traffic_variant": "traffic_0.rou.xml",
+      "outcome": {
+        "success": false,
+        "collision": false,
+        "off_route": false,
+        "timeout": true,
+        "raw_steps": 302
+      },
+      "decisions": 101,
+      "mean_target_speed_mps": 2.1719963243692226,
+      "min_target_speed_mps": 1.0778656601905823,
+      "max_target_speed_mps": 9.288926720619202,
+      "negative_lane_command_rate": 0.04950495049504951,
+      "keep_lane_command_rate": 0.0297029702970297,
+      "positive_lane_command_rate": 0.9207920792079208,
+      "lane_change_applied_rate": 0.0,
+      "roads_visited": [
+        "ego_approach",
+        ":bend_0",
+        ":cross_1"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.8577853441238403,
+          "action_lateral_raw": -0.9243422150611877,
+          "target_speed_mps": 9.288926720619202,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 94.98,
+            "y_sumo": 1.93,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 92.59682803237855,
+            "y_sumo": 1.9061682803237856,
+            "speed_mps": 9.288926720619202
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.6891472339630127,
+          "action_lateral_raw": -0.8465170860290527,
+          "target_speed_mps": 8.445736169815063,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 92.59682803237855,
+            "y_sumo": 1.9061682803237856,
+            "speed_mps": 9.288926720619202
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 89.95335108629637,
+            "y_sumo": 1.8797335108629636,
+            "speed_mps": 8.445736169815063
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.7013159990310669,
+          "action_lateral_raw": -0.759963870048523,
+          "target_speed_mps": 8.506579995155334,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 89.95335108629637,
+            "y_sumo": 1.8797335108629636,
+            "speed_mps": 8.445736169815063
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 87.33752989911729,
+            "y_sumo": 1.853575298991173,
+            "speed_mps": 8.506579995155334
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 25,
+          "action_speed_raw": -0.657970666885376,
+          "action_lateral_raw": 0.8141324520111084,
+          "target_speed_mps": 1.7101466655731201,
+          "source_lane_command": 1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 64.64223708804184,
+            "y_sumo": 1.6171521504372626,
+            "speed_mps": 1.737239956855774
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 64.11434798762835,
+            "y_sumo": 1.6110844596279121,
+            "speed_mps": 1.7101466655731201
+          },
+          "reward": 0.0,
+          "raw_steps": 78
+        },
+        {
+          "decision": 50,
+          "action_speed_raw": -0.7337193489074707,
+          "action_lateral_raw": 0.9493844509124756,
+          "target_speed_mps": 1.3314032554626465,
+          "source_lane_command": 1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 54.846251608234084,
+            "y_sumo": 3.6371135584155097,
+            "speed_mps": 1.510610580444336
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 54.56925550010831,
+            "y_sumo": 3.9516512636132766,
+            "speed_mps": 1.3314032554626465
+          },
+          "reward": 0.0,
+          "raw_steps": 153
+        },
+        {
+          "decision": 75,
+          "action_speed_raw": -0.5884341597557068,
+          "action_lateral_raw": 0.9543513059616089,
+          "target_speed_mps": 2.057829201221466,
+          "source_lane_command": 1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": ":bend_0",
+            "lane_index": 0,
+            "x_sumo": 46.5221470547316,
+            "y_sumo": 14.439137765503029,
+            "speed_mps": 2.0819243788719177
+          },
+          "after": {
+            "active": true,
+            "road_id": ":bend_0",
+            "lane_index": 0,
+            "x_sumo": 46.17308780735459,
+            "y_sumo": 14.949893576003209,
+            "speed_mps": 2.057829201221466
+          },
+          "reward": 0.0,
+          "raw_steps": 228
+        },
+        {
+          "decision": 100,
+          "action_speed_raw": -0.6325870156288147,
+          "action_lateral_raw": 0.9467818737030029,
+          "target_speed_mps": 1.8370649218559265,
+          "source_lane_command": 1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": ":cross_1",
+            "lane_index": 0,
+            "x_sumo": 46.05,
+            "y_sumo": 26.639194340705874,
+            "speed_mps": 1.8234962224960327
+          },
+          "after": {
+            "active": true,
+            "road_id": ":cross_1",
+            "lane_index": 0,
+            "x_sumo": 46.05,
+            "y_sumo": 27.005928890109065,
+            "speed_mps": 1.8370649218559265
+          },
+          "reward": 0.0,
+          "raw_steps": 302
+        }
+      ]
+    },
+    {
+      "run": "paper__full_balanced__carla__seed1",
+      "algorithm": "topo_scene_balanced",
+      "scenario": "carla",
+      "training_seed": 1,
+      "evaluation_seed": 10001,
+      "traffic_variant": "traffic_0.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 99
+      },
+      "decisions": 33,
+      "mean_target_speed_mps": 7.60247528553009,
+      "min_target_speed_mps": 4.017655253410339,
+      "max_target_speed_mps": 9.972870349884033,
+      "negative_lane_command_rate": 0.3939393939393939,
+      "keep_lane_command_rate": 0.6060606060606061,
+      "positive_lane_command_rate": 0.0,
+      "lane_change_applied_rate": 0.18181818181818182,
+      "roads_visited": [
+        "ego_approach",
+        ":bend_0",
+        ":cross_1",
+        "north_upper"
+      ],
+      "lane_indices_visited": [
+        0,
+        1,
+        2
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.973876953125,
+          "action_lateral_raw": -0.32243990898132324,
+          "target_speed_mps": 9.869384765625,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 94.98,
+            "y_sumo": 1.93,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 92.44790540839364,
+            "y_sumo": 1.9046790540839365,
+            "speed_mps": 9.869384765625
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.9739282131195068,
+          "action_lateral_raw": -0.3591156005859375,
+          "target_speed_mps": 9.869641065597534,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 92.44790540839364,
+            "y_sumo": 1.9046790540839365,
+            "speed_mps": 9.869384765625
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 89.40932614200908,
+            "y_sumo": 1.874293261420091,
+            "speed_mps": 9.869641065597534
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.9802486896514893,
+          "action_lateral_raw": -0.21596968173980713,
+          "target_speed_mps": 9.901243448257446,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 89.40932614200908,
+            "y_sumo": 1.874293261420091,
+            "speed_mps": 9.869641065597534
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 86.36262580027147,
+            "y_sumo": 1.8438262580027147,
+            "speed_mps": 9.901243448257446
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 8,
+          "action_speed_raw": 0.9839414358139038,
+          "action_lateral_raw": 0.12416291236877441,
+          "target_speed_mps": 9.919707179069519,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 71.10270840770482,
+            "y_sumo": 1.691227084077048,
+            "speed_mps": 9.917868375778198
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 68.04884342267475,
+            "y_sumo": 1.6563085450882153,
+            "speed_mps": 9.919707179069519
+          },
+          "reward": 0.0,
+          "raw_steps": 27
+        },
+        {
+          "decision": 16,
+          "action_speed_raw": 0.992974042892456,
+          "action_lateral_raw": -0.2452913522720337,
+          "target_speed_mps": 9.96487021446228,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 49.689148694047326,
+            "y_sumo": 9.533752066380817,
+            "speed_mps": 9.972870349884033
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 48.0498240113093,
+            "y_sumo": 12.1276202352701,
+            "speed_mps": 9.96487021446228
+          },
+          "reward": 0.0,
+          "raw_steps": 51
+        },
+        {
+          "decision": 24,
+          "action_speed_raw": -0.17528367042541504,
+          "action_lateral_raw": -0.8834758996963501,
+          "target_speed_mps": 4.123581647872925,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": ":cross_1",
+            "lane_index": 0,
+            "x_sumo": 46.05,
+            "y_sumo": 25.36725135266781,
+            "speed_mps": 4.229050576686859
+          },
+          "after": {
+            "active": true,
+            "road_id": ":cross_1",
+            "lane_index": 0,
+            "x_sumo": 46.05,
+            "y_sumo": 26.609599293470385,
+            "speed_mps": 4.123581647872925
+          },
+          "reward": 0.0,
+          "raw_steps": 75
+        },
+        {
+          "decision": 32,
+          "action_speed_raw": -0.12663835287094116,
+          "action_lateral_raw": -0.9403276443481445,
+          "target_speed_mps": 4.366808235645294,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "north_upper",
+            "lane_index": 2,
+            "x_sumo": 44.13,
+            "y_sumo": 35.21162781238556,
+            "speed_mps": 4.256700873374939
+          },
+          "after": {
+            "active": true,
+            "road_id": "north_upper",
+            "lane_index": 2,
+            "x_sumo": 43.81,
+            "y_sumo": 36.51616491496563,
+            "speed_mps": 4.366808235645294
+          },
+          "reward": 1.0,
+          "raw_steps": 99
+        }
+      ]
+    },
+    {
+      "run": "paper__temporal_graph__carla__seed0",
+      "algorithm": "temporal_graph",
+      "scenario": "carla",
+      "training_seed": 0,
+      "evaluation_seed": 10000,
+      "traffic_variant": "traffic_0.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 93
+      },
+      "decisions": 31,
+      "mean_target_speed_mps": 8.881141081933052,
+      "min_target_speed_mps": 8.749209642410278,
+      "max_target_speed_mps": 9.116654396057129,
+      "negative_lane_command_rate": 1.0,
+      "keep_lane_command_rate": 0.0,
+      "positive_lane_command_rate": 0.0,
+      "lane_change_applied_rate": 0.1935483870967742,
+      "roads_visited": [
+        "ego_approach",
+        ":bend_0",
+        ":cross_1",
+        "north_upper",
+        ":split_1"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.8233308792114258,
+          "action_lateral_raw": -0.9208460450172424,
+          "target_speed_mps": 9.116654396057129,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 94.98,
+            "y_sumo": 1.93,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 92.64102631136616,
+            "y_sumo": 1.9066102631136614,
+            "speed_mps": 9.116654396057129
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.7850034236907959,
+          "action_lateral_raw": -0.8538348078727722,
+          "target_speed_mps": 8.92501711845398,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 92.64102631136616,
+            "y_sumo": 1.9066102631136614,
+            "speed_mps": 9.116654396057129
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 89.88342444661932,
+            "y_sumo": 1.8790342444661932,
+            "speed_mps": 8.92501711845398
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.810157299041748,
+          "action_lateral_raw": -0.907017707824707,
+          "target_speed_mps": 9.05078649520874,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 89.88342444661932,
+            "y_sumo": 1.8790342444661932,
+            "speed_mps": 8.92501711845398
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 87.1033884361689,
+            "y_sumo": 1.8512338843616891,
+            "speed_mps": 9.05078649520874
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 7,
+          "action_speed_raw": 0.7518564462661743,
+          "action_lateral_raw": -0.8743426203727722,
+          "target_speed_mps": 8.759282231330872,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 76.23957896737404,
+            "y_sumo": 1.7425957896737405,
+            "speed_mps": 8.765394687652588
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 73.54252200862643,
+            "y_sumo": 1.7156252200862643,
+            "speed_mps": 8.759282231330872
+          },
+          "reward": 0.0,
+          "raw_steps": 24
+        },
+        {
+          "decision": 15,
+          "action_speed_raw": 0.765532374382019,
+          "action_lateral_raw": -0.8313836455345154,
+          "target_speed_mps": 8.827661871910095,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 54.897799996845194,
+            "y_sumo": 3.5785787581611403,
+            "speed_mps": 8.814539909362793
+          },
+          "after": {
+            "active": true,
+            "road_id": "ego_approach",
+            "lane_index": 1,
+            "x_sumo": 53.10196218286274,
+            "y_sumo": 5.6178085103023845,
+            "speed_mps": 8.827661871910095
+          },
+          "reward": 0.0,
+          "raw_steps": 48
+        },
+        {
+          "decision": 23,
+          "action_speed_raw": 0.8013947010040283,
+          "action_lateral_raw": -0.865553617477417,
+          "target_speed_mps": 9.006973505020142,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": ":cross_1",
+            "lane_index": 0,
+            "x_sumo": 46.05,
+            "y_sumo": 22.127954514026644,
+            "speed_mps": 9.03711199760437
+          },
+          "after": {
+            "active": true,
+            "road_id": ":cross_1",
+            "lane_index": 0,
+            "x_sumo": 46.05,
+            "y_sumo": 24.831553490161898,
+            "speed_mps": 9.006973505020142
+          },
+          "reward": 0.0,
+          "raw_steps": 72
+        },
+        {
+          "decision": 30,
+          "action_speed_raw": 0.7943296432495117,
+          "action_lateral_raw": -0.8873696327209473,
+          "target_speed_mps": 8.971648216247559,
+          "source_lane_command": -1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "north_upper",
+            "lane_index": 1,
+            "x_sumo": 44.449999999999996,
+            "y_sumo": 38.33,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": ":split_1",
+            "lane_index": 0,
+            "x_sumo": 43.3318447622224,
+            "y_sumo": 39.552066133689095,
+            "speed_mps": 8.971648216247559
+          },
+          "reward": 1.0,
+          "raw_steps": 93
+        }
+      ]
+    },
+    {
+      "run": "paper__full_balanced__roundabout_medium__seed2",
+      "algorithm": "topo_scene_balanced",
+      "scenario": "roundabout_medium",
+      "training_seed": 2,
+      "evaluation_seed": 10002,
+      "traffic_variant": "traffic_938.rou.xml",
+      "outcome": {
+        "success": false,
+        "collision": true,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 218
+      },
+      "decisions": 73,
+      "mean_target_speed_mps": 8.042207433752818,
+      "min_target_speed_mps": 7.89647102355957,
+      "max_target_speed_mps": 8.36421251296997,
+      "negative_lane_command_rate": 0.0,
+      "keep_lane_command_rate": 0.0,
+      "positive_lane_command_rate": 1.0,
+      "lane_change_applied_rate": 0.0821917808219178,
+      "roads_visited": [
+        "edge-east-EW",
+        ":junction-intersection-east_0",
+        "edge-east-EN",
+        ":junction-intersection-north_5",
+        "edge-north-NW",
+        ":junction-intersection-west_2",
+        ":junction-intersection-west_6"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.5875396728515625,
+          "action_lateral_raw": 0.6132051944732666,
+          "target_speed_mps": 7.9376983642578125,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 147.83,
+            "y_sumo": 73.56510104102877,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 145.84557540893556,
+            "y_sumo": 73.55537942637568,
+            "speed_mps": 7.9376983642578125
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.5904850959777832,
+          "action_lateral_raw": 0.622605562210083,
+          "target_speed_mps": 7.952425479888916,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 145.84557540893556,
+            "y_sumo": 73.55537942637568,
+            "speed_mps": 7.9376983642578125
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 143.46058412075044,
+            "y_sumo": 73.54369545190814,
+            "speed_mps": 7.952425479888916
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.5902807712554932,
+          "action_lateral_raw": 0.6233148574829102,
+          "target_speed_mps": 7.951403856277466,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 143.46058412075044,
+            "y_sumo": 73.54369545190814,
+            "speed_mps": 7.952425479888916
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 141.07511188268663,
+            "y_sumo": 73.53200912128689,
+            "speed_mps": 7.951403856277466
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 18,
+          "action_speed_raw": 0.5940481424331665,
+          "action_lateral_raw": 0.6386089324951172,
+          "target_speed_mps": 7.9702407121658325,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 1,
+            "x_sumo": 118.6611297381162,
+            "y_sumo": 95.70269818431998,
+            "speed_mps": 7.95775294303894
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 1,
+            "x_sumo": 117.21260727340906,
+            "y_sumo": 97.52017410134887,
+            "speed_mps": 7.9702407121658325
+          },
+          "reward": 0.0,
+          "raw_steps": 57
+        },
+        {
+          "decision": 36,
+          "action_speed_raw": 0.5884386301040649,
+          "action_lateral_raw": 0.6004111766815186,
+          "target_speed_mps": 7.942193150520325,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 1,
+            "x_sumo": 85.58738622701435,
+            "y_sumo": 119.06172222454526,
+            "speed_mps": 7.963441610336304
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 1,
+            "x_sumo": 83.31466582358205,
+            "y_sumo": 119.38420282232957,
+            "speed_mps": 7.942193150520325
+          },
+          "reward": 0.0,
+          "raw_steps": 111
+        },
+        {
+          "decision": 54,
+          "action_speed_raw": 0.618071436882019,
+          "action_lateral_raw": 0.6783255338668823,
+          "target_speed_mps": 8.090357184410095,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 1,
+            "x_sumo": 45.54482457351293,
+            "y_sumo": 110.19327864441357,
+            "speed_mps": 8.078368902206421
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 1,
+            "x_sumo": 43.69149331216448,
+            "y_sumo": 108.7761375240039,
+            "speed_mps": 8.090357184410095
+          },
+          "reward": 0.0,
+          "raw_steps": 165
+        },
+        {
+          "decision": 72,
+          "action_speed_raw": 0.6728425025939941,
+          "action_lateral_raw": 0.7299489974975586,
+          "target_speed_mps": 8.36421251296997,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": ":junction-intersection-west_6",
+            "lane_index": 0,
+            "x_sumo": 24.404588585856462,
+            "y_sumo": 74.20436543190331,
+            "speed_mps": 8.356095552444458
+          },
+          "after": {
+            "active": true,
+            "road_id": ":junction-intersection-west_6",
+            "lane_index": 0,
+            "x_sumo": 22.886064095913063,
+            "y_sumo": 73.55100720926438,
+            "speed_mps": 8.36421251296997
+          },
+          "reward": -1.0,
+          "raw_steps": 218
+        }
+      ]
+    },
+    {
+      "run": "paper__full_balanced__roundabout_medium__seed1",
+      "algorithm": "topo_scene_balanced",
+      "scenario": "roundabout_medium",
+      "training_seed": 1,
+      "evaluation_seed": 10001,
+      "traffic_variant": "traffic_938.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 446
+      },
+      "decisions": 149,
+      "mean_target_speed_mps": 4.394390579038018,
+      "min_target_speed_mps": 0.08430540561676025,
+      "max_target_speed_mps": 5.782046318054199,
+      "negative_lane_command_rate": 0.9463087248322147,
+      "keep_lane_command_rate": 0.006711409395973154,
+      "positive_lane_command_rate": 0.04697986577181208,
+      "lane_change_applied_rate": 0.11409395973154363,
+      "roads_visited": [
+        "edge-east-EW",
+        ":junction-intersection-east_0",
+        "edge-east-EN",
+        ":junction-intersection-north_5",
+        "edge-north-NW",
+        ":junction-intersection-west_0",
+        "edge-west-EW"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.03967857360839844,
+          "action_lateral_raw": -0.9778001308441162,
+          "target_speed_mps": 5.198392868041992,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 147.83,
+            "y_sumo": 73.56510104102877,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 146.53040178298951,
+            "y_sumo": 73.55873436268458,
+            "speed_mps": 5.198392868041992
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.029757380485534668,
+          "action_lateral_raw": -0.9781091809272766,
+          "target_speed_mps": 5.148786902427673,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 146.53040178298951,
+            "y_sumo": 73.55873436268458,
+            "speed_mps": 5.198392868041992
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 144.9832854139805,
+            "y_sumo": 73.55115510306909,
+            "speed_mps": 5.148786902427673
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.009511113166809082,
+          "action_lateral_raw": -0.9773266911506653,
+          "target_speed_mps": 5.047555565834045,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 144.9832854139805,
+            "y_sumo": 73.55115510306909,
+            "speed_mps": 5.148786902427673
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 143.4639571774006,
+            "y_sumo": 73.54371197637428,
+            "speed_mps": 5.047555565834045
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 37,
+          "action_speed_raw": -0.01216745376586914,
+          "action_lateral_raw": -0.9790134429931641,
+          "target_speed_mps": 4.939162731170654,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 114.78642957555361,
+            "y_sumo": 105.1099377957657,
+            "speed_mps": 4.8899319767951965
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 113.81557108899932,
+            "y_sumo": 106.29785813906993,
+            "speed_mps": 4.939162731170654
+          },
+          "reward": 0.0,
+          "raw_steps": 114
+        },
+        {
+          "decision": 74,
+          "action_speed_raw": -0.15185332298278809,
+          "action_lateral_raw": -0.951290488243103,
+          "target_speed_mps": 4.24073338508606,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": ":junction-intersection-north_5",
+            "lane_index": 0,
+            "x_sumo": 81.00969529282577,
+            "y_sumo": 119.70715833977134,
+            "speed_mps": 4.1653043031692505
+          },
+          "after": {
+            "active": true,
+            "road_id": ":junction-intersection-north_5",
+            "lane_index": 0,
+            "x_sumo": 79.75368289758796,
+            "y_sumo": 119.88234682988725,
+            "speed_mps": 4.24073338508606
+          },
+          "reward": 0.0,
+          "raw_steps": 225
+        },
+        {
+          "decision": 111,
+          "action_speed_raw": -0.09119677543640137,
+          "action_lateral_raw": -0.9671041369438171,
+          "target_speed_mps": 4.544016122817993,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 0,
+            "x_sumo": 36.33053338469049,
+            "y_sumo": 106.18864404861117,
+            "speed_mps": 4.67840850353241
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 0,
+            "x_sumo": 35.45202248852152,
+            "y_sumo": 105.07319037961655,
+            "speed_mps": 4.544016122817993
+          },
+          "reward": 0.0,
+          "raw_steps": 336
+        },
+        {
+          "decision": 148,
+          "action_speed_raw": 0.14981281757354736,
+          "action_lateral_raw": -0.9807555079460144,
+          "target_speed_mps": 5.749064087867737,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-west-EW",
+            "lane_index": 0,
+            "x_sumo": 0.8225783927565793,
+            "y_sumo": 73.00955921774128,
+            "speed_mps": 5.751439929008484
+          },
+          "after": {
+            "active": false
+          },
+          "reward": 1.0,
+          "raw_steps": 446
+        }
+      ]
+    },
+    {
+      "run": "paper__temporal_graph__roundabout_medium__seed2",
+      "algorithm": "temporal_graph",
+      "scenario": "roundabout_medium",
+      "training_seed": 2,
+      "evaluation_seed": 10002,
+      "traffic_variant": "traffic_938.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 291
+      },
+      "decisions": 97,
+      "mean_target_speed_mps": 6.835453835959287,
+      "min_target_speed_mps": 0.2750733494758606,
+      "max_target_speed_mps": 9.994884729385376,
+      "negative_lane_command_rate": 0.44329896907216493,
+      "keep_lane_command_rate": 0.13402061855670103,
+      "positive_lane_command_rate": 0.422680412371134,
+      "lane_change_applied_rate": 0.3711340206185567,
+      "roads_visited": [
+        "edge-east-EW",
+        ":junction-intersection-east_0",
+        "edge-east-EN",
+        ":junction-intersection-north_5",
+        "edge-north-NW",
+        ":junction-intersection-west_2",
+        ":junction-intersection-west_6",
+        "edge-west-EW"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.9088943004608154,
+          "action_lateral_raw": 0.8748519420623779,
+          "target_speed_mps": 9.544471502304077,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 147.83,
+            "y_sumo": 73.56510104102877,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 145.443882124424,
+            "y_sumo": 73.55341154745584,
+            "speed_mps": 9.544471502304077
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.7430059909820557,
+          "action_lateral_raw": 0.503521203994751,
+          "target_speed_mps": 8.715029954910278,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 145.443882124424,
+            "y_sumo": 73.55341154745584,
+            "speed_mps": 9.544471502304077
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 142.78790106058122,
+            "y_sumo": 73.54040000519574,
+            "speed_mps": 8.715029954910278
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.7178053855895996,
+          "action_lateral_raw": -0.13051247596740723,
+          "target_speed_mps": 8.589026927947998,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 142.78790106058122,
+            "y_sumo": 73.54040000519574,
+            "speed_mps": 8.715029954910278
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 140.2048928308487,
+            "y_sumo": 73.52774595385596,
+            "speed_mps": 8.589026927947998
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 24,
+          "action_speed_raw": 0.4721086025238037,
+          "action_lateral_raw": 0.976320743560791,
+          "target_speed_mps": 7.3605430126190186,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 125.79826680465202,
+            "y_sumo": 82.29296981857378,
+            "speed_mps": 8.39147686958313
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 124.94691290256341,
+            "y_sumo": 84.4997567002532,
+            "speed_mps": 7.3605430126190186
+          },
+          "reward": 0.0,
+          "raw_steps": 75
+        },
+        {
+          "decision": 48,
+          "action_speed_raw": 0.9989055395126343,
+          "action_lateral_raw": 0.8276307582855225,
+          "target_speed_mps": 9.994527697563171,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 90.00363928436258,
+            "y_sumo": 119.42798926428772,
+            "speed_mps": 9.988343119621277
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 1,
+            "x_sumo": 87.50736141970573,
+            "y_sumo": 119.83850314623217,
+            "speed_mps": 9.994527697563171
+          },
+          "reward": 0.0,
+          "raw_steps": 147
+        },
+        {
+          "decision": 72,
+          "action_speed_raw": -0.32826709747314453,
+          "action_lateral_raw": 0.9599170684814453,
+          "target_speed_mps": 3.3586645126342773,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 0,
+            "x_sumo": 36.74818214133983,
+            "y_sumo": 106.65625510421266,
+            "speed_mps": 3.6807191371917725
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 0,
+            "x_sumo": 36.314438854219595,
+            "y_sumo": 105.65101874122993,
+            "speed_mps": 3.3586645126342773
+          },
+          "reward": 0.0,
+          "raw_steps": 219
+        },
+        {
+          "decision": 96,
+          "action_speed_raw": 0.9853192567825317,
+          "action_lateral_raw": -0.27727895975112915,
+          "target_speed_mps": 9.926596283912659,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-west-EW",
+            "lane_index": 0,
+            "x_sumo": 2.4118166121174838,
+            "y_sumo": 72.98888473864326,
+            "speed_mps": 9.937943816184998
+          },
+          "after": {
+            "active": false
+          },
+          "reward": 1.0,
+          "raw_steps": 291
+        }
+      ]
+    },
+    {
+      "run": "paper__full_balanced__roundabout__seed2",
+      "algorithm": "topo_scene_balanced",
+      "scenario": "roundabout",
+      "training_seed": 2,
+      "evaluation_seed": 10002,
+      "traffic_variant": "traffic_191.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 437
+      },
+      "decisions": 146,
+      "mean_target_speed_mps": 6.219864691773506,
+      "min_target_speed_mps": 0.008928179740905762,
+      "max_target_speed_mps": 7.113233804702759,
+      "negative_lane_command_rate": 1.0,
+      "keep_lane_command_rate": 0.0,
+      "positive_lane_command_rate": 0.0,
+      "lane_change_applied_rate": 0.0,
+      "roads_visited": [
+        "edge-east-EW",
+        ":junction-intersection-east_0",
+        "edge-east-EN",
+        ":junction-intersection-north_3",
+        "edge-north-NW",
+        ":junction-intersection-west_1",
+        "edge-west-WS",
+        ":junction-intersection-south_2",
+        "edge-south-NS"
+      ],
+      "lane_indices_visited": [
+        0
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.183610200881958,
+          "action_lateral_raw": -0.9290412068367004,
+          "target_speed_mps": 5.91805100440979,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 147.83,
+            "y_sumo": 73.56510104102877,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 146.35048724889756,
+            "y_sumo": 73.55785296876373,
+            "speed_mps": 5.91805100440979
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.18344521522521973,
+          "action_lateral_raw": -0.9301199913024902,
+          "target_speed_mps": 5.917226076126099,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 146.35048724889756,
+            "y_sumo": 73.55785296876373,
+            "speed_mps": 5.91805100440979
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 144.57527817964555,
+            "y_sumo": 73.54915629236812,
+            "speed_mps": 5.917226076126099
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.18843746185302734,
+          "action_lateral_raw": -0.9327975511550903,
+          "target_speed_mps": 5.942187309265137,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 144.57527817964555,
+            "y_sumo": 73.54915629236812,
+            "speed_mps": 5.917226076126099
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EW",
+            "lane_index": 0,
+            "x_sumo": 142.79387004852296,
+            "y_sumo": 73.54042924702276,
+            "speed_mps": 5.942187309265137
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 36,
+          "action_speed_raw": 0.22554874420166016,
+          "action_lateral_raw": -0.9482803344726562,
+          "target_speed_mps": 6.127743721008301,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 105.2302212190286,
+            "y_sumo": 113.7776339497375,
+            "speed_mps": 6.097322702407837
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-east-EN",
+            "lane_index": 0,
+            "x_sumo": 103.64444193930476,
+            "y_sumo": 114.83319118986186,
+            "speed_mps": 6.127743721008301
+          },
+          "reward": 0.0,
+          "raw_steps": 111
+        },
+        {
+          "decision": 73,
+          "action_speed_raw": 0.34219908714294434,
+          "action_lateral_raw": -0.9657986760139465,
+          "target_speed_mps": 6.710995435714722,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 0,
+            "x_sumo": 47.139160633996134,
+            "y_sumo": 115.18057345928393,
+            "speed_mps": 6.735700964927673
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-north-NW",
+            "lane_index": 0,
+            "x_sumo": 45.42061534595608,
+            "y_sumo": 113.99472367329992,
+            "speed_mps": 6.710995435714722
+          },
+          "reward": 0.0,
+          "raw_steps": 222
+        },
+        {
+          "decision": 109,
+          "action_speed_raw": 0.41967296600341797,
+          "action_lateral_raw": -0.9680187106132507,
+          "target_speed_mps": 7.09836483001709,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-west-WS",
+            "lane_index": 0,
+            "x_sumo": 28.854010933628707,
+            "y_sumo": 47.520877684563025,
+            "speed_mps": 7.095487117767334
+          },
+          "after": {
+            "active": true,
+            "road_id": "edge-west-WS",
+            "lane_index": 0,
+            "x_sumo": 29.976271027722042,
+            "y_sumo": 45.620138436592285,
+            "speed_mps": 7.09836483001709
+          },
+          "reward": 0.0,
+          "raw_steps": 330
+        },
+        {
+          "decision": 145,
+          "action_speed_raw": 0.2034510374069214,
+          "action_lateral_raw": -0.9758756756782532,
+          "target_speed_mps": 6.017255187034607,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "edge-south-NS",
+            "lane_index": 0,
+            "x_sumo": 74.32178995922281,
+            "y_sumo": 1.0386461174488062,
+            "speed_mps": 6.070861220359802
+          },
+          "after": {
+            "active": false
+          },
+          "reward": 1.0,
+          "raw_steps": 437
+        }
+      ]
+    },
+    {
+      "run": "paper__full_balanced__cross__seed1",
+      "algorithm": "topo_scene_balanced",
+      "scenario": "cross",
+      "training_seed": 1,
+      "evaluation_seed": 10001,
+      "traffic_variant": "traffic_276.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 394
+      },
+      "decisions": 132,
+      "mean_target_speed_mps": 6.812585797725302,
+      "min_target_speed_mps": 1.0240527987480164,
+      "max_target_speed_mps": 9.969784021377563,
+      "negative_lane_command_rate": 0.25757575757575757,
+      "keep_lane_command_rate": 0.2803030303030303,
+      "positive_lane_command_rate": 0.4621212121212121,
+      "lane_change_applied_rate": 0.24242424242424243,
+      "roads_visited": [
+        "gneE17",
+        ":gneJ3_1",
+        "gneE5",
+        ":gneJ7_0",
+        "gneE23"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.5142492055892944,
+          "action_lateral_raw": 0.16852927207946777,
+          "target_speed_mps": 7.571246027946472,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 18.684507422402156,
+            "y_sumo": 66.3997705802969,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 20.24882289727207,
+            "y_sumo": 65.33407427703803,
+            "speed_mps": 7.571246027946472
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.3077361583709717,
+          "action_lateral_raw": -0.08590573072433472,
+          "target_speed_mps": 6.538680791854858,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 20.24882289727207,
+            "y_sumo": 65.33407427703803,
+            "speed_mps": 7.571246027946472
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 21.912660390671128,
+            "y_sumo": 64.20057819237753,
+            "speed_mps": 6.538680791854858
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.2942349910736084,
+          "action_lateral_raw": -0.08402931690216064,
+          "target_speed_mps": 6.471174955368042,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 21.912660390671128,
+            "y_sumo": 64.20057819237753,
+            "speed_mps": 6.538680791854858
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 23.519882106613693,
+            "y_sumo": 63.10565183723182,
+            "speed_mps": 6.471174955368042
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 33,
+          "action_speed_raw": -0.08273422718048096,
+          "action_lateral_raw": 0.9525765180587769,
+          "target_speed_mps": 4.586328864097595,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 1,
+            "x_sumo": 55.62143852367321,
+            "y_sumo": 50.04000376137315,
+            "speed_mps": 5.266651511192322
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 1,
+            "x_sumo": 56.32610978759478,
+            "y_sumo": 50.03935996466467,
+            "speed_mps": 4.586328864097595
+          },
+          "reward": 0.0,
+          "raw_steps": 102
+        },
+        {
+          "decision": 66,
+          "action_speed_raw": 0.9058784246444702,
+          "action_lateral_raw": -0.9961354732513428,
+          "target_speed_mps": 9.529392123222351,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 1,
+            "x_sumo": 75.92795520486668,
+            "y_sumo": 50.02145146717655,
+            "speed_mps": 9.53192949295044
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 1,
+            "x_sumo": 77.35655489978167,
+            "y_sumo": 49.70014614661453,
+            "speed_mps": 9.529392123222351
+          },
+          "reward": 0.0,
+          "raw_steps": 201
+        },
+        {
+          "decision": 99,
+          "action_speed_raw": 0.9920604228973389,
+          "action_lateral_raw": -0.9417278170585632,
+          "target_speed_mps": 9.960302114486694,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 0,
+            "x_sumo": 117.5770346253303,
+            "y_sumo": 46.783393572423556,
+            "speed_mps": 9.952322244644165
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 0,
+            "x_sumo": 119.0701225331137,
+            "y_sumo": 46.78202932966517,
+            "speed_mps": 9.960302114486694
+          },
+          "reward": 0.0,
+          "raw_steps": 300
+        },
+        {
+          "decision": 131,
+          "action_speed_raw": 0.7831393480300903,
+          "action_lateral_raw": 0.00535130500793457,
+          "target_speed_mps": 8.915696740150452,
+          "source_lane_command": 0,
+          "sumo_lane_offset": 0,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE23",
+            "lane_index": 0,
+            "x_sumo": 181.78858104825022,
+            "y_sumo": 46.61320555924526,
+            "speed_mps": 8.902150392532349
+          },
+          "after": {
+            "active": false
+          },
+          "reward": 1.0,
+          "raw_steps": 394
+        }
+      ]
+    },
+    {
+      "run": "paper__temporal_graph__cross__seed1",
+      "algorithm": "temporal_graph",
+      "scenario": "cross",
+      "training_seed": 1,
+      "evaluation_seed": 10001,
+      "traffic_variant": "traffic_276.rou.xml",
+      "outcome": {
+        "success": true,
+        "collision": false,
+        "off_route": false,
+        "timeout": false,
+        "raw_steps": 416
+      },
+      "decisions": 139,
+      "mean_target_speed_mps": 6.528229308214119,
+      "min_target_speed_mps": 0.06986796855926514,
+      "max_target_speed_mps": 9.98717725276947,
+      "negative_lane_command_rate": 0.5107913669064749,
+      "keep_lane_command_rate": 0.17266187050359713,
+      "positive_lane_command_rate": 0.31654676258992803,
+      "lane_change_applied_rate": 0.5323741007194245,
+      "roads_visited": [
+        "gneE17",
+        ":gneJ3_1",
+        "gneE5",
+        ":gneJ7_0",
+        "gneE23"
+      ],
+      "lane_indices_visited": [
+        0,
+        1
+      ],
+      "trace_samples": [
+        {
+          "decision": 0,
+          "action_speed_raw": 0.9730656147003174,
+          "action_lateral_raw": -0.7590973377227783,
+          "target_speed_mps": 9.865328073501587,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 18.684507422402156,
+            "y_sumo": 66.3997705802969,
+            "speed_mps": 0.0
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 20.722809349599316,
+            "y_sumo": 65.0111690714356,
+            "speed_mps": 9.865328073501587
+          },
+          "reward": 0.0,
+          "raw_steps": 3
+        },
+        {
+          "decision": 1,
+          "action_speed_raw": 0.9750488996505737,
+          "action_lateral_raw": -0.4171220660209656,
+          "target_speed_mps": 9.875244498252869,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 20.722809349599316,
+            "y_sumo": 65.0111690714356,
+            "speed_mps": 9.865328073501587
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 23.17082052138492,
+            "y_sumo": 63.343451467142735,
+            "speed_mps": 9.875244498252869
+          },
+          "reward": 0.0,
+          "raw_steps": 6
+        },
+        {
+          "decision": 2,
+          "action_speed_raw": 0.8940099477767944,
+          "action_lateral_raw": 0.5986292362213135,
+          "target_speed_mps": 9.470049738883972,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 23.17082052138492,
+            "y_sumo": 63.343451467142735,
+            "speed_mps": 9.875244498252869
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE17",
+            "lane_index": 0,
+            "x_sumo": 25.53552308759226,
+            "y_sumo": 61.73248819049071,
+            "speed_mps": 9.470049738883972
+          },
+          "reward": 0.0,
+          "raw_steps": 9
+        },
+        {
+          "decision": 34,
+          "action_speed_raw": 0.6361230611801147,
+          "action_lateral_raw": -0.8643777966499329,
+          "target_speed_mps": 8.180615305900574,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 1,
+            "x_sumo": 54.27695014348162,
+            "y_sumo": 48.7612315690082,
+            "speed_mps": 7.009211182594299
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 1,
+            "x_sumo": 55.47456351989143,
+            "y_sumo": 49.08013754761084,
+            "speed_mps": 8.180615305900574
+          },
+          "reward": 0.0,
+          "raw_steps": 105
+        },
+        {
+          "decision": 69,
+          "action_speed_raw": -0.8996650576591492,
+          "action_lateral_raw": 0.9896199703216553,
+          "target_speed_mps": 0.5016747117042542,
+          "source_lane_command": 1,
+          "sumo_lane_offset": 1,
+          "lane_change_applied": true,
+          "before": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 0,
+            "x_sumo": 90.88186237808503,
+            "y_sumo": 47.12778523394243,
+            "speed_mps": 0.8431932330131531
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 0,
+            "x_sumo": 90.96590142254382,
+            "y_sumo": 47.447708580575494,
+            "speed_mps": 0.5016747117042542
+          },
+          "reward": 0.0,
+          "raw_steps": 210
+        },
+        {
+          "decision": 104,
+          "action_speed_raw": 0.876990556716919,
+          "action_lateral_raw": -0.7127997875213623,
+          "target_speed_mps": 9.384952783584595,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 0,
+            "x_sumo": 131.16738834529824,
+            "y_sumo": 48.050976524653336,
+            "speed_mps": 9.536981582641602
+          },
+          "after": {
+            "active": true,
+            "road_id": "gneE5",
+            "lane_index": 0,
+            "x_sumo": 132.57792344106565,
+            "y_sumo": 47.729687577283016,
+            "speed_mps": 9.384952783584595
+          },
+          "reward": 0.0,
+          "raw_steps": 315
+        },
+        {
+          "decision": 138,
+          "action_speed_raw": 0.9645242691040039,
+          "action_lateral_raw": -0.5808888077735901,
+          "target_speed_mps": 9.82262134552002,
+          "source_lane_command": -1,
+          "sumo_lane_offset": -1,
+          "lane_change_applied": false,
+          "before": {
+            "active": true,
+            "road_id": "gneE23",
+            "lane_index": 0,
+            "x_sumo": 181.38954377412796,
+            "y_sumo": 46.61467343829551,
+            "speed_mps": 9.941184520721436
+          },
+          "after": {
+            "active": false
+          },
+          "reward": 1.0,
+          "raw_steps": 416
+        }
+      ]
+    }
+  ]
+}

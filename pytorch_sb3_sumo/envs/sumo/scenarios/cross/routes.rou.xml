@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="ego_type" accel="2.6" decel="4.5" emergencyDecel="8.0" sigma="0" length="4.7" minGap="2.0" maxSpeed="10.0" color="0,0.35,1"/>
+    <vType id="traffic" accel="2.4" decel="4.5" sigma="0.5" length="4.7" minGap="2.5" maxSpeed="13.89" speedFactor="normc(0.9,0.12,0.65,1.15)"/>
+    <route id="ego_route" edges="main_0 main_1 main_2 main_out"/>
+    <route id="main_route" edges="main_0 main_1 main_2 main_out"/>
+    <route id="first_merge" edges="ramp_1 main_1 main_2 main_out"/>
+    <route id="second_merge" edges="ramp_2 main_2 main_out"/>
+    <vehicle id="ego" type="ego_type" route="ego_route" depart="0" departLane="1" departSpeed="0"/>
+    <flow id="first_merge_flow" type="traffic" route="first_merge" begin="0" end="6000" vehsPerHour="640" departLane="best" departSpeed="random"/>
+    <flow id="second_merge_flow" type="traffic" route="second_merge" begin="0" end="6000" vehsPerHour="640" departLane="best" departSpeed="random"/>
+    <flow id="main_flow" type="traffic" route="main_route" begin="4" end="6000" vehsPerHour="380" departLane="random" departSpeed="random"/>
+</routes>

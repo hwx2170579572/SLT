@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="scene_rep_ego_type" accel="2.6" decel="4.5" emergencyDecel="8.0" sigma="0" length="4.7" minGap="2.0" maxSpeed="10.0" color="0,0.35,1"/>
+    <route id="scene_rep_ego_route" edges="edge-east-EW edge-east-EN edge-north-NW edge-west-WS edge-south-NS"/>
+    <vehicle id="ego" type="scene_rep_ego_type" route="scene_rep_ego_route" depart="30" departLane="0" departPos="1" departSpeed="0" arrivalLane="0" arrivalPos="max"/>
+</routes>
