@@ -1,0 +1,129 @@
+{
+  "schema_version": "three-scene-hold35k-vs-mst-50ep-curve/v1",
+  "experiment_id": "three-scene-hold35k-vs-mst-50ep-v1",
+  "run_id_prefix": "three_scene_v1",
+  "name": "hold35k (v4_8) vs MST+SLT baseline: standard training curves on cross / carla / cross_left",
+  "created_at_local": "2026-09-24T00:00:00+08:00",
+  "no_fabrication": true,
+  "formal_test_accessed": false,
+  "scope": "Add a 4-way unprotected-left-turn SUMO scenario (cross_left) and train BOTH hold35k (v4_8) and the MST+SLT baseline on cross, carla, and cross_left with one training seed, saving a checkpoint every 2000 raw steps. Afterwards evaluate every historical checkpoint of both methods on all three scenarios (50 episodes each) and draw standard success-rate vs raw-steps training curves.",
+  "matrix": {
+    "method_order": ["hold35k", "mst_slt"],
+    "scenario_order": ["cross", "carla", "cross_left"],
+    "method_scenario_cells": 6,
+    "training_seed": 0,
+    "raw_training_steps": 50000,
+    "learning_starts_raw_steps": 5000,
+    "checkpoint_frequency_raw_steps": 2000,
+    "checkpoints_per_cell": 25,
+    "evaluation_episodes_per_checkpoint": 50,
+    "total_evaluation_tasks": 150,
+    "total_evaluation_episodes": 7500,
+    "pairing": "Within every scenario, both methods use training seed 0, the same ordered physical 80/20 high-density traffic partition, deterministic actor-only actions, and the source episode limit.",
+    "primary_metrics": {
+      "success_rate": "higher",
+      "collision_rate": "lower"
+    }
+  },
+  "methods": {
+    "hold35k": {
+      "display_label": "hold35k (v4.8)",
+      "trainer_adapter": "v4_8",
+      "cli_algorithm": "topo_v4_8_tie_only_replicated_calibration",
+      "implementation_id": "full_decision_aligned_hybrid_factorized_entropy_horizon_correct_16_step_credit_tie_only_replicated_joint_selector_v4_8",
+      "stability_candidate": "tau0025_floor2e5_hold35k",
+      "optimization": {
+        "tau": 0.0025,
+        "learning_rate": 5e-5,
+        "final_learning_rate": 2e-5,
+        "decay_start_raw_step": 20000,
+        "decay_end_raw_step": 35000,
+        "batch_size": 32,
+        "buffer_size": 20000
+      }
+    },
+    "mst_slt": {
+      "display_label": "MST+SLT",
+      "trainer_adapter": "base",
+      "cli_algorithm": "scene_rep",
+      "implementation_id": "released_scene_rep_pytorch_port_v1",
+      "optimization": {
+        "learning_rate": 0.0001,
+        "batch_size": 32,
+        "buffer_size": 20000
+      }
+    }
+  },
+  "scenarios": {
+    "cross": {
+      "display_label": "Double Merging (high traffic)",
+      "scenario_id": "cross_high_density_single_seed_100ep_v2",
+      "traffic_mode": "high_density_v2",
+      "vehicle_scale": 1.5,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [8.0, 10.0],
+      "rationale": "Inherited exactly from independent v2: 50% additional social vehicles with delayed clones so ego can depart before merge pressure builds."
+    },
+    "carla": {
+      "display_label": "CARLA Town-10 SUMO reconstruction (high traffic)",
+      "scenario_id": "carla_high_density_single_seed_100ep_v2",
+      "traffic_mode": "high_density_v2",
+      "vehicle_scale": 1.35,
+      "pedestrian_scale": 1.35,
+      "clone_depart_jitter_seconds": [0.8, 1.8],
+      "rationale": "Inherited exactly from independent v2: motor and pedestrian demand are both scaled by 1.35."
+    },
+    "cross_left": {
+      "display_label": "4-way cross unprotected left turn (high traffic)",
+      "scenario_id": "cross_left_high_density_three_scene_v1",
+      "traffic_mode": "high_density_calibrated_v1",
+      "vehicle_scale": 1.4,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [4.0, 6.0],
+      "source_traffic_files": 60,
+      "source_explicit_vehicles_first_150_seconds_mean": 41.6,
+      "source_total_demand_veh_per_hour": 1000.0,
+      "rationale": "Reuse the released 4-arm priority network. Social traffic is straight (both lanes) plus right turns on all four arms; the ego is the sole left-turner (south_in -> west_out), making the unprotected left turn the signature challenge. 40% additional vehicles with 4-6 s clone jitter keeps it on the dense end between left_turn and cross while remaining solvable."
+    }
+  },
+  "environment_contract": {
+    "map_changed": false,
+    "ego_route_changed": false,
+    "observation_changed_within_method": false,
+    "action_space_changed": false,
+    "reward_changed": false,
+    "episode_limit_profile": "source",
+    "ego_control_profile": "direct",
+    "physical_traffic_partition": "matched_frozen_80_20",
+    "evaluation_seed_start": 10000,
+    "deployment": "actor_only_deterministic",
+    "formal_test_accessed": false,
+    "high_density_overlay_suffix": "_i5m6s100_v1.rou.xml"
+  },
+  "profiles": {
+    "smoke": {
+      "raw_training_steps": 96,
+      "learning_starts_raw_steps": 48,
+      "checkpoint_frequency_raw_steps": 48,
+      "evaluation_episodes": 1,
+      "evidence_scope": "Engineering smoke only; never report as a method result."
+    },
+    "comparison": {
+      "raw_training_steps": 50000,
+      "learning_starts_raw_steps": 5000,
+      "checkpoint_frequency_raw_steps": 2000,
+      "evaluation_episodes": 50,
+      "seeds": [0],
+      "evidence_scope": "Single-training-seed standard training curves: 6 cells (2 methods x 3 scenarios), 25 checkpoints each, 50 evaluation episodes per checkpoint."
+    }
+  },
+  "artifact_contract": {
+    "result_root": "results_three_scene_v1",
+    "train_directory": "train",
+    "overlay_directory": "overlays_three_scene_v1",
+    "eval_curve_directory": "eval_curve",
+    "report_directory": "eval_curve/report",
+    "missing_value_rule": "Missing checkpoints remain explicit nulls in the curve; the report warns instead of silently interpolating.",
+    "single_seed_uncertainty_rule": "Cross-training-seed standard deviations and significance remain null/not claimed."
+  }
+}

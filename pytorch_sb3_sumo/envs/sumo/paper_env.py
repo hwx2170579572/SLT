@@ -24,6 +24,7 @@ EPISODE_LIMIT_PROFILES = ("source", "paper")
 _PAPER_MAX_EPISODE_STEPS = {
     "left_turn": 400,
     "cross": 400,
+    "cross_left": 600,
     "roundabout_easy": 400,
     "roundabout_medium": 600,
     "roundabout": 800,

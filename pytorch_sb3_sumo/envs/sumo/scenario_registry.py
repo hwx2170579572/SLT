@@ -46,6 +46,9 @@ SCENARIOS: dict[str, SumoScenarioSpec] = {
     "cross": SumoScenarioSpec(
         "cross", max_episode_steps=600, network_name="double_merge"
     ),
+    # 4-way priority (yield) intersection; ego takes an unprotected left turn
+    # south_in -> west_out while social traffic goes straight + right.
+    "cross_left": SumoScenarioSpec("cross_left", max_episode_steps=600),
     # The legacy CARLA scene records three candidate polylines with x/y only.
     "carla": SumoScenarioSpec(
         "carla",

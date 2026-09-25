@@ -30,6 +30,12 @@ class PaperScenarioSpec:
     source_observation_contract: str = "smarts"
     waypoint_spacing: float = 1.0
     coordinate_offset: tuple[float, float] = (0.0, 0.0)
+    # Static lane-graph padding capacity.  The released 4-way ``cross_left``
+    # network has more conflict/merge typed edges than the small double-merge /
+    # roundabout / T-junction assets, so it declares a larger edge capacity.
+    # Defaults keep every pre-existing scenario byte-identical (64 / 256).
+    topology_max_nodes: int = 64
+    topology_max_edges: int = 256
 
     @property
     def asset_directory(self) -> Path:
@@ -61,6 +67,10 @@ PAPER_SCENARIOS: dict[str, PaperScenarioSpec] = {
     # Episode limits follow the released tools/test.py source, as requested.
     "left_turn": PaperScenarioSpec("left_turn", 400, ego_depart_time=15.0),
     "cross": PaperScenarioSpec("cross", 600, ego_depart_time=5.0),
+    "cross_left": PaperScenarioSpec(
+        "cross_left", 600, ego_depart_time=15.0,
+        topology_max_edges=512,
+    ),
     "roundabout_easy": PaperScenarioSpec(
         "roundabout_easy", 400, ego_depart_time=30.0
     ),

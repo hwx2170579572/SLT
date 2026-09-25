@@ -12,6 +12,7 @@ from algos.sb3_torch.replay_buffer import DictNStepReplayBuffer
 from algos.sb3_torch.sac_v4_5 import ConfidentActorFusionSACV45
 from algos.sb3_torch.topo_temporal_features_v2 import TopoTemporalGraphExtractorV2
 from configs.sb3_configs_v4 import make_model_v4, source_action_repeat_v4
+from envs.sumo.topology_graph import MAX_TOPO_EDGES, MAX_TOPO_NODES
 from envs.sumo.topology_graph_v2 import build_topology_graph_v2
 
 
@@ -107,8 +108,14 @@ def make_model_v4_5(
     specification = getattr(raw_env, "specification", None)
     if specification is None or not hasattr(specification, "network_path"):
         raise TypeError("v4.5 topology method requires specification.network_path")
+    # Static lane-graph padding capacity is declared per scenario; defaults
+    # keep every pre-existing scenario at the original 64 / 256 capacity.
+    max_nodes = int(getattr(specification, "topology_max_nodes", MAX_TOPO_NODES))
+    max_edges = int(getattr(specification, "topology_max_edges", MAX_TOPO_EDGES))
     topology_graph, topology_info = build_topology_graph_v2(
         specification.network_path,
+        max_nodes=max_nodes,
+        max_edges=max_edges,
         coordinate_offset=tuple(
             getattr(specification, "coordinate_offset", (0.0, 0.0))
         ),

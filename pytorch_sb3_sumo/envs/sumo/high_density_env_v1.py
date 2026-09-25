@@ -31,6 +31,7 @@ HIGH_DENSITY_PARTITIONS = ("all", "train", "evaluation")
 SUPPORTED_HIGH_DENSITY_SCENARIOS = (
     "left_turn",
     "cross",
+    "cross_left",
     "roundabout_easy",
     "roundabout_medium",
     "roundabout",
