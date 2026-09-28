@@ -1,0 +1,23 @@
+{
+  "schema_version": "fast-developer-visual-driving/v1",
+  "status": "completed",
+  "training_performed": false,
+  "live_sumogui": true,
+  "deterministic": true,
+  "episodes": 5,
+  "speed": 4.0,
+  "device": "cuda",
+  "beautify_rendering": true,
+  "methods": [
+    "sac_mlp_depart4p0__intersection_sorted"
+  ],
+  "completed": [],
+  "failed": [
+    {
+      "method": "sac_mlp_depart4p0__intersection_sorted",
+      "error": "FatalTraCIError('Connection closed by SUMO.')"
+    }
+  ],
+  "started_at_utc": "2026-09-28T10:53:59.917512+00:00",
+  "wall_seconds": 28.235904932022095
+}

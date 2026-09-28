@@ -106,9 +106,15 @@ METHODS: list[tuple[str, str, str, str, str, int, str, float | None]] = [
     ("hsac_mlp_base__intersection_sorted",    "HSAC-MLP base (sorted 三车流)",    "yield_v2", "v4_base", "scene_rep_actor", 10_000, "intersection_sorted", None),
     ("hold35k_legacy__intersection_sorted",   "hold35k legacy (sorted 三车流)",   "legacy",   "v4_8",    "stability_actor", 420_000, "intersection_sorted", None),
     ("mst_slt_legacy__intersection_sorted",   "MST+SLT legacy (sorted 三车流)",   "legacy",   "base",    "scene_rep",       10_000, "intersection_sorted", None),
-    # --- intersection_sorted 发车间隔难度验证（sac_mlp，两组 depart×scale） ---
-    ("sac_mlp_depart1p0__intersection_sorted", "SAC-MLP depart×1.0 (sorted 密度不变)", "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 1.0),
-    ("sac_mlp_depart0p5__intersection_sorted", "SAC-MLP depart×0.5 (sorted 密度×2)",    "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 0.5),
+    # --- intersection_sorted 发车间隔难度验证（sac_mlp，三组降密度 depart×scale） ---
+    ("sac_mlp_depart2p5__intersection_sorted", "SAC-MLP depart×2.5 (intersection_sorted 密度÷2.5)", "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 2.5),
+    ("sac_mlp_depart3p0__intersection_sorted", "SAC-MLP depart×3.0 (intersection_sorted 密度÷3)",   "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 3.0),
+    ("sac_mlp_depart4p0__intersection_sorted", "SAC-MLP depart×4.0 (intersection_sorted 密度÷4)",   "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 4.0),
+    # --- intersection_sorted + depart4.0 总编排训练（mst_slt 与 D1 表征消融） ---
+    ("mst_slt__intersection_sorted_depart4p0",          "MST+SLT depart×4.0 (intersection_sorted 三车流)",     "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 4.0),
+    ("sac_mlp_d1_st__intersection_sorted_depart4p0",    "SAC D1-1 时空交互 depart×4.0 (intersection_sorted)",  "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 4.0),
+    ("sac_mlp_d1_st_attn__intersection_sorted_depart4p0", "SAC D1-1 attention 边权重 depart×4.0 (intersection_sorted)", "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 4.0),
+    ("sac_mlp_d1_st_rt__intersection_sorted_depart4p0", "SAC D1-2 +路由意图 depart×4.0 (intersection_sorted)", "yield_v2", "base", "scene_rep", 10_000, "intersection_sorted", 4.0),
 ]
 
 METHOD_BY_DIR = {entry[0]: entry for entry in METHODS}
