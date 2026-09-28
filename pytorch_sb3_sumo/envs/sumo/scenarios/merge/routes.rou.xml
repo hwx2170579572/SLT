@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="ego_type" accel="2.6" decel="4.5" emergencyDecel="8.0" sigma="0" length="4.7" minGap="2.0" maxSpeed="10.0" color="0,0.35,1"/>
+    <vType id="traffic" accel="2.4" decel="4.5" sigma="0.4" length="4.7" minGap="2.5" maxSpeed="13.89" speedFactor="normc(0.9,0.1,0.7,1.1)"/>
+    <route id="ego_route" edges="inflow_highway left center"/>
+    <route id="highway_route" edges="inflow_highway left center"/>
+    <route id="ramp_route" edges="inflow_merge bottom center"/>
+    <vehicle id="ego" type="ego_type" route="ego_route" depart="5" departLane="0" departSpeed="0"/>
+    <flow id="highway_flow" type="traffic" route="highway_route" begin="0" end="6000" vehsPerHour="900" departLane="0" departSpeed="max"/>
+    <flow id="ramp_flow" type="traffic" route="ramp_route" begin="0" end="6000" vehsPerHour="180" departLane="0" departSpeed="max"/>
+</routes>

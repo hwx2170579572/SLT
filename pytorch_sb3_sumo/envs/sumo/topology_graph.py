@@ -203,6 +203,55 @@ def _connection_lane_id(connection: Any, lane_by_id: dict[str, Any]) -> str:
     return source
 
 
+def _segment_cross(
+    a: tuple[float, float],
+    b: tuple[float, float],
+    c: tuple[float, float],
+    d: tuple[float, float],
+) -> bool:
+    """True iff segments ``a-b`` and ``c-d`` cross strictly.
+
+    Endpoint-touching and collinear overlap are deliberately *not* crossings, so
+    two movements that share a from-lane (and therefore a start point) or that
+    merge into one downstream lane are never mistaken for conflicts.
+    """
+
+    def _cross(o, p, q):
+        return (p[0] - o[0]) * (q[1] - o[1]) - (p[1] - o[1]) * (q[0] - o[0])
+
+    d1 = _cross(a, b, c)
+    d2 = _cross(a, b, d)
+    d3 = _cross(c, d, a)
+    d4 = _cross(c, d, b)
+    return ((d1 > 0 and d2 < 0) or (d1 < 0 and d2 > 0)) and (
+        (d3 > 0 and d4 < 0) or (d3 < 0 and d4 > 0)
+    )
+
+
+def _polylines_cross(
+    shape_a: list[tuple[float, float]], shape_b: list[tuple[float, float]]
+) -> bool:
+    """True iff any segment of ``shape_a`` crosses any segment of ``shape_b``."""
+    for i in range(len(shape_a) - 1):
+        for j in range(len(shape_b) - 1):
+            if _segment_cross(shape_a[i], shape_a[i + 1], shape_b[j], shape_b[j + 1]):
+                return True
+    return False
+
+
+def _connection_movement_shape(connection: Any, lane_by_id: dict[str, Any]):
+    """Return the connection's internal via-lane polyline (fallback: from lane)."""
+    via = str(connection.getViaLaneID() or "")
+    if via and via in lane_by_id:
+        shape = lane_by_id[via].getShape()
+        if shape:
+            return shape
+    source = str(connection.getFromLane().getID())
+    if source in lane_by_id:
+        return lane_by_id[source].getShape()
+    return None
+
+
 def _conflict_pairs(net: Any, lane_by_id: dict[str, Any]) -> set[tuple[str, str]]:
     pairs: set[tuple[str, str]] = set()
     for node in sorted(net.getNodes(), key=lambda item: str(item.getID())):
@@ -230,21 +279,59 @@ def _conflict_pairs(net: Any, lane_by_id: dict[str, Any]) -> set[tuple[str, str]
             indexed[junction_index] = connection
 
         indices = sorted(indexed)
-        for position, left_index in enumerate(indices):
-            for right_index in indices[position + 1 :]:
-                try:
-                    foes = bool(node.areFoes(left_index, right_index)) or bool(
-                        node.areFoes(right_index, left_index)
-                    )
-                except (IndexError, KeyError, TypeError) as exc:
-                    raise ValueError(
-                        f"Invalid foe indices ({left_index}, {right_index}) at junction "
-                        f"{node.getID()!r}"
-                    ) from exc
-                if not foes:
+        if not indices:
+            continue
+
+        if getattr(node, "_foes", None):
+            # Junctions with a right-of-way matrix (priority / traffic-light).
+            for position, left_index in enumerate(indices):
+                for right_index in indices[position + 1 :]:
+                    try:
+                        foes = bool(node.areFoes(left_index, right_index)) or bool(
+                            node.areFoes(right_index, left_index)
+                        )
+                    except (IndexError, KeyError, TypeError) as exc:
+                        raise ValueError(
+                            f"Invalid foe indices ({left_index}, {right_index}) at junction "
+                            f"{node.getID()!r}"
+                        ) from exc
+                    if not foes:
+                        continue
+                    left_lane = _connection_lane_id(indexed[left_index], lane_by_id)
+                    right_lane = _connection_lane_id(indexed[right_index], lane_by_id)
+                    if left_lane != right_lane:
+                        pairs.add((left_lane, right_lane))
+                        pairs.add((right_lane, left_lane))
+            continue
+
+        # Junctions with no right-of-way matrix (SUMO ``unregulated`` and the
+        # like) expose no ``areFoes`` data.  Derive driving conflicts from the
+        # internal movement-lane geometry: two movements conflict iff their via
+        # lanes cross.  Pedestrian crossing movements (from-lane ``:...``) are
+        # excluded, as are two movements sharing a from-lane (they diverge).
+        driving = [
+            index
+            for index in indices
+            if not str(indexed[index].getFromLane().getID()).startswith(":")
+        ]
+        for position, left_index in enumerate(driving):
+            left_conn = indexed[left_index]
+            left_shape = _connection_movement_shape(left_conn, lane_by_id)
+            if not left_shape:
+                continue
+            for right_index in driving[position + 1 :]:
+                right_conn = indexed[right_index]
+                if str(left_conn.getFromLane().getID()) == str(
+                    right_conn.getFromLane().getID()
+                ):
                     continue
-                left_lane = _connection_lane_id(indexed[left_index], lane_by_id)
-                right_lane = _connection_lane_id(indexed[right_index], lane_by_id)
+                right_shape = _connection_movement_shape(right_conn, lane_by_id)
+                if not right_shape:
+                    continue
+                if not _polylines_cross(left_shape, right_shape):
+                    continue
+                left_lane = _connection_lane_id(left_conn, lane_by_id)
+                right_lane = _connection_lane_id(right_conn, lane_by_id)
                 if left_lane != right_lane:
                     pairs.add((left_lane, right_lane))
                     pairs.add((right_lane, left_lane))

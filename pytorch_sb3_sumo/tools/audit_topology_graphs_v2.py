@@ -1,4 +1,4 @@
-"""Audit merge-aware topology graphs on all six paper scenarios."""
+"""Audit merge-aware topology graphs on every registered paper scenario."""
 
 from __future__ import annotations
 
@@ -51,19 +51,27 @@ def audit() -> dict[str, Any]:
     for scenario in PAPER_SCENARIOS:
         specification = get_paper_scenario_spec(scenario)
         offset = tuple(specification.coordinate_offset)
+        max_nodes = specification.topology_max_nodes
+        max_edges = specification.topology_max_edges
         v1, v1_info = build_topology_graph(
             specification.network_path,
             coordinate_offset=offset,
+            max_nodes=max_nodes,
+            max_edges=max_edges,
             return_info=True,
         )
         v2, v2_info = build_topology_graph_v2(
             specification.network_path,
             coordinate_offset=offset,
+            max_nodes=max_nodes,
+            max_edges=max_edges,
             return_info=True,
         )
         repeated, repeated_info = build_topology_graph_v2(
             specification.network_path,
             coordinate_offset=offset,
+            max_nodes=max_nodes,
+            max_edges=max_edges,
             return_info=True,
         )
 

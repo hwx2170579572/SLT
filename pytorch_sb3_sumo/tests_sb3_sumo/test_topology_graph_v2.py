@@ -27,10 +27,14 @@ def test_v2_preserves_v1_graph_and_adds_only_symmetric_merge(scenario: str) -> N
     v1 = build_topology_graph(
         specification.network_path,
         coordinate_offset=specification.coordinate_offset,
+        max_nodes=specification.topology_max_nodes,
+        max_edges=specification.topology_max_edges,
     )
     v2, info = build_topology_graph_v2(
         specification.network_path,
         coordinate_offset=specification.coordinate_offset,
+        max_nodes=specification.topology_max_nodes,
+        max_edges=specification.topology_max_edges,
         return_info=True,
     )
     np.testing.assert_array_equal(v1.lane_points, v2.lane_points)
@@ -88,8 +92,8 @@ def test_v2_capacity_overflow_is_explicit() -> None:
         build_topology_graph_v2(specification.network_path, max_edges=19)
 
 
-def test_six_scenario_v2_audit_passes() -> None:
+def test_all_scenario_v2_audit_passes() -> None:
     report = audit()
     assert report["passed"] is True
-    assert report["scenario_count"] == 6
+    assert report["scenario_count"] == len(PAPER_SCENARIOS)
     assert report["failures"] == []

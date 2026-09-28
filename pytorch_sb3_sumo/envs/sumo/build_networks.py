@@ -29,6 +29,7 @@ def _sumo_tool(name: str, explicit: str | None = None) -> str:
 def build_all(netconvert: str | None = None) -> None:
     binary = _sumo_tool("netconvert", netconvert)
     intersection = ROOT / "networks" / "intersection"
+    cross_left_unreg = ROOT / "networks" / "cross_left_unreg"
     double_merge = ROOT / "networks" / "double_merge"
     roundabout = ROOT / "networks" / "roundabout"
     commands = [
@@ -42,6 +43,30 @@ def build_all(netconvert: str | None = None) -> None:
                 "intersection.edg.xml",
                 "--output-file",
                 "intersection.net.xml",
+                "--no-turnarounds",
+                "true",
+                "--junctions.corner-detail",
+                "8",
+                "--sidewalks.guess",
+                "true",
+                "--sidewalks.guess.max-speed",
+                "14",
+                "--crossings.guess",
+                "true",
+                "--crossings.guess.speed-threshold",
+                "14",
+            ],
+        ),
+        (
+            cross_left_unreg,
+            [
+                binary,
+                "--node-files",
+                "cross_left_unreg.nod.xml",
+                "--edge-files",
+                "cross_left_unreg.edg.xml",
+                "--output-file",
+                "cross_left_unreg.net.xml",
                 "--no-turnarounds",
                 "true",
                 "--junctions.corner-detail",

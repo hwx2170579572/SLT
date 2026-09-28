@@ -1,0 +1,51 @@
+{
+  "implementation_fidelity": {
+    "implementation_id": "released_scene_rep_pytorch_port_v1",
+    "source_primary": true,
+    "research_extension": false,
+    "reconstruction_required": false,
+    "reconstruction_reason": null
+  },
+  "runtime_paths": {
+    "tensorboard_log": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\tb\\477d9cba24906b5d",
+    "tensorboard_short_root_injected": true
+  },
+  "requested_raw_steps": {
+    "scenario": "intersection",
+    "algo": "scene_rep",
+    "max_steps": 50000,
+    "seed": 0,
+    "device": "cuda",
+    "batch_size": 256,
+    "learning_rate": 0.0003,
+    "discount": 0.99,
+    "learning_starts": 2000,
+    "buffer_size": 20000,
+    "neighbors": 5,
+    "history_steps": 10,
+    "path_length": 10,
+    "action_repeat": 3,
+    "ego_control_profile": "direct",
+    "traffic_protocol": "frozen_80_20",
+    "episode_limit_profile": "source",
+    "checkpoint_freq": 200,
+    "eval_freq": 0,
+    "eval_episodes": 100,
+    "output_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer",
+    "model_name": "mst_slt__intersection",
+    "gui": false,
+    "check_only": false
+  },
+  "effective_sb3_decision_steps": {
+    "expected_total_without_partial_repeats": 16667,
+    "learn_loop_upper_bound": 50000,
+    "learning_starts_decisions": 667,
+    "model_learning_starts_argument": 2000,
+    "checkpoint_freq": 67,
+    "eval_freq": 0,
+    "gradient_steps_per_decision": 3,
+    "source_ppo_horizon": null,
+    "source_ppo_expected_collected_raw_steps": null,
+    "source_ppo_test_checkpoint_raw_step": null
+  }
+}

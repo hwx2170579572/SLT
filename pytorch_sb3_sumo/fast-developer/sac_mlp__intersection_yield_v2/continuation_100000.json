@@ -1,0 +1,36 @@
+{
+  "method": "sac_mlp",
+  "scenario": "intersection",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp__intersection_yield_v2",
+  "base_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp__intersection_yield_v2\\final_model.zip",
+  "base_raw_steps": 50000,
+  "extra_raw_steps": 50000,
+  "global_raw_steps": 100000,
+  "continuation_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp__intersection_yield_v2\\continue_100000",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp__intersection_yield_v2\\continue_100000\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.39,
+    "collision_rate": 0.61,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -0.22,
+    "std_return": 0.9754998718605759,
+    "mean_decision_steps": 93.3,
+    "mean_raw_steps": 278.84,
+    "mean_success_completion_time_seconds": 32.83846153846154,
+    "std_success_completion_time_seconds": 3.696818825423812,
+    "successful_episodes": 39
+  },
+  "training_curve": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp__intersection_yield_v2\\continue_100000\\training_curve.png",
+  "smoke": false,
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  },
+  "note": "续训：加载 base_model 的权重/优化器/计数器；replay buffer 从空重新累积；raw_learning_starts 设为 500(smoke 100) 先填满 buffer；checkpoint 名为局部步数，保存前把 _raw_steps_seen 写回全局步数。"
+}

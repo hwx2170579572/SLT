@@ -25,12 +25,17 @@ _PAPER_MAX_EPISODE_STEPS = {
     "left_turn": 400,
     "cross": 400,
     "cross_left": 600,
+    "cross_left_unreg": 600,
     "roundabout_easy": 400,
     "roundabout_medium": 600,
     "roundabout": 800,
     # The paper does not publish a separate CARLA step count.  Retain the
     # only executable contract recoverable from carla_env.py.
     "carla": 302,
+    # New SUMO scenarios (this project).  Urban merge and unsignalised
+    # intersection use the same 600-decision-step cap as cross/cross_left.
+    "merge": 600,
+    "intersection": 600,
 }
 
 

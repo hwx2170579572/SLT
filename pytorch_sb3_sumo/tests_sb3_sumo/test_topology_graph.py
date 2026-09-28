@@ -7,8 +7,6 @@ import torch
 from algos.sb3_torch.topo_temporal_features import RelationalTopologyEncoder
 from envs.sumo.paper_scenario_registry import PAPER_SCENARIOS
 from envs.sumo.topology_graph import (
-    MAX_TOPO_EDGES,
-    MAX_TOPO_NODES,
     PREDECESSOR,
     SUCCESSOR,
     TopologyCapacityError,
@@ -21,16 +19,19 @@ def _paper_graph(name: str):
     return build_topology_graph(
         specification.network_path,
         coordinate_offset=specification.coordinate_offset,
+        max_nodes=specification.topology_max_nodes,
+        max_edges=specification.topology_max_edges,
         return_info=True,
     )
 
 
 @pytest.mark.parametrize("scenario", tuple(PAPER_SCENARIOS))
 def test_all_released_maps_are_deterministic_and_within_capacity(scenario: str) -> None:
+    specification = PAPER_SCENARIOS[scenario]
     first, first_info = _paper_graph(scenario)
     second, second_info = _paper_graph(scenario)
-    assert first.valid_node_count <= MAX_TOPO_NODES
-    assert first.valid_edge_count <= MAX_TOPO_EDGES
+    assert first.valid_node_count <= specification.topology_max_nodes
+    assert first.valid_edge_count <= specification.topology_max_edges
     assert first_info.fingerprint == second_info.fingerprint
     for field in (
         "lane_points",
@@ -48,8 +49,8 @@ def test_released_capacity_scan_matches_declared_l1_bound() -> None:
         (graph.valid_node_count, graph.valid_edge_count)
         for graph, _ in (_paper_graph(name) for name in PAPER_SCENARIOS)
     ]
-    assert max(nodes for nodes, _ in counts) == 44
-    assert max(edges for _, edges in counts) == 160
+    assert max(nodes for nodes, _ in counts) == 56
+    assert max(edges for _, edges in counts) == 336
 
 
 def test_valid_edges_have_inverse_predecessors_and_never_touch_padding() -> None:

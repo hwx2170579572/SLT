@@ -47,7 +47,10 @@ def test_protocol_is_exact_five_by_six_and_excludes_removed_methods() -> None:
 
 def test_all_six_scenarios_are_increased_with_calibrated_new_scales() -> None:
     protocol = load_protocol()
-    assert tuple(SUPPORTED_HIGH_DENSITY_SCENARIOS) == SCENARIOS
+    # The high-density overlay now also covers cross_left / merge / intersection
+    # (zero-shot scenes added after the six-scenario protocol was frozen), so it
+    # is a superset of the protocol's scenario list rather than equal to it.
+    assert set(SCENARIOS) <= set(SUPPORTED_HIGH_DENSITY_SCENARIOS)
     assert {
         scenario: protocol["scenarios"][scenario]["vehicle_scale"]
         for scenario in ("left_turn", "roundabout_easy", "roundabout_medium")

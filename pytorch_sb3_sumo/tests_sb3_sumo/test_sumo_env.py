@@ -7,7 +7,10 @@ import pytest
 from stable_baselines3.common.env_checker import check_env
 
 from envs.sumo.legacy import LegacySumoAdapter
-from envs.sumo.scenario_registry import available_scenarios, get_scenario_spec
+from envs.sumo.scenario_registry import (
+    base_runnable_scenarios,
+    get_scenario_spec,
+)
 from envs.sumo.sumo_env import (
     SumoSceneEnv,
     _oriented_boxes_overlap,
@@ -58,7 +61,7 @@ def test_source_state_lstm_uses_distinct_ego_and_social_fields() -> None:
     )
 
 
-@pytest.mark.parametrize("scenario", available_scenarios())
+@pytest.mark.parametrize("scenario", base_runnable_scenarios())
 def test_scenario_files_and_single_transition(scenario: str) -> None:
     spec = get_scenario_spec(scenario)
     assert spec.config_path.is_file()
@@ -86,7 +89,7 @@ def test_scenario_files_and_single_transition(scenario: str) -> None:
         env.close()
 
 
-@pytest.mark.parametrize("scenario", available_scenarios())
+@pytest.mark.parametrize("scenario", base_runnable_scenarios())
 def test_full_episode_reaches_a_declared_terminal_event(scenario: str) -> None:
     env = SumoSceneEnv(scenario=scenario)
     try:

@@ -32,10 +32,16 @@ SUPPORTED_HIGH_DENSITY_SCENARIOS = (
     "left_turn",
     "cross",
     "cross_left",
+    "cross_left_unreg",
     "roundabout_easy",
     "roundabout_medium",
     "roundabout",
     "carla",
+    # New SUMO scenarios (this project).
+    "merge",
+    "intersection",
+    # intersection 副本：traffic 按 depart 排序（三股车流都参与仿真）。
+    "intersection_sorted",
 )
 
 
@@ -210,8 +216,14 @@ def build_high_density_overlay(
     pedestrian_scale = (
         vehicle_scale if pedestrian_scale is None else float(pedestrian_scale)
     )
-    if not 1.0 < vehicle_scale <= 2.0:
-        raise ValueError("vehicle_scale must be in (1, 2]")
+    # ``vehicle_scale == 1.0`` is a valid no-op: ``_extra_count(..., 1.0)`` and
+    # the flow extra-factor both evaluate to zero, so the overlay is an empty
+    # additive file and the scenario runs at its base demand.  This is used for
+    # scenarios whose base traffic *already is* the experiment density (e.g.
+    # ``cross_left_unreg`` at 0.2 veh/s per approach), where any overlay would
+    # push an already-saturated uncontrolled junction into gridlock.
+    if not 1.0 <= vehicle_scale <= 2.0:
+        raise ValueError("vehicle_scale must be in [1, 2]")
     if not 1.0 <= pedestrian_scale <= 2.0:
         raise ValueError("pedestrian_scale must be in [1, 2]")
     jitter = tuple(float(value) for value in clone_depart_jitter_seconds)

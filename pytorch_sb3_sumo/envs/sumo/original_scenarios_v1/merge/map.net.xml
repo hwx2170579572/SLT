@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-09-26T15:44:01.714493+08:00 by Eclipse SUMO netconvert 1.25.0
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="D:\Program Files (x86)\paper\Scene-Rep-Transformer-main1\Scene-Rep-Transformer-main\pytorch_sb3_sumo\envs\sumo\original_scenarios_v1\merge\merge.nod.xml"/>
+        <edge-files value="D:\Program Files (x86)\paper\Scene-Rep-Transformer-main1\Scene-Rep-Transformer-main\pytorch_sb3_sumo\envs\sumo\original_scenarios_v1\merge\merge.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="D:\Program Files (x86)\paper\Scene-Rep-Transformer-main1\Scene-Rep-Transformer-main\pytorch_sb3_sumo\envs\sumo\original_scenarios_v1\merge\map.net.xml"/>
+    </output>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="80.00,98.99" convBoundary="0.00,0.00,390.00,98.99" origBoundary="-80.00,-98.99,310.00,0.00" projParameter="!"/>
+
+    <edge id=":bottom_0" function="internal">
+        <lane id=":bottom_0_0" index="0" speed="15.00" length="0.10" shape="268.70,55.43 268.70,55.43"/>
+    </edge>
+    <edge id=":center_0" function="internal">
+        <lane id=":center_0_0" index="0" speed="14.39" length="19.30" shape="302.27,89.00 305.73,91.80 310.25,94.52 315.05,96.58 319.33,97.39"/>
+    </edge>
+    <edge id=":center_1" function="internal">
+        <lane id=":center_1_0" index="0" speed="15.00" length="20.53" shape="298.80,97.39 319.33,97.39"/>
+    </edge>
+    <edge id=":left_0" function="internal">
+        <lane id=":left_0_0" index="0" speed="15.00" length="0.10" shape="80.00,97.39 80.00,97.39"/>
+    </edge>
+
+    <edge id="bottom" from="bottom" to="center" priority="3">
+        <lane id="bottom_0" index="0" speed="15.00" length="47.48" shape="268.70,55.43 302.27,89.00"/>
+    </edge>
+    <edge id="center" from="center" to="right" priority="5">
+        <lane id="center_0" index="0" speed="15.00" length="70.67" shape="319.33,97.39 390.00,97.39"/>
+    </edge>
+    <edge id="inflow_highway" from="inflow_highway" to="left" priority="5">
+        <lane id="inflow_highway_0" index="0" speed="15.00" length="80.00" shape="0.00,97.39 80.00,97.39"/>
+    </edge>
+    <edge id="inflow_merge" from="inflow_merge" to="bottom" priority="3">
+        <lane id="inflow_merge_0" index="0" speed="15.00" length="79.99" shape="212.14,-1.13 268.70,55.43"/>
+    </edge>
+    <edge id="left" from="left" to="center" priority="5">
+        <lane id="left_0" index="0" speed="15.00" length="218.80" shape="80.00,97.39 298.80,97.39"/>
+    </edge>
+
+    <junction id="bottom" type="priority" x="267.57" y="56.56" incLanes="inflow_merge_0" intLanes=":bottom_0_0" shape="267.57,56.56 269.83,54.30 267.57,56.56">
+        <request index="0" response="0" foes="0" cont="0"/>
+    </junction>
+    <junction id="center" type="priority" x="310.00" y="98.99" incLanes="bottom_0 left_0" intLanes=":center_0_0 :center_1_0" shape="319.33,98.99 319.33,95.79 315.50,95.64 312.64,95.13 310.39,94.19 308.35,92.72 306.15,90.64 303.41,87.87 301.14,90.13 302.65,91.86 303.40,93.28 303.39,94.38 302.62,95.16 301.09,95.63 298.80,95.79 298.80,98.99" radius="8.00">
+        <request index="0" response="10" foes="10" cont="0"/>
+        <request index="1" response="00" foes="01" cont="0"/>
+    </junction>
+    <junction id="inflow_highway" type="dead_end" x="0.00" y="98.99" incLanes="" intLanes="" shape="0.00,98.99 0.00,95.79"/>
+    <junction id="inflow_merge" type="dead_end" x="211.01" y="0.00" incLanes="" intLanes="" shape="211.01,0.00 213.27,-2.26"/>
+    <junction id="left" type="priority" x="80.00" y="98.99" incLanes="inflow_highway_0" intLanes=":left_0_0" shape="80.00,98.99 80.00,95.79 80.00,98.99">
+        <request index="0" response="0" foes="0" cont="0"/>
+    </junction>
+    <junction id="right" type="dead_end" x="390.00" y="98.99" incLanes="center_0" intLanes="" shape="390.00,95.79 390.00,98.99"/>
+
+    <connection from="bottom" to="center" fromLane="0" toLane="0" via=":center_0_0" dir="r" state="m"/>
+    <connection from="inflow_highway" to="left" fromLane="0" toLane="0" via=":left_0_0" dir="s" state="M"/>
+    <connection from="inflow_merge" to="bottom" fromLane="0" toLane="0" via=":bottom_0_0" dir="s" state="M"/>
+    <connection from="left" to="center" fromLane="0" toLane="0" via=":center_1_0" dir="s" state="M"/>
+
+    <connection from=":bottom_0" to="bottom" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":center_0" to="center" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":center_1" to="center" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":left_0" to="left" fromLane="0" toLane="0" dir="s" state="M"/>
+
+</net>

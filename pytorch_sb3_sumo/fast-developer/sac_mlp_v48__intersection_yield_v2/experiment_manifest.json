@@ -1,0 +1,47 @@
+{
+  "method": "sac_mlp_v48",
+  "scenario": "intersection",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_v48__intersection_yield_v2",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_v48__intersection_yield_v2\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.36,
+    "collision_rate": 0.64,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -0.28,
+    "std_return": 0.96,
+    "mean_decision_steps": 67.04,
+    "mean_raw_steps": 200.05,
+    "mean_success_completion_time_seconds": 25.174999999999997,
+    "std_success_completion_time_seconds": 0.3832427429188973,
+    "successful_episodes": 36
+  },
+  "training_curve": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_v48__intersection_yield_v2\\training_curve.png",
+  "smoke": false,
+  "raw_training_steps": 50000,
+  "checkpoint_frequency": 200,
+  "train_workers": 2,
+  "eval_episodes_total": 100,
+  "eval_workers": 6,
+  "hyperparams": {
+    "batch_size": 32,
+    "learning_rate": {
+      "hold35k": 5e-05,
+      "mst_slt": 0.0001,
+      "hsac_mlp": 0.0001,
+      "sac_mlp": 0.0001,
+      "sac_mlp_v48": 0.0001
+    },
+    "learning_starts": 5000
+  },
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  },
+  "env_class": "YieldConflictIndependentV2EnvV4V1 (改法 1+2+3)"
+}

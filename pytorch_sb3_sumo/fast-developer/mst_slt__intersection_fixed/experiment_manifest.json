@@ -1,0 +1,35 @@
+{
+  "method": "mst_slt",
+  "scenario": "intersection",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_fixed",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_fixed\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.01,
+    "collision_rate": 0.16,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.83,
+    "mean_return": -0.15,
+    "std_return": 0.3840572873934304,
+    "mean_decision_steps": 177.82,
+    "mean_raw_steps": 533.29,
+    "mean_success_completion_time_seconds": 26.8,
+    "std_success_completion_time_seconds": 0.0,
+    "successful_episodes": 1
+  },
+  "training_curve": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_fixed\\training_curve.png",
+  "smoke": false,
+  "raw_training_steps": 50000,
+  "checkpoint_frequency": 200,
+  "train_workers": 2,
+  "eval_episodes_total": 100,
+  "eval_workers": 6,
+  "hyperparams": {
+    "batch_size": 32,
+    "learning_rate": {
+      "hold35k": 5e-05,
+      "mst_slt": 0.0001
+    },
+    "learning_starts": 5000
+  }
+}

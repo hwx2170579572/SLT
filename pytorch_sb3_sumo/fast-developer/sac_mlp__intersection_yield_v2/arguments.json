@@ -1,0 +1,33 @@
+{
+  "method": "sac_mlp",
+  "scenario": "intersection",
+  "raw_budget": 50000,
+  "checkpoint_frequency": 200,
+  "learning_starts_raw_steps": 5000,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "buffer_size": 20000,
+  "discount": 0.99,
+  "action_repeat": 3,
+  "seed": 0,
+  "device": "cuda",
+  "density": {
+    "vehicle_scale": 1.0,
+    "pedestrian_scale": 1.0,
+    "clone_depart_jitter_seconds": [
+      0.0,
+      0.0
+    ]
+  },
+  "smoke": false,
+  "env_contract": "base",
+  "env_class": "YieldObsIndependentV2EnvV1 (改法 1+2)",
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  }
+}

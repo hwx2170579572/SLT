@@ -71,6 +71,34 @@ PAPER_SCENARIOS: dict[str, PaperScenarioSpec] = {
         "cross_left", 600, ego_depart_time=15.0,
         topology_max_edges=512,
     ),
+    # Uncontrolled (unregulated) 4-way cross, 70 m lanes, all three turning
+    # behaviours on every approach (straight + left + right social traffic).
+    "cross_left_unreg": PaperScenarioSpec(
+        "cross_left_unreg", 600, ego_depart_time=15.0,
+        topology_max_edges=512,
+    ),
+    # New SUMO scenarios added for this project (kept separate from the seven
+    # released assets above):
+    #   * merge        -- single-lane highway + 45-degree on-ramp merge,
+    #                     urban-scaled adaptation of TorchGRL MergeNetwork.
+    #   * intersection -- DARRL's 4-way unsignalised intersection, unprotected
+    #                     left turn (ego route -E1 -> -E0).
+    "merge": PaperScenarioSpec("merge", 600, ego_depart_time=5.0),
+    "intersection": PaperScenarioSpec(
+        "intersection", 600, ego_depart_time=50.0,
+        topology_max_edges=512,
+    ),
+    # intersection 副本：traffic 按 depart 时间全局排序。修复 SUMO 的
+    # 「Route file should be sorted by departure time, ignoring ...」警告导致的
+    # bug —— 原 traffic 文件按流向分组、depart 时间在组间回退，使左右手车流
+    # （东→西 / 西→东）被 SUMO 静默忽略，实际只有北→南一股车流在跑。副本把
+    # 每个 traffic 文件的 <vehicle> 按 (depart, departLane) 升序重排，让三股
+    # 车流都真正参与仿真。资产由 fast-developer/train_intersection_sorted.py
+    # 的 ensure_sorted_scenario() 生成（幂等）。
+    "intersection_sorted": PaperScenarioSpec(
+        "intersection_sorted", 600, ego_depart_time=50.0,
+        topology_max_edges=512,
+    ),
     "roundabout_easy": PaperScenarioSpec(
         "roundabout_easy", 400, ego_depart_time=30.0
     ),

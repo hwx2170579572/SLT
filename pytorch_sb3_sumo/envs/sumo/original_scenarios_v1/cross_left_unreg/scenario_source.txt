@@ -1,0 +1,86 @@
+"""SMARTS sstudio reference for the 4-way uncontrolled unprotected-left-turn.
+
+This scenario reuses the 4-arm network at
+envs/sumo/networks/cross_left_unreg/ (unregulated junction, 70 m lanes) and
+adds social traffic in the same idiom as the released left_turn/cross/cross_left
+scenarios (SMARTS v0.4.17): per-lane flows with randomised TrafficActor
+speed/min-gap/imperfection/lane-change/junction parameters, expanded to
+explicit vehicles.  The ego takes an unprotected left turn (south_in ->
+west_out).
+
+Unlike cross_left (where the ego is the sole left turner), every approach here
+carries straight, left, and right social flows, and the junction is
+``unregulated`` (no right-of-way rules) rather than ``priority``.
+
+The generator tools/gen_cross_left_unreg_scenario.py emits deterministic
+explicit <vehicle> elements directly (seeded), equivalent to the SMARTS
+gen_traffic -> duarouter pipeline, so the additive high-density overlay clones
+vehicles as it does for the released scenarios.
+"""
+from pathlib import Path
+import os
+
+from smarts.sstudio import gen_scenario, gen_missions, gen_traffic
+from smarts.sstudio.types import (
+    Scenario, Traffic, Flow, Route, TrafficActor, Distribution,
+    LaneChangingModel, JunctionModel, Mission,
+)
+import numpy as np
+
+scenario = os.path.dirname(os.path.realpath(__file__))
+
+# straight (2 lanes) + right-turn + left-turn flows on all four arms.
+straight = {
+    "north": ("north_in", "south_out"),
+    "south": ("south_in", "north_out"),
+    "east": ("east_in", "west_out"),
+    "west": ("west_in", "east_out"),
+}
+right_turn = {
+    "south": ("south_in", "east_out"),
+    "east": ("east_in", "north_out"),
+    "north": ("north_in", "west_out"),
+    "west": ("west_in", "south_out"),
+}
+left_turn = {
+    "south": ("south_in", "west_out"),
+    "east": ("east_in", "south_out"),
+    "north": ("north_in", "east_out"),
+    "west": ("west_in", "north_out"),
+}
+
+for seed in np.random.choice(1000, 60, replace=False):
+    actors = {}
+    for i in range(4):
+        car = TrafficActor(
+            name=f"car_type_{i+1}",
+            speed=Distribution(mean=np.random.uniform(0.6, 1.0), sigma=0.1),
+            min_gap=Distribution(mean=np.random.uniform(2, 4), sigma=0.1),
+            imperfection=Distribution(mean=np.random.uniform(0.3, 0.7), sigma=0.1),
+            lane_changing_model=LaneChangingModel(
+                speed_gain=np.random.uniform(1.0, 2.0),
+                impatience=np.random.uniform(0, 1.0),
+                cooperative=np.random.uniform(0, 1.0)),
+            junction_model=JunctionModel(
+                ignore_foe_prob=np.random.uniform(0, 1.0),
+                impatience=np.random.uniform(0, 1.0)),
+        )
+        actors[car] = 0.25
+
+    flows = []
+    for (src, dst) in straight.values():
+        flows += [Flow(route=Route(begin=(src, lane, "random"), end=(dst, lane, "random")),
+                       rate=180, actors=actors) for lane in (1, 2)]
+    for (src, dst) in right_turn.values():
+        flows += [Flow(route=Route(begin=(src, 1, "random"), end=(dst, 1, "max")),
+                       rate=180, actors=actors)]
+    for (src, dst) in left_turn.values():
+        flows += [Flow(route=Route(begin=(src, 2, "random"), end=(dst, 2, "max")),
+                       rate=180, actors=actors)]
+
+    gen_traffic(scenario, Traffic(flows=flows), seed=seed, name=f"traffic_{seed}")
+
+# ego: approach from the south arm and take an unprotected left turn to the west.
+gen_missions(scenario=scenario, missions=[
+    Mission(Route(begin=("south_in", 2, 20), end=("west_out", 2, "max")), start_time=15),
+])
