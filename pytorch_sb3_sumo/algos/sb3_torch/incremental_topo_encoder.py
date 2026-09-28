@@ -63,6 +63,9 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
         use_route: bool = True,
         use_topology: bool = True,
         use_slots: bool = True,
+        route_gate: bool = False,
+        route_late: bool = False,
+        route_gate_bias: float = 2.0,
         features_dim: int = 128,
         hidden_dim: int = 128,
         num_heads: int = 2,
@@ -102,6 +105,22 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
         # parent class's geometry-only edge-feature branch is reachable again.
         self.use_topology = bool(use_topology)
         self.use_slots = bool(use_slots)
+        # Route-conditioning variants (both require use_route=True):
+        #   route_gate -- adaptive, initially-near-zero residual gate on the route
+        #                 context injected into the interaction tokens.
+        #   route_late -- route does NOT enter interaction at all; it only feeds the
+        #                 route slot (goal-side) of the final policy head.
+        self.route_gate = bool(route_gate) and self.use_route
+        self.route_late = bool(route_late) and self.use_route
+        if self.route_gate:
+            self.route_gate_mlp = nn.Sequential(
+                nn.Linear(hidden_dim * 2, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, 1, bias=False),
+            )
+            self.route_gate_mlp.apply(keras_initialize_linear)
+            # gate_bias > 0 => alpha = sigmoid(z - bias) starts near 0 (~0.12 at 2.0).
+            self.route_gate_bias = nn.Parameter(torch.tensor(float(route_gate_bias)))
 
         # MLP-style fallback modules, used only when a switch is disabled.
         self.mlp_map_point_encoder = nn.Sequential(
@@ -166,9 +185,23 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
             route_tokens, path_valid, route_context = self._encode_routes(
                 rotated_map, map_valid, current_state
             )
-            intent_tokens = self.route_norm(
-                state_tokens + route_context[:, :, None, :]
-            ) * trajectory_valid[..., None]
+            if self.route_late:
+                # Late route fusion：route 不注入交互，只作为 route slot 进决策头。
+                intent_tokens = state_tokens
+            elif self.route_gate:
+                # Gated route injection：自适应、初始近零的残差门控。
+                state_pool = self._mlp_temporal_pool(state_tokens, trajectory_valid)
+                gate_logit = self.route_gate_mlp(
+                    torch.cat([state_pool, route_context], dim=-1)
+                )
+                alpha = torch.sigmoid(gate_logit - self.route_gate_bias)
+                intent_tokens = self.route_norm(
+                    state_tokens + alpha[:, :, None, :] * route_context[:, :, None, :]
+                ) * trajectory_valid[..., None]
+            else:
+                intent_tokens = self.route_norm(
+                    state_tokens + route_context[:, :, None, :]
+                ) * trajectory_valid[..., None]
             route_component = None
         else:
             route_tokens, path_valid = None, None
