@@ -1,0 +1,24 @@
+{
+  "algorithm": "scene_rep",
+  "scenario": "intersection_sorted",
+  "raw_steps": 50000,
+  "learner_updates": 45001,
+  "end_to_end_training_wall_seconds": 7383.948046399979,
+  "end_to_end_wall_ms_per_learner_update": 164.08408805137617,
+  "peak_gpu_memory_mb": 105.83251953125,
+  "parameters": {
+    "policy_total": 1042984,
+    "policy_trainable": 1042984,
+    "critic_feature_extractor": 452992,
+    "representation_objective": 173248,
+    "model_plus_representation": 1216232
+  },
+  "inference": {
+    "device": "cuda",
+    "warmup_calls": 10,
+    "measured_calls": 100,
+    "total_seconds": 0.4965544999577105,
+    "mean_milliseconds_per_action": 4.965544999577105,
+    "actions_per_second": 201.3877630925036
+  }
+}

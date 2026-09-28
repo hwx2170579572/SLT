@@ -1,0 +1,19 @@
+{
+  "method": "hsac_mlp_base_hcc16",
+  "parent": "hsac_mlp_base",
+  "scenario": "intersection",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\hsac_mlp_base_hcc16__intersection_yield_v2",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\hsac_mlp_base_hcc16__intersection_yield_v2\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.4,
+    "collision_rate": 0.6,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -0.2
+  },
+  "smoke": false,
+  "raw_training_steps": 50000,
+  "note": "D4 样本采样消融：n-step 回报 4→16 + horizon-correct bootstrap（HCC-16），判断「关键样本 credit 传递」是否让行场景的学习瓶颈。",
+  "ablation": "n_step_4_to_hcc16_horizon_correct"
+}

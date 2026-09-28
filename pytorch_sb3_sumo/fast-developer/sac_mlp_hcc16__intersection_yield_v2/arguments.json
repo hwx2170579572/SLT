@@ -1,0 +1,36 @@
+{
+  "method": "sac_mlp_hcc16",
+  "parent": "sac_mlp",
+  "scenario": "intersection",
+  "raw_budget": 50000,
+  "checkpoint_frequency": 200,
+  "learning_starts_raw_steps": 5000,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "buffer_size": 20000,
+  "discount": 0.99,
+  "action_repeat": 3,
+  "seed": 0,
+  "device": "cuda",
+  "density": {
+    "vehicle_scale": 1.0,
+    "pedestrian_scale": 1.0,
+    "clone_depart_jitter_seconds": [
+      0.0,
+      0.0
+    ]
+  },
+  "smoke": false,
+  "env_contract": "base",
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  },
+  "ablation": "n_step_4_to_hcc16_horizon_correct",
+  "n_step": 16,
+  "note": "与父基线 sac_mlp 唯一差异：n-step 回报 4→16，bootstrap γ^4→γ^实际视界（HCC-16）。编码器/动作头/熵/调参/环境契约完全一致。"
+}

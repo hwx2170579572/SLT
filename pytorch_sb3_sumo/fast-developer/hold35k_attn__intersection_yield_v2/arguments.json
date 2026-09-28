@@ -1,0 +1,59 @@
+{
+  "method": "hold35k_attn",
+  "scenario": "intersection",
+  "candidate": "tau0025_floor2e5_hold35k",
+  "original_candidate_config": {
+    "learning_rate": 5e-05,
+    "final_learning_rate": 2e-05,
+    "decay_start": 20000,
+    "decay_end": 35000,
+    "tau": 0.0025,
+    "batch_size": 32,
+    "buffer_size": 20000,
+    "label": "Tau .0025 + floor 2e-5 + settle 15k",
+    "reuse": null
+  },
+  "accelerated_config": {
+    "learning_rate": 5e-05,
+    "final_learning_rate": 2e-05,
+    "decay_start": 20000,
+    "decay_end": 35000,
+    "tau": 0.0025,
+    "batch_size": 32,
+    "buffer_size": 20000,
+    "label": "Tau .0025 + floor 2e-5 + settle 15k",
+    "reuse": null
+  },
+  "raw_budget": 20000,
+  "checkpoint_frequency": 200,
+  "learning_starts_raw_steps": 5000,
+  "batch_size": 32,
+  "learning_rate": 5e-05,
+  "tau": 0.0025,
+  "buffer_size": 20000,
+  "discount": 0.99,
+  "action_repeat": 3,
+  "seed": 0,
+  "device": "cuda",
+  "density": {
+    "vehicle_scale": 1.0,
+    "pedestrian_scale": 1.0,
+    "clone_depart_jitter_seconds": [
+      0.0,
+      0.0
+    ]
+  },
+  "smoke": false,
+  "env_contract": "v4_8",
+  "env_class": "YieldConflictIndependentV2EnvV4V1 (改法 1+2+3)",
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  },
+  "ablation": "vehicle_gcn_distance_weight_to_learned_attention",
+  "note": "与 hold35k 唯一差异：TopoTemporalGraphExtractorV2 的 VehicleGraphLayer（高斯距离权重 σ=20）换成 VehicleGraphAttentionLayer（可学习 attention）。其余（因子化熵/混合头/16步horizon replay/Graph-SLT）完全一致。"
+}

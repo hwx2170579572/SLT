@@ -1,0 +1,18 @@
+{
+  "method": "hold35k_attn",
+  "scenario": "intersection",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\hold35k_attn__intersection_yield_v2",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\hold35k_attn__intersection_yield_v2\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.0,
+    "collision_rate": 0.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_return": 0.0
+  },
+  "smoke": false,
+  "raw_training_steps": 20000,
+  "note": "hold35k attention 消融：vehicle GCN 高斯距离权重 → 可学习 attention；短训练（默认 20000 raw 步）判断是否不再坍缩。",
+  "ablation": "vehicle_gcn_distance_weight_to_learned_attention"
+}

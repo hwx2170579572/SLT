@@ -1,0 +1,22 @@
+{
+  "method": "sac_mlp_d1_full",
+  "parent": "sac_mlp",
+  "scenario": "intersection",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_full__intersection_yield_v2",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_full__intersection_yield_v2\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.4,
+    "collision_rate": 0.6,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -0.2
+  },
+  "smoke": false,
+  "raw_training_steps": 50000,
+  "note": "D1 表征消融：features_extractor 换 IncrementalTopoEncoder 并逐维叠加 时空交互→路由→拓扑→三槽+SLT/SBS，判断各表征增量的边际增益。",
+  "ablation": "d1_representation_incremental",
+  "use_route": true,
+  "use_topology": true,
+  "use_slots": true
+}
