@@ -99,6 +99,18 @@ def _load_spec(global_name: str):
     )
 
 
+def _continue_run_dir(global_name: str, depart_scale: float) -> Path:
+    """续训的源 run_dir（兼容历史特殊命名的目录）。"""
+    if global_name == "sac_mlp":
+        # sac_mlp 的 depart 密度实验来自 train_intersection_sorted_sac_mlp_depart.py，
+        # run_dir 命名为 sac_mlp_depart{token}__intersection_sorted（非标准 _run_dir）。
+        return (
+            d1.base.RESULT_ROOT
+            / f"sac_mlp_depart{d1._depart_token(depart_scale)}__{d1.NEW_SCENARIO}"
+        )
+    return d1._run_dir(global_name, depart_scale)
+
+
 def run_continue(
     global_name: str,
     *,
@@ -117,7 +129,7 @@ def run_continue(
     torch.set_num_threads(1)
 
     family, mod, method = d1.DISPATCH[global_name]
-    run_dir = d1._run_dir(global_name, depart_scale)
+    run_dir = _continue_run_dir(global_name, depart_scale)
     model_path = Path(model_path) if model_path else (run_dir / "final_model.zip")
     if not model_path.is_file():
         raise FileNotFoundError(f"待续训模型不存在（先跑正式训练）：{model_path}")
@@ -131,19 +143,22 @@ def run_continue(
     if smoke:
         extra_steps = min(extra_steps, 300)
     global_raw_steps = base_raw_steps + extra_steps
-    cont_dir = run_dir / f"continue_{global_raw_steps}"
+    # 目录名保持简短：Windows 传统 MAX_PATH(260) 限制下，续训多出的这一层会把
+    # overlay manifest 路径顶到上限（原训练 244 字符 → ``continue_100000`` 正好 260 失败）。
+    cont_dir = run_dir / f"c{global_raw_steps}"
     cont_dir.mkdir(parents=True, exist_ok=True)
 
     load_cls, adapter, env_factory, namespace_fn, is_stability = _load_spec(global_name)
     frequency = 100 if smoke else d1.base.CHECKPOINT_FREQUENCY
-    namespace = "sm" if smoke else "ct"
 
     started = time.time()
     env = None
     model = None
 
     env = Monitor(
-        env_factory(adapter, cont_dir / "overlays" / f"ns_{namespace}")(
+        # overlay_root 保持极短：长方法名（如 sac_mlp_d1_st_rt_late）+ run_dir 已把
+        # manifest 路径推到接近 MAX_PATH，再叠 overlays/ns_* 层级会超 260 失败。
+        env_factory(adapter, cont_dir / "o")(
             namespace_fn(), evaluation=False
         ),
         filename=str(cont_dir / "train_monitor.csv"),
@@ -314,18 +329,31 @@ def run_continue(
 
 
 def run_all(
-    *, target_steps: int, depart_scale: float, smoke: bool, workers: int
+    *,
+    target_steps: int,
+    depart_scale: float,
+    smoke: bool,
+    workers: int,
+    methods: list[str] | None = None,
 ) -> Path:
-    """并行续训所有已训练（有 final_model）且未达 target 的方法。"""
+    """并行续训指定（或全部）已训练（有 final_model）且未达 target 的方法。
+
+    ``methods`` 为 None 时遍历 d1.ALL_METHODS；否则只续训清单内方法。
+    """
     if not smoke and not d1.base._cuda_available():
         raise RuntimeError("CUDA unavailable; training has no CPU fallback")
 
     root = d1.base.RESULT_ROOT
     root.mkdir(parents=True, exist_ok=True)
 
+    names = list(d1.ALL_METHODS) if methods is None else list(methods)
+    unknown = [n for n in names if n not in d1.ALL_METHODS]
+    if unknown:
+        raise ValueError(f"未知方法：{unknown}")
+
     todo: list[str] = []
-    for name in d1.ALL_METHODS:
-        model_path = d1._run_dir(name, depart_scale) / "final_model.zip"
+    for name in names:
+        model_path = _continue_run_dir(name, depart_scale) / "final_model.zip"
         if not model_path.is_file():
             print(f"[skip] {name}: no final_model", flush=True)
             continue
@@ -393,6 +421,10 @@ def main(argv=None) -> int:
         help="并行续训所有已训练（有 final_model）且未达 target 的方法",
     )
     parser.add_argument(
+        "--methods",
+        help="逗号分隔的方法清单，只续训这些方法（与 --all 二选一）",
+    )
+    parser.add_argument(
         "--target-steps",
         type=int,
         default=DEFAULT_TARGET_STEPS,
@@ -412,17 +444,22 @@ def main(argv=None) -> int:
     d1._apply_patch(args.depart_scale)
     d1.ensure_sorted_scenario()
 
-    if args.all:
+    methods = None
+    if args.methods:
+        methods = [m.strip() for m in args.methods.split(",") if m.strip()]
+
+    if args.all or methods:
         run_all(
             target_steps=args.target_steps,
             depart_scale=args.depart_scale,
             smoke=args.smoke,
             workers=args.workers,
+            methods=methods,
         )
         return 0
 
     if args.method is None:
-        parser.error("需要 --method 或 --all")
+        parser.error("需要 --method / --methods / --all")
     run_continue(
         args.method,
         target_steps=args.target_steps,

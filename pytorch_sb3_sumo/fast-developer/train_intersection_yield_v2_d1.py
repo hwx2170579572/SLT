@@ -85,6 +85,8 @@ PARENT = {
     "sac_mlp_d1_st_rt": "sac_mlp",
     "sac_mlp_d1_st_rt_gate": "sac_mlp",
     "sac_mlp_d1_st_rt_late": "sac_mlp",
+    "sac_mlp_d1_st_rt_ego": "sac_mlp",
+    "sac_mlp_d1_st_rt_edge": "sac_mlp",
     "sac_mlp_d1_st_rt_topo": "sac_mlp",
     "sac_mlp_d1_full": "sac_mlp",
     "hsac_mlp_base_d1_st": "hsac_mlp_base",
@@ -101,6 +103,8 @@ D1_CONFIG = {
     "sac_mlp_d1_st_rt": dict(use_route=True, use_topology=False, use_slots=False),
     "sac_mlp_d1_st_rt_gate": dict(use_route=True, use_topology=False, use_slots=False, route_gate=True),
     "sac_mlp_d1_st_rt_late": dict(use_route=True, use_topology=False, use_slots=False, route_late=True),
+    "sac_mlp_d1_st_rt_ego": dict(use_route=True, use_topology=False, use_slots=False, route_ego_only=True),
+    "sac_mlp_d1_st_rt_edge": dict(use_route=True, use_topology=False, use_slots=False, route_cond_edge=True),
     "sac_mlp_d1_st_rt_topo": dict(use_route=True, use_topology=True, use_slots=False),
     "sac_mlp_d1_full": dict(use_route=True, use_topology=True, use_slots=True),
     "hsac_mlp_base_d1_st": dict(use_route=False, use_topology=False, use_slots=False),
@@ -172,6 +176,8 @@ def _build_model_d1(method: str, env, *, learning_starts: int):
         "use_slots": cfg["use_slots"],
         "route_gate": cfg.get("route_gate", False),
         "route_late": cfg.get("route_late", False),
+        "route_ego_only": cfg.get("route_ego_only", False),
+        "route_cond_edge": cfg.get("route_cond_edge", False),
         "features_dim": 128,
         "hidden_dim": 128,
         "num_heads": 2,
@@ -406,7 +412,10 @@ def _evaluate_saved(method: str, model_path: Path, run_dir: Path, n_ep: int) -> 
     parent = PARENT[method]
     use_slots = bool(D1_CONFIG[method]["use_slots"])
     env_adapter = _env_adapter_d1(method)
-    overlay_root = run_dir / "overlays" / "eval"
+    # 评估 overlay 目录保持极短（"oe"）：续训时 run_dir = <run>/c100000 多一层，
+    # 长方法名（如 sac_mlp_d1_st_rt_late）会把 manifest 路径顶到 264 > MAX_PATH(260)，
+    # os.replace 报 WinError 3。原 "overlays/eval"(12 字符) 减到 "oe"(2 字符) 后降到 254。
+    overlay_root = run_dir / "oe"
     env = base.make_env_factory(env_adapter, overlay_root)(
         base._environment_namespace(), evaluation=True
     )
@@ -446,7 +455,7 @@ def _evaluate_saved(method: str, model_path: Path, run_dir: Path, n_ep: int) -> 
         env.close()
 
     n = len(records)
-    return dict(
+    summary = dict(
         episodes=n,
         success_rate=sum(int(r["success"]) for r in records) / n if n else 0.0,
         collision_rate=sum(int(r["collision"]) for r in records) / n if n else 0.0,
@@ -454,6 +463,7 @@ def _evaluate_saved(method: str, model_path: Path, run_dir: Path, n_ep: int) -> 
         timeout_rate=sum(int(r["timeout"]) for r in records) / n if n else 0.0,
         mean_return=float(np.mean([r["episode_return"] for r in records])) if n else None,
     )
+    return summary, records
 
 
 # --------------------------------------------------------------------------- #
@@ -586,7 +596,7 @@ def _evaluate_d1(global_name: str, run_dir: Path, final_model: Path, smoke: bool
     """d1 家族进程内评估（无 run_eval_worker，用 _evaluate_saved）。"""
     family, mod, method = DISPATCH[global_name]
     n_ep = 8 if smoke else EVAL_EPISODES_TOTAL
-    summary = _evaluate_saved(method, final_model, run_dir, n_ep)
+    summary, records = _evaluate_saved(method, final_model, run_dir, n_ep)
     result = dict(
         identity=dict(
             method=global_name,
@@ -602,7 +612,7 @@ def _evaluate_d1(global_name: str, run_dir: Path, final_model: Path, smoke: bool
             smoke=smoke,
         ),
         summary=summary,
-        episode_records=[],
+        episode_records=records,
     )
     base._write_json_atomic(run_dir / "evaluation_results.json", result)
     return result

@@ -65,6 +65,8 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
         use_slots: bool = True,
         route_gate: bool = False,
         route_late: bool = False,
+        route_ego_only: bool = False,
+        route_cond_edge: bool = False,
         route_gate_bias: float = 2.0,
         features_dim: int = 128,
         hidden_dim: int = 128,
@@ -105,13 +107,19 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
         # parent class's geometry-only edge-feature branch is reachable again.
         self.use_topology = bool(use_topology)
         self.use_slots = bool(use_slots)
-        # Route-conditioning variants (both require use_route=True):
-        #   route_gate -- adaptive, initially-near-zero residual gate on the route
-        #                 context injected into the interaction tokens.
-        #   route_late -- route does NOT enter interaction at all; it only feeds the
-        #                 route slot (goal-side) of the final policy head.
+        # Route-conditioning variants (all require use_route=True):
+        #   route_gate      -- adaptive, initially-near-zero residual gate on the route
+        #                      context injected into the interaction tokens.
+        #   route_late      -- route does NOT enter interaction; it only feeds the route
+        #                      slot (goal-side) of the final policy head.
+        #   route_ego_only  -- unconditional route injection into ego only (neighbors keep
+        #                      state-only); isolates "neighbor route is harmful".
+        #   route_cond_edge -- route does NOT enter node representation; it only modulates
+        #                      ego->j edge relevance (route-conditioned interaction).
         self.route_gate = bool(route_gate) and self.use_route
         self.route_late = bool(route_late) and self.use_route
+        self.route_ego_only = bool(route_ego_only) and self.use_route
+        self.route_cond_edge = bool(route_cond_edge) and self.use_route
         if self.route_gate:
             self.route_gate_mlp = nn.Sequential(
                 nn.Linear(hidden_dim * 2, hidden_dim),
@@ -121,6 +129,15 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
             self.route_gate_mlp.apply(keras_initialize_linear)
             # gate_bias > 0 => alpha = sigmoid(z - bias) starts near 0 (~0.12 at 2.0).
             self.route_gate_bias = nn.Parameter(torch.tensor(float(route_gate_bias)))
+        if self.route_cond_edge:
+            # edge feature dim = 8 (delta_pos 2 + delta_vel 2 + cos 1 + ttc 1 +
+            # same_lane 1 + conflict 1), matching VehicleGraphLayer(edge_dim=8).
+            self.route_edge_mlp = nn.Sequential(
+                nn.Linear(hidden_dim + 8, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, 1),
+            )
+            self.route_edge_mlp.apply(keras_initialize_linear)
 
         # MLP-style fallback modules, used only when a switch is disabled.
         self.mlp_map_point_encoder = nn.Sequential(
@@ -159,6 +176,31 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
         ).sum(dim=2) / self.paths_per_actor
         return map_per_actor[:, 0]
 
+    def _apply_route_edge_correction(
+        self,
+        edge_weights: Tensor,
+        edge_features: Tensor,
+        route_context: Tensor,
+    ) -> Tensor:
+        """Route-conditioned edge relevance（R2）：route 只调 ego->j 的边权重。
+
+        当前 edge_weights = exp(-d²/2σ²)，shape [B, H, target, source]。对 ego(target=0)
+        的边加一个可学习 correction：w[ego,j] = w_orig * exp(g(r_ego, e[ego,j]))。
+        g = MLP([r_ego, e[ego,j]])，keras init 使其初始近 0 => exp(g)≈1，初始中性。
+        neighbor->neighbor 的边不受影响。correction clamp 到 ±5 防数值溢出。
+        """
+        ego_edge = edge_features[:, :, 0]  # [B, H, N, E]（target=0 的边特征）
+        batch, history, actors, edge_dim = ego_edge.shape
+        r_ego = route_context[:, 0]  # [B, D]
+        r = r_ego[:, None, None, :].expand(batch, history, actors, -1)  # [B, H, N, D]
+        correction = self.route_edge_mlp(
+            torch.cat([r, ego_edge], dim=-1)
+        ).squeeze(-1)  # [B, H, N]
+        correction = correction.clamp(-5.0, 5.0)
+        out = edge_weights.clone()
+        out[:, :, 0] = edge_weights[:, :, 0] * torch.exp(correction)
+        return out
+
     # ------------------------------------------------------------------ #
     # Forward
     # ------------------------------------------------------------------ #
@@ -185,9 +227,21 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
             route_tokens, path_valid, route_context = self._encode_routes(
                 rotated_map, map_valid, current_state
             )
-            if self.route_late:
-                # Late route fusion：route 不注入交互，只作为 route slot 进决策头。
+            if self.route_late or self.route_cond_edge:
+                # Late / edge-conditioned：route 不进 interaction token（只进 route slot
+                # 或 edge relevance），state 保持纯净。
                 intent_tokens = state_tokens
+            elif self.route_ego_only:
+                # Ego-only route injection：只让 ego(actor 0) 注入 route，neighbor 保持
+                # state-only，隔离「neighbor route 进入 message 是否有害」。
+                ego_mask = torch.zeros(
+                    route_context.shape[1], device=route_context.device
+                )
+                ego_mask[0] = 1.0
+                intent_tokens = self.route_norm(
+                    state_tokens
+                    + route_context[:, :, None, :] * ego_mask[None, :, None, None]
+                ) * trajectory_valid[..., None]
             elif self.route_gate:
                 # Gated route injection：自适应、初始近零的残差门控。
                 state_pool = self._mlp_temporal_pool(state_tokens, trajectory_valid)
@@ -264,6 +318,12 @@ class IncrementalTopoEncoder(TopoTemporalGraphExtractorV2):
                 node_valid,
             ) = self._vehicle_edge_features(
                 rotated, trajectory_valid, topology_attention=None
+            )
+
+        # ---- route-conditioned edge relevance (R2) ----
+        if self.route_cond_edge:
+            edge_weights = self._apply_route_edge_correction(
+                edge_weights, edge_features, route_context
             )
 
         # ---- spatiotemporal interaction (D1-1) ----
