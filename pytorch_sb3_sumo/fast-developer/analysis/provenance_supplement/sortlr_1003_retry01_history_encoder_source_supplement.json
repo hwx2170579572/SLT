@@ -1,0 +1,47 @@
+{
+  "schema": "source_provenance_supplement/v1",
+  "collected_at_local": "2026-10-03T04:36:47.4625959+08:00",
+  "purpose": "Supplement the decision-window diagnostic runtime-source list with the shared temporal encoder source used by the audited D1 history-index path.",
+  "runtime_snapshot_context": {
+    "diagnostic_runner": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_strt_decision_windows_20261003.py",
+    "omitted_source": "algos/sb3_torch/topo_temporal_features.py",
+    "note": "The diagnostic runner explicit runtime-source list did not name this shared file; this supplement preserves the current source. The two formal training source-archive manifests do list it."
+  },
+  "current_source": {
+    "workspace_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features.py",
+    "supplement_copy": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\provenance_supplement\\topo_temporal_features.py",
+    "supplement_sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204",
+    "current_source_sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204",
+    "byte_length": 31313,
+    "copy_matches_current_source": true
+  },
+  "formal_run_manifest_checks": [
+    {
+      "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01\\source_archive_manifest.json",
+      "manifest_created_at": "2026-10-03T03:44:52.09375+08:00",
+      "source_archive": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01\\source_archive.zip",
+      "source_archive_sha256": "88d592049ac9d13a6e4059d202b64c25b2cfdb951207c3ba6db7f62c727fe804",
+      "entry_path": "algos/sb3_torch/topo_temporal_features.py",
+      "entry_sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204",
+      "entry_bytes": 31313,
+      "current_source_sha256_matches_manifest": true
+    },
+    {
+      "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres\\source_archive_manifest.json",
+      "manifest_created_at": "2026-10-03T03:57:03.200729+08:00",
+      "source_archive": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres\\source_archive.zip",
+      "source_archive_sha256": "b55a1a2fadae3f00f6a4492ef8b767d47ade95223bb5aec21e82f98e6481150c",
+      "entry_path": "algos/sb3_torch/topo_temporal_features.py",
+      "entry_sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204",
+      "entry_bytes": 31313,
+      "current_source_sha256_matches_manifest": true
+    }
+  ],
+  "limitations": [
+    "Collected after the formal runs had already started; this is follow-on provenance only.",
+    "Does not alter either original source_archive_manifest.json or source_archive.zip, the launcher, active runner, or production source; no runtime behavior changed.",
+    "Hash equality establishes byte identity to each manifest entry, but this supplement does not independently prove which module bytes a running process had loaded at a particular instant."
+  ]
+}
