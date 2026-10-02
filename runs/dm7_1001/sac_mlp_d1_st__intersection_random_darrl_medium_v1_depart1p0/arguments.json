@@ -1,0 +1,48 @@
+{
+  "method": "sac_mlp_d1_st",
+  "parent": "sac_mlp",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "raw_budget": 100000,
+  "checkpoint_frequency": 10000,
+  "learning_starts_raw_steps": 5000,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "buffer_size": 20000,
+  "discount": 0.99,
+  "action_repeat": 3,
+  "seed": 0,
+  "device": "cuda",
+  "density": {
+    "vehicle_scale": 1.0,
+    "pedestrian_scale": 1.0,
+    "clone_depart_jitter_seconds": [
+      0.0,
+      0.0
+    ]
+  },
+  "smoke": false,
+  "behavior_diagnostics": true,
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001",
+  "env_contract": "base",
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  },
+  "ablation": "d1_representation_incremental",
+  "use_route": false,
+  "use_topology": false,
+  "use_slots": false,
+  "use_incremental_slots": false,
+  "use_route_reachability": false,
+  "use_graph_slt": false,
+  "use_sbs": false,
+  "structured_representation": false,
+  "representation_coef": 0.0,
+  "slot_balance_coef": 0.0,
+  "algorithm_class": "SceneRepresentationSAC",
+  "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=False, topology=False, slots=False, incremental_slots=False, Graph-SLT=False, SBS=False."
+}

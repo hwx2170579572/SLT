@@ -1,0 +1,99 @@
+{
+  "identity": {
+    "method": "sac_mlp_d1_st_rt_conflicttime_v1",
+    "source_script": "train_intersection_yield_v2_d1",
+    "source_method": "sac_mlp_d1_st_rt_conflicttime_v1",
+    "family": "d1",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "eval_traffic_split": "validation",
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "58ce993f4cbf1068c46a0bc52d463d2a7b028a8afb7d1b128cf6c2c7e84da9a5",
+    "episodes": 1,
+    "workers": 1,
+    "smoke": false,
+    "behavior_diagnostics": true,
+    "policy_shadow_probes": false,
+    "policy_shadow_eval_max_per_episode": 3,
+    "policy_shadow_critical_eval_sample": false,
+    "diagnostic_experiment": "sortct_frozen_interventions_20261003",
+    "diagnostic_phase": "control_smoke",
+    "diagnostic_arm": "b_control_smoke",
+    "checkpoint_method": "sac_mlp_d1_st_rt_conflicttime_v1",
+    "base_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\final_model.zip",
+    "base_checkpoint_sha256": "58ce993f4cbf1068c46a0bc52d463d2a7b028a8afb7d1b128cf6c2c7e84da9a5",
+    "eval_device": "cpu",
+    "learning_or_replay_updates": 0,
+    "resume": false,
+    "intervention": "unmodified conflict-time policy",
+    "policy_shadow_probe": null,
+    "policy_predict_probe_calls": 0,
+    "model_policy_fingerprint": [
+      {
+        "phase": "before_eval",
+        "policy_state_sha256": "85ebcf56b6e30704045e924a7b539b95a2e1da79321bde27aef0e5d50a76975b",
+        "state_tensor_count": 484,
+        "n_updates": 95001
+      },
+      {
+        "phase": "after_eval",
+        "policy_state_sha256": "85ebcf56b6e30704045e924a7b539b95a2e1da79321bde27aef0e5d50a76975b",
+        "state_tensor_count": 484,
+        "n_updates": 95001
+      }
+    ]
+  },
+  "summary": {
+    "episodes": 1,
+    "success_rate": 0.0,
+    "collision_rate": 1.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -9.175325582623483,
+    "std_return": 0.0,
+    "raw_mean_return": -1.0,
+    "raw_std_return": 0.0,
+    "raw_return_coverage": 1,
+    "reward_component_means": {
+      "reward_success": 0.0,
+      "reward_collision": -10.0,
+      "reward_off_route": 0.0,
+      "reward_timeout": 0.0,
+      "reward_step_cost": -1.0000000000000007,
+      "reward_progress": 1.8246744173765181
+    },
+    "reward_component_coverage": 1,
+    "reward_component_reconciliation_max_abs_error": 0.0,
+    "evaluation_return_protocol_version": "environment_step_reward_v2",
+    "raw_return_protocol_version": "info_undiscounted_reward_or_step_reward_fallback_v1",
+    "reward_component_protocol_version": "yield_v2_cumulative_reward_branches_v1"
+  },
+  "episode_records": [
+    {
+      "episode": 0,
+      "seed": 10000,
+      "episode_return": -9.175325582623483,
+      "decision_steps": 100,
+      "environment_steps": 100,
+      "raw_steps": 300,
+      "completion_time_seconds": null,
+      "success": false,
+      "collision": true,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_10.rou.xml",
+      "raw_episode_return": -1.0,
+      "raw_return_source": "info.undiscounted_reward",
+      "reward_success": 0.0,
+      "reward_collision": -10.0,
+      "reward_off_route": 0.0,
+      "reward_timeout": 0.0,
+      "reward_step_cost": -1.0000000000000007,
+      "reward_progress": 1.8246744173765181,
+      "evaluation_return_protocol_version": "environment_step_reward_v2",
+      "raw_return_protocol_version": "info_undiscounted_reward_or_step_reward_fallback_v1",
+      "reward_component_protocol_version": "yield_v2_cumulative_reward_branches_v1",
+      "reward_component_reconciliation_error": 0.0
+    }
+  ]
+}

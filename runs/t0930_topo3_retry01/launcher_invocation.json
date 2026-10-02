@@ -1,0 +1,78 @@
+{
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01",
+  "launched_at": "2026-09-30T01:24:05.4667078+08:00",
+  "supervisor_pid": 50304,
+  "supervisor_start_time": "2026-09-30T01:24:05.4667078+08:00",
+  "executable": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+  "script": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+  "arguments": [
+    "--methods",
+    "sac_mlp_d1_st_rt_topo,sac_mlp_d1_st_rt_topo_3slot",
+    "--max-steps",
+    "100000",
+    "--depart-scale",
+    "4.0",
+    "--run-root",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01",
+    "--reference-run-root",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+    "--checkpoint-frequency",
+    "10000",
+    "--behavior-diagnostics"
+  ],
+  "smoke": false,
+  "resume": false,
+  "raw_step_budget": 100000,
+  "training_seed": 0,
+  "learning_starts": 5000,
+  "evaluation_episodes": 100,
+  "workers": {
+    "sac_mlp_d1_st_rt_topo": {
+      "status": "running",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp_d1_st_rt_topo",
+        "--depart-scale",
+        "4.0",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics"
+      ],
+      "log": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\launcher_logs\\sac_mlp_d1_st_rt_topo__train.log",
+      "pid": 8364,
+      "started_at": 1790702648.2647605
+    },
+    "sac_mlp_d1_st_rt_topo_3slot": {
+      "status": "running",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp_d1_st_rt_topo_3slot",
+        "--depart-scale",
+        "4.0",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics"
+      ],
+      "log": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\launcher_logs\\sac_mlp_d1_st_rt_topo_3slot__train.log",
+      "pid": 62860,
+      "started_at": 1790702648.2647605
+    }
+  },
+  "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\launcher_logs\\supervisor.stdout.log",
+  "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\launcher_logs\\supervisor.stderr.log",
+  "source_snapshot": "source_snapshot.json"
+}

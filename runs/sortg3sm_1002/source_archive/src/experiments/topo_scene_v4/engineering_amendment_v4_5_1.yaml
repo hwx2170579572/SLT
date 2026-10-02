@@ -1,0 +1,82 @@
+schema_version: topo-scene-v4.5.1.engineering-amendment/v1
+status: preregistered_before_any_validation
+created_at_local: '2026-08-19T11:01:02+08:00'
+scientific_method: v4_5_confident_actor_fusion
+formal_test_locked: true
+formal_test_accessed: false
+
+lineage:
+  contract: experiments/topo_scene_v4/experiment_contract_v4_5.yaml
+  contract_sha256: 3c1f7f8bb2f2967f7559907386b58e67760c53dfa8e46bf581fc4824d186bb7c
+  implementation_freeze: results_topo_v4_5_dev/engineering/implementation_freeze.json
+  implementation_freeze_sha256: 9ab0ccc71b33110ac526f5a9f89e8f504d0f3fc0ddafd6407c6ff36dc2414666
+  incident_job: E1__cand__cross__s4__p3c1f7f8b
+  failed_launcher_log: results_topo_v4_5_dev/development/launcher_logs/E1__cand__cross__s4__p3c1f7f8b.log
+  failed_launcher_log_sha256: 6e097e6ea98c2035879da509e9b4b3f5eb302f1ab7d3ecd8fb0d76b4121e43c6
+
+observed_training_only_boundary:
+  partition: train
+  calibration_seed: 68002
+  flags: {success: true, collision: false, off_route: false, timeout: true}
+  validation_environment_constructed: false
+  validation_artifacts_present: false
+  formal_test_accessed: false
+
+patch_scope:
+  name: allow_source_terminal_event_flags_to_overlap_in_checkpoint_selection
+  summaries_preserved: true
+  episode_records_preserved: true
+  event_relabeling: false
+  event_precedence_added: false
+  selection_order_changed: false
+  model_changed: false
+  training_changed: false
+  decoder_changed: false
+  threshold_changed: false
+  evaluation_metrics_changed: false
+  gates_changed: false
+
+selector_invariants:
+  event_rates_imply_integral_counts: true
+  counts_bounded_by_episode_population: true
+  summary_counts_match_episode_records: true
+  every_episode_has_terminal_event_flag: true
+  terminal_event_flags_may_overlap: true
+  overlap_evidence_recorded: true
+  checkpoint_crc_and_sha_required: true
+  paired_calibration_seed_and_traffic_signature_required: true
+  original_selection_order:
+    - maximize_success_count
+    - minimize_collision_count
+    - minimize_off_route_count
+    - minimize_timeout_count
+    - maximize_mean_return
+    - prefer_exact_final_on_complete_tie
+
+e1_recovery:
+  reuse_training: true
+  reuse_calibration: true
+  rerun_training: false
+  rerun_calibration: false
+  inputs:
+    arguments_sha256: 68058cf9f8ef42da160cdf8610b8b230245025d5ff88d5f7e2d53cdcce97e509
+    highest_training_success_checkpoint_sha256: 5f324d6f68a46eea527983b589d89960ba72fe40a9970521403d12665be125d6
+    exact_final_checkpoint_sha256: 2d9afa0420fd78e6dec7b60f8b5fb53f5139ccdbb63affe8bd3a29fcc30b7519
+    highest_training_success_calibration_sha256: 748a504f01db7fe8b07b144f7e0e115825ab57812176b153cf5f51ee40332710
+    exact_final_calibration_sha256: e729ff915e5cc8a423959706a0635fa81af76e09982796726da1fabc3058a21c
+  selector_receipt_must_predate_validation_environment: true
+
+future_development_jobs:
+  from_scratch_training_required: true
+  selector_patch_only: true
+  ordered_cells_unchanged: [E2, E3, E4]
+
+hard_stop_on:
+  - input_hash_drift
+  - checkpoint_crc_failure
+  - summary_episode_record_count_mismatch
+  - episode_without_terminal_event_flag
+  - paired_calibration_signature_mismatch
+  - decoder_trace_mismatch
+  - validation_artifact_preexists_e1_recovery
+  - formal_test_access

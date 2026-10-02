@@ -1,0 +1,50 @@
+schema_version: topo-scene-v4.7.2.runner-context-engineering-patch/v1
+status: preregistered_before_runner_patch_and_retry
+no_fabrication: true
+formal_test_locked: true
+formal_test_accessed: false
+
+scientific_protocol:
+  unchanged: true
+  contract_sha256: e97ef91a85ddeb60bee50fb6fdccdff4afb4e49f5a9d6e52ffee24431890ea7a
+  v4_7_implementation_freeze_sha256: eb4526f1c9b197c2dc8259af8f3b7e2eea9c6b0b22de05054f54957fbf0082b0
+  method_changed: false
+  return_estimator_changed: false
+  seeds_or_traffic_changed: false
+  gates_changed: false
+
+parent_engineering_patch:
+  contract_sha256: 6e27c933130f3a33a62eb294fabab7f06af0851703faa2b1419087db0191aa8a
+  implementation_freeze_sha256: 979080cc6a76936f572cc79d730ce23202803be976f201ab61810967b1b93359
+  training_adapter_changed: false
+  metadata_binding_writer_changed: false
+
+trigger:
+  phase: development_dry_run_before_any_retry_training
+  error: freeze preregistration hash drifted
+  scientific_job_started: false
+  validation_accessed_by_retry: false
+  formal_test_accessed: false
+
+single_engineering_change:
+  name: preserve_parent_default_preregistration_inside_runner_context
+  removed_context_override: DEFAULT_PREREGISTRATION
+  patch_preregistration_hash_still_explicit_in_protocol_hashes: true
+  command_or_training_logic_changed: false
+
+retry:
+  from_scratch: true
+  allowed_attempts: 1
+  first_cell: G1
+  output_root: results_topo_v4_7_2_dev
+  training_adapter: tools/train_paper_sb3_sumo_v4_7_1.py
+  ordered_cells_unchanged: [G1, G2, G3, G4, G5]
+
+engineering_gates:
+  targeted_tests_min: 4
+  full_regression_min: 327
+  status_must_pass: true
+  development_dry_run_must_pass: true
+  parent_v4_7_freeze_revalidated: true
+  parent_v4_7_1_freeze_revalidated: true
+  formal_test_accessed: false

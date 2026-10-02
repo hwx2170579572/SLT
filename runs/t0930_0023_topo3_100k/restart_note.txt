@@ -1,0 +1,7 @@
+Restart note — 2026-09-30 (Asia/Shanghai)
+
+The original 3slot worker (PID 9240) failed at about 5.65k raw steps after a PermissionError [WinError 5] while behavior_diagnostics.py atomically published diagnostics/train/summary.json. Its diagnostic JSONL artifacts were preserved.
+
+The Topo worker (PID 17496) was still training when last observed at 17,967 raw steps / 12,967 updates. It was deliberately interrupted because both methods shared the same vulnerable summary-publication path; this is not a Topo training failure or evaluation result.
+
+After verifying original StartTimes for supervisor PID 56072 and worker PID 17496 against launcher_status.json, taskkill /PID 56072 /T /F stopped that run's process tree. All original run artifacts were retained.

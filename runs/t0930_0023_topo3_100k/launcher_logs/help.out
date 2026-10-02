@@ -1,0 +1,73 @@
+usage: train_intersection_yield_v2_d1.py [-h] [--smoke]
+                                         [--smoke-eval-episodes SMOKE_EVAL_EPISODES]
+                                         [--method {hold35k,mst_slt,hsac_mlp,sac_mlp,sac_mlp_v48,hsac_mlp_base,hold35k_legacy,mst_slt_legacy,sac_mlp_d1_st,sac_mlp_d1_st_attn,sac_mlp_d1_st_rt,sac_mlp_d1_st_rt_gate,sac_mlp_d1_st_rt_late,sac_mlp_d1_st_rt_ego,sac_mlp_d1_st_rt_edge,sac_mlp_d1_st_rt_topo,sac_mlp_d1_st_rt_topo_3slot,sac_mlp_d1_full,hsac_mlp_base_d1_st,hsac_mlp_base_d1_st_rt,hsac_mlp_base_d1_st_rt_topo,hsac_mlp_base_d1_full}]
+                                         [--methods METHODS]
+                                         [--depart-scale DEPART_SCALE]
+                                         [--max-steps MAX_STEPS]
+                                         [--model-path MODEL_PATH]
+                                         [--output-dir OUTPUT_DIR]
+                                         [--run-root RUN_ROOT]
+                                         [--reference-run-root REFERENCE_RUN_ROOT]
+                                         [--behavior-diagnostics]
+                                         [--checkpoint-frequency CHECKPOINT_FREQUENCY]
+                                         [--worker-id WORKER_ID]
+                                         [--start-episode START_EPISODE]
+                                         [--end-episode END_EPISODE]
+                                         [--eval-only] [--make-scenario-only]
+                                         [{train-method,eval-worker}]
+
+在「depart 排序版」intersection 副本场景上训练两个脚本里的所有方法。 背景 ---- 原 ``intersection`` 场景的
+traffic 文件按**流向**分组，组间 depart 时间大幅回退，SUMO 报「Route file should be sorted by
+departure time, ignoring ...」后把左右手车流静默
+忽略，实际只有北→南一股车流在跑。``intersection_sorted`` 副本把 traffic 按 ``(depart,
+departLane)`` 升序重排，三股车流都真正参与仿真。 本脚本在 ``intersection_sorted``
+上训练三类方法（发车间隔可自定义，默认 depart×4.0 降密度），复用既有脚本的**训练 / 评估 / 绘图**底层函数，并把它们的
+``SCENARIO`` 常量 指向新场景： yield_v2
+家族（``train_intersection_yield_v2``：DEPART_SCALE 降密度 + reward v2 + 改法 1+2/3）:
+hold35k / mst_slt / hsac_mlp / sac_mlp / sac_mlp_v48 / hsac_mlp_base legacy
+家族（``train_intersection_hold35k_mst_fixed``：原始密度 + 纸面 reward + 改法 1+2）:
+hold35k_legacy / mst_slt_legacy d1 家族（本文件 D1 表征消融，父基线 sac_mlp /
+hsac_mlp_base）: sac_mlp_d1_st / sac_mlp_d1_st_attn / sac_mlp_d1_st_rt /
+sac_mlp_d1_st_rt_topo / sac_mlp_d1_full / sac_mlp_d1_st_rt_topo_3slot /
+hsac_mlp_base_d1_st / hsac_mlp_base_d1_st_rt / hsac_mlp_base_d1_st_rt_topo /
+hsac_mlp_base_d1_full 默认训练 ``mst_slt`` 与 ``sac_mlp_d1_st_rt`` 两个方法（两 CUDA
+worker 并行）。 结果目录 ``fast-developer/{方法名}__intersection_sorted_depart{scale}``。
+用法:: python fast-developer/train_intersection_yield_v2_d1.py --make-scenario-
+only python fast-developer/train_intersection_yield_v2_d1.py --smoke # 默认两方法
+smoke python fast-developer/train_intersection_yield_v2_d1.py # 默认两方法正式训练
+python fast-developer/train_intersection_yield_v2_d1.py --method mst_slt
+--smoke python fast-developer/train_intersection_yield_v2_d1.py --method
+sac_mlp_d1_st_rt --depart-scale 3.0 python fast-
+developer/train_intersection_yield_v2_d1.py --eval-only --method
+sac_mlp_d1_st_rt --model-path <run_dir>/final_model.zip --output-dir <run_dir>
+--depart-scale 4.0
+
+positional arguments:
+  {train-method,eval-worker}
+                        留空表示 launcher（两 CUDA worker 并行训练默认方法）
+
+options:
+  -h, --help            show this help message and exit
+  --smoke               缩小规模快速验证全链路
+  --smoke-eval-episodes SMOKE_EVAL_EPISODES
+                        仅smoke模式的eval回合数（默认8）
+  --method {hold35k,mst_slt,hsac_mlp,sac_mlp,sac_mlp_v48,hsac_mlp_base,hold35k_legacy,mst_slt_legacy,sac_mlp_d1_st,sac_mlp_d1_st_attn,sac_mlp_d1_st_rt,sac_mlp_d1_st_rt_gate,sac_mlp_d1_st_rt_late,sac_mlp_d1_st_rt_ego,sac_mlp_d1_st_rt_edge,sac_mlp_d1_st_rt_topo,sac_mlp_d1_st_rt_topo_3slot,sac_mlp_d1_full,hsac_mlp_base_d1_st,hsac_mlp_base_d1_st_rt,hsac_mlp_base_d1_st_rt_topo,hsac_mlp_base_d1_full}
+  --methods METHODS     逗号分隔的方法清单；launcher 模式训练这些方法（默认 DEFAULT_METHODS）
+  --depart-scale DEPART_SCALE
+                        发车间隔缩放（>1.0 降密度，默认 4.0）
+  --max-steps MAX_STEPS
+                        d1 家族训练 raw 步数（默认 50k 满预算）
+  --model-path MODEL_PATH
+  --output-dir OUTPUT_DIR
+  --run-root RUN_ROOT   独立结果根目录；用于从新目录运行，避免覆盖历史结果
+  --reference-run-root REFERENCE_RUN_ROOT
+                        已完成对照结果根目录，用于无环境复跑的paired stage comparison
+  --behavior-diagnostics
+                        记录训练优化轨迹和最终评估行为诊断
+  --checkpoint-frequency CHECKPOINT_FREQUENCY
+                        以原始仿真步为单位的检查点间隔
+  --worker-id WORKER_ID
+  --start-episode START_EPISODE
+  --end-episode END_EPISODE
+  --eval-only
+  --make-scenario-only  只生成 depart 排序版副本场景后退出

@@ -1,0 +1,135 @@
+{
+  "status": "passed",
+  "kind": "environment integration smoke; no model training or learned-policy performance evaluation",
+  "cases": [
+    {
+      "scenario": "intersection_random_low_v1",
+      "reset_signature": "f4a2c5e8387eb487e0b74d7ae08a6bb2f0037db6e5abf752af2bec8fa12ab0ce",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 590,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 200,
+          "E0_to_E3": 150,
+          "E2_to_E1": 240
+        },
+        "departed_background_total": 9,
+        "departed_background_by_route_total": {
+          "E2_to_E1": 7,
+          "neg_E3_to_neg_E0": 2
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 7,
+        "pending_background_insertions": 0,
+        "peak_background_vehicles": 5,
+        "departure_delay_samples": 9,
+        "mean_departure_delay_seconds": 0.0,
+        "max_departure_delay_seconds": 0.0,
+        "endless_reinsertions_enabled": false
+      }
+    },
+    {
+      "scenario": "intersection_random_medium_v1",
+      "reset_signature": "922d86ef7f95836c978425deae034b873c3455295eed105e58674bb1c06371ca",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 1180,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 400,
+          "E0_to_E3": 300,
+          "E2_to_E1": 480
+        },
+        "departed_background_total": 28,
+        "departed_background_by_route_total": {
+          "neg_E3_to_neg_E0": 9,
+          "E2_to_E1": 13,
+          "E0_to_E3": 6
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 23,
+        "pending_background_insertions": 0,
+        "peak_background_vehicles": 15,
+        "departure_delay_samples": 28,
+        "mean_departure_delay_seconds": 0.09642857142857143,
+        "max_departure_delay_seconds": 1.4,
+        "endless_reinsertions_enabled": false
+      }
+    },
+    {
+      "scenario": "intersection_random_high_v1",
+      "reset_signature": "f0945691c8747174303f6e8da2ca79f998bec70b4c63ed515cbd84372fa0b990",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 1770,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 600,
+          "E0_to_E3": 450,
+          "E2_to_E1": 720
+        },
+        "departed_background_total": 35,
+        "departed_background_by_route_total": {
+          "E2_to_E1": 18,
+          "neg_E3_to_neg_E0": 10,
+          "E0_to_E3": 7
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 26,
+        "pending_background_insertions": 0,
+        "peak_background_vehicles": 17,
+        "departure_delay_samples": 35,
+        "mean_departure_delay_seconds": 1.3657142857142857,
+        "max_departure_delay_seconds": 9.6,
+        "endless_reinsertions_enabled": false
+      }
+    }
+  ],
+  "additional_split_seeds": {
+    "train": 10000,
+    "test": 1500010000
+  },
+  "same_seed_reproducible": true,
+  "different_seed_changes_traffic": true,
+  "legacy_scenario_seed_unchanged": true
+}

@@ -1,0 +1,123 @@
+{
+  "schema_version": "sortct_frozen_run_annotation_v1",
+  "annotated_at_local": "2026-10-03T01:13:52+08:00",
+  "purpose": "Preserve a correction note without rewriting the original experiment manifest.",
+  "original_experiment_manifest": {
+    "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\experiment_manifest.json",
+    "sha256": "D875784435196DB215ED6F7F880F8BAB4509ABF3645DFA44AF4BD92F8D3D530F",
+    "recorded_mode": "read_only_preview",
+    "mode_field_note": "This value was inherited from the preflight plan when the coordinator created the manifest. It is inaccurate for this completed run; the coordinator was actually launched with --start. The original file is retained byte-for-byte."
+  },
+  "actual_execution_evidence": {
+    "launcher_status_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_status.json",
+    "status": "complete",
+    "stage": "complete",
+    "coordinator_pid": 37380,
+    "started_at_local": "2026-10-03T00:49:26.879474+08:00",
+    "completed_at_local": "2026-10-03T01:03:41.769558+08:00",
+    "control_gate": "passed",
+    "all_worker_exit_codes": 0,
+    "control_checks": {
+      "routeact_seed_10000": {
+        "passed": true,
+        "expected_and_actual_outcome": "success",
+        "expected_and_actual_traffic_variant": "traffic_10.rou.xml",
+        "mismatches": []
+      },
+      "conflicttime_seed_10000": {
+        "passed": true,
+        "expected_and_actual_outcome": "collision",
+        "expected_and_actual_traffic_variant": "traffic_10.rou.xml",
+        "mismatches": []
+      }
+    },
+    "intervention_budget": {
+      "control_episodes": 2,
+      "episodes_per_intervention_arm": 40,
+      "intervention_arms": 3,
+      "total_episodes": 122,
+      "seed_range_per_arm": [10000, 10039],
+      "pairing_key": ["seed", "traffic_variant"],
+      "traffic_variant_mismatches": 0,
+      "unique_templates_per_arm": 30,
+      "evaluation_device": "cpu",
+      "learning_or_replay_updates": 0
+    }
+  },
+  "checkpoint_and_frozen_policy_checks": {
+    "routeact_checkpoint_sha256": "8a36cd283d13e08b0c83cd16d988147c1e1213f7e13a610731c1a8532176bebe",
+    "conflicttime_checkpoint_sha256": "58ce993f4cbf1068c46a0bc52d463d2a7b028a8afb7d1b128cf6c2c7e84da9a5",
+    "updates_before_and_after_each_arm": 95001,
+    "state_dict_fingerprint_equal_before_after_each_arm": true,
+    "checkpoint_sha_equal_to_each_eval_identity": true,
+    "behavior_diagnostic_error_count_each_arm": 0,
+    "reward_component_reconciliation_max_abs_error": 3.552713678800501e-15,
+    "paired_outcomes_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\paired_outcomes.json"
+  },
+  "intervention_summaries": {
+    "a_remove_route_veto": {
+      "evaluation_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\intervention\\a_no_veto\\evaluation_results.json",
+      "episodes": 40,
+      "outcomes_success_collision_timeout_offroute": [6, 26, 8, 0],
+      "mean_shaped_environment_step_return": -5.440500875256956,
+      "mean_raw_undiscounted_return": -0.5,
+      "reward_component_means": {
+        "reward_success": 1.5,
+        "reward_collision": -6.5,
+        "reward_off_route": 0.0,
+        "reward_timeout": -1.0,
+        "reward_step_cost": -1.3005000000000009,
+        "reward_progress": 1.8599991247430445
+      },
+      "raw_records": 15575,
+      "decision_records": 5202
+    },
+    "b_conflict_off": {
+      "evaluation_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\intervention\\b_conflict_off\\evaluation_results.json",
+      "episodes": 40,
+      "outcomes_success_collision_timeout_offroute": [19, 20, 1, 0],
+      "mean_shaped_environment_step_return": 1.3151488354280594,
+      "mean_raw_undiscounted_return": -0.025,
+      "reward_component_means": {
+        "reward_success": 4.75,
+        "reward_collision": -5.0,
+        "reward_off_route": 0.0,
+        "reward_timeout": -0.125,
+        "reward_step_cost": -0.8105000000000006,
+        "reward_progress": 2.500648835428059
+      },
+      "raw_records": 9690,
+      "decision_records": 3242,
+      "policy_predict_calls": 3242
+    },
+    "b_times_off": {
+      "evaluation_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\intervention\\b_times_off\\evaluation_results.json",
+      "episodes": 40,
+      "outcomes_success_collision_timeout_offroute": [11, 28, 1, 0],
+      "mean_shaped_environment_step_return": -3.157739524133503,
+      "mean_raw_undiscounted_return": -0.425,
+      "reward_component_means": {
+        "reward_success": 2.75,
+        "reward_collision": -7.0,
+        "reward_off_route": 0.0,
+        "reward_timeout": -0.125,
+        "reward_step_cost": -0.9420000000000005,
+        "reward_progress": 2.1592604758664966
+      },
+      "raw_records": 11256,
+      "decision_records": 3768,
+      "policy_predict_calls": 3768
+    }
+  },
+  "runner_source_hashes": {
+    "executed_and_archived_sha256": "CE08FAE56D0F1C875ECE5CFD2A2D44409C6F91DF07D660B995A161B98072DFEC",
+    "current_runner_after_metadata_fix_sha256": "0B816B4E0A36593DDA8D793A748F5ECBD7FD9C6AFE0CB9E404AF2512976CD6E6",
+    "post_run_change": "Only the future _start manifest mode assignment was corrected; the coordinator had already loaded and completed the archived original. This patch did not alter evaluation outputs."
+  },
+  "limitations": [
+    "Results describe fixed checkpoints and 40 paired evaluation seeds per intervention; they do not estimate training-seed variability.",
+    "The 40 seeds cover 30 reused sorted traffic templates, so this is not 40 independent traffic layouts.",
+    "The control smoke verifies exact reproduction only for seed 10000 per checkpoint; the paired tables use the first 40 official evaluation rows.",
+    "The route-veto removal and conflict-feature overrides are diagnostic interventions on frozen policies, not retrained performance comparisons."
+  ]
+}

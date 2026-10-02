@@ -1,0 +1,75 @@
+schema_version: topo-scene-v4.9.1.read-only-selector-metadata-acceptance-patch/v1
+status: locked_before_patch_implementation_after_real_run_trigger
+created_at_local: '2026-08-26T07:41:46.6449835+08:00'
+no_fabrication: true
+scientific_protocol_changed: false
+model_changed: false
+training_changed: false
+selection_changed: false
+evaluation_changed: false
+gate_thresholds_changed: false
+formal_test_locked: true
+
+parent:
+  scientific_contract: experiments/topo_scene_v4/experiment_contract_v4_9.yaml
+  scientific_contract_sha256: 4a8f39b734357efda228e1981c0a3d1bf956dba2cdd6af0d49cfafa8b7aae16d
+  scientific_freeze: results_topo_v4_9_dev/engineering/implementation_freeze.json
+  scientific_freeze_sha256: 766ff1a0b4856e5f9a07afb43ac7122fdc7d9a63a3ec76e810cdf947eea22a5b
+  engineering_receipt: results_topo_v4_9_dev/engineering/engineering_receipt.json
+  engineering_receipt_sha256: aeb77f12885c01082d665b8992420c21ea1aa2a0108ab66c2dc16b23720838cc
+  runner: tools/run_topo_v4_9_experiments.py
+  runner_sha256: 11bdc61834018e4e55027e76dbc836b82ba143ee660c39dc8096f6e0d97a5241
+  promotion_automation: tools/run_all_v4_9_promotion.py
+  promotion_automation_sha256: f475d4135050232bfa6f0840853e25265e64a5483e3beeb6383a0a026748ec7c
+  formal_test_accessed: false
+
+trigger:
+  completed_jobs: [M1, M2]
+  original_acceptance_reason: 'parent structural acceptance failed: metadata selector partition drifted'
+  real_selector_evidence:
+    selection_partition: train
+    selector_receipt_precedes_validation_environment: true
+  interrupted_job: M3
+  interruption_receipt: results_topo_v4_9_dev/development/interrupted_attempts/M3__cand__ram__s12__p4a8f39b7__attempt1/interruption_receipt.json
+  interruption_receipt_sha256: 6e7cae3383c30b77e5acdf479cf515de502380b0fa081a37c255875878c59859
+
+single_engineering_change:
+  name: derive_parent_selector_metadata_from_existing_v4_9_evidence_in_read_only_view
+  scope: candidate method_metadata compatibility view only
+  allowed_derived_fields:
+    checkpoint_calibration_partition:
+      value: train
+      required_source: selector/receipt.json selection_partition == train
+    validation_used_for_checkpoint_selection:
+      value: false
+      required_sources:
+        - selector/receipt.json selection_partition == train
+        - paper_evaluation_detailed.json selector_receipt_precedes_validation_environment == true
+  writes_completed_run_artifacts: false
+  changes_real_json_values: false
+  bypasses_strict_v4_9_model_checks: false
+  changes_candidate_outcome_gate: false
+  changes_control_acceptance: false
+
+recovery:
+  preserve_interrupted_attempt: true
+  interrupted_attempt_counted_for_gate: false
+  rerun_M1: false
+  rerun_M2: false
+  rerun_M3_from_scratch_with_identical_frozen_settings: true
+  run_M4_after_M3_regardless_of_M3_result: true
+  development_execution_policy: attempt_all_then_summarize
+
+promotion:
+  wrapper_required: true
+  jobs: 12
+  execution_policy: attempt_all_then_summarize
+  failure_does_not_cancel_remaining_jobs: true
+  formal_stage_launched: false
+
+formal_test:
+  locked: true
+  accessed: false
+  unlock_condition: complete_fresh_v4_9_promotion_gate_pass
+
+unknown_rule: Missing, interrupted, rejected, or protocol-incompatible evidence remains TBD.

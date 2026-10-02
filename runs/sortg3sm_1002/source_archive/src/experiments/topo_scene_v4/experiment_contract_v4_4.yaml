@@ -1,0 +1,198 @@
+schema_version: topo-scene-v4.4.train-only-selector-contract/v1
+status: preregistered_before_implementation_and_fresh_development
+created_at_local: '2026-08-19T00:23:08.2576425+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  parent_method: v4_3_target_critic_decoder
+  parent_contract: experiments/topo_scene_v4/experiment_contract_v4_3.yaml
+  parent_contract_sha256: da6b283ba126a2fdcf1189935eb56df27f96ddbdbe746f2dd4d246188f2d3880
+  parent_implementation_freeze_sha256: 3008dba9c3a50131b66acd171a3bda47cae8c890dcc388fab4452bc506a662c0
+  parent_development_decision: results_topo_v4_3_dev/development/development_decision.json
+  parent_development_decision_sha256: f45a22da1f8310ce7fe38a794bc67867f7f5b583f8ee5dc773d5037a9b62978a
+  failure_attribution: results_topo_v4_3_dev/attribution/t3_failure/attribution_summary.json
+  failure_attribution_sha256: 3ee695e016875d72cc2e2759929888c5209839ea9cb7a7a013a763ec31d2e58c
+  deep_attribution: results_topo_v4_3_dev/attribution/t3_failure/deep_attribution.md
+  deep_attribution_sha256: 5c9564a4ea546f96379c4e954a80836c2a9271c5039def97fe387ff21b9de522
+  formal_test_accessed: false
+
+single_change:
+  name: train_only_deployment_aware_checkpoint_selector
+  candidate_checkpoints: [highest_training_success, exact_final]
+  calibration_partition: train
+  calibration_episodes: 12
+  paired_calibration: true
+  selection_order:
+    - maximize_success_count
+    - minimize_collision_count
+    - minimize_off_route_count
+    - minimize_timeout_count
+    - maximize_mean_return
+    - prefer_exact_final_on_complete_tie
+  missing_training_best_fallback: exact_final
+  selector_receipt_must_predate_validation: true
+  training_changed: false
+  deterministic_decoder_changed: false
+  reward_changed: false
+  encoder_changed: false
+  critic_training_changed: false
+  entropy_changed: false
+
+fixed_runtime:
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  episode_limit_profile: source
+  actor_encoder_detach: true
+  slot_balance_coef: 0.01
+  lane_entropy_scale: 0.0
+  speed_target_entropy: -1.0
+  exact_final_checkpoint_rule: exactly_at_requested_raw_steps
+  training_best_checkpoint_rule:
+    metric: highest_training_success_rate_last_20
+    fixed_denominator: 20
+    minimum_completed_episodes_exclusive: 20
+    tie_break: earliest_strict_improvement
+
+selector_integrity:
+  calibration_environment_constructed_before_validation: true
+  validation_environment_forbidden_until_receipt_sealed: true
+  test_environment_forbidden_until_promotion_and_receipt_sealed: true
+  both_checkpoints_use_identical_calibration_seeds: true
+  both_checkpoints_use_identical_traffic_order: true
+  checkpoint_zip_crc_required: true
+  checkpoint_sha256_required: true
+  selected_model_hash_must_match_receipt: true
+  calibration_trace_and_episode_records_required: true
+  partial_checkpoint_ineligible: true
+
+development:
+  evaluation_split: validation
+  evaluation_episodes: 12
+  calibration_split: train
+  calibration_episodes_per_checkpoint: 12
+  ordered_cells:
+    - id: D1
+      kind: fresh_training_with_train_only_selection
+      scenario: carla
+      seed: 3
+      raw_steps: 20000
+      calibration_seed_start: 64000
+      evaluation_seed_start: 55000
+      role: carla_fresh_training_guard
+    - id: D2
+      kind: fresh_training_with_train_only_selection
+      scenario: cross
+      seed: 2
+      raw_steps: 20000
+      calibration_seed_start: 65000
+      evaluation_seed_start: 56000
+      requires: D1_pass
+      role: cross_fresh_training_guard
+    - id: D3
+      kind: fresh_training_with_train_only_selection
+      scenario: cross
+      seed: 3
+      raw_steps: 20000
+      calibration_seed_start: 66000
+      evaluation_seed_start: 57000
+      requires: D2_pass
+      role: cross_seed_stability_guard
+    - id: D4
+      kind: fresh_training_with_train_only_selection
+      scenario: roundabout_medium
+      seed: 0
+      raw_steps: 20000
+      calibration_seed_start: 67000
+      evaluation_seed_start: 58000
+      requires: D3_pass
+      role: third_scenario_regression_guard
+  carla_outcome_gate:
+    success_rate_min: 0.50
+    collision_rate_max: 0.10
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.50
+  carla_target_decoder_gate:
+    episodes_with_non_keep_route_window_min: 1
+    route_event_applied_match_episode_rate_min: 0.50
+    applied_match_positive_target_q_margin_episode_rate_min: 0.50
+    exact_target_critic_argmax_rate: 1.00
+  non_carla_guard:
+    success_rate_min: 0.50
+    collision_rate_max: 0.45
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.30
+  selector_gate:
+    calibration_partition: train
+    calibration_episodes_each: 12
+    paired_seed_rate: 1.00
+    selected_hash_match: true
+    receipt_predates_validation: true
+  no_gate_compensation: true
+  on_fail: stop_and_create_new_versioned_attribution
+  on_pass: run_promotion
+
+promotion:
+  methods: [temporal_graph, selected_v4_candidate]
+  checkpoint_selector_applied_symmetrically: true
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [0, 1]
+  raw_training_steps: 50000
+  calibration_episodes_per_checkpoint: 12
+  calibration_split: train
+  calibration_seed_start_formula: 80000 + 1000 * training_seed
+  evaluation_episodes: 30
+  evaluation_split: validation
+  evaluation_seed_start_formula: 90000 + 1000 * training_seed
+  jobs: 12
+  thresholds:
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+
+formal_test:
+  locked: true
+  accessed: false
+  methods: [temporal_graph, selected_v4_candidate]
+  checkpoint_selector_applied_symmetrically: true
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  calibration_episodes_per_checkpoint: 12
+  calibration_split: train
+  calibration_seed_start_formula: 100000 + 1000 * training_seed
+  evaluation_episodes: 50
+  evaluation_split: test
+  evaluation_seed_start_formula: 200000 + 1000 * training_seed
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260817
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+infrastructure_interruption_policy:
+  interrupted_cell_status: TBD
+  archive_partial_attempt: true
+  partial_checkpoint_eligible: false
+  identical_from_scratch_retries_allowed: 1
+  on_second_matching_failure: stop_for_versioned_engineering_attribution
+
+unknown_rule: Unrun, interrupted, rejected, or protocol-incompatible cells remain TBD.

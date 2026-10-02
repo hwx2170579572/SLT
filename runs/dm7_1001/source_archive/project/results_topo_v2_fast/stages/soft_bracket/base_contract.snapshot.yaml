@@ -1,0 +1,399 @@
+schema_version: topo-scene-v2.experiment-contract/v1
+mode: standard
+venue_family: AI/ML
+target_venue: unknown
+no_fabrication: true
+created_at: 2026-08-15T00:00:00+08:00
+output_root: results_topo_v2
+
+scope:
+  objective: >-
+    Preserve TemporalGraph as the stable path and test whether merge-aware,
+    route-constrained, near-zero residual topology plus SoftBalancedSlots can
+    remove the observed safety and seed-instability failures at 100k raw steps.
+  bounded_claim: >-
+    A topology benefit may be claimed only after the complete 2x2 identifies
+    topology and hard-normalisation effects, the cumulative development gate
+    passes, and a frozen candidate is tested on the untouched v2 test split.
+  novelty_status: unsearched
+  novelty_rule: No module is called novel until a separate literature search is completed.
+
+historical_evidence:
+  role: hypothesis_generation_only
+  diagnosis: reports/full_balanced_scenario_diagnosis_20260815/TECHNICAL_REPORT.md
+  matrix_root: results_systematic_matrix/selected
+  restriction: >-
+    Historical held-out results informed the v2 design and cannot be reused as
+    an untouched v2 test. They are never pooled with the new 60/20/20 runs.
+
+freeze:
+  source_and_assets: artifacts/topo_v2/freeze_manifest.json
+  topology_audit: artifacts/topo_v2/topology_graph_v2_audit.json
+  runtime_environment: artifacts/topo_v2/runtime_environment.json
+  every_run_binds_all_freeze_sha256: true
+  protected_v1_files:
+    - envs/sumo/topology_graph.py
+    - algos/sb3_torch/topo_temporal_features.py
+    - algos/sb3_torch/sac.py
+    - configs/sb3_configs.py
+  no_silent_truncation: true
+
+storyline:
+  scientific_origin: >-
+    A stable temporal vehicle representation can be harmed when diffuse global
+    topology and per-sample hard slot normalisation overwrite task confidence.
+  gap: >-
+    Existing results jointly change topology and hard normalisation, omit merge
+    semantics, and do not identify why some seeds saturate the lateral action sign.
+  core_insight: >-
+    Topology should be a route-compatible residual that can decay to zero, while
+    slot balance should use batch statistics without deleting sample magnitude.
+  evidence_ladder:
+    - Establish topology and hard-normalisation main/interaction effects with a full 2x2.
+    - Test MERGE semantics on Double Merging.
+    - Test route/direction localisation on Roundabout-B and CARLA with Roundabout-C control.
+    - Test zero-initialised residual and split-pool seed stability.
+    - Select or reject SoftBalancedSlots on validation only.
+    - Freeze one candidate, then run the untouched formal test.
+
+claims:
+  C0:
+    claim: Topology and hard BalancedSlots effects are separately identifiable.
+    evidence: full factorial 2x2 on six scenarios, three paired training seeds, and validation traffic
+    failure_interpretation: Joint historical deltas remain non-identifiable.
+  C1:
+    claim: Explicit MERGE semantics repairs a relation omission in Double Merging.
+    evidence: exact graph audit plus V2 versus topology-only V1 under matched runs
+    failure_interpretation: Missing merge edges are not the policy-limiting cause.
+  C2:
+    claim: Route/direction sparse queries improve topology localisation.
+    evidence: compatible attention mass, effective lane count, fallback rate, and closed-loop safety
+    failure_interpretation: Token dilution or lane-direction ambiguity is not the main bottleneck.
+  C3:
+    claim: Near-zero residual and split pooling reduce seed collapse without harming TemporalGraph safety.
+    evidence: V4 versus V3 and TemporalGraph, including worst-seed and lateral-action diagnostics
+    failure_interpretation: Instability lies outside topology overwrite/goal-pool coupling.
+  C4:
+    claim: SoftBalancedSlots improves long-run slot-scale balance without deleting useful magnitude.
+    evidence: predeclared lambda sweep, batch RMS/log-variance, latent std, probes, and closed-loop guardrails
+    failure_interpretation: Retain V4 and reject SoftBalancedSlots.
+  C5:
+    claim: The frozen candidate has bounded compute overhead.
+    evidence: parameters, update time, inference latency, wall time, and peak GPU memory
+    failure_interpretation: Report the engineering trade-off without an efficiency claim.
+
+methods:
+  temporal_graph:
+    label: TemporalGraph
+    cli_algorithm: temporal_graph_v1_control
+    implementation_id: temporal_vehicle_graph_slt_pytorch_v1
+    topology: false
+    hard_slot_normalization: false
+    soft_slot_balance_coef: 0.0
+    role: stable primary baseline
+  topology_v1:
+    label: Topology-only V1
+    cli_algorithm: topo_scene_v1_control
+    implementation_id: topo_temporal_graph_slt_pytorch_v1
+    topology: true
+    hard_slot_normalization: false
+    soft_slot_balance_coef: 0.0
+    role: 2x2 topology main-effect cell and V1 for V2 contrast
+  temporal_hard:
+    label: TemporalGraph+HardBalancedSlots
+    cli_algorithm: temporal_graph_balanced_v1
+    implementation_id: temporal_vehicle_graph_hard_balanced_slots_v1
+    topology: false
+    hard_slot_normalization: true
+    soft_slot_balance_coef: 0.0
+    role: 2x2 hard-normalisation main-effect cell
+  full_hard:
+    label: Full+HardBalancedSlots V1
+    cli_algorithm: topo_scene_balanced_v1_control
+    implementation_id: topo_temporal_graph_slt_balanced_slots_v1
+    topology: true
+    hard_slot_normalization: true
+    soft_slot_balance_coef: 0.0
+    role: 2x2 interaction cell
+  v2_merge:
+    label: V2 +MERGE
+    cli_algorithm: topo_v2_merge
+    implementation_id: merge_aware_topology_temporal_graph_v2
+    soft_slot_balance_coef: 0.0
+  v3_query:
+    label: V3 +RouteDirectionQuery
+    cli_algorithm: topo_v2_query
+    implementation_id: route_direction_sparse_topology_temporal_graph_v2
+    soft_slot_balance_coef: 0.0
+  v4_gated:
+    label: V4 +GatedSplitPool
+    cli_algorithm: topo_v2_gated
+    implementation_id: gated_split_pool_topology_temporal_graph_v2
+    soft_slot_balance_coef: 0.0
+  v5_soft_1e4:
+    label: V5 SoftBalancedSlots lambda=1e-4
+    cli_algorithm: topo_v2_soft
+    implementation_id: soft_balanced_gated_topology_temporal_graph_v2
+    soft_slot_balance_coef: 0.0001
+  v5_soft_1e3:
+    label: V5 SoftBalancedSlots lambda=1e-3
+    cli_algorithm: topo_v2_soft
+    implementation_id: soft_balanced_gated_topology_temporal_graph_v2
+    soft_slot_balance_coef: 0.001
+  v5_soft_1e2:
+    label: V5 SoftBalancedSlots lambda=1e-2
+    cli_algorithm: topo_v2_soft
+    implementation_id: soft_balanced_gated_topology_temporal_graph_v2
+    soft_slot_balance_coef: 0.01
+  selected_candidate:
+    label: Frozen V4/V5 candidate
+    resolver: results_topo_v2/development/candidate_selection.json
+    role: unavailable until the development gate freezes one implementation and coefficient
+
+phases:
+  engineering:
+    purpose: All method/scenario interfaces, serialization, SUMO, and artifact smoke tests.
+    methods: [temporal_graph, topology_v1, temporal_hard, full_hard, v2_merge, v3_query, v4_gated, v5_soft_1e3]
+    scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+    seeds: [0]
+    check_only: true
+    evaluation_split: validation
+  causal_2x2:
+    purpose: Complete factorial identification before v2 method selection.
+    methods: [temporal_graph, topology_v1, temporal_hard, full_hard]
+    scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: validation
+  v2_merge:
+    purpose: Isolate explicit merge semantics and provide matched V2 controls for every V3 diagnostic scene.
+    methods: [v2_merge]
+    scenarios: [cross, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: validation
+  v3_query:
+    purpose: Add only route/direction sparse query to V2.
+    methods: [v3_query]
+    scenarios: [cross, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: validation
+  v4_gated:
+    purpose: Add near-zero residual fusion and separate route/topology pooling to V3.
+    methods: [v4_gated]
+    scenarios: [cross, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: validation
+  v5_lambda:
+    purpose: Select or reject SoftBalancedSlots using validation only.
+    methods: [v5_soft_1e4, v5_soft_1e3, v5_soft_1e2]
+    scenarios: [roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: validation
+  candidate_validation:
+    purpose: Run the frozen V4 or V5 choice on every diagnostic scene before opening test.
+    methods: [selected_candidate]
+    scenarios: [cross, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: validation
+  formal_test:
+    purpose: Untouched ten-seed, six-scenario comparison after a passed development gate.
+    methods: [temporal_graph, selected_candidate]
+    scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    raw_training_steps: 100000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 50
+    evaluation_split: test
+    gate_receipt: results_topo_v2/development/development_gate.json
+
+fixed_controls:
+  python_environment: llm_pipeline
+  device_preference: cuda
+  latent_dim: 128
+  hidden_dim: 128
+  num_heads: 2
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  neighbors: 5
+  history_steps: 10
+  path_length: 10
+  ego_control_profile: direct
+  raw_training_steps: 100000
+  deterministic_final_policy: true
+  reward_unchanged: true
+  action_space_unchanged: true
+  actor_critic_unchanged: true
+  slt_target_unchanged: true
+  traffic_protocol: frozen_60_20_20
+  episode_limit_profile: source
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  final_checkpoint_rule: last checkpoint at exactly 100k raw steps; never select by evaluation performance
+  route_sigma: 20.0
+  topology_top_k: 8
+  reverse_heading_cosine_min: 0.0
+  route_bias_init: 1.0
+  heading_bias_init: 1.0
+  topology_layerscale_init: 0.001
+  goal_layerscale_init: 0.001
+
+metrics:
+  primary:
+    success_rate: higher
+    collision_rate: lower
+  secondary:
+    mean_return: higher
+    off_route_rate: lower
+    timeout_rate: lower
+    successful_completion_time_seconds: lower
+  mechanism:
+    topology_attention_entropy: finite
+    topology_effective_lanes: lower_than_or_equal_to_top_k
+    route_compatible_attention_mass: higher
+    merge_attention_mass: report
+    merge_pair_score: report
+    topology_residual_scale: report_distribution
+    goal_residual_scale: report_distribution
+    topology_fallback_rate: lower
+    ego_slot_rms: report
+    social_slot_rms: report
+    route_slot_rms: report
+    slot_rms_ratio: closer_to_one
+    latent_std: positive
+    lane_command_negative_rate: report
+    lane_command_keep_rate: report
+    lane_command_positive_rate: report
+    lane_command_threshold_margin: report
+    lane_change_applied_rate: report
+    mean_speed_mps: report
+  efficiency:
+    parameter_count: report
+    train_ms_per_gradient_step: report
+    end_to_end_training_wall_seconds: report
+    inference_ms_per_action: report
+    peak_gpu_memory_mb: report
+
+statistics:
+  development_seed_count: 3
+  formal_seed_count: 10
+  episodes_per_policy: 50
+  seed_pairing: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260815
+  primary_intervals: paired_hierarchical_bootstrap_95_percent
+  multiplicity: Holm correction across predeclared candidate-versus-TemporalGraph scenario tests
+  factorial_2x2:
+    topology_main_effect: average topology-on minus topology-off over hard-normalisation levels
+    hard_norm_main_effect: average hard-on minus hard-off over topology levels
+    interaction: difference_of_differences
+  carla_limit: one traffic asset; training seeds and SUMO stochasticity do not create asset-disjoint generalisation
+
+lambda_selection:
+  candidates: [0.0, 0.0001, 0.001, 0.01]
+  zero_candidate_source: v4_gated
+  order:
+    - Reject a coefficient if any validation scenario exceeds V4 collision by more than 0.02.
+    - Among safe candidates, maximise macro success over Roundabout-B, Roundabout-C, and CARLA.
+    - If macro success differs by less than 0.01, minimise mean log-slot-RMS variance.
+    - If still tied, choose the smaller coefficient.
+  output: results_topo_v2/development/candidate_selection.json
+
+development_gate:
+  margin_rationale: >-
+    Collision 0.02 equals one event in the frozen 50-episode evaluation;
+    aggregate success 0.03 allows at most roughly one to two episodes, while
+    the 0.10 paired-seed bound separately forbids seed collapse. These values
+    are frozen before any v2 validation outcome is observed.
+  required_scenarios: [cross, roundabout_medium, roundabout, carla]
+  finite_all_metrics: true
+  collision_noninferiority_margin: 0.02
+  success_noninferiority_margin: 0.03
+  worst_seed_success_margin: 0.10
+  mechanism_checks:
+    topology_effective_lanes_max: 8.0
+    route_compatible_attention_mass_min: 0.80
+    topology_fallback_rate_max: 0.10
+  positive_effect_any:
+    scenarios: [cross, roundabout_medium, carla]
+    minimum_success_gain: 0.05
+    minimum_collision_reduction: 0.05
+  pass_rule: >-
+    Candidate is non-inferior to TemporalGraph on aggregate success and every
+    scenario's collision guardrail, no paired seed collapses beyond the stated
+    margin, all mechanism checks are finite/passed, and at least one diagnosed
+    failure scenario has the stated positive effect.
+  fail_rule: >-
+    Do not access the v2 test partition. Record the failed mechanism and either
+    run the next predeclared cumulative variant or stop with a bounded negative result.
+
+stop_rules:
+  - If TemporalGraph+HardBalancedSlots degrades in the 2x2, reject hard normalisation.
+  - If V2 does not improve Double Merging relation/safety evidence, do not claim MERGE as causal.
+  - If V3 localisation improves but safety does not, reject route dilution as the main bottleneck.
+  - If V4 fails non-inferiority, do not use V5 to hide a structural failure.
+  - If every positive lambda violates safety or contracts latent magnitude, freeze V4 with lambda zero.
+  - If the formal test is incomplete, keep missing cells TBD and make no full-matrix claim.
+
+result_artifacts:
+  run_required:
+    - arguments.json
+    - method_metadata.json
+    - final_model.zip
+    - checkpoint_audit.json
+    - final_evaluation.json
+    - paper_evaluation_detailed.json
+    - training_diagnostics.json
+    - performance_profile.json
+    - action_diagnostics.json
+  phase_required:
+    - protocol.snapshot.yaml
+    - jobs.json
+    - summary.json
+    - summary.csv
+    - attribution.json
+    - iteration_receipt.json
+  final_required:
+    - candidate_selection.json
+    - development_gate.json
+    - formal_summary.json
+    - factorial_2x2.json
+    - iteration_ledger.json
+    - FINAL_REPORT.md
+  unknown_rule: Every unexecuted or invalid cell is explicit TBD; no imputation or cross-profile pooling.

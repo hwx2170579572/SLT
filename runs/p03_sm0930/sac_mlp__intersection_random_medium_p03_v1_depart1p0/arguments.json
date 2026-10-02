@@ -1,0 +1,35 @@
+{
+  "method": "sac_mlp",
+  "scenario": "intersection_random_medium_p03_v1",
+  "raw_budget": 300,
+  "checkpoint_frequency": 100,
+  "learning_starts_raw_steps": 60,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "buffer_size": 20000,
+  "discount": 0.99,
+  "action_repeat": 3,
+  "seed": 0,
+  "device": "cuda",
+  "density": {
+    "vehicle_scale": 1.0,
+    "pedestrian_scale": 1.0,
+    "clone_depart_jitter_seconds": [
+      0.0,
+      0.0
+    ]
+  },
+  "smoke": true,
+  "behavior_diagnostics": true,
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\p03_sm0930",
+  "env_contract": "base",
+  "env_class": "YieldObsIndependentV2EnvV1 (改法 1+2)",
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  }
+}

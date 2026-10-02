@@ -1,0 +1,65 @@
+{
+  "schema_version": "sorted_goalonly_causal_pairs_v1",
+  "pairs_vs_frozen_control": {
+    "topology_goal_off": {
+      "reference_arm": "frozen_control",
+      "matched_seed_pairs": 100,
+      "outcome_matrix_reference_rows_candidate_columns": {
+        "collision": {
+          "collision": 24,
+          "success": 23
+        },
+        "success": {
+          "collision": 12,
+          "success": 12
+        },
+        "timeout": {
+          "collision": 19,
+          "success": 10
+        }
+      },
+      "traffic_identity": {
+        "fully_checked_pairs": 100,
+        "unknown_pairs": [],
+        "mismatches": [],
+        "identity_fields": [
+          "episode_seed",
+          "traffic_index_before_reset",
+          "traffic_roll",
+          "selected_traffic_sha256"
+        ]
+      },
+      "interpretation": "paired frozen-policy diagnostic; does not identify performance effects across training seeds"
+    },
+    "route_lane_veto": {
+      "reference_arm": "frozen_control",
+      "matched_seed_pairs": 100,
+      "outcome_matrix_reference_rows_candidate_columns": {
+        "collision": {
+          "collision": 26,
+          "success": 21
+        },
+        "success": {
+          "collision": 10,
+          "success": 14
+        },
+        "timeout": {
+          "collision": 20,
+          "success": 9
+        }
+      },
+      "traffic_identity": {
+        "fully_checked_pairs": 100,
+        "unknown_pairs": [],
+        "mismatches": [],
+        "identity_fields": [
+          "episode_seed",
+          "traffic_index_before_reset",
+          "traffic_roll",
+          "selected_traffic_sha256"
+        ]
+      },
+      "interpretation": "paired frozen-policy diagnostic; does not identify performance effects across training seeds"
+    }
+  }
+}

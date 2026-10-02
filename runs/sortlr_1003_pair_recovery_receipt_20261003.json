@@ -1,0 +1,187 @@
+{
+  "schema": "sorted_longres_pair_recovery_receipt_v1",
+  "recorded_at": "2026-10-03T04:23:36+08:00",
+  "comparison_protocol": {
+    "scene": "intersection_sorted_depart4p0",
+    "training_seed": 0,
+    "fresh": true,
+    "resume": false,
+    "raw_step_budget_per_method": 100000,
+    "evaluation": {
+      "split": "validation",
+      "episodes": 100,
+      "logical_seed_start": 10000,
+      "logical_seed_end": 10099,
+      "checkpoint": "final_model.zip"
+    },
+    "reward_schema": "environment_step_reward_v2",
+    "bootstrap_protocol": "unchanged released-source-compatible single_gamma n-step; timeout bootstrap",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "torch": "2.12.0+cu132",
+    "policy_shadow_budget": {
+      "training": "At most 20 unique states over the entire training phase, sampled at 5000-raw-step intervals.",
+      "evaluation": "At most 4 unique states per episode.",
+      "extra_environment_steps": 0
+    }
+  },
+  "selected_pair": [
+    {
+      "role": "ST-RT control",
+      "method": "sac_mlp_d1_st_rt",
+      "run_root": "runs/sortlr_1003_retry01",
+      "started_at_local": "2026-10-03T03:44:52+08:00",
+      "supervisor_pid": 9600,
+      "worker_pid": 17856,
+      "manifest_status": "running",
+      "child_status": "training",
+      "progress_snapshot": {
+        "raw_steps": 18852,
+        "updates": 13852,
+        "progress_file_last_write_local": "2026-10-03T04:23:08+08:00"
+      },
+      "checkpoint_10000_exists": true,
+      "source_archive": {
+        "file_count": 8736,
+        "archive_sha256": "88d592049ac9d13a6e4059d202b64c25b2cfdb951207c3ba6db7f62c727fe804"
+      }
+    },
+    {
+      "role": "Longres candidate",
+      "method": "sac_mlp_d1_st_rt_longres_v1",
+      "run_root": "runs/sortlr_1003_retry01_longres",
+      "started_at_local": "2026-10-03T03:57:03+08:00",
+      "supervisor_pid": 45924,
+      "worker_pid": 56004,
+      "manifest_status": "running",
+      "child_status": "training",
+      "progress_snapshot": {
+        "raw_steps": 12571,
+        "updates": 7571,
+        "progress_file_last_write_local": "2026-10-03T04:23:36+08:00"
+      },
+      "source_archive": {
+        "file_count": 8736,
+        "archive_sha256": "b55a1a2fadae3f00f6a4492ef8b767d47ade95223bb5aec21e82f98e6481150c"
+      }
+    }
+  ],
+  "failed_same_root_candidate": {
+    "run_root": "runs/sortlr_1003_retry01",
+    "method": "sac_mlp_d1_st_rt_longres_v1",
+    "worker_pid": 46724,
+    "exit_code": 1,
+    "failure": "PermissionError [WinError 5] in train_intersection_yield_v2.py::_traffic_paths_for_scale while os.replace attempted to replace the shared traffic_24.rou.xml route overlay.",
+    "interpretation": "Two workers concurrently attempted to create/replace a shared per-root traffic overlay. This failed longres worker is not part of the selected pair; the ST-RT worker in the same root remains an independent fresh arm."
+  },
+  "source_archive_comparison": {
+    "file_count_each": 8736,
+    "worker_critical_source_files_checked_equal": 16,
+    "worker_critical_areas": [
+      "D1/base training runner",
+      "longres method implementation",
+      "policy shadow probes",
+      "SAC and replay",
+      "callbacks and encoder",
+      "behavior diagnostics",
+      "evaluation",
+      "reward and SUMO environment"
+    ],
+    "only_manifest_entry_differences_between_selected_roots": [
+      {
+        "path": "fast-developer/diagnose_strt_decision_windows_20261003.py",
+        "retry01_sha256": "f5fe983c7de0e545037f0877c2ff014037188ee208c5d92d184cfef0d7665db2",
+        "retry01_longres_sha256": "02c6e32887488de2431e9245b58218414185a37d42c609c82af01eba9b418404",
+        "worker_runtime_dependency": false
+      },
+      {
+        "path": "fast-developer/launch_sorted_longres_20261003.py",
+        "retry01_sha256": "631554311e6043e6f356afff092d697ed6efd1b3c80c219f05255f6e08f34a7e",
+        "retry01_longres_sha256": "12bff8d49dbf0730485b651f015f409a56c3a4538c710f78a4b6b2869b2cce4d",
+        "worker_runtime_dependency": false
+      }
+    ],
+    "interpretation": "The selected workers execute identical training production sources. The two changed archive files are the standalone window diagnostic runner and launch-only helper; neither is imported by the worker."
+  },
+  "traffic_overlay_comparison": {
+    "depart_scale": 4.0,
+    "template_count_each": 30,
+    "names_match": true,
+    "sha256_match_count": 30,
+    "sha256_mismatch_count": 0,
+    "traffic_24_sha256_both_roots": "5a9d782123f73fc3363049231128a56a4b77ee9d3d943058004c42080cf0d542",
+    "sha256_by_filename": {
+      "traffic_00.rou.xml": "42bcb8f455e3f8fb78766d5e88827088d7aeed2f73db5c37ce916d074a97c3e1",
+      "traffic_01.rou.xml": "d73c328bed330f2619e696d8c017e45a385e42b740adca4565dc516e91d01df7",
+      "traffic_02.rou.xml": "12d1b47636c8d57d29bc443f28d07b240c5dea65fbcb8e460656710d032a8e24",
+      "traffic_03.rou.xml": "61e7f3f2a54ecc1ba741ce44fea75d90b1e1ead3ffc6bfeca453299b41106cc2",
+      "traffic_04.rou.xml": "62c378f12f0cd89edaf66aaad1144c3d9548f1fccb93e90b909cca1d293926f9",
+      "traffic_05.rou.xml": "a6335ea8bddc6e83ad76210f66778d9d309f99ba009724a7cb49f22c1b100b9e",
+      "traffic_06.rou.xml": "dacdb9d52709d1df6385d70847febe25df790ce2a3e7b9ff28cd8b24bd1bf341",
+      "traffic_07.rou.xml": "f158085057e2fc18b37be323a85b45065026c5f71c20fdcecfe4eeb6c88825e2",
+      "traffic_08.rou.xml": "9c0edf2448a8a37db6fd7427e6f596ca41562bf98bfd1468c810e57312a79b6c",
+      "traffic_09.rou.xml": "1b56768fb8f35d6c9d0f81d29ea8a97620b488b1aa8c0b43946365dbde78a865",
+      "traffic_10.rou.xml": "bfcb79e4ce5f46d2f88501e3db397e051333adfecbe5d89fcb189d1a294b0f8a",
+      "traffic_11.rou.xml": "fc0265e201a4028688e89cf66c2a4215f997f54fbe99a67ada861608845f59c0",
+      "traffic_12.rou.xml": "a51d772fce55de46538d43b84e77a3addb37d83b5a78da0257f52f1532caaaba",
+      "traffic_13.rou.xml": "ace22f5bbfb1f0c4f65ba8aad18d3e5c018d13976f037c3e4058c1cd410735ec",
+      "traffic_14.rou.xml": "f4da209ce134c30c0145acfaaf3688e4866aeb5b4a38bd9d12b259c92808509e",
+      "traffic_15.rou.xml": "c2fae1b19bcfda96a789418c9665f78ac2b48ce489a254568d665254dec3ee9f",
+      "traffic_16.rou.xml": "af05ec8aed18dbe0f809d047473ba31a96a69b853772adf974562a638dc2f761",
+      "traffic_17.rou.xml": "4a651222880e80c03a9def81b9868797800c68bacfea43b57008ec6617d4c808",
+      "traffic_18.rou.xml": "0ecdee620dd167d76a52e70782deee4575af4bab65b6abd7d274852ec1ea0106",
+      "traffic_19.rou.xml": "e6b8c101539ddbc1ea2edd0a736b099959dddec887b4c322a927b2d8fe65a412",
+      "traffic_20.rou.xml": "c643f52b5d2a43b215c0f5e16911f0570013ab8ad62b8c2a876bfeb76d79fcca",
+      "traffic_21.rou.xml": "def9bc0ff203d7d70db9070d572edc23df9324a5f8f522981a110666f7383ef7",
+      "traffic_22.rou.xml": "4ee12b762a462110a9f4e0d449a255654df8e46daee6adb7b20088209b17541f",
+      "traffic_23.rou.xml": "a2f061aa51f5a919aa07eddedf201abcf7ea7241b048abbeffb494c755966f82",
+      "traffic_24.rou.xml": "5a9d782123f73fc3363049231128a56a4b77ee9d3d943058004c42080cf0d542",
+      "traffic_25.rou.xml": "2b8e6f4daadbabaf01f41580ee380840366692a902d03e42cbee3eacdb82c30b",
+      "traffic_26.rou.xml": "62cacd70b539f18dabb619179b80f3a01a214181f5ac0db131ad5bbd6c38d601",
+      "traffic_27.rou.xml": "6f3f9489346f47dc45169c116f871d58b660206e5dd53026b4ff30840f70eeb3",
+      "traffic_28.rou.xml": "2515d91d2365cab19a9d8fd107c78585ea7c7657385470dc78521430edcd1001",
+      "traffic_29.rou.xml": "6994c368a90c3c263bdbd6b8609cece6f4072f727d5482578a79bc5ded90eaae"
+    }
+  },
+  "trajectory_audit": {
+    "scope": "One saved threshold observation from each selected formal root, read from the small policy_observations.jsonl.gz stream; no raw_steps.gz files were read.",
+    "production_mask": "For each trajectory slot and time index, proxy-valid is trajectory[slot][time][0] != 0.0.",
+    "results": [
+      {
+        "method": "sac_mlp_d1_st_rt",
+        "run_root": "runs/sortlr_1003_retry01",
+        "raw_step_before_action": 10002,
+        "decision": 22,
+        "trigger": "train_first_policy_input_at_or_after_10k_raw_boundary",
+        "trajectory_shape": [6, 10, 5],
+        "proxy_valid_frame_counts_by_slot": [10, 10, 10, 10, 10, 10],
+        "legacy_count_minus_one_clamped_by_slot": [9, 9, 9, 9, 9, 9],
+        "true_last_proxy_valid_index_by_slot": [9, 9, 9, 9, 9, 9],
+        "idx_mismatch_slots": 0,
+        "legacy_index_points_to_proxy_masked_slot_count": 0
+      },
+      {
+        "method": "sac_mlp_d1_st_rt_longres_v1",
+        "run_root": "runs/sortlr_1003_retry01_longres",
+        "raw_step_before_action": 10000,
+        "decision": 33,
+        "trigger": "train_first_policy_input_at_or_after_10k_raw_boundary",
+        "trajectory_shape": [6, 10, 5],
+        "proxy_valid_frame_counts_by_slot": [10, 10, 10, 10, 10, 10],
+        "legacy_count_minus_one_clamped_by_slot": [9, 9, 9, 9, 9, 9],
+        "true_last_proxy_valid_index_by_slot": [9, 9, 9, 9, 9, 9],
+        "idx_mismatch_slots": 0,
+        "legacy_index_points_to_proxy_masked_slot_count": 0
+      }
+    ],
+    "limitation": "These two threshold snapshots show no index mismatch under the production x!=0 proxy. They do not estimate the training-state mismatch rate or late-entrant frequency, and x==0 can be a legitimate coordinate rather than true vehicle absence.",
+    "recoverability": "The sampled policy-input trajectory arrays can be reconstructed at those saved snapshots. The serialized observations have only trajectory/map, without actor IDs, first-tracked timestamps, history-reset timestamps, or an explicit valid mask; they cannot reconstruct actor-history age or lifecycle across snapshots. The original interrupted run has zero saved policy_observations rows in both arms."
+  },
+  "original_interruption_receipt": "runs/sortlr_1003/interruption_receipt.json",
+  "result_status": "Both selected fresh arms are still reported as training at their last saved progress snapshots. No final 100-episode result exists; do not report smoke outcomes as performance evidence.",
+  "smoke_exclusion": {
+    "root": "runs/sortlr_smoke_1003",
+    "budget": "300 raw training steps plus 1 evaluation episode of 600 raw steps",
+    "limitation": "The earlier smoke shadow probe had a pre-residual hook defect. It was fixed before formal launches; smoke is not a formal result."
+  },
+  "separate_diagnostic_note": "The strt_window_1003 diagnostic root stopped at 13 episodes/3340 raw steps with a missing physical snapshot; it is a separate diagnostic track and is not merged into either training arm."
+}

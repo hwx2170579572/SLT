@@ -1,0 +1,217 @@
+schema_version: topo-scene-v4.12.augmented-joint-support-prcr-contract/v1
+status: locked_before_v4_12_implementation_and_training
+created_at_local: '2026-09-01T10:29:09+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  parent_method: v4_11_proper_calibrated_ranked_risk
+  parent_contract: experiments/topo_scene_v4/experiment_contract_v4_11.yaml
+  parent_contract_sha256: c71e98e709874a5b2a7c2a9f4a558c2dea7e7c1054688757615c8ffff886f880
+  complete_parent_promotion_summary: results_topo_v4_11_promotion/summary.json
+  complete_parent_promotion_summary_sha256: b64550caa431f2bf7e0869b298acdbec35ac70978c0db9320dc40cca17c7ff8b
+  failed_parent_promotion_gate: results_topo_v4_11_promotion/promotion_gate.json
+  failed_parent_promotion_gate_sha256: a7099e33270a7d97824d5372e9341935efb47a97ba0bf0ffd27215b77842a036
+  complete_parent_attribution: results_topo_v4_11_promotion/attribution/complete_failure_v4_11/attribution.json
+  complete_parent_attribution_sha256: 0290609badf5ee5d09dc424b14265f1beadba251fa6471b06008af01cc70bf30
+  complete_parent_attribution_markdown: results_topo_v4_11_promotion/attribution/complete_failure_v4_11/ATTRIBUTION_V4_11_PROMOTION.md
+  formal_test_accessed: false
+
+observed_evidence:
+  cross_delta: {success_rate: -0.1833333333333334, collision_rate: 0.08333333333333331, timeout_rate: 0.10}
+  roundabout_medium_delta: {success_rate: 0.26666666666666666, collision_rate: -0.25, timeout_rate: -0.016666666666666666}
+  carla_delta: {success_rate: 0.55, collision_rate: -0.05, timeout_rate: -0.50}
+  macro_success_delta: 0.2111111111111111
+  worst_paired_seed_success_delta: -0.2666666666666667
+  cross_collision_value_auc_h10: 0.6979591690212203
+  cross_actor_mode_switch_rate: 0.10158008778809091
+  cross_selector_lane_switch_rate: 0.16991062640339905
+  cross_actor_mode_non_keep_rate: 0.4438970712138347
+  lane_prior_0_05_cross_switch_rate: 0.10192305531838404
+  risk_coef_1_50_cross_changed_lane_rate: 0.01691964057318531
+  cross_train_minus_validation_actor_switch: -0.004739288885084868
+  cross_train_validation_success_gap_range: [0.21666666666666667, 0.41666666666666663]
+
+hypothesis:
+  name: augmented_joint_replay_supported_ranked_risk
+  statement: >-
+    The v4.11 lane actor is not actually replay-supported because its support
+    NLL covers conditional speed only, while deterministic selection omits the
+    lane probability. Completing joint lane/speed support and enabling the
+    already-existing rotation augmentation for Cross will improve unseen-
+    traffic generalization without a rule or safety projection.
+  falsifier: >-
+    Fresh development fails the preregistered paired parent-improvement and
+    guard gates, required ablations do not complete, promotion violates any
+    per-scenario noninferiority gate, or any runtime action differs from the
+    exact learned model argmax.
+
+model_change:
+  replay_joint_action_support:
+    objective: masked_lane_categorical_nll_plus_conditional_speed_mixture_nll
+    outer_coefficient: 0.05
+    lane_term_scale: 1.0
+    replay_actions_only: true
+  deterministic_joint_support_score:
+    lane_log_prior_coefficient: 0.05
+    component_log_prior_coefficient: 0.05
+    low_probability_threshold: false
+    actor_confidence_gate: false
+    all_physically_feasible_lanes_remain_candidates: true
+  cross_rotation_augmentation:
+    training_and_collection: true
+    evaluation: false
+    existing_extractor_mechanism_reused: true
+  representation_online_target_encoder_for_cross_changed: false
+
+ablations:
+  no_cross_augmentation:
+    lane_term_scale: 1.0
+    lane_log_prior_coefficient: 0.05
+    cross_rotation_augmentation: false
+  augmentation_only:
+    lane_term_scale: 0.0
+    lane_log_prior_coefficient: 0.0
+    cross_rotation_augmentation: true
+
+unchanged:
+  reward: true
+  observation_and_action_spaces: true
+  topology_temporal_graph_slt_backbone: true
+  collision_soft_bernoulli_loss: true
+  collision_pairwise_rank_coefficient: 0.25
+  collision_temporal_consistency_coefficient: 0.05
+  collision_risk_coefficient: 1.0
+  twin_uncertainty_coefficient: 0.25
+  speed_components_per_lane: 3
+  component_entropy_scale: 0.25
+  fixed_speed_grid_at_inference: false
+  collision_label_source: observed_environment_info_collision
+  future_or_oracle_collision_labels: false
+  n_step: 16
+  physical_lane_existence_mask: true
+  traffic_risk_in_lane_mask: false
+  checkpoint_candidates: [highest_training_success, exact_final]
+  checkpoint_selector_partition: train
+  validation_used_for_checkpoint_selection: false
+  formal_test_used_for_checkpoint_selection: false
+
+forbidden:
+  kinematic_safety_projection: true
+  ttc_or_headway_threshold: true
+  geometry_unsafe_label: true
+  lane_change_veto: true
+  actor_confidence_gate: true
+  safety_shield_or_rule_fallback: true
+  semantic_tie_override: true
+  post_decoder_action_rewrite: true
+  scenario_conditioned_inference_rule: true
+  validation_or_formal_outcome_as_model_input: true
+
+fixed_runtime:
+  python_executable: D:/Programs/Anaconda/envs/llm_pipeline/python.exe
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  slot_balance_coefficient: 0.01
+  lane_entropy_scale: 0.0
+  speed_target_entropy: -1.0
+
+engineering_gate:
+  joint_lane_and_speed_nll_value_gradient_tests: required
+  masked_lane_nll_finite_test: required
+  exact_joint_support_score_test: required
+  optimizer_owner_overlap_count: 0
+  all_training_diagnostics_finite: true
+  exact_learned_model_argmax_rate: 1.0
+  exact_selected_proposal_action_match_rate: 1.0
+  no_rule_projection_static_and_runtime_audit: required
+  real_sumo_smoke_required: true
+  formal_test_accessed: false
+
+development:
+  execution_policy: attempt_all_then_summarize
+  failure_does_not_cancel_remaining_jobs: true
+  fresh_training_required: true
+  evaluation_split: validation
+  evaluation_episodes: 20
+  ordered_primary_cells:
+    - {id: D1, method: ajs_prcr_full, scenario: cross, seed: 10, raw_steps: 20000, calibration_seed_start: 151000, evaluation_seed_start: 161000}
+    - {id: D2, method: ajs_prcr_full, scenario: cross, seed: 11, raw_steps: 20000, calibration_seed_start: 152000, evaluation_seed_start: 162000}
+    - {id: D3, method: ajs_prcr_full, scenario: roundabout_medium, seed: 12, raw_steps: 20000, calibration_seed_start: 153000, evaluation_seed_start: 163000}
+    - {id: D4, method: ajs_prcr_full, scenario: carla, seed: 13, raw_steps: 20000, calibration_seed_start: 154000, evaluation_seed_start: 164000}
+  matched_parent_v4_11_reference:
+    D1: {success_rate: 0.75, collision_rate: 0.25}
+    D2: {success_rate: 0.80, collision_rate: 0.20}
+    D3: {success_rate: 0.90, collision_rate: 0.10}
+    D4: {success_rate: 1.00, collision_rate: 0.00}
+  per_run_gates:
+    cross: {success_rate_min: 0.70, collision_rate_max: 0.30, off_route_rate_max: 0.00, timeout_rate_max: 0.10}
+    roundabout_medium: {success_rate_min: 0.85, collision_rate_max: 0.15, off_route_rate_max: 0.00, timeout_rate_max: 0.10}
+    carla: {success_rate_min: 0.95, collision_rate_max: 0.05, off_route_rate_max: 0.00, timeout_rate_max: 0.05}
+  paired_parent_guard:
+    per_seed_success_delta_min: -0.05
+    per_seed_collision_delta_max: 0.05
+    cross_aggregate_positive_success_delta_min: 0.05
+    cross_aggregate_positive_collision_delta_max: -0.05
+    positive_effect_logic: success_or_collision
+  ordered_ablation_cells_after_primary_pass:
+    - {id: A1, method: ajs_prcr_no_cross_augmentation, scenario: cross, seed: 10, raw_steps: 20000, evaluation_episodes: 20}
+    - {id: A2, method: ajs_prcr_augmentation_only, scenario: cross, seed: 10, raw_steps: 20000, evaluation_episodes: 20}
+  on_complete_pass: run_required_ablation_then_fresh_promotion
+  on_complete_fail: write_complete_attribution_then_create_new_version
+
+promotion:
+  execution_policy: attempt_all_then_summarize
+  failure_does_not_cancel_remaining_jobs: true
+  methods: [temporal_graph, ajs_prcr_full]
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [20, 21]
+  raw_training_steps: 50000
+  evaluation_episodes: 30
+  evaluation_split: validation
+  jobs: 12
+  thresholds:
+    candidate_development_guards_each_seed: true
+    all_candidate_off_route_zero: true
+    macro_success_noninferiority_margin: 0.03
+    per_scenario_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.10
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+  on_complete_pass: unlock_untouched_formal_test
+  on_complete_fail: complete_attribution_then_create_new_version
+
+formal_test:
+  locked: true
+  accessed: false
+  unlock_condition: complete_fresh_v4_12_promotion_gate_pass
+  methods: [temporal_graph, ajs_prcr_full]
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  evaluation_episodes: 50
+  evaluation_split: test
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260901
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+unknown_rule: Missing, interrupted, failed, or protocol-incompatible evidence remains TBD.
+

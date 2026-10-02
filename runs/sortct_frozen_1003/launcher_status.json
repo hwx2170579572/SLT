@@ -1,0 +1,179 @@
+{
+  "status": "complete",
+  "stage": "complete",
+  "pid": 37380,
+  "started_at_utc": "2026-10-02T16:49:26.879474+00:00",
+  "workers": {
+    "a_control_smoke": {
+      "pid": 45616,
+      "status": "complete",
+      "phase": "control_smokes",
+      "method": "sac_mlp_d1_st_rt_routeact_v1",
+      "checkpoint_method": "sac_mlp_d1_st_rt_routeact_v1",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "-u",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_sortct_frozen_interventions_20261003.py",
+        "--worker-arm",
+        "a_control_smoke",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003",
+        "--episode-count",
+        "1",
+        "--seed-start",
+        "10000"
+      ],
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\a_control.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\a_control.stderr.log",
+      "exit_code": 0
+    },
+    "b_control_smoke": {
+      "pid": 71676,
+      "status": "complete",
+      "phase": "control_smokes",
+      "method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "checkpoint_method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "-u",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_sortct_frozen_interventions_20261003.py",
+        "--worker-arm",
+        "b_control_smoke",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003",
+        "--episode-count",
+        "1",
+        "--seed-start",
+        "10000"
+      ],
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\b_control.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\b_control.stderr.log",
+      "exit_code": 0
+    },
+    "a_remove_route_veto": {
+      "pid": 33616,
+      "status": "complete",
+      "phase": "interventions",
+      "method": "sac_mlp_d1_st_rt",
+      "checkpoint_method": "sac_mlp_d1_st_rt_routeact_v1",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "-u",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_sortct_frozen_interventions_20261003.py",
+        "--worker-arm",
+        "a_remove_route_veto",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003",
+        "--episode-count",
+        "40",
+        "--seed-start",
+        "10000"
+      ],
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\a_no_veto.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\a_no_veto.stderr.log",
+      "exit_code": 0
+    },
+    "b_conflict_off": {
+      "pid": 97200,
+      "status": "complete",
+      "phase": "interventions",
+      "method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "checkpoint_method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "-u",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_sortct_frozen_interventions_20261003.py",
+        "--worker-arm",
+        "b_conflict_off",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003",
+        "--episode-count",
+        "40",
+        "--seed-start",
+        "10000"
+      ],
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\b_conflict_off.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\b_conflict_off.stderr.log",
+      "exit_code": 0
+    },
+    "b_times_off": {
+      "pid": 71252,
+      "status": "complete",
+      "phase": "interventions",
+      "method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "checkpoint_method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "-u",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_sortct_frozen_interventions_20261003.py",
+        "--worker-arm",
+        "b_times_off",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003",
+        "--episode-count",
+        "40",
+        "--seed-start",
+        "10000"
+      ],
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\b_times_off.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\launcher_logs\\b_times_off.stderr.log",
+      "exit_code": 0
+    }
+  },
+  "control_gate": {
+    "status": "passed",
+    "checks": {
+      "a_control_smoke": {
+        "reference_run": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0",
+        "seed": 10000,
+        "passed": true,
+        "mismatches": [],
+        "expected_outcome": "success",
+        "actual_outcome": "success",
+        "expected_traffic_variant": "traffic_10.rou.xml",
+        "actual_traffic_variant": "traffic_10.rou.xml"
+      },
+      "b_control_smoke": {
+        "reference_run": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0",
+        "seed": 10000,
+        "passed": true,
+        "mismatches": [],
+        "expected_outcome": "collision",
+        "actual_outcome": "collision",
+        "expected_traffic_variant": "traffic_10.rou.xml",
+        "actual_traffic_variant": "traffic_10.rou.xml"
+      }
+    }
+  },
+  "control_smoke_exit_codes": {
+    "a_control_smoke": {
+      "pid": 45616,
+      "exit_code": 0,
+      "status": "complete"
+    },
+    "b_control_smoke": {
+      "pid": 71676,
+      "exit_code": 0,
+      "status": "complete"
+    }
+  },
+  "intervention_exit_codes": {
+    "b_conflict_off": {
+      "pid": 97200,
+      "exit_code": 0,
+      "status": "complete"
+    },
+    "a_remove_route_veto": {
+      "pid": 33616,
+      "exit_code": 0,
+      "status": "complete"
+    },
+    "b_times_off": {
+      "pid": 71252,
+      "exit_code": 0,
+      "status": "complete"
+    }
+  },
+  "paired_outcomes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_frozen_1003\\paired_outcomes.json",
+  "completed_at_utc": "2026-10-02T17:03:41.769558+00:00"
+}

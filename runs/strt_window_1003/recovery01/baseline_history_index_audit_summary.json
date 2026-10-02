@@ -1,0 +1,32 @@
+{
+  "scope": "supplied episode records only; selected outcome-stratified cases do not estimate the full evaluation or training distribution",
+  "episode_count": 12,
+  "decision_count": 1057,
+  "audit_unavailable_decision_count": 0,
+  "mask_rule": "trajectory[..., 0] != 0 via _nonzero_mask",
+  "exposure_definition": "among nonempty actor histories, count_minus_one_index points to a false _nonzero_mask slot",
+  "actor_groups": {
+    "ego": {
+      "actor_decision_slots": 1057,
+      "nonempty_actor_histories": 1057,
+      "selected_model_padding_count": 0,
+      "count_minus_one_matches_true_last_count": 1057,
+      "selected_model_padding_rate_among_nonempty": 0.0,
+      "count_minus_one_matches_true_last_rate_among_nonempty": 1.0,
+      "index_delta_min": 0,
+      "index_delta_max": 0,
+      "index_delta_mean": 0.0
+    },
+    "social": {
+      "actor_decision_slots": 5285,
+      "nonempty_actor_histories": 5285,
+      "selected_model_padding_count": 0,
+      "count_minus_one_matches_true_last_count": 5285,
+      "selected_model_padding_rate_among_nonempty": 0.0,
+      "count_minus_one_matches_true_last_rate_among_nonempty": 1.0,
+      "index_delta_min": 0,
+      "index_delta_max": 0,
+      "index_delta_mean": 0.0
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "sac-mlp-random-pair-launch/v1",
+  "created_at_utc": "2026-09-30T14:24:33+00:00",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930",
+  "source_hashes": {
+    "launcher": "e3697206388a813aae79d648c2a2390dda714ceb99ca936ddef930ab9df04ddf",
+    "d1_trainer": "da62554efc9412038202b8d6b38a80973860569d18084206a1468083ce997fcf",
+    "base_trainer": "4d2fb354d8dcc963a74544f0381e5d7a79f7a74c9895c5c8c782ed65e1b3f0f2",
+    "random_intersection": "ec612fbf75d9b9264d51b8f702535b2f58446a5bb1b6fadf8131136fce545f1c",
+    "paper_env": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+    "high_density_adapter": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c"
+  },
+  "method": "sac_mlp",
+  "scenario_pair": [
+    "intersection_random_darrl_low_v1",
+    "intersection_random_darrl_medium_v1"
+  ],
+  "training_seed": 0,
+  "training_seed_source": "base trainer constant; D1 CLI has no seed override",
+  "traffic_seed_split": "train for training; validation for final evaluation",
+  "raw_training_steps": 100000,
+  "learning_starts_raw_steps": 5000,
+  "checkpoint_frequency_raw_steps": 10000,
+  "evaluation_episodes": 100,
+  "device_request": "cuda (both workers share the inherited visible CUDA device set)",
+  "fresh_from_scratch": true,
+  "resume": false,
+  "smoke": false,
+  "worker_specs": [
+    {
+      "key": "darrl_low",
+      "scenario": "intersection_random_darrl_low_v1",
+      "method": "sac_mlp",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp",
+        "--scenario",
+        "intersection_random_darrl_low_v1",
+        "--depart-scale",
+        "1.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics"
+      ],
+      "command_windows": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py\" train-method --method sac_mlp --scenario intersection_random_darrl_low_v1 --depart-scale 1.0 --eval-traffic-split validation --max-steps 100000 --run-root \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\" --checkpoint-frequency 10000 --behavior-diagnostics",
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\launcher_logs\\darrl_low.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\launcher_logs\\darrl_low.stderr.log",
+      "status": "complete",
+      "pid": 14512,
+      "started_at_utc": "2026-09-30T14:24:35+00:00",
+      "exit_code": 0
+    },
+    {
+      "key": "darrl_medium",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "method": "sac_mlp",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp",
+        "--scenario",
+        "intersection_random_darrl_medium_v1",
+        "--depart-scale",
+        "1.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics"
+      ],
+      "command_windows": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py\" train-method --method sac_mlp --scenario intersection_random_darrl_medium_v1 --depart-scale 1.0 --eval-traffic-split validation --max-steps 100000 --run-root \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\" --checkpoint-frequency 10000 --behavior-diagnostics",
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\launcher_logs\\darrl_medium.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\launcher_logs\\darrl_medium.stderr.log",
+      "status": "complete",
+      "pid": 84484,
+      "started_at_utc": "2026-09-30T14:24:35+00:00",
+      "exit_code": 0
+    }
+  ],
+  "exit_codes": {
+    "darrl_low": 0,
+    "darrl_medium": 0
+  },
+  "finished_at_utc": "2026-09-30T16:09:55+00:00"
+}

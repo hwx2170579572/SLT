@@ -1,0 +1,134 @@
+schema_version: topo-scene-v4.factorized-entropy-contract/v1
+status: preregistered_before_implementation
+created_at_local: '2026-08-18T06:37:51.8189690+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  parent_contract: experiments/topo_scene_v4/experiment_contract.yaml
+  parent_contract_sha256: 8e02d4695be422325bcb11eeddfa87486f91cce088323f1d797865a6270bd498
+  parent_implementation_freeze_sha256: 68320fb4bb2b6d12bf7d6b62b5602d17cfb7dbbe9cbfd9ca08babdee9b8c894a
+  parent_decision: fail_at_D4_seed_stability_gate
+  attribution: results_topo_v4_dev/attribution/v4_1_seed_instability/attribution_summary.json
+  selected_version: v4_2_factorized_lane_entropy
+
+single_change:
+  name: factorized_hybrid_entropy
+  parent_actor_target_entropy_term: alpha_joint_times_lane_plus_speed_log_probability
+  candidate_actor_target_entropy_term: alpha_speed_times_speed_log_probability_only
+  lane_entropy_scale: 0.0
+  speed_target_entropy: -1.0
+  lane_exploration_source: uniform_feasible_action_warmup_first_5000_raw_steps
+
+fixed_runtime:
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  episode_limit_profile: source
+  reward_change_allowed: false
+  actor_encoder_detach: true
+
+frozen_from_parent:
+  reward: unchanged
+  encoder: topo_v2_soft
+  representation_losses: {graph_slt: unchanged, soft_slot_balance_coef: 0.01}
+  actor_encoder_detach: true
+  route_intent_observation: false
+  lane_action_mask: physical_feasibility_only
+  conditional_speed: true
+  exact_lane_enumeration: true
+  critic_lane_one_hot: true
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  episode_limit_profile: source
+
+development:
+  evaluation_split: validation
+  evaluation_seed_start_formula: 42000 + 1000 * training_seed
+  evaluation_episodes: 12
+  raw_steps_per_job: 20000
+  ordered_jobs:
+    - {id: F1, scenario: carla, seed: 1, role: failed_seed_rescue}
+    - {id: F2, scenario: carla, seed: 0, role: successful_seed_preservation, requires: F1_pass}
+    - {id: F3, scenario: cross, seed: 0, role: regression_guard, requires: F2_pass}
+    - {id: F4, scenario: cross, seed: 1, role: stability_guard, requires: F3_pass}
+  parent_controls:
+    - v4_1_D1_carla_seed0_final
+    - v4_1_D4_carla_seed1_final
+  carla_outcome_gate:
+    success_rate_min: 0.30
+    collision_rate_max: 0.10
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.70
+    lane_command_keep_rate_max: 0.90
+    lane_change_applied_rate_min: 0.02
+  carla_mechanism_gate:
+    route_window_samples_min: 1
+    route_window_match_rate_min: 0.80
+    route_minus_keep_probability_margin_mean_min: 0.05
+    route_minus_keep_probability_margin_minimum_strictly_positive: true
+  cross_guard:
+    success_rate_min: 0.50
+    collision_rate_max: 0.45
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.30
+  no_gate_compensation: true
+  on_fail: stop_and_create_new_versioned_attribution
+  on_pass: freeze_selected_v4_2_and_run_parent_promotion_contract
+
+promotion:
+  inherited_from_parent_contract: true
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [0, 1]
+  raw_training_steps: 50000
+  evaluation_episodes: 30
+  evaluation_split: validation
+  jobs: 12
+  evaluation_seed_start_formula: 50000 + 1000 * training_seed
+  thresholds:
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+  formal_test_remains_locked_until_hash_bound_promotion_pass: true
+
+formal_test:
+  inherited_from_parent_contract: true
+  locked: true
+  accessed: false
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  evaluation_episodes: 50
+  evaluation_split: test
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260817
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+unknown_rule: Unrun, interrupted, rejected, or protocol-incompatible cells remain TBD.

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "recorded_at_local": "2026-10-01",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "scenario_revision": "darrl_r2_20260930",
+  "status": "launch_failed_before_any_method_completed_training_or_final_evaluation",
+  "official_comparison": {
+    "evaluation_file": "evaluation_results.json",
+    "episodes_per_method": 100,
+    "traffic_split": "validation",
+    "logical_episode_seeds": {
+      "start": 10000,
+      "end_inclusive": 10099
+    },
+    "policy": "final checkpoint"
+  },
+  "method_accounting": {
+    "mst_slt": {
+      "internal_final_evaluation": {
+        "file": "final_evaluation.json",
+        "episodes": 100,
+        "traffic_split": "validation",
+        "logical_episode_seeds": {
+          "start": 10000,
+          "end_inclusive": 10099
+        },
+        "policy": "same final policy as the external official comparison"
+      },
+      "external_official_comparison": {
+        "file": "evaluation_results.json",
+        "episodes": 100,
+        "included_in_seven_method_comparison": true
+      },
+      "planned_rollouts_total": 200,
+      "note": "The 100 internal episodes are an existing MST pipeline pass; only the external 100-episode result is the official cross-method comparison set."
+    },
+    "d1_incremental_methods": {
+      "methods": [
+        "sac_mlp_d1_st",
+        "sac_mlp_d1_st_rt",
+        "sac_mlp_d1_st_rt_topo",
+        "sac_mlp_d1_st_rt_topo_routeaware_v1",
+        "sac_mlp_d1_st_rt_3slot",
+        "sac_mlp_d1_st_rt_topo_3slot"
+      ],
+      "external_official_comparison": {
+        "file": "evaluation_results.json",
+        "episodes_per_method": 100,
+        "traffic_split": "validation",
+        "logical_episode_seeds": {
+          "start": 10000,
+          "end_inclusive": 10099
+        },
+        "included_in_seven_method_comparison": true
+      },
+      "other_evaluation_pass": "none in the configured D1 path"
+    }
+  },
+  "observed_attempt": {
+    "launcher_status": "7_of_7_failed_exit_code_1",
+    "final_evaluation_artifacts_created": false,
+    "performance_results_available": false,
+    "failure": "Initial environment step raised TypeError because behavior_telemetry_protocol was supplied both explicitly and through route_lane_facts."
+  },
+  "evidence_basis": [
+    "D1 trainer external final-evaluation configuration and per-method arguments in this run root",
+    "MST training/evaluation pipeline configuration in train_intersection_yield_v2.py and train_intersection_yield_v2_d1.py",
+    "Suite manifest and launcher_status.json in this run root",
+    "Failure logs under launcher_logs/"
+  ],
+  "limitations": [
+    "This file records planned evaluation accounting, not completed episode data.",
+    "The seven-method run failed before producing final evaluation results; do not interpret planned episode counts as actual completed evaluations.",
+    "MST's internal 100-episode pass adds pipeline compute but is not a second official comparison sample."
+  ]
+}

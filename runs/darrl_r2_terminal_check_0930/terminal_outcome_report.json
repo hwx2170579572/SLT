@@ -1,0 +1,413 @@
+{
+  "status": "passed_same_tick_collision_over_arrival",
+  "purpose": "one forced SUMO collision-removal check; not training or policy evaluation",
+  "output_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\darrl_r2_terminal_check_0930",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "scenario_revision": "darrl_r2_20260930",
+  "case_kind": "forced_collision_test_only",
+  "excluded_from_training_and_policy_evaluation": true,
+  "logical_seed": 10000,
+  "reset_info": {
+    "scenario": "intersection_random_darrl_medium_v1",
+    "is_success": false,
+    "collision": false,
+    "geometric_collision": false,
+    "off_route": false,
+    "max_time": false,
+    "legacy_info": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "raw_sumo_arrived": false,
+    "raw_sumo_collision": false,
+    "raw_max_time": false,
+    "terminal_outcome_protocol": "exclusive_terminal_v2",
+    "raw_simulation_steps": 0,
+    "lifetime_raw_simulation_steps": 0,
+    "decision_steps": 0,
+    "active_vehicles": 21,
+    "active_persons": 0,
+    "ego_control_profile": "direct",
+    "state_lstm_contract": null,
+    "effective_target_speed": 0.0,
+    "curve_speed_limit": null,
+    "simulation_seed": 1000010000,
+    "released_scenario_assets": true,
+    "scenario_asset_source": "project_random_intersection_v1",
+    "source_observation_contract": "smarts",
+    "waypoint_spacing_m": 1.0,
+    "source_coordinate_offset": [
+      0.0,
+      0.0
+    ],
+    "episode_limit_profile": "source",
+    "effective_max_episode_steps": 600,
+    "traffic_partition": "validation",
+    "traffic_partition_size": 500000000,
+    "traffic_partition_is_disjoint": true,
+    "traffic_variant": "episode.rou.xml",
+    "traffic_variant_seed": 1000010000,
+    "source_traffic_cycle_episode": null,
+    "source_traffic_roll": null,
+    "source_endless_traffic": false,
+    "endless_traffic_reinsertions": 0,
+    "traffic_partition_unit": "simulation_seed",
+    "traffic_definition_file_count": 1,
+    "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+    "traffic_split": "validation",
+    "traffic_logical_episode_seed": 10000,
+    "traffic_sumo_seed": 1000010000,
+    "random_traffic": {
+      "protocol": "intersection_bernoulli_step_schedule_v1",
+      "split": "validation",
+      "logical_episode_seed": 10000,
+      "sumo_seed": 1000010000,
+      "seed_domain": [
+        1000000000,
+        1499999999
+      ],
+      "requested_vehicles_per_hour": 3240,
+      "requested_vehicles_per_hour_by_route": {
+        "neg_E3_to_neg_E0": 1080,
+        "E0_to_E3": 1080,
+        "E2_to_E1": 1080
+      },
+      "departed_background_total": 43,
+      "departed_background_by_route_total": {
+        "E0_to_E3": 19,
+        "E2_to_E1": 11,
+        "neg_E3_to_neg_E0": 13
+      },
+      "departed_background_control": 0,
+      "departed_background_by_route_control": {
+        "neg_E3_to_neg_E0": 0,
+        "E0_to_E3": 0,
+        "E2_to_E1": 0
+      },
+      "control_elapsed_seconds": 0.0,
+      "realized_departure_rate_vph_control": null,
+      "arrived_background_total": 23,
+      "pending_background_insertions": 0,
+      "peak_background_vehicles": 20,
+      "departure_delay_samples": 43,
+      "mean_departure_delay_seconds": 0.27209302325581397,
+      "max_departure_delay_seconds": 2.6,
+      "endless_reinsertions_enabled": false,
+      "episode_schedule": {
+        "sampler": "intersection_bernoulli_step_schedule_v1",
+        "actual_seed": 1000010000,
+        "scheduled_vehicle_count": 108,
+        "scheduled_count_by_route": {
+          "neg_E3_to_neg_E0": 32,
+          "E0_to_E3": 33,
+          "E2_to_E1": 43
+        },
+        "sha256": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e"
+      }
+    },
+    "high_density_environment_version": "same-scene-high-density-v1",
+    "high_density_same_map": true,
+    "high_density_vehicle_scale": 1.0,
+    "high_density_pedestrian_scale": 1.0,
+    "high_density_partition": "evaluation",
+    "high_density_original_assets_modified": false,
+    "high_density_overlay": "episode.rou__sb0d674fb06aa6a9b__hdx1_i5m6s100_v1.rou.xml",
+    "high_density_overlay_sha256": "dbb9dcb55b50854d5be63d55d90821d96efa5e25799e851defefba9db8dd77a0",
+    "high_density_additional_explicit_vehicles": 0,
+    "comparison_experiment_id": "independent-v2-five-methods-six-scenarios-100ep-v1",
+    "comparison_environment_version": "independent-v2-5m6s100e-high-density/v1",
+    "comparison_training_seeds": 1,
+    "comparison_evaluation_episodes": 100,
+    "matched_physical_partition": "evaluation",
+    "contract_partition": "evaluation",
+    "formal_test_accessed": false,
+    "warmup_traffic_checkpoints": [
+      {
+        "target_seconds": 30.0,
+        "simulation_time_seconds": 30.0,
+        "in_network_vehicles": 14,
+        "in_network_background_vehicles": 14,
+        "in_network_background_by_route": {
+          "neg_E3_to_neg_E0": 4,
+          "E0_to_E3": 5,
+          "E2_to_E1": 5
+        },
+        "ego_present": false,
+        "queue_definition": "halting vehicles with speed below 0.1 m/s; pending insertion is counted separately",
+        "halting_speed_threshold_mps": 0.1,
+        "halting_background_vehicles": 0,
+        "inlet_lanes": {
+          "-E3_1": {
+            "vehicles_on_lane": 2,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 8,
+            "actually_inserted_cumulative": 8,
+            "pending_insertion": 0
+          },
+          "E0_1": {
+            "vehicles_on_lane": 2,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 8,
+            "actually_inserted_cumulative": 8,
+            "pending_insertion": 0
+          },
+          "E2_1": {
+            "vehicles_on_lane": 3,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 9,
+            "actually_inserted_cumulative": 8,
+            "pending_insertion": 1
+          }
+        },
+        "request_count_source": "seeded_schedule_depart_time_less_than_snapshot_time",
+        "requested_background_due": 25,
+        "requested_background_due_by_route": {
+          "neg_E3_to_neg_E0": 8,
+          "E0_to_E3": 8,
+          "E2_to_E1": 9
+        },
+        "actually_inserted_background_cumulative": 24,
+        "actually_inserted_background_by_route": {
+          "neg_E3_to_neg_E0": 8,
+          "E0_to_E3": 8,
+          "E2_to_E1": 8
+        },
+        "actual_insertion_rate_vph_since_begin": 2880.0,
+        "pending_background_insertions": 1,
+        "pending_background_by_route": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "request_balance_due_minus_inserted_minus_pending": 0,
+        "arrived_background_cumulative": 10,
+        "mean_departure_delay_seconds": 0.12083333333333335,
+        "max_departure_delay_seconds": 2.2
+      },
+      {
+        "target_seconds": 40.0,
+        "simulation_time_seconds": 40.0,
+        "in_network_vehicles": 17,
+        "in_network_background_vehicles": 17,
+        "in_network_background_by_route": {
+          "neg_E3_to_neg_E0": 4,
+          "E0_to_E3": 9,
+          "E2_to_E1": 4
+        },
+        "ego_present": false,
+        "queue_definition": "halting vehicles with speed below 0.1 m/s; pending insertion is counted separately",
+        "halting_speed_threshold_mps": 0.1,
+        "halting_background_vehicles": 0,
+        "inlet_lanes": {
+          "-E3_1": {
+            "vehicles_on_lane": 2,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 10,
+            "actually_inserted_cumulative": 10,
+            "pending_insertion": 0
+          },
+          "E0_1": {
+            "vehicles_on_lane": 5,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 16,
+            "actually_inserted_cumulative": 14,
+            "pending_insertion": 2
+          },
+          "E2_1": {
+            "vehicles_on_lane": 0,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 9,
+            "actually_inserted_cumulative": 9,
+            "pending_insertion": 0
+          }
+        },
+        "request_count_source": "seeded_schedule_depart_time_less_than_snapshot_time",
+        "requested_background_due": 35,
+        "requested_background_due_by_route": {
+          "neg_E3_to_neg_E0": 10,
+          "E0_to_E3": 16,
+          "E2_to_E1": 9
+        },
+        "actually_inserted_background_cumulative": 33,
+        "actually_inserted_background_by_route": {
+          "neg_E3_to_neg_E0": 10,
+          "E0_to_E3": 14,
+          "E2_to_E1": 9
+        },
+        "actual_insertion_rate_vph_since_begin": 2970.0,
+        "pending_background_insertions": 2,
+        "pending_background_by_route": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 2,
+          "E2_to_E1": 0
+        },
+        "request_balance_due_minus_inserted_minus_pending": 0,
+        "arrived_background_cumulative": 16,
+        "mean_departure_delay_seconds": 0.1272727272727273,
+        "max_departure_delay_seconds": 2.2
+      },
+      {
+        "target_seconds": 50.0,
+        "simulation_time_seconds": 50.0,
+        "in_network_vehicles": 20,
+        "in_network_background_vehicles": 20,
+        "in_network_background_by_route": {
+          "neg_E3_to_neg_E0": 7,
+          "E0_to_E3": 9,
+          "E2_to_E1": 4
+        },
+        "ego_present": false,
+        "queue_definition": "halting vehicles with speed below 0.1 m/s; pending insertion is counted separately",
+        "halting_speed_threshold_mps": 0.1,
+        "halting_background_vehicles": 0,
+        "inlet_lanes": {
+          "-E3_1": {
+            "vehicles_on_lane": 3,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 13,
+            "actually_inserted_cumulative": 13,
+            "pending_insertion": 0
+          },
+          "E0_1": {
+            "vehicles_on_lane": 5,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 19,
+            "actually_inserted_cumulative": 19,
+            "pending_insertion": 0
+          },
+          "E2_1": {
+            "vehicles_on_lane": 0,
+            "halting_vehicles_on_lane": 0,
+            "requested_due": 11,
+            "actually_inserted_cumulative": 11,
+            "pending_insertion": 0
+          }
+        },
+        "request_count_source": "seeded_schedule_depart_time_less_than_snapshot_time",
+        "requested_background_due": 43,
+        "requested_background_due_by_route": {
+          "neg_E3_to_neg_E0": 13,
+          "E0_to_E3": 19,
+          "E2_to_E1": 11
+        },
+        "actually_inserted_background_cumulative": 43,
+        "actually_inserted_background_by_route": {
+          "neg_E3_to_neg_E0": 13,
+          "E0_to_E3": 19,
+          "E2_to_E1": 11
+        },
+        "actual_insertion_rate_vph_since_begin": 3096.0,
+        "pending_background_insertions": 0,
+        "pending_background_by_route": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 0
+        },
+        "request_balance_due_minus_inserted_minus_pending": 0,
+        "arrived_background_cumulative": 23,
+        "mean_departure_delay_seconds": 0.27209302325581397,
+        "max_departure_delay_seconds": 2.6
+      }
+    ]
+  },
+  "sumo_command_collision_action": "remove",
+  "step_length_seconds": 0.1,
+  "simulation_time_before_intervention_seconds": 50.2,
+  "ego_route": [
+    "-E1",
+    "-E0"
+  ],
+  "selected_background_before_intervention": {
+    "id": "background_neg_E3_to_neg_E0.8",
+    "road_id": "-E0",
+    "lane_id": "-E0_1",
+    "lane_position_m": 29.640351236210925,
+    "speed_mps": 5.513268498770982,
+    "route": [
+      "-E3",
+      "-E0"
+    ],
+    "route_index": 1,
+    "length_m": 5.0
+  },
+  "target_lane_id": "-E0_1",
+  "target_lane_length_m": 70.0,
+  "target_lane_position_m": 29.640351236210925,
+  "ego_after_intervention_before_tick": {
+    "id": "ego",
+    "road_id": "-E0",
+    "lane_id": "-E0_1",
+    "lane_position_m": 29.640351236210925,
+    "speed_mps": 0.0,
+    "route": [
+      "-E1",
+      "-E0"
+    ],
+    "route_index": 1,
+    "length_m": 3.68
+  },
+  "background_after_intervention_before_tick": {
+    "id": "background_neg_E3_to_neg_E0.8",
+    "road_id": "-E0",
+    "lane_id": "-E0_1",
+    "lane_position_m": 29.640351236210925,
+    "speed_mps": 5.513268498770982,
+    "route": [
+      "-E3",
+      "-E0"
+    ],
+    "route_index": 1,
+    "length_m": 5.0
+  },
+  "raw_events_before_intervention": {
+    "arrived_ids": [],
+    "colliding_vehicle_ids": [],
+    "collision_records": []
+  },
+  "raw_events_after_env_step": {
+    "arrived_ids": [
+      "background_neg_E3_to_neg_E0.8",
+      "ego"
+    ],
+    "colliding_vehicle_ids": [
+      "background_neg_E3_to_neg_E0.8",
+      "ego"
+    ],
+    "collision_records": [
+      {
+        "collider": "ego",
+        "victim": "background_neg_E3_to_neg_E0.8",
+        "lane": "-E0_1",
+        "position": 29.640351236210925,
+        "kind": "collision"
+      }
+    ]
+  },
+  "resolved_info": {
+    "raw_sumo_collision": true,
+    "raw_sumo_arrived": true,
+    "geometric_collision": false,
+    "collision": true,
+    "is_success": false,
+    "off_route": false,
+    "max_time": false,
+    "raw_max_time": false,
+    "terminal_outcome_protocol": "exclusive_terminal_v2",
+    "raw_steps_executed": 1,
+    "undiscounted_reward": -1.0,
+    "reward_collision": -10.0,
+    "reward_success": 0.0,
+    "reward_off_route": 0.0,
+    "reward_timeout": 0.0,
+    "reward_step_cost": -0.01,
+    "reward_progress": 0.0
+  },
+  "returned_reward": -10.01,
+  "terminated": true,
+  "truncated": false,
+  "native_ego_collision_event": true,
+  "collision_terminal_pass": true,
+  "same_tick_arrival_collision_priority_verified": true
+}

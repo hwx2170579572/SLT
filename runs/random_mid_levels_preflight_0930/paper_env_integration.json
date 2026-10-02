@@ -1,0 +1,291 @@
+{
+  "status": "passed",
+  "kind": "environment integration smoke; no model training or learned-policy performance evaluation",
+  "cases": [
+    {
+      "scenario": "intersection_random_low_v1",
+      "reset_signature": "f4a2c5e8387eb487e0b74d7ae08a6bb2f0037db6e5abf752af2bec8fa12ab0ce",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 590,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 200,
+          "E0_to_E3": 150,
+          "E2_to_E1": 240
+        },
+        "departed_background_total": 9,
+        "departed_background_by_route_total": {
+          "E2_to_E1": 7,
+          "neg_E3_to_neg_E0": 2
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 7,
+        "pending_background_insertions": 0,
+        "peak_background_vehicles": 5,
+        "departure_delay_samples": 9,
+        "mean_departure_delay_seconds": 0.0,
+        "max_departure_delay_seconds": 0.0,
+        "endless_reinsertions_enabled": false
+      }
+    },
+    {
+      "scenario": "intersection_random_medium_v1",
+      "reset_signature": "922d86ef7f95836c978425deae034b873c3455295eed105e58674bb1c06371ca",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 1180,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 400,
+          "E0_to_E3": 300,
+          "E2_to_E1": 480
+        },
+        "departed_background_total": 28,
+        "departed_background_by_route_total": {
+          "neg_E3_to_neg_E0": 9,
+          "E2_to_E1": 13,
+          "E0_to_E3": 6
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 23,
+        "pending_background_insertions": 0,
+        "peak_background_vehicles": 15,
+        "departure_delay_samples": 28,
+        "mean_departure_delay_seconds": 0.09642857142857143,
+        "max_departure_delay_seconds": 1.4,
+        "endless_reinsertions_enabled": false
+      }
+    },
+    {
+      "scenario": "intersection_random_high_v1",
+      "reset_signature": "f0945691c8747174303f6e8da2ca79f998bec70b4c63ed515cbd84372fa0b990",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 1770,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 600,
+          "E0_to_E3": 450,
+          "E2_to_E1": 720
+        },
+        "departed_background_total": 35,
+        "departed_background_by_route_total": {
+          "E2_to_E1": 18,
+          "neg_E3_to_neg_E0": 10,
+          "E0_to_E3": 7
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 0,
+          "E2_to_E1": 1
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 26,
+        "pending_background_insertions": 0,
+        "peak_background_vehicles": 17,
+        "departure_delay_samples": 35,
+        "mean_departure_delay_seconds": 1.3657142857142857,
+        "max_departure_delay_seconds": 9.6,
+        "endless_reinsertions_enabled": false
+      }
+    },
+    {
+      "scenario": "intersection_random_medium_p05_v1",
+      "reset_signature": "00b88f8a29f72d7b8b867c76c08fe194f843bd6be6dc189fbcc40774db8f609d",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_step_schedule_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 54000,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 18000,
+          "E0_to_E3": 18000,
+          "E2_to_E1": 18000
+        },
+        "departed_background_total": 83,
+        "departed_background_by_route_total": {
+          "neg_E3_to_neg_E0": 26,
+          "E0_to_E3": 28,
+          "E2_to_E1": 29
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 1,
+          "E0_to_E3": 0,
+          "E2_to_E1": 0
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 58,
+        "pending_background_insertions": 686,
+        "peak_background_vehicles": 32,
+        "departure_delay_samples": 83,
+        "mean_departure_delay_seconds": 20.96867469879518,
+        "max_departure_delay_seconds": 45.8,
+        "endless_reinsertions_enabled": false,
+        "episode_schedule": {
+          "sampler": "intersection_bernoulli_step_schedule_v1",
+          "actual_seed": 1000010000,
+          "scheduled_vehicle_count": 1947,
+          "scheduled_count_by_route": {
+            "neg_E3_to_neg_E0": 618,
+            "E0_to_E3": 668,
+            "E2_to_E1": 661
+          },
+          "sha256": "8580b5475833db41aa7eae4fa8f2795eabb88857f307b2a010f140a32df2cad9"
+        }
+      }
+    },
+    {
+      "scenario": "intersection_random_medium_p03_v1",
+      "reset_signature": "5db2eaf734d4d0ecd908a604222a058d88f146a3dbc1bfe9a6acd5ce28d33691",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_step_schedule_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 32400,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 10800,
+          "E0_to_E3": 10800,
+          "E2_to_E1": 10800
+        },
+        "departed_background_total": 82,
+        "departed_background_by_route_total": {
+          "neg_E3_to_neg_E0": 27,
+          "E0_to_E3": 28,
+          "E2_to_E1": 27
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 1,
+          "E0_to_E3": 0,
+          "E2_to_E1": 0
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 52,
+        "pending_background_insertions": 375,
+        "peak_background_vehicles": 32,
+        "departure_delay_samples": 82,
+        "mean_departure_delay_seconds": 19.586585365853658,
+        "max_departure_delay_seconds": 41.9,
+        "endless_reinsertions_enabled": false,
+        "episode_schedule": {
+          "sampler": "intersection_bernoulli_step_schedule_v1",
+          "actual_seed": 1000010000,
+          "scheduled_vehicle_count": 1134,
+          "scheduled_count_by_route": {
+            "neg_E3_to_neg_E0": 369,
+            "E0_to_E3": 376,
+            "E2_to_E1": 389
+          },
+          "sha256": "b67a674295fef2c5d06a550254f7894f39aed30cacaf7a0b8f63b9449cb5a35f"
+        }
+      }
+    },
+    {
+      "scenario": "intersection_random_medium_p02_v1",
+      "reset_signature": "1c8d035f8b66d9ca832702be96b7f75d46d30de7cd338099b2974b8dcaa4fa63",
+      "terminal_smoke_info": {
+        "protocol": "intersection_bernoulli_step_schedule_v1",
+        "split": "validation",
+        "logical_episode_seed": 10000,
+        "sumo_seed": 1000010000,
+        "seed_domain": [
+          1000000000,
+          1499999999
+        ],
+        "requested_vehicles_per_hour": 21600,
+        "requested_vehicles_per_hour_by_route": {
+          "neg_E3_to_neg_E0": 7200,
+          "E0_to_E3": 7200,
+          "E2_to_E1": 7200
+        },
+        "departed_background_total": 84,
+        "departed_background_by_route_total": {
+          "neg_E3_to_neg_E0": 27,
+          "E0_to_E3": 29,
+          "E2_to_E1": 28
+        },
+        "departed_background_control": 1,
+        "departed_background_by_route_control": {
+          "neg_E3_to_neg_E0": 0,
+          "E0_to_E3": 1,
+          "E2_to_E1": 0
+        },
+        "control_elapsed_seconds": 1.5,
+        "realized_departure_rate_vph_control": 2400.0,
+        "arrived_background_total": 56,
+        "pending_background_insertions": 221,
+        "peak_background_vehicles": 33,
+        "departure_delay_samples": 84,
+        "mean_departure_delay_seconds": 17.501190476190484,
+        "max_departure_delay_seconds": 40.2,
+        "endless_reinsertions_enabled": false,
+        "episode_schedule": {
+          "sampler": "intersection_bernoulli_step_schedule_v1",
+          "actual_seed": 1000010000,
+          "scheduled_vehicle_count": 754,
+          "scheduled_count_by_route": {
+            "neg_E3_to_neg_E0": 249,
+            "E0_to_E3": 251,
+            "E2_to_E1": 254
+          },
+          "sha256": "cf9146e24cc54053fe11070069e799217897a5b6a6daee27dde96ca896a0339d"
+        }
+      }
+    }
+  ],
+  "additional_split_seeds": {
+    "train": 10000,
+    "test": 1500010000
+  },
+  "same_seed_reproducible": true,
+  "different_seed_changes_traffic": true,
+  "legacy_scenario_seed_unchanged": true
+}

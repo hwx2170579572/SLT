@@ -1,0 +1,67 @@
+schema_version: topo-scene-v4.7.1.metadata-binding-engineering-patch/v1
+status: preregistered_before_patch_implementation_and_retry
+no_fabrication: true
+formal_test_locked: true
+formal_test_accessed: false
+
+scientific_protocol:
+  unchanged: true
+  contract: experiments/topo_scene_v4/experiment_contract_v4_7.yaml
+  contract_sha256: e97ef91a85ddeb60bee50fb6fdccdff4afb4e49f5a9d6e52ffee24431890ea7a
+  implementation_freeze: results_topo_v4_7_dev/engineering/implementation_freeze.json
+  implementation_freeze_sha256: eb4526f1c9b197c2dc8259af8f3b7e2eea9c6b0b22de05054f54957fbf0082b0
+  method_changed: false
+  return_estimator_changed: false
+  reward_changed: false
+  network_changed: false
+  optimizer_changed: false
+  selector_changed: false
+  decoder_changed: false
+  seeds_or_traffic_changed: false
+  gates_changed: false
+
+rejected_attempt:
+  run: results_topo_v4_7_dev/development/runs/G1__cand__cross__s6__pe97ef91a
+  status: engineering_rejected_not_gate_eligible
+  child_returncode: 0
+  acceptance_reason: detailed selected decoder mismatch
+  validation_outcome_inspected_for_patch_design: false
+  validation_outcome_gate_eligible: false
+  checkpoint_eligible_for_retry: false
+  detailed_sha256: 6ef859c5737aa91d47523759095f5bb0bc37838f6983efc3a3555cbc2ad3364c
+  selector_receipt_sha256: ffdfa9540f5a35d20f9e5f43819e5336b2a52a903a40b53db5ea7fe2e50379c8
+
+single_engineering_change:
+  name: bind_sealed_selected_deployment_fields_into_detailed_evaluation
+  source_of_truth: selector_receipt_sealed_before_validation
+  fields:
+    - selected_deployment_decoder
+    - selected_source_checkpoint_sha256
+    - selected_model_policy_class
+    - selected_model_parameter_state_sha256
+  value_recomputation_forbidden: true
+  selection_rerun_forbidden: true
+  evaluation_logic_changed: false
+
+retry:
+  from_scratch: true
+  allowed_attempts: 1
+  reuse_parent_checkpoint: false
+  reuse_parent_replay: false
+  reuse_parent_calibration: false
+  reuse_parent_validation: false
+  output_root: results_topo_v4_7_1_dev
+  scientific_contract_sha256_must_equal: e97ef91a85ddeb60bee50fb6fdccdff4afb4e49f5a9d6e52ffee24431890ea7a
+  ordered_cells_unchanged: [G1, G2, G3, G4, G5]
+  first_eligible_cell: G1
+
+engineering_gates:
+  targeted_tests_min: 5
+  full_regression_min: 320
+  real_sumo_smoke_required: true
+  detailed_fields_match_selector_receipt: true
+  selector_receipt_predates_validation: true
+  parent_v4_7_freeze_revalidated: true
+  formal_test_accessed: false
+
+on_second_matching_failure: stop_for_versioned_engineering_attribution

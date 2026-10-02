@@ -1,0 +1,82 @@
+{
+  "identity": {
+    "method": "sac_mlp_d1_st_rt_3slot_nonlinear_v1",
+    "source_script": "train_intersection_yield_v2_d1",
+    "source_method": "sac_mlp_d1_st_rt_3slot_nonlinear_v1",
+    "family": "d1",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "eval_traffic_split": "validation",
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3sm_1002\\sac_mlp_d1_st_rt_3slot_nonlinear_v1__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "ad3be502c23408b3816c03cbf5c247d80c24a270870edcd2f35a01ce2c329315",
+    "episodes": 1,
+    "workers": 1,
+    "smoke": true,
+    "behavior_diagnostics": true,
+    "policy_shadow_probes": true,
+    "policy_shadow_eval_max_per_episode": 3
+  },
+  "summary": {
+    "episodes": 1,
+    "success_rate": 0.0,
+    "collision_rate": 1.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -8.79054221332073,
+    "std_return": 0.0,
+    "raw_mean_return": -1.0,
+    "raw_std_return": 0.0,
+    "raw_return_coverage": 1,
+    "reward_component_means": {
+      "reward_success": 0.0,
+      "reward_collision": -10.0,
+      "reward_off_route": 0.0,
+      "reward_timeout": 0.0,
+      "reward_step_cost": -0.5400000000000003,
+      "reward_progress": 1.7494577866792678
+    },
+    "reward_component_coverage": 1,
+    "reward_component_reconciliation_max_abs_error": 3.552713678800501e-15,
+    "evaluation_return_protocol_version": "environment_step_reward_v2",
+    "raw_return_protocol_version": "info_undiscounted_reward_or_step_reward_fallback_v1",
+    "reward_component_protocol_version": "yield_v2_cumulative_reward_branches_v1"
+  },
+  "episode_records": [
+    {
+      "episode": 0,
+      "seed": 10000,
+      "episode_return": -8.79054221332073,
+      "decision_steps": 54,
+      "environment_steps": 54,
+      "raw_steps": 160,
+      "completion_time_seconds": null,
+      "success": false,
+      "collision": true,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_10.rou.xml",
+      "raw_episode_return": -1.0,
+      "raw_return_source": "info.undiscounted_reward",
+      "reward_success": 0.0,
+      "reward_collision": -10.0,
+      "reward_off_route": 0.0,
+      "reward_timeout": 0.0,
+      "reward_step_cost": -0.5400000000000003,
+      "reward_progress": 1.7494577866792678,
+      "evaluation_return_protocol_version": "environment_step_reward_v2",
+      "raw_return_protocol_version": "info_undiscounted_reward_or_step_reward_fallback_v1",
+      "reward_component_protocol_version": "yield_v2_cumulative_reward_branches_v1",
+      "reward_component_reconciliation_error": 3.552713678800501e-15,
+      "policy_shadow_probe_coverage": {
+        "unique_samples": 2,
+        "rows_written": 24,
+        "error_rows": 0,
+        "selector_status": {
+          "first_valid_multi_car": "selected",
+          "first_valid_route_context": "selected",
+          "last_preterminal_prediction": "selected"
+        }
+      }
+    }
+  ]
+}

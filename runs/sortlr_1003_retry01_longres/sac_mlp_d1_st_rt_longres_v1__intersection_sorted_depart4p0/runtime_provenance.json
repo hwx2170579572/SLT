@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "recorded_at_epoch_seconds": 1790971039.1594322,
+      "phase": "train",
+      "method": "sac_mlp_d1_st_rt_longres_v1",
+      "pid": 56004,
+      "python_executable": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+      "argv": [
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp_d1_st_rt_longres_v1",
+        "--scenario",
+        "intersection_sorted",
+        "--depart-scale",
+        "4.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics",
+        "--policy-shadow-probes",
+        "--policy-shadow-train-raw-interval",
+        "5000",
+        "--policy-shadow-eval-max-per-episode",
+        "4",
+        "--policy-shadow-critical-eval-sample"
+      ],
+      "cwd": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo",
+      "project_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo",
+      "model_path": null,
+      "source_files": {
+        "d1_entrypoint": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+          "sha256": "b133deb4fa7c52b4ff7b3967e4e2e24e1ab8aa549be01e81ef5249b4b4770bfd"
+        },
+        "base_runner": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py",
+          "sha256": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e"
+        },
+        "incremental_topo_encoder": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\incremental_topo_encoder.py",
+          "sha256": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9"
+        },
+        "longitudinal_residual_policy": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\longitudinal_residual_policy.py",
+          "sha256": "b8c97ffd380261b1037df332ed0507821ccf9e42d324084d692e455e95b28d43"
+        },
+        "route_conflict_observation_wrapper": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\conflict_timing_observation.py",
+          "sha256": "8352b3cf7c6ca9a6802f71e34e0ffe8a9e9401ba7ab1deebf658a604da54e9c4"
+        },
+        "route_conflict_timing_kernel": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\route_conflict_timing.py",
+          "sha256": "e87d431a67ca23e651a89d6576aedaf8f3089f658a48a04a4cd06173f30c1913"
+        },
+        "behavior_diagnostics": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\behavior_diagnostics.py",
+          "sha256": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b"
+        }
+      }
+    }
+  ]
+}

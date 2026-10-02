@@ -1,0 +1,85 @@
+{
+  "algorithm": "scene_rep",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "raw_steps": 100000,
+  "learner_updates": 95001,
+  "statistics": {
+    "train/ent_coef": {
+      "count": 63452,
+      "mean": 0.026974037624096083,
+      "minimum": 0.005840221652761102,
+      "maximum": 0.19998999685049057,
+      "last": 0.008416873402893543
+    },
+    "train/actor_loss": {
+      "count": 63452,
+      "mean": 5.7228961528993185,
+      "minimum": -0.667505145072937,
+      "maximum": 9.184120178222656,
+      "last": 5.692165374755859
+    },
+    "train/critic_loss": {
+      "count": 63452,
+      "mean": 2.6000187317755623,
+      "minimum": 0.031298257410526276,
+      "maximum": 28.284671783447266,
+      "last": 4.306194305419922
+    },
+    "train/ent_coef_loss": {
+      "count": 63452,
+      "mean": 0.06460134459834074,
+      "minimum": -0.016294702887535095,
+      "maximum": 0.6955757141113281,
+      "last": -0.002939172089099884
+    },
+    "train/representation_loss": {
+      "count": 63452,
+      "mean": -0.988773075194274,
+      "minimum": -0.9960665106773376,
+      "maximum": -0.04841151647269726,
+      "last": -0.9924287796020508
+    },
+    "diagnostic/q1_mean_sampled": {
+      "count": 96,
+      "mean": -5.627628883424525,
+      "minimum": -8.891878128051758,
+      "maximum": -0.04733116179704666,
+      "last": -5.01739501953125
+    },
+    "diagnostic/q2_mean_sampled": {
+      "count": 96,
+      "mean": -5.635166657312463,
+      "minimum": -8.903120040893555,
+      "maximum": -0.039804860949516296,
+      "last": -5.0048089027404785
+    },
+    "diagnostic/target_q_mean_sampled": {
+      "count": 96,
+      "mean": -5.629581048774223,
+      "minimum": -9.062589645385742,
+      "maximum": -0.06959673762321472,
+      "last": -4.969281196594238
+    },
+    "diagnostic/q1_abs_td_mean_sampled": {
+      "count": 96,
+      "mean": 0.7366991695016623,
+      "minimum": 0.2765190005302429,
+      "maximum": 2.15356183052063,
+      "last": 0.7461600303649902
+    },
+    "diagnostic/q2_abs_td_mean_sampled": {
+      "count": 96,
+      "mean": 0.7325906368593375,
+      "minimum": 0.2788925766944885,
+      "maximum": 2.089016914367676,
+      "last": 0.6960320472717285
+    },
+    "performance/train_ms_per_gradient_step": {
+      "count": 63452,
+      "mean": 79.1567908608251,
+      "minimum": 54.53690001741052,
+      "maximum": 335.0491999881342,
+      "last": 82.40910002496094
+    }
+  }
+}

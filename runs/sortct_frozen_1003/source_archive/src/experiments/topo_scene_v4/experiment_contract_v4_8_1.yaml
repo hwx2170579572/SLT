@@ -1,0 +1,61 @@
+schema_version: topo-scene-v4.8.1.runtime-diagnostic-acceptance-engineering-patch/v1
+status: preregistered_before_patch_implementation
+created_at_local: '2026-08-20T11:11:00+08:00'
+no_fabrication: true
+formal_test_locked: true
+formal_test_accessed: false
+
+parent_scientific_protocol:
+  version: v4.8_tie_only_replicated_train_calibration
+  contract: experiments/topo_scene_v4/experiment_contract_v4_8.yaml
+  contract_sha256: 42f54135e4d105563b0ad2113147bfef7811c80664793419538a18e9d8c08e51
+  implementation_freeze: results_topo_v4_8_dev/engineering/implementation_freeze.json
+  implementation_freeze_sha256: 5827ca63caf5cfd187ac5ad0bdc2fd0fbb0fb00c324459007cf24620f0b57aa6
+  scientific_content_sha256: 0ef153763770384c9bacae780db0b6ebf19de25320a61aa976b11c3d5300aee6
+  unchanged: true
+
+trigger:
+  job: H1__cand__cross__s8__p42f54135
+  subprocess_returncode: 0
+  frozen_runner_acceptance_reason: v4.8 changed return estimator
+  last_execution_sha256: a13c995eb6187c1a6f4de71e3f0d0e4c4cae514a126df95cc125b4ec120d581c
+  return_estimator_diagnostics_sha256: 2b656b852228d00970d2bd6fe4063614094dccf514d17c58afb1ab4d0b9ee08c
+  training_diagnostics_sha256: 9a61b247331042552f112610f83225a77831ab2b68f22bfa77e203b5f8bcadb4
+  paper_evaluation_detailed_sha256: 1b22046c621a87851f4af0d8dc8e527af19183e3539f7a7c0890cfb71bc1ef71
+  selector_receipt_sha256: 40afb02053af79f89819c863145918bae67d0083660c5a71e7c00cf9ff5e5091
+  formal_test_accessed: false
+
+observed_interface:
+  runtime_diagnostic_has_return_estimator_changed: true
+  runtime_diagnostic_return_estimator_changed: true
+  runtime_diagnostic_has_return_estimator_changed_from_v4_7: false
+  run_fidelity_return_estimator_changed_from_v4_7: false
+  run_fidelity_training_changed_from_v4_7: false
+  candidate_n_step: 16
+  candidate_bootstrap_discount: gamma_power_actual_horizon
+  candidate_horizon_correct_bootstrap: true
+
+single_engineering_change:
+  name: accept_runtime_diagnostic_against_its_emitted_legacy_reference_field
+  acceptance_only: true
+  training_changed: false
+  return_estimator_changed: false
+  selector_changed: false
+  decoder_changed: false
+  result_artifacts_changed: false
+  scientific_gates_changed: false
+  seeds_or_traffic_changed: false
+  result_root_changed: false
+  h1_rerun_forbidden: true
+  h1_artifact_rewrite_forbidden: true
+
+continuation:
+  adopt_h1_in_place_only_if_all_artifact_hashes_match: true
+  scientific_implementation_hash_remains_parent_v4_8: true
+  engineering_patch_freeze_checked_separately: true
+  next_job_after_adoption: H2
+  development_order_unchanged: [H1, H2, H3, H4]
+  promotion_unchanged: true
+  formal_protocol_unchanged: true
+  formal_test_locked: true
+

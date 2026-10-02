@@ -1,0 +1,98 @@
+{
+  "protocol": "routeaware_overlay_shortpath_multi_reset_v1",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0",
+  "train_overlay_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr",
+  "eval_overlay_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_eval",
+  "reference_overlay_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_ref\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr",
+  "real_sumo_resets": 5,
+  "real_sumo_steps": 5,
+  "same_seed_storage_invariant": {
+    "seed": 0,
+    "matched_fields": [
+      "source_sha256",
+      "overlay_sha256",
+      "base_explicit_vehicles",
+      "additional_explicit_vehicles"
+    ],
+    "passed": true
+  },
+  "records": [
+    {
+      "phase": "train",
+      "seed": 0,
+      "overlay_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr\\intersection_random_darrl_medium_v1\\episode.rou__s0998e75c00647b7e__hdx1_i5m6s100_v1.rou.xml",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr\\intersection_random_darrl_medium_v1\\episode.rou__s0998e75c00647b7e__hdx1_i5m6s100_v1.rou.xml.manifest.json",
+      "manifest_path_chars": 226,
+      "source_sha256": "0998e75c00647b7e9bd9597741bd3299697e502d6f916e2d49cfcd3b4c626920",
+      "overlay_sha256": "dbb9dcb55b50854d5be63d55d90821d96efa5e25799e851defefba9db8dd77a0",
+      "base_explicit_vehicles": 112,
+      "additional_explicit_vehicles": 0,
+      "reward": 0.015000000000000001,
+      "terminated": false,
+      "truncated": false,
+      "route_lane_status_known": null
+    },
+    {
+      "phase": "train",
+      "seed": 1,
+      "overlay_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr\\intersection_random_darrl_medium_v1\\episode.rou__sfe8e1823e426fa9d__hdx1_i5m6s100_v1.rou.xml",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr\\intersection_random_darrl_medium_v1\\episode.rou__sfe8e1823e426fa9d__hdx1_i5m6s100_v1.rou.xml.manifest.json",
+      "manifest_path_chars": 226,
+      "source_sha256": "fe8e1823e426fa9d5d497c01a15d63cdb3de6546b85b421adca7968b7a2b3d53",
+      "overlay_sha256": "dbb9dcb55b50854d5be63d55d90821d96efa5e25799e851defefba9db8dd77a0",
+      "base_explicit_vehicles": 105,
+      "additional_explicit_vehicles": 0,
+      "reward": 0.015000000000000001,
+      "terminated": false,
+      "truncated": false,
+      "route_lane_status_known": null
+    },
+    {
+      "phase": "eval",
+      "seed": 0,
+      "overlay_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_eval\\intersection_random_darrl_medium_v1\\episode.rou__s32d55ee4e0432579__hdx1_i5m6s100_v1.rou.xml",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_eval\\intersection_random_darrl_medium_v1\\episode.rou__s32d55ee4e0432579__hdx1_i5m6s100_v1.rou.xml.manifest.json",
+      "manifest_path_chars": 228,
+      "source_sha256": "32d55ee4e0432579c97927010d5b9d6d74365d8f3d87bb75cdb328be5f43dfe4",
+      "overlay_sha256": "dbb9dcb55b50854d5be63d55d90821d96efa5e25799e851defefba9db8dd77a0",
+      "base_explicit_vehicles": 110,
+      "additional_explicit_vehicles": 0,
+      "reward": 0.015000000000000001,
+      "terminated": false,
+      "truncated": false,
+      "route_lane_status_known": null
+    },
+    {
+      "phase": "eval",
+      "seed": 1,
+      "overlay_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_eval\\intersection_random_darrl_medium_v1\\episode.rou__s42c19a9a89abcb20__hdx1_i5m6s100_v1.rou.xml",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_hd\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_eval\\intersection_random_darrl_medium_v1\\episode.rou__s42c19a9a89abcb20__hdx1_i5m6s100_v1.rou.xml.manifest.json",
+      "manifest_path_chars": 228,
+      "source_sha256": "42c19a9a89abcb20dd205e53755567e18bc889b11c53cf5047eac470a58d7b7d",
+      "overlay_sha256": "dbb9dcb55b50854d5be63d55d90821d96efa5e25799e851defefba9db8dd77a0",
+      "base_explicit_vehicles": 118,
+      "additional_explicit_vehicles": 0,
+      "reward": 0.015000000000000001,
+      "terminated": false,
+      "truncated": false,
+      "route_lane_status_known": null
+    },
+    {
+      "phase": "same_seed_reference",
+      "seed": 0,
+      "overlay_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_ref\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr\\intersection_random_darrl_medium_v1\\episode.rou__s0998e75c00647b7e__hdx1_i5m6s100_v1.rou.xml",
+      "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_pathchk\\_ref\\sac_mlp_d1_st_rt_topo_routeaware_v1\\ns_tr\\intersection_random_darrl_medium_v1\\episode.rou__s0998e75c00647b7e__hdx1_i5m6s100_v1.rou.xml.manifest.json",
+      "manifest_path_chars": 227,
+      "source_sha256": "0998e75c00647b7e9bd9597741bd3299697e502d6f916e2d49cfcd3b4c626920",
+      "overlay_sha256": "dbb9dcb55b50854d5be63d55d90821d96efa5e25799e851defefba9db8dd77a0",
+      "base_explicit_vehicles": 112,
+      "additional_explicit_vehicles": 0,
+      "reward": 0.015000000000000001,
+      "terminated": false,
+      "truncated": false,
+      "route_lane_status_known": null
+    }
+  ]
+}

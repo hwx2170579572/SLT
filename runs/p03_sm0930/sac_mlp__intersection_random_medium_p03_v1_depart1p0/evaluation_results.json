@@ -1,0 +1,50 @@
+{
+  "identity": {
+    "method": "sac_mlp",
+    "source_script": "train_intersection_yield_v2",
+    "source_method": "sac_mlp",
+    "family": "yv2",
+    "scenario": "intersection_random_medium_p03_v1",
+    "depart_scale": 1.0,
+    "eval_traffic_split": "validation",
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\p03_sm0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\final_model.zip",
+    "checkpoint_sha256": "fd4f47d3b748276fd0c289554b8f04d61e9e358a3dcb867af9acbf0639b06ae1",
+    "episodes": 1,
+    "workers": 1,
+    "episodes_per_worker": [
+      1
+    ],
+    "smoke": true,
+    "behavior_diagnostics": true
+  },
+  "summary": {
+    "episodes": 1,
+    "success_rate": 0.0,
+    "collision_rate": 0.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_return": 0.0,
+    "std_return": 0.0,
+    "mean_decision_steps": 200.0,
+    "mean_raw_steps": 600.0,
+    "mean_success_completion_time_seconds": null,
+    "std_success_completion_time_seconds": null,
+    "successful_episodes": 0
+  },
+  "episode_records": [
+    {
+      "episode": 0,
+      "seed": 10000,
+      "episode_return": 0.0,
+      "decision_steps": 200,
+      "environment_steps": 200,
+      "raw_steps": 600,
+      "completion_time_seconds": null,
+      "success": false,
+      "collision": false,
+      "off_route": false,
+      "timeout": true,
+      "traffic_variant": "episode.rou.xml"
+    }
+  ]
+}

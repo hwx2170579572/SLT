@@ -1,0 +1,87 @@
+{
+  "schema": "sac-mlp-random-medium-active-pair-snapshot/v1",
+  "observed_at": "2026-09-30T11:31:01.744+08:00",
+  "note": "Startup/progress snapshot only; not a completion or result summary.",
+  "protocol": {
+    "final_evaluation_episodes": 100,
+    "training_seed": 0,
+    "learning_starts_raw_steps": 5000,
+    "depart_scale": 1.0,
+    "checkpoint_frequency_raw_steps": 10000,
+    "method": "sac_mlp",
+    "smoke": false,
+    "resume": false,
+    "device": "cuda",
+    "fresh_from_scratch": true,
+    "raw_training_steps": 100000
+  },
+  "active_runs": [
+    {
+      "status": "training",
+      "raw_steps": 23619,
+      "completed_train_episodes": 79,
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium.stderr.log",
+      "scenario": "intersection_random_medium_v1",
+      "pid": 15900,
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium.stdout.log",
+      "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\arguments.json",
+      "updates": 18619,
+      "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930",
+      "progress_at": "2026-09-30T11:31:01.744+08:00",
+      "role": "original healthy medium",
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0"
+    },
+    {
+      "status": "training",
+      "raw_steps": 3886,
+      "completed_train_episodes": 13,
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\launcher_logs\\p05.stderr.log",
+      "progress_snapshots": [
+        {
+          "updates": 0,
+          "progress_updated_epoch": 1790738924.1117594,
+          "raw_steps": 1193
+        },
+        {
+          "updates": 0,
+          "progress_updated_epoch": 1790738952.7646735,
+          "raw_steps": 1790
+        },
+        {
+          "updates": 0,
+          "completed_train_episodes": 13,
+          "observed_at": "2026-09-30T11:31:01.744+08:00",
+          "raw_steps": 3886
+        }
+      ],
+      "scenario": "intersection_random_medium_p05_v1",
+      "pid": 90004,
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\launcher_logs\\p05.stdout.log",
+      "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\arguments.json",
+      "updates": 0,
+      "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930",
+      "progress_at": "2026-09-30T11:31:01.744+08:00",
+      "role": "p05 fresh restart",
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0",
+      "restart_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\restart_manifest.json"
+    }
+  ],
+  "failed_prior_attempt": {
+    "status": "failed",
+    "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0",
+    "exit_code": 1,
+    "launcher_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_manifest.json",
+    "raw_steps_at_failure": 144,
+    "scenario": "intersection_random_medium_p05_v1",
+    "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium_p05.stderr.log",
+    "pid": 19128,
+    "reason": "High-density overlay manifest source_sha256 mismatch after a later episode reused the same temporary route filename; repaired by keying dynamic overlays on the schedule SHA256 prefix. Prior artifacts retained."
+  },
+  "repair_validation": {
+    "targeted_unittest": "test_random_intersection_scenarios.RandomIntersectionProtocolTests.test_dynamic_episode_schedule_uses_distinct_overlay_cache_keys",
+    "new_instance_same_seed": "same schedule SHA256 reused the matching overlay despite a different TemporaryDirectory source path",
+    "factory_smoke": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_cache_smoke_0930\\cache_reuse_smoke.json",
+    "exit_code": 0,
+    "same_instance_different_seed": "different schedule SHA256 and distinct overlay paths"
+  }
+}

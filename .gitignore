@@ -2,8 +2,17 @@
 # 注意：所有目录规则都锚定到仓库根（前导 /），避免误伤 Scene-Rep-Transformer-main/ 内的嵌套目录。
 
 # 训练输出 / 临时
-/runs/
 /tmp/
+
+# runs/：保留配置(json/xml/yaml)、脚本(py)、结果(md/csv/png)，仅排除模型与大诊断日志
+# diagnostics/ 目录容纳全部原始日志(raw_steps.jsonl.gz/representation.jsonl/summary.json 等，15.3GB)；
+# 另有 episodes/*.jsonl(43MB级) 散落在 diagnostics/ 之外，故同时排除 *.jsonl / *.jsonl.gz
+/runs/**/diagnostics/
+/runs/**/*.jsonl
+/runs/**/*.jsonl.gz
+/runs/**/*.zip
+/runs/**/*.tmp
+/runs/**/*.lock
 
 # 第三方库拷贝 / 资产
 /tf2rl-master/

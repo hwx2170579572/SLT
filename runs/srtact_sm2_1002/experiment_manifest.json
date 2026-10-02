@@ -1,0 +1,958 @@
+{
+  "schema_version": "sorted_st_rt_routeact_frozen_diagnostic_v1",
+  "created_at_utc": "2026-10-02T10:42:03.130203+00:00",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\srtact_sm2_1002",
+  "mode": "smoke_functional_only",
+  "arms": [
+    "frozen_control",
+    "routeact"
+  ],
+  "method_by_arm": {
+    "frozen_control": "sac_mlp_d1_st_rt",
+    "routeact": "sac_mlp_d1_st_rt_routeact_v1"
+  },
+  "scene": {
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "traffic_split": "validation"
+  },
+  "evaluation": {
+    "episodes": 1,
+    "seed_start": 10000,
+    "seed_end_inclusive": 10000,
+    "deterministic": true,
+    "device": "cpu (same device used by the frozen reference evaluation)",
+    "behavior_diagnostics": true,
+    "route_action_sidecar_expected_for_routeact": true,
+    "no_learning_or_replay_updates": true,
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262"
+  },
+  "frozen_reference": {
+    "model_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+    "model_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+    "training_complete_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\training_complete.json",
+    "raw_steps": 100000,
+    "updates": 95001,
+    "training_seed": 0,
+    "evaluation_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\evaluation_results.json",
+    "evaluation_identity": {
+      "method": "sac_mlp_d1_st_rt",
+      "source_script": "train_intersection_yield_v2_d1",
+      "source_method": "sac_mlp_d1_st_rt",
+      "family": "d1",
+      "scenario": "intersection_sorted",
+      "depart_scale": 4.0,
+      "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+      "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+      "episodes": 100,
+      "workers": 1,
+      "smoke": false,
+      "behavior_diagnostics": true
+    },
+    "evaluation_episodes": 100,
+    "evaluation_seeds": {
+      "start": 10000,
+      "end_inclusive": 10099
+    },
+    "reference_eval_outcomes": {
+      "success": 63,
+      "collision": 37
+    },
+    "reference_traffic_manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\eval\\manifest.json",
+    "reference_effective_traffic": [
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_00.rou.xml",
+        "sha256": "42bcb8f455e3f8fb78766d5e88827088d7aeed2f73db5c37ce916d074a97c3e1"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_01.rou.xml",
+        "sha256": "d73c328bed330f2619e696d8c017e45a385e42b740adca4565dc516e91d01df7"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_02.rou.xml",
+        "sha256": "12d1b47636c8d57d29bc443f28d07b240c5dea65fbcb8e460656710d032a8e24"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_03.rou.xml",
+        "sha256": "61e7f3f2a54ecc1ba741ce44fea75d90b1e1ead3ffc6bfeca453299b41106cc2"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_04.rou.xml",
+        "sha256": "62c378f12f0cd89edaf66aaad1144c3d9548f1fccb93e90b909cca1d293926f9"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_05.rou.xml",
+        "sha256": "a6335ea8bddc6e83ad76210f66778d9d309f99ba009724a7cb49f22c1b100b9e"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_06.rou.xml",
+        "sha256": "dacdb9d52709d1df6385d70847febe25df790ce2a3e7b9ff28cd8b24bd1bf341"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_07.rou.xml",
+        "sha256": "f158085057e2fc18b37be323a85b45065026c5f71c20fdcecfe4eeb6c88825e2"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_08.rou.xml",
+        "sha256": "9c0edf2448a8a37db6fd7427e6f596ca41562bf98bfd1468c810e57312a79b6c"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_09.rou.xml",
+        "sha256": "1b56768fb8f35d6c9d0f81d29ea8a97620b488b1aa8c0b43946365dbde78a865"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_10.rou.xml",
+        "sha256": "bfcb79e4ce5f46d2f88501e3db397e051333adfecbe5d89fcb189d1a294b0f8a"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_11.rou.xml",
+        "sha256": "fc0265e201a4028688e89cf66c2a4215f997f54fbe99a67ada861608845f59c0"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_12.rou.xml",
+        "sha256": "a51d772fce55de46538d43b84e77a3addb37d83b5a78da0257f52f1532caaaba"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_13.rou.xml",
+        "sha256": "ace22f5bbfb1f0c4f65ba8aad18d3e5c018d13976f037c3e4058c1cd410735ec"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_14.rou.xml",
+        "sha256": "f4da209ce134c30c0145acfaaf3688e4866aeb5b4a38bd9d12b259c92808509e"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_15.rou.xml",
+        "sha256": "c2fae1b19bcfda96a789418c9665f78ac2b48ce489a254568d665254dec3ee9f"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_16.rou.xml",
+        "sha256": "af05ec8aed18dbe0f809d047473ba31a96a69b853772adf974562a638dc2f761"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_17.rou.xml",
+        "sha256": "4a651222880e80c03a9def81b9868797800c68bacfea43b57008ec6617d4c808"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_18.rou.xml",
+        "sha256": "0ecdee620dd167d76a52e70782deee4575af4bab65b6abd7d274852ec1ea0106"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_19.rou.xml",
+        "sha256": "e6b8c101539ddbc1ea2edd0a736b099959dddec887b4c322a927b2d8fe65a412"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_20.rou.xml",
+        "sha256": "c643f52b5d2a43b215c0f5e16911f0570013ab8ad62b8c2a876bfeb76d79fcca"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_21.rou.xml",
+        "sha256": "def9bc0ff203d7d70db9070d572edc23df9324a5f8f522981a110666f7383ef7"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_22.rou.xml",
+        "sha256": "4ee12b762a462110a9f4e0d449a255654df8e46daee6adb7b20088209b17541f"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_23.rou.xml",
+        "sha256": "a2f061aa51f5a919aa07eddedf201abcf7ea7241b048abbeffb494c755966f82"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_24.rou.xml",
+        "sha256": "5a9d782123f73fc3363049231128a56a4b77ee9d3d943058004c42080cf0d542"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_25.rou.xml",
+        "sha256": "2b8e6f4daadbabaf01f41580ee380840366692a902d03e42cbee3eacdb82c30b"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_26.rou.xml",
+        "sha256": "62cacd70b539f18dabb619179b80f3a01a214181f5ac0db131ad5bbd6c38d601"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_27.rou.xml",
+        "sha256": "6f3f9489346f47dc45169c116f871d58b660206e5dd53026b4ff30840f70eeb3"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_28.rou.xml",
+        "sha256": "2515d91d2365cab19a9d8fd107c78585ea7c7657385470dc78521430edcd1001"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_29.rou.xml",
+        "sha256": "6994c368a90c3c263bdbd6b8609cece6f4072f727d5482578a79bc5ded90eaae"
+      }
+    ],
+    "reference_traffic_variants_per_seed": [
+      {
+        "seed": 10000,
+        "traffic_variant": "traffic_10.rou.xml"
+      },
+      {
+        "seed": 10001,
+        "traffic_variant": "traffic_11.rou.xml"
+      },
+      {
+        "seed": 10002,
+        "traffic_variant": "traffic_12.rou.xml"
+      },
+      {
+        "seed": 10003,
+        "traffic_variant": "traffic_13.rou.xml"
+      },
+      {
+        "seed": 10004,
+        "traffic_variant": "traffic_14.rou.xml"
+      },
+      {
+        "seed": 10005,
+        "traffic_variant": "traffic_15.rou.xml"
+      },
+      {
+        "seed": 10006,
+        "traffic_variant": "traffic_16.rou.xml"
+      },
+      {
+        "seed": 10007,
+        "traffic_variant": "traffic_17.rou.xml"
+      },
+      {
+        "seed": 10008,
+        "traffic_variant": "traffic_18.rou.xml"
+      },
+      {
+        "seed": 10009,
+        "traffic_variant": "traffic_19.rou.xml"
+      },
+      {
+        "seed": 10010,
+        "traffic_variant": "traffic_20.rou.xml"
+      },
+      {
+        "seed": 10011,
+        "traffic_variant": "traffic_21.rou.xml"
+      },
+      {
+        "seed": 10012,
+        "traffic_variant": "traffic_22.rou.xml"
+      },
+      {
+        "seed": 10013,
+        "traffic_variant": "traffic_23.rou.xml"
+      },
+      {
+        "seed": 10014,
+        "traffic_variant": "traffic_24.rou.xml"
+      },
+      {
+        "seed": 10015,
+        "traffic_variant": "traffic_25.rou.xml"
+      },
+      {
+        "seed": 10016,
+        "traffic_variant": "traffic_26.rou.xml"
+      },
+      {
+        "seed": 10017,
+        "traffic_variant": "traffic_27.rou.xml"
+      },
+      {
+        "seed": 10018,
+        "traffic_variant": "traffic_28.rou.xml"
+      },
+      {
+        "seed": 10019,
+        "traffic_variant": "traffic_29.rou.xml"
+      },
+      {
+        "seed": 10020,
+        "traffic_variant": "traffic_00.rou.xml"
+      },
+      {
+        "seed": 10021,
+        "traffic_variant": "traffic_01.rou.xml"
+      },
+      {
+        "seed": 10022,
+        "traffic_variant": "traffic_02.rou.xml"
+      },
+      {
+        "seed": 10023,
+        "traffic_variant": "traffic_03.rou.xml"
+      },
+      {
+        "seed": 10024,
+        "traffic_variant": "traffic_04.rou.xml"
+      },
+      {
+        "seed": 10025,
+        "traffic_variant": "traffic_05.rou.xml"
+      },
+      {
+        "seed": 10026,
+        "traffic_variant": "traffic_06.rou.xml"
+      },
+      {
+        "seed": 10027,
+        "traffic_variant": "traffic_07.rou.xml"
+      },
+      {
+        "seed": 10028,
+        "traffic_variant": "traffic_08.rou.xml"
+      },
+      {
+        "seed": 10029,
+        "traffic_variant": "traffic_09.rou.xml"
+      },
+      {
+        "seed": 10030,
+        "traffic_variant": "traffic_10.rou.xml"
+      },
+      {
+        "seed": 10031,
+        "traffic_variant": "traffic_11.rou.xml"
+      },
+      {
+        "seed": 10032,
+        "traffic_variant": "traffic_12.rou.xml"
+      },
+      {
+        "seed": 10033,
+        "traffic_variant": "traffic_13.rou.xml"
+      },
+      {
+        "seed": 10034,
+        "traffic_variant": "traffic_14.rou.xml"
+      },
+      {
+        "seed": 10035,
+        "traffic_variant": "traffic_15.rou.xml"
+      },
+      {
+        "seed": 10036,
+        "traffic_variant": "traffic_16.rou.xml"
+      },
+      {
+        "seed": 10037,
+        "traffic_variant": "traffic_17.rou.xml"
+      },
+      {
+        "seed": 10038,
+        "traffic_variant": "traffic_18.rou.xml"
+      },
+      {
+        "seed": 10039,
+        "traffic_variant": "traffic_19.rou.xml"
+      },
+      {
+        "seed": 10040,
+        "traffic_variant": "traffic_20.rou.xml"
+      },
+      {
+        "seed": 10041,
+        "traffic_variant": "traffic_21.rou.xml"
+      },
+      {
+        "seed": 10042,
+        "traffic_variant": "traffic_22.rou.xml"
+      },
+      {
+        "seed": 10043,
+        "traffic_variant": "traffic_23.rou.xml"
+      },
+      {
+        "seed": 10044,
+        "traffic_variant": "traffic_24.rou.xml"
+      },
+      {
+        "seed": 10045,
+        "traffic_variant": "traffic_25.rou.xml"
+      },
+      {
+        "seed": 10046,
+        "traffic_variant": "traffic_26.rou.xml"
+      },
+      {
+        "seed": 10047,
+        "traffic_variant": "traffic_27.rou.xml"
+      },
+      {
+        "seed": 10048,
+        "traffic_variant": "traffic_28.rou.xml"
+      },
+      {
+        "seed": 10049,
+        "traffic_variant": "traffic_29.rou.xml"
+      },
+      {
+        "seed": 10050,
+        "traffic_variant": "traffic_00.rou.xml"
+      },
+      {
+        "seed": 10051,
+        "traffic_variant": "traffic_01.rou.xml"
+      },
+      {
+        "seed": 10052,
+        "traffic_variant": "traffic_02.rou.xml"
+      },
+      {
+        "seed": 10053,
+        "traffic_variant": "traffic_03.rou.xml"
+      },
+      {
+        "seed": 10054,
+        "traffic_variant": "traffic_04.rou.xml"
+      },
+      {
+        "seed": 10055,
+        "traffic_variant": "traffic_05.rou.xml"
+      },
+      {
+        "seed": 10056,
+        "traffic_variant": "traffic_06.rou.xml"
+      },
+      {
+        "seed": 10057,
+        "traffic_variant": "traffic_07.rou.xml"
+      },
+      {
+        "seed": 10058,
+        "traffic_variant": "traffic_08.rou.xml"
+      },
+      {
+        "seed": 10059,
+        "traffic_variant": "traffic_09.rou.xml"
+      },
+      {
+        "seed": 10060,
+        "traffic_variant": "traffic_10.rou.xml"
+      },
+      {
+        "seed": 10061,
+        "traffic_variant": "traffic_11.rou.xml"
+      },
+      {
+        "seed": 10062,
+        "traffic_variant": "traffic_12.rou.xml"
+      },
+      {
+        "seed": 10063,
+        "traffic_variant": "traffic_13.rou.xml"
+      },
+      {
+        "seed": 10064,
+        "traffic_variant": "traffic_14.rou.xml"
+      },
+      {
+        "seed": 10065,
+        "traffic_variant": "traffic_15.rou.xml"
+      },
+      {
+        "seed": 10066,
+        "traffic_variant": "traffic_16.rou.xml"
+      },
+      {
+        "seed": 10067,
+        "traffic_variant": "traffic_17.rou.xml"
+      },
+      {
+        "seed": 10068,
+        "traffic_variant": "traffic_18.rou.xml"
+      },
+      {
+        "seed": 10069,
+        "traffic_variant": "traffic_19.rou.xml"
+      },
+      {
+        "seed": 10070,
+        "traffic_variant": "traffic_20.rou.xml"
+      },
+      {
+        "seed": 10071,
+        "traffic_variant": "traffic_21.rou.xml"
+      },
+      {
+        "seed": 10072,
+        "traffic_variant": "traffic_22.rou.xml"
+      },
+      {
+        "seed": 10073,
+        "traffic_variant": "traffic_23.rou.xml"
+      },
+      {
+        "seed": 10074,
+        "traffic_variant": "traffic_24.rou.xml"
+      },
+      {
+        "seed": 10075,
+        "traffic_variant": "traffic_25.rou.xml"
+      },
+      {
+        "seed": 10076,
+        "traffic_variant": "traffic_26.rou.xml"
+      },
+      {
+        "seed": 10077,
+        "traffic_variant": "traffic_27.rou.xml"
+      },
+      {
+        "seed": 10078,
+        "traffic_variant": "traffic_28.rou.xml"
+      },
+      {
+        "seed": 10079,
+        "traffic_variant": "traffic_29.rou.xml"
+      },
+      {
+        "seed": 10080,
+        "traffic_variant": "traffic_00.rou.xml"
+      },
+      {
+        "seed": 10081,
+        "traffic_variant": "traffic_01.rou.xml"
+      },
+      {
+        "seed": 10082,
+        "traffic_variant": "traffic_02.rou.xml"
+      },
+      {
+        "seed": 10083,
+        "traffic_variant": "traffic_03.rou.xml"
+      },
+      {
+        "seed": 10084,
+        "traffic_variant": "traffic_04.rou.xml"
+      },
+      {
+        "seed": 10085,
+        "traffic_variant": "traffic_05.rou.xml"
+      },
+      {
+        "seed": 10086,
+        "traffic_variant": "traffic_06.rou.xml"
+      },
+      {
+        "seed": 10087,
+        "traffic_variant": "traffic_07.rou.xml"
+      },
+      {
+        "seed": 10088,
+        "traffic_variant": "traffic_08.rou.xml"
+      },
+      {
+        "seed": 10089,
+        "traffic_variant": "traffic_09.rou.xml"
+      },
+      {
+        "seed": 10090,
+        "traffic_variant": "traffic_10.rou.xml"
+      },
+      {
+        "seed": 10091,
+        "traffic_variant": "traffic_11.rou.xml"
+      },
+      {
+        "seed": 10092,
+        "traffic_variant": "traffic_12.rou.xml"
+      },
+      {
+        "seed": 10093,
+        "traffic_variant": "traffic_13.rou.xml"
+      },
+      {
+        "seed": 10094,
+        "traffic_variant": "traffic_14.rou.xml"
+      },
+      {
+        "seed": 10095,
+        "traffic_variant": "traffic_15.rou.xml"
+      },
+      {
+        "seed": 10096,
+        "traffic_variant": "traffic_16.rou.xml"
+      },
+      {
+        "seed": 10097,
+        "traffic_variant": "traffic_17.rou.xml"
+      },
+      {
+        "seed": 10098,
+        "traffic_variant": "traffic_18.rou.xml"
+      },
+      {
+        "seed": 10099,
+        "traffic_variant": "traffic_19.rou.xml"
+      }
+    ],
+    "reference_arguments": {
+      "method": "sac_mlp_d1_st_rt",
+      "parent": "sac_mlp",
+      "scenario": "intersection_sorted",
+      "raw_budget": 100000,
+      "checkpoint_frequency": 10000,
+      "learning_starts_raw_steps": 5000,
+      "batch_size": 32,
+      "learning_rate": 0.0001,
+      "buffer_size": 20000,
+      "discount": 0.99,
+      "action_repeat": 3,
+      "seed": 0,
+      "device": "cuda",
+      "density": {
+        "vehicle_scale": 1.0,
+        "pedestrian_scale": 1.0,
+        "clone_depart_jitter_seconds": [
+          0.0,
+          0.0
+        ]
+      },
+      "smoke": false,
+      "behavior_diagnostics": true,
+      "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+      "env_contract": "base",
+      "reward_shaping": {
+        "success_reward": 10.0,
+        "collision_reward": -10.0,
+        "off_route_reward": -10.0,
+        "timeout_reward": -5.0,
+        "progress_scale": 0.02,
+        "step_cost": 0.01
+      },
+      "ablation": "d1_representation_incremental",
+      "use_route": true,
+      "use_topology": false,
+      "use_slots": false,
+      "structured_representation": false,
+      "representation_coef": 0.0,
+      "slot_balance_coef": 0.0,
+      "note": "与父基线 sac_mlp 唯一差异：features_extractor 换 IncrementalTopoEncoder（use_route=True, use_topology=False, use_slots=False）。动作头 / 熵 / 调参 / n_step / 环境契约完全一致。"
+    }
+  },
+  "method_configs": {
+    "sac_mlp_d1_st_rt": {
+      "use_route": true,
+      "use_topology": false,
+      "use_slots": false,
+      "use_incremental_slots": false,
+      "use_route_reachability": false,
+      "use_route_action_veto": false,
+      "use_route_conflict_timing": false,
+      "use_topology_actor_intent": false,
+      "use_topology_relations": false,
+      "use_topology_goal": false,
+      "use_parameter_matched_nonlinear_slots": false,
+      "use_graph_slt": false,
+      "use_sbs": false,
+      "representation_coef": 0.0,
+      "slot_balance_coef": 0.0
+    },
+    "sac_mlp_d1_st_rt_routeact_v1": {
+      "use_route": true,
+      "use_topology": false,
+      "use_slots": false,
+      "use_route_action_veto": true,
+      "method_protocol": "strt_route_action_consistency_v1",
+      "use_incremental_slots": false,
+      "use_route_reachability": false,
+      "use_route_conflict_timing": false,
+      "use_topology_actor_intent": false,
+      "use_topology_relations": false,
+      "use_topology_goal": false,
+      "use_parameter_matched_nonlinear_slots": false,
+      "use_graph_slt": false,
+      "use_sbs": false,
+      "representation_coef": 0.0,
+      "slot_balance_coef": 0.0
+    }
+  },
+  "reward": {
+    "evaluation_protocol": "environment_step_reward_v2",
+    "raw_return_protocol": "info_undiscounted_reward_or_step_reward_fallback_v1",
+    "component_protocol": "yield_v2_cumulative_reward_branches_v1",
+    "six_component_keys": [
+      "reward_success",
+      "reward_collision",
+      "reward_off_route",
+      "reward_timeout",
+      "reward_step_cost",
+      "reward_progress"
+    ],
+    "training_reward_coefficients": {
+      "success_reward": 10.0,
+      "collision_reward": -10.0,
+      "off_route_reward": -10.0,
+      "timeout_reward": -5.0,
+      "progress_scale": 0.02,
+      "step_cost": 0.01
+    },
+    "control_and_routeact_share_evaluator_reward_code": true
+  },
+  "traffic": {
+    "template_count": 30,
+    "pool_protocol": "same complete effective 30-template pool; sorted departures scaled by 4.0; validation seeds 10000..10099",
+    "current_source_template_hashes": [
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_00.rou.xml",
+        "sha256": "d2fede6206b44f142a2cf3803eb0532612fb031727ff4ad65b192c1cf3010a2a"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_01.rou.xml",
+        "sha256": "a275d5caa1cf43100adbfc51b2ce5f1a7d0ab03e735e5a627cfccd782adb6730"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_02.rou.xml",
+        "sha256": "d84da6724cc50ef536a26fcbb53e75d709cae5337d5f448666e9f8950357bd02"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_03.rou.xml",
+        "sha256": "de33abca28bc114428a98d5435f9ec17ddd9c4ba6103f610735b0af304517eea"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_04.rou.xml",
+        "sha256": "90888ee8b148df740110c26e126f32f92c237daa7ed022623f51e9b7f9b1c433"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_05.rou.xml",
+        "sha256": "7cefd8055fb9b9ecfb291aa307b90085558a9a0f70354d096c73c0a9cbe3bfbd"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_06.rou.xml",
+        "sha256": "aebd3efc00ad084e2a9a89f926818bf1a0e25eee5ee94e601eee5de0adecd00d"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_07.rou.xml",
+        "sha256": "13c18beac99e70bdcb19a088776b7a7cddb6f123a9f47a9e9cbcfffa155f49aa"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_08.rou.xml",
+        "sha256": "58330ac560d4d96a5066b9dc3a9b8bd458b7a8b165b9f19ccf4d4f919cd02b05"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_09.rou.xml",
+        "sha256": "da103eadbe86258625853c4604de63f6352ae5f308a23cc9b30f5e9b09290dc5"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_10.rou.xml",
+        "sha256": "6811892037adb7b03dce7fd07d7443022ece53a9bd3e64be4b8b7daeec69fff5"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_11.rou.xml",
+        "sha256": "324d1184a46cba298e0998ec85784cd6aa04feb838757296d931aedf59975448"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_12.rou.xml",
+        "sha256": "72ac33ce27a0a75ec0e8980e6407b5cf296e99b6dae918facdee6b471aa3f601"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_13.rou.xml",
+        "sha256": "5aacce0944ee41f0160c9107d27fbf45d1d87526179bbcc4c822badd58bc9327"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_14.rou.xml",
+        "sha256": "ca4125cf9379c62e069305627350daf8b587b796c0bebafcac0e4b0b11af6396"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_15.rou.xml",
+        "sha256": "1629b39c45249828c3377340703bc81ef441048e2f78ddc076c08553b53cad76"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_16.rou.xml",
+        "sha256": "ae1a6834f4fcdce8d5629b14caf3fc33157d28bda4eee9940fd9ec05230e3730"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_17.rou.xml",
+        "sha256": "8e3897f96bdb3b47dba751f2bd3085b177279b497d34b0bee8c20ec62eac608d"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_18.rou.xml",
+        "sha256": "f921ea2ba0f5a38db91370acebd1d7cbd659c5fc94e3d4b6f1f662505c56ec92"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_19.rou.xml",
+        "sha256": "26b1131309406d7fe6bd7666290246c08457905720f250cead2cdb5978edac67"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_20.rou.xml",
+        "sha256": "bb05013e2292028eb28f425587a956ae1cc459e3c92ba410bfb696c2eb80eb83"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_21.rou.xml",
+        "sha256": "7072a4e2c5adadeb718b22e194f40127064b1f335dd4548372aeb643d5f1f404"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_22.rou.xml",
+        "sha256": "cd40baf5c0557f8364d191998a758d696f33dc78ab8dfe995f1f3cfcb325c118"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_23.rou.xml",
+        "sha256": "59a1d061662cd1150a6ad578fd953ee9a79eaca3ad9c346753a90ef07fb34517"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_24.rou.xml",
+        "sha256": "b9f3f2b90b0469dacff02698ee09bd3244885e4cff099fe1753b8aba4ae06a58"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_25.rou.xml",
+        "sha256": "9031088838bd9cbd80e58ae6c42eb48f6df2113f9a46ca63bbf534e4330e7ca8"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_26.rou.xml",
+        "sha256": "0c2c57631f049a02d25edbdb693a2fef3f9864dd549a78c4e0d55042f3d48041"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_27.rou.xml",
+        "sha256": "e26bcdec86632a49254f3a073bb630e58eba2764a513d4f53385fbe5b7285001"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_28.rou.xml",
+        "sha256": "6ae37da13dd3a4fb8e5077e37e25b66ab30545c686207a633d39c8f89a469e14"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic\\traffic_29.rou.xml",
+        "sha256": "edcd54a2d86de9f7a1a74d220bcb35825f1e742aa66cfc6061fb2e15981de0bd"
+      }
+    ],
+    "reference_effective_template_hashes": [
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_00.rou.xml",
+        "sha256": "42bcb8f455e3f8fb78766d5e88827088d7aeed2f73db5c37ce916d074a97c3e1"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_01.rou.xml",
+        "sha256": "d73c328bed330f2619e696d8c017e45a385e42b740adca4565dc516e91d01df7"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_02.rou.xml",
+        "sha256": "12d1b47636c8d57d29bc443f28d07b240c5dea65fbcb8e460656710d032a8e24"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_03.rou.xml",
+        "sha256": "61e7f3f2a54ecc1ba741ce44fea75d90b1e1ead3ffc6bfeca453299b41106cc2"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_04.rou.xml",
+        "sha256": "62c378f12f0cd89edaf66aaad1144c3d9548f1fccb93e90b909cca1d293926f9"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_05.rou.xml",
+        "sha256": "a6335ea8bddc6e83ad76210f66778d9d309f99ba009724a7cb49f22c1b100b9e"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_06.rou.xml",
+        "sha256": "dacdb9d52709d1df6385d70847febe25df790ce2a3e7b9ff28cd8b24bd1bf341"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_07.rou.xml",
+        "sha256": "f158085057e2fc18b37be323a85b45065026c5f71c20fdcecfe4eeb6c88825e2"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_08.rou.xml",
+        "sha256": "9c0edf2448a8a37db6fd7427e6f596ca41562bf98bfd1468c810e57312a79b6c"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_09.rou.xml",
+        "sha256": "1b56768fb8f35d6c9d0f81d29ea8a97620b488b1aa8c0b43946365dbde78a865"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_10.rou.xml",
+        "sha256": "bfcb79e4ce5f46d2f88501e3db397e051333adfecbe5d89fcb189d1a294b0f8a"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_11.rou.xml",
+        "sha256": "fc0265e201a4028688e89cf66c2a4215f997f54fbe99a67ada861608845f59c0"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_12.rou.xml",
+        "sha256": "a51d772fce55de46538d43b84e77a3addb37d83b5a78da0257f52f1532caaaba"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_13.rou.xml",
+        "sha256": "ace22f5bbfb1f0c4f65ba8aad18d3e5c018d13976f037c3e4058c1cd410735ec"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_14.rou.xml",
+        "sha256": "f4da209ce134c30c0145acfaaf3688e4866aeb5b4a38bd9d12b259c92808509e"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_15.rou.xml",
+        "sha256": "c2fae1b19bcfda96a789418c9665f78ac2b48ce489a254568d665254dec3ee9f"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_16.rou.xml",
+        "sha256": "af05ec8aed18dbe0f809d047473ba31a96a69b853772adf974562a638dc2f761"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_17.rou.xml",
+        "sha256": "4a651222880e80c03a9def81b9868797800c68bacfea43b57008ec6617d4c808"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_18.rou.xml",
+        "sha256": "0ecdee620dd167d76a52e70782deee4575af4bab65b6abd7d274852ec1ea0106"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_19.rou.xml",
+        "sha256": "e6b8c101539ddbc1ea2edd0a736b099959dddec887b4c322a927b2d8fe65a412"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_20.rou.xml",
+        "sha256": "c643f52b5d2a43b215c0f5e16911f0570013ab8ad62b8c2a876bfeb76d79fcca"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_21.rou.xml",
+        "sha256": "def9bc0ff203d7d70db9070d572edc23df9324a5f8f522981a110666f7383ef7"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_22.rou.xml",
+        "sha256": "4ee12b762a462110a9f4e0d449a255654df8e46daee6adb7b20088209b17541f"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_23.rou.xml",
+        "sha256": "a2f061aa51f5a919aa07eddedf201abcf7ea7241b048abbeffb494c755966f82"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_24.rou.xml",
+        "sha256": "5a9d782123f73fc3363049231128a56a4b77ee9d3d943058004c42080cf0d542"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_25.rou.xml",
+        "sha256": "2b8e6f4daadbabaf01f41580ee380840366692a902d03e42cbee3eacdb82c30b"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_26.rou.xml",
+        "sha256": "62cacd70b539f18dabb619179b80f3a01a214181f5ac0db131ad5bbd6c38d601"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_27.rou.xml",
+        "sha256": "6f3f9489346f47dc45169c116f871d58b660206e5dd53026b4ff30840f70eeb3"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_28.rou.xml",
+        "sha256": "2515d91d2365cab19a9d8fd107c78585ea7c7657385470dc78521430edcd1001"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_29.rou.xml",
+        "sha256": "6994c368a90c3c263bdbd6b8609cece6f4072f727d5482578a79bc5ded90eaae"
+      }
+    ],
+    "reference_and_current_source_names_match": true
+  },
+  "max_parallel_processes": 2,
+  "worker_processes_are_independent": true,
+  "cuda_used": false,
+  "resume": false,
+  "training": false,
+  "d1_evaluator_signature": "(global_name: 'str', run_dir: 'Path', final_model: 'Path', smoke: 'bool', behavior_diagnostics: 'bool' = False, policy_shadow_probes: 'bool' = False, policy_shadow_eval_max_per_episode: 'int' = 3, policy_shadow_critical_eval_sample: 'bool' = False) -> 'dict'",
+  "path_check": {
+    "limit_chars": 240,
+    "maximum_anticipated_path_chars": 217
+  },
+  "source_files_to_archive": 781,
+  "status": "complete",
+  "started_at_utc": "2026-10-02T10:42:09.779153+00:00",
+  "supervisor_pid": 95972,
+  "archive_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\srtact_sm2_1002\\source_archive\\manifest.json",
+  "source_archive_files": 823,
+  "effective_traffic_pool_reused_read_only_from": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+  "workers": {},
+  "completed_at_utc": "2026-10-02T10:42:39.280991+00:00"
+}

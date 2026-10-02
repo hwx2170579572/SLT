@@ -1,0 +1,51 @@
+{
+  "implementation_fidelity": {
+    "implementation_id": "released_scene_rep_pytorch_port_v1",
+    "source_primary": true,
+    "research_extension": false,
+    "reconstruction_required": false,
+    "reconstruction_reason": null
+  },
+  "runtime_paths": {
+    "tensorboard_log": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001\\tb\\405bbfdd081a9355",
+    "tensorboard_short_root_injected": true
+  },
+  "requested_raw_steps": {
+    "scenario": "intersection_random_darrl_medium_v1",
+    "algo": "scene_rep",
+    "max_steps": 100000,
+    "seed": 0,
+    "device": "cuda",
+    "batch_size": 32,
+    "learning_rate": 0.0001,
+    "discount": 0.99,
+    "learning_starts": 5000,
+    "buffer_size": 20000,
+    "neighbors": 5,
+    "history_steps": 10,
+    "path_length": 10,
+    "action_repeat": 3,
+    "ego_control_profile": "direct",
+    "traffic_protocol": "frozen_80_20",
+    "episode_limit_profile": "source",
+    "checkpoint_freq": 10000,
+    "eval_freq": 0,
+    "eval_episodes": 100,
+    "output_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001",
+    "model_name": "mst_slt__intersection_random_darrl_medium_v1_depart1p0",
+    "gui": false,
+    "check_only": false
+  },
+  "effective_sb3_decision_steps": {
+    "expected_total_without_partial_repeats": 33334,
+    "learn_loop_upper_bound": 100000,
+    "learning_starts_decisions": 1667,
+    "model_learning_starts_argument": 5000,
+    "checkpoint_freq": 3334,
+    "eval_freq": 0,
+    "gradient_steps_per_decision": 3,
+    "source_ppo_horizon": null,
+    "source_ppo_expected_collected_raw_steps": null,
+    "source_ppo_test_checkpoint_raw_step": null
+  }
+}

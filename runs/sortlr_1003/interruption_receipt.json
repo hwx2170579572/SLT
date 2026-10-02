@@ -1,0 +1,91 @@
+{
+  "schema": "sorted_longres_interruption_receipt_v1",
+  "recorded_at": "2026-10-03T04:04:16+08:00",
+  "run_root": "runs/sortlr_1003",
+  "state": "user_interrupted",
+  "state_basis": "The user explicitly reported manually interrupting the run. The exact termination time is unavailable.",
+  "protocol": {
+    "scene": "intersection_sorted_depart4p0",
+    "training_seed": 0,
+    "fresh": true,
+    "resume": false,
+    "raw_step_budget_per_method": 100000,
+    "cuda": true,
+    "evaluation": {
+      "split": "validation",
+      "episodes": 100,
+      "logical_seed_start": 10000,
+      "logical_seed_end": 10099
+    }
+  },
+  "manifest_state_note": "The on-disk launcher_status.json and child status.json files still say running/training; this receipt records the user-confirmed interruption and does not rewrite those runtime snapshots.",
+  "process_audit_note": "A prior parent-side exact PID query found supervisor 80360 and workers 37064/83736 absent. A fresh query during receipt authoring was denied access, so this receipt does not claim a new live-process check.",
+  "source_archive": {
+    "file_count": 8736,
+    "archive_sha256": "34e54de1da82ec33468f057c89912ef8286508a60ebdbda89758253515f8c027",
+    "verified_against_source_archive_manifest": true
+  },
+  "workers": [
+    {
+      "method": "sac_mlp_d1_st_rt",
+      "pid": 37064,
+      "supervisor_pid": 80360,
+      "last_saved_progress": {
+        "raw_steps": 9276,
+        "updates": 4276,
+        "finished_episodes": 29,
+        "progress_file_last_write_local": "2026-10-03T03:28:23+08:00"
+      },
+      "behavior_diagnostic_error_count": 0,
+      "best_training_success_model_exists": true
+    },
+    {
+      "method": "sac_mlp_d1_st_rt_longres_v1",
+      "pid": 83736,
+      "supervisor_pid": 80360,
+      "last_saved_progress": {
+        "raw_steps": 8679,
+        "updates": 3679,
+        "finished_episodes": 27,
+        "progress_file_last_write_local": "2026-10-03T03:28:36+08:00"
+      },
+      "behavior_diagnostic_error_count": 0,
+      "best_training_success_model_exists": true,
+      "nonfatal_log_observation": "Repeated SUMO Vehicle 'ego' is not known messages appeared near 03:20; no Python traceback was recorded and progress continued afterward."
+    }
+  ],
+  "policy_shadow_probes": {
+    "sampling_note": "One unique train-000 state per method, pre_raw=5001 and post_raw=5004.",
+    "training_budget": "At most 20 unique states over the entire training phase, sampled at 5000-raw-step intervals.",
+    "evaluation_budget": "At most 4 unique states per episode.",
+    "sac_mlp_d1_st_rt": {
+      "variant_rows": 14,
+      "applicable_valid_rows": 5,
+      "branch_inactive_rows": 9,
+      "active_invalid_rows": 0,
+      "diagnostic_error_count": 0
+    },
+    "sac_mlp_d1_st_rt_longres_v1": {
+      "variant_rows": 15,
+      "applicable_valid_rows": 6,
+      "branch_inactive_rows": 9,
+      "active_invalid_rows": 0,
+      "diagnostic_error_count": 0,
+      "longitudinal_residual_off_mean_delta_pre_tanh": [0.00006429851055145264, 0.0],
+      "longitudinal_residual_off_mean_delta_normalized": [0.00006389549772183034, 0.0],
+      "action_delta_l2_normalized": null,
+      "null_scalar_note": "The derived L2 scalar is absent; no exception or diagnostic error was recorded."
+    }
+  },
+  "recovery_assessment": {
+    "exact_resume_available": false,
+    "reason": "No periodic/final checkpoint, replay buffer, or RNG/optimizer continuation state was saved. Only best_training_success_model.zip files exist; they are not a complete exact-resume state.",
+    "raw_progress_must_be_preserved": true,
+    "formal_final_evaluation_completed": false
+  },
+  "later_recovery": {
+    "selected_fresh_pair_root_a": "runs/sortlr_1003_retry01",
+    "selected_fresh_pair_root_b": "runs/sortlr_1003_retry01_longres",
+    "note": "The original partial raw steps remain historical work and are not added to either fresh 100000-raw-step arm."
+  }
+}

@@ -1,0 +1,170 @@
+schema_version: topo-scene-v4.10.shared-risk-supported-mixture-contract/v1
+status: locked_before_v4_10_implementation_and_training
+created_at_local: '2026-08-29T12:59:38+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  parent_method: v4_9_2_strict_target_only_learned_collision_model
+  parent_contract: experiments/topo_scene_v4/experiment_contract_v4_9_2.yaml
+  parent_contract_sha256: 9e99845d3987a32216b213e34267c19fddaa2386880035498d60610615344a95
+  completed_promotion_summary: results_topo_v4_9_2_promotion/engineering_recovery_v4_9_2_3/summary.json
+  completed_promotion_summary_sha256: c3204ac944b71899c4ea6c3175986db88092661594a112e6b9bc7bb8a155b96d
+  failed_promotion_gate: results_topo_v4_9_2_promotion/engineering_recovery_v4_9_2_3/promotion_gate.json
+  failed_promotion_gate_sha256: 080cff14f2edabaf994f8349144d21b570b977cc0d0129be2dee15090eddab56
+  complete_promotion_attribution: results_topo_v4_9_2_promotion/attribution/promotion_model_attribution.json
+  complete_promotion_attribution_sha256: 6222ee5af9749f138b131860b14046b057c7f082b3e1815d1cb508fad285bda8
+  speed_proposal_probe: results_topo_v4_10_dev/stage_0_speed_proposal_probe/speed_proposal_coverage.json
+  speed_proposal_probe_sha256: 48218df0e5282e44e9a6b76ce62e2e1580d21b5cfc853332b3bc1f265a614276
+  speed_proposal_attribution: results_topo_v4_10_dev/stage_0_speed_proposal_probe/deep_attribution.json
+  speed_proposal_attribution_sha256: 4638c70f1bf942e10ed4af170f1e33724ccdfe9291b11c02a35ad2f20c229420
+  speed_proposal_attribution_markdown: results_topo_v4_10_dev/stage_0_speed_proposal_probe/DEEP_ATTRIBUTION_V4_10.md
+  speed_proposal_attribution_markdown_sha256: deb3b3bb22fd6045813bf44964f330871c10dd4752c643a190fac630fc9d5632
+  formal_test_accessed: false
+
+hypothesis:
+  name: shared_risk_supported_mixture
+  statement: >-
+    Seed-conditioned failures arise jointly from an independent sparse collision
+    representation, one learned speed proposal per lane, and target-critic
+    extrapolation outside the actor's learned action support.
+  falsifier: >-
+    Complete development does not satisfy every preregistered outcome gate, or
+    proposal/support diagnostics remain collapsed, non-finite, or boundary-dominated.
+
+model_change:
+  learned_speed_components_per_lane: 3
+  fixed_speed_grid_at_inference: false
+  shared_online_scene_encoder: [actor, reward_critic, collision_critic]
+  actor_encoder_stop_gradient: true
+  collision_supervision_shapes_shared_encoder: true
+  replay_speed_support_objective: squashed_gaussian_mixture_negative_log_likelihood
+  replay_support_coefficient: 0.05
+  component_entropy_scale: 0.25
+  twin_uncertainty_coefficient: 0.25
+  deterministic_component_prior_coefficient: 0.05
+  collision_risk_coefficient: 1.0
+  deterministic_model_score: min_reward_q_minus_max_collision_value_minus_twin_disagreement_plus_log_component_probability
+  encoder_optimizer_owner_count: 1
+  optimizer_parameter_sets_must_be_disjoint: true
+
+unchanged:
+  reward: true
+  observation_and_action_spaces: true
+  topology_temporal_graph_slt_backbone: true
+  collision_label_source: observed_environment_info_collision
+  future_or_oracle_collision_labels: false
+  n_step: 16
+  bootstrap_discount: gamma_power_actual_horizon
+  lane_feasibility_mask: true
+  training_budget_and_warmup: true
+  checkpoint_candidates: [highest_training_success, exact_final]
+  checkpoint_selector_partition: train
+  validation_used_for_checkpoint_selection: false
+  formal_test_used_for_checkpoint_selection: false
+
+forbidden:
+  kinematic_projection: true
+  fixed_speed_search_at_inference: true
+  ttc_or_headway_threshold: true
+  geometry_unsafe_label: true
+  lane_change_veto: true
+  actor_confidence_gate: true
+  safety_shield_or_rule_fallback: true
+  post_decoder_action_rewrite: true
+
+fixed_runtime:
+  python_executable: D:/Programs/Anaconda/envs/llm_pipeline/python.exe
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  slot_balance_coefficient: 0.01
+  lane_entropy_scale: 0.0
+  speed_target_entropy: -1.0
+
+engineering_gate:
+  unit_gradient_serialization_mask_score_tests: required
+  optimizer_owner_overlap_count: 0
+  learned_component_count_exact: 3
+  all_training_diagnostics_finite: true
+  real_sumo_smoke_required: true
+  formal_test_accessed: false
+
+development:
+  execution_policy: attempt_all_then_summarize
+  failure_does_not_cancel_remaining_jobs: true
+  fresh_training_required: true
+  evaluation_split: validation
+  evaluation_episodes: 20
+  ordered_cells:
+    - {id: D1, method: srsm_full, scenario: cross, seed: 10, raw_steps: 20000, calibration_seed_start: 131000, evaluation_seed_start: 141000}
+    - {id: D2, method: srsm_full, scenario: cross, seed: 11, raw_steps: 20000, calibration_seed_start: 132000, evaluation_seed_start: 142000}
+    - {id: D3, method: srsm_full, scenario: roundabout_medium, seed: 12, raw_steps: 20000, calibration_seed_start: 133000, evaluation_seed_start: 143000}
+    - {id: D4, method: srsm_full, scenario: carla, seed: 13, raw_steps: 20000, calibration_seed_start: 134000, evaluation_seed_start: 144000}
+  per_run_gates:
+    cross: {success_rate_min: 0.50, collision_rate_max: 0.40, off_route_rate_max: 0.00, timeout_rate_max: 0.35}
+    roundabout_medium: {success_rate_min: 0.50, collision_rate_max: 0.35, off_route_rate_max: 0.00, timeout_rate_max: 0.35}
+    carla: {success_rate_min: 0.50, collision_rate_max: 0.10, off_route_rate_max: 0.00, timeout_rate_max: 0.50}
+  aggregate_cross_gate:
+    success_rate_min: 0.60
+    collision_rate_max: 0.30
+    positive_cell_success_rate_min: 0.60
+    positive_cell_collision_rate_max: 0.25
+  required_ablation_cells_after_primary_pass:
+    - {id: A1, method: shared_single, scenario: cross, seed: 10, raw_steps: 20000, evaluation_episodes: 20}
+    - {id: A2, method: mixture_no_support, scenario: cross, seed: 10, raw_steps: 20000, evaluation_episodes: 20}
+  on_complete_pass: run_fresh_promotion
+  on_complete_fail: write_complete_attribution_then_create_new_version
+
+promotion:
+  execution_policy: attempt_all_then_summarize
+  failure_does_not_cancel_remaining_jobs: true
+  methods: [temporal_graph, srsm_full]
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [20, 21]
+  raw_training_steps: 50000
+  evaluation_episodes: 30
+  evaluation_split: validation
+  jobs: 12
+  thresholds:
+    candidate_development_guards_each_seed: true
+    all_candidate_off_route_zero: true
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+  on_complete_pass: unlock_untouched_formal_test
+  on_complete_fail: complete_attribution_then_create_new_version
+
+formal_test:
+  locked: true
+  accessed: false
+  unlock_condition: complete_fresh_v4_10_promotion_gate_pass
+  methods: [temporal_graph, srsm_full]
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  evaluation_episodes: 50
+  evaluation_split: test
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260829
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+unknown_rule: Missing, interrupted, failed, or protocol-incompatible evidence remains TBD.

@@ -1,0 +1,1105 @@
+{
+  "orientation": "official frozen evaluation row -> intervention column",
+  "pairing_key": [
+    "seed",
+    "traffic_variant"
+  ],
+  "seed_range": [
+    10000,
+    10039
+  ],
+  "arms": {
+    "a_remove_route_veto": {
+      "orientation": "reference row -> intervention column",
+      "paired_count": 40,
+      "traffic_variant_mismatch_seeds": [],
+      "matrix": {
+        "success": {
+          "success": 5,
+          "collision": 8,
+          "timeout": 2,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "collision": {
+          "success": 1,
+          "collision": 18,
+          "timeout": 6,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "timeout": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        }
+      },
+      "pairs": [
+        {
+          "seed": 10000,
+          "reference_traffic_variant": "traffic_10.rou.xml",
+          "candidate_traffic_variant": "traffic_10.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10001,
+          "reference_traffic_variant": "traffic_11.rou.xml",
+          "candidate_traffic_variant": "traffic_11.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10002,
+          "reference_traffic_variant": "traffic_12.rou.xml",
+          "candidate_traffic_variant": "traffic_12.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10003,
+          "reference_traffic_variant": "traffic_13.rou.xml",
+          "candidate_traffic_variant": "traffic_13.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10004,
+          "reference_traffic_variant": "traffic_14.rou.xml",
+          "candidate_traffic_variant": "traffic_14.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10005,
+          "reference_traffic_variant": "traffic_15.rou.xml",
+          "candidate_traffic_variant": "traffic_15.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10006,
+          "reference_traffic_variant": "traffic_16.rou.xml",
+          "candidate_traffic_variant": "traffic_16.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10007,
+          "reference_traffic_variant": "traffic_17.rou.xml",
+          "candidate_traffic_variant": "traffic_17.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10008,
+          "reference_traffic_variant": "traffic_18.rou.xml",
+          "candidate_traffic_variant": "traffic_18.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10009,
+          "reference_traffic_variant": "traffic_19.rou.xml",
+          "candidate_traffic_variant": "traffic_19.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10010,
+          "reference_traffic_variant": "traffic_20.rou.xml",
+          "candidate_traffic_variant": "traffic_20.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10011,
+          "reference_traffic_variant": "traffic_21.rou.xml",
+          "candidate_traffic_variant": "traffic_21.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10012,
+          "reference_traffic_variant": "traffic_22.rou.xml",
+          "candidate_traffic_variant": "traffic_22.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10013,
+          "reference_traffic_variant": "traffic_23.rou.xml",
+          "candidate_traffic_variant": "traffic_23.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10014,
+          "reference_traffic_variant": "traffic_24.rou.xml",
+          "candidate_traffic_variant": "traffic_24.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10015,
+          "reference_traffic_variant": "traffic_25.rou.xml",
+          "candidate_traffic_variant": "traffic_25.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10016,
+          "reference_traffic_variant": "traffic_26.rou.xml",
+          "candidate_traffic_variant": "traffic_26.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10017,
+          "reference_traffic_variant": "traffic_27.rou.xml",
+          "candidate_traffic_variant": "traffic_27.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10018,
+          "reference_traffic_variant": "traffic_28.rou.xml",
+          "candidate_traffic_variant": "traffic_28.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10019,
+          "reference_traffic_variant": "traffic_29.rou.xml",
+          "candidate_traffic_variant": "traffic_29.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10020,
+          "reference_traffic_variant": "traffic_00.rou.xml",
+          "candidate_traffic_variant": "traffic_00.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10021,
+          "reference_traffic_variant": "traffic_01.rou.xml",
+          "candidate_traffic_variant": "traffic_01.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10022,
+          "reference_traffic_variant": "traffic_02.rou.xml",
+          "candidate_traffic_variant": "traffic_02.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10023,
+          "reference_traffic_variant": "traffic_03.rou.xml",
+          "candidate_traffic_variant": "traffic_03.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10024,
+          "reference_traffic_variant": "traffic_04.rou.xml",
+          "candidate_traffic_variant": "traffic_04.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10025,
+          "reference_traffic_variant": "traffic_05.rou.xml",
+          "candidate_traffic_variant": "traffic_05.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10026,
+          "reference_traffic_variant": "traffic_06.rou.xml",
+          "candidate_traffic_variant": "traffic_06.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10027,
+          "reference_traffic_variant": "traffic_07.rou.xml",
+          "candidate_traffic_variant": "traffic_07.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10028,
+          "reference_traffic_variant": "traffic_08.rou.xml",
+          "candidate_traffic_variant": "traffic_08.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10029,
+          "reference_traffic_variant": "traffic_09.rou.xml",
+          "candidate_traffic_variant": "traffic_09.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10030,
+          "reference_traffic_variant": "traffic_10.rou.xml",
+          "candidate_traffic_variant": "traffic_10.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10031,
+          "reference_traffic_variant": "traffic_11.rou.xml",
+          "candidate_traffic_variant": "traffic_11.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10032,
+          "reference_traffic_variant": "traffic_12.rou.xml",
+          "candidate_traffic_variant": "traffic_12.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10033,
+          "reference_traffic_variant": "traffic_13.rou.xml",
+          "candidate_traffic_variant": "traffic_13.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10034,
+          "reference_traffic_variant": "traffic_14.rou.xml",
+          "candidate_traffic_variant": "traffic_14.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10035,
+          "reference_traffic_variant": "traffic_15.rou.xml",
+          "candidate_traffic_variant": "traffic_15.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10036,
+          "reference_traffic_variant": "traffic_16.rou.xml",
+          "candidate_traffic_variant": "traffic_16.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10037,
+          "reference_traffic_variant": "traffic_17.rou.xml",
+          "candidate_traffic_variant": "traffic_17.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10038,
+          "reference_traffic_variant": "traffic_18.rou.xml",
+          "candidate_traffic_variant": "traffic_18.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10039,
+          "reference_traffic_variant": "traffic_19.rou.xml",
+          "candidate_traffic_variant": "traffic_19.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        }
+      ]
+    },
+    "b_conflict_off": {
+      "orientation": "reference row -> intervention column",
+      "paired_count": 40,
+      "traffic_variant_mismatch_seeds": [],
+      "matrix": {
+        "success": {
+          "success": 6,
+          "collision": 6,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "collision": {
+          "success": 12,
+          "collision": 13,
+          "timeout": 1,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "timeout": {
+          "success": 1,
+          "collision": 1,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        }
+      },
+      "pairs": [
+        {
+          "seed": 10000,
+          "reference_traffic_variant": "traffic_10.rou.xml",
+          "candidate_traffic_variant": "traffic_10.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10001,
+          "reference_traffic_variant": "traffic_11.rou.xml",
+          "candidate_traffic_variant": "traffic_11.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10002,
+          "reference_traffic_variant": "traffic_12.rou.xml",
+          "candidate_traffic_variant": "traffic_12.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10003,
+          "reference_traffic_variant": "traffic_13.rou.xml",
+          "candidate_traffic_variant": "traffic_13.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10004,
+          "reference_traffic_variant": "traffic_14.rou.xml",
+          "candidate_traffic_variant": "traffic_14.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10005,
+          "reference_traffic_variant": "traffic_15.rou.xml",
+          "candidate_traffic_variant": "traffic_15.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10006,
+          "reference_traffic_variant": "traffic_16.rou.xml",
+          "candidate_traffic_variant": "traffic_16.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10007,
+          "reference_traffic_variant": "traffic_17.rou.xml",
+          "candidate_traffic_variant": "traffic_17.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10008,
+          "reference_traffic_variant": "traffic_18.rou.xml",
+          "candidate_traffic_variant": "traffic_18.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10009,
+          "reference_traffic_variant": "traffic_19.rou.xml",
+          "candidate_traffic_variant": "traffic_19.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10010,
+          "reference_traffic_variant": "traffic_20.rou.xml",
+          "candidate_traffic_variant": "traffic_20.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10011,
+          "reference_traffic_variant": "traffic_21.rou.xml",
+          "candidate_traffic_variant": "traffic_21.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10012,
+          "reference_traffic_variant": "traffic_22.rou.xml",
+          "candidate_traffic_variant": "traffic_22.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10013,
+          "reference_traffic_variant": "traffic_23.rou.xml",
+          "candidate_traffic_variant": "traffic_23.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10014,
+          "reference_traffic_variant": "traffic_24.rou.xml",
+          "candidate_traffic_variant": "traffic_24.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10015,
+          "reference_traffic_variant": "traffic_25.rou.xml",
+          "candidate_traffic_variant": "traffic_25.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10016,
+          "reference_traffic_variant": "traffic_26.rou.xml",
+          "candidate_traffic_variant": "traffic_26.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "timeout",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10017,
+          "reference_traffic_variant": "traffic_27.rou.xml",
+          "candidate_traffic_variant": "traffic_27.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10018,
+          "reference_traffic_variant": "traffic_28.rou.xml",
+          "candidate_traffic_variant": "traffic_28.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10019,
+          "reference_traffic_variant": "traffic_29.rou.xml",
+          "candidate_traffic_variant": "traffic_29.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10020,
+          "reference_traffic_variant": "traffic_00.rou.xml",
+          "candidate_traffic_variant": "traffic_00.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10021,
+          "reference_traffic_variant": "traffic_01.rou.xml",
+          "candidate_traffic_variant": "traffic_01.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10022,
+          "reference_traffic_variant": "traffic_02.rou.xml",
+          "candidate_traffic_variant": "traffic_02.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10023,
+          "reference_traffic_variant": "traffic_03.rou.xml",
+          "candidate_traffic_variant": "traffic_03.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10024,
+          "reference_traffic_variant": "traffic_04.rou.xml",
+          "candidate_traffic_variant": "traffic_04.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10025,
+          "reference_traffic_variant": "traffic_05.rou.xml",
+          "candidate_traffic_variant": "traffic_05.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10026,
+          "reference_traffic_variant": "traffic_06.rou.xml",
+          "candidate_traffic_variant": "traffic_06.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "timeout",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10027,
+          "reference_traffic_variant": "traffic_07.rou.xml",
+          "candidate_traffic_variant": "traffic_07.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10028,
+          "reference_traffic_variant": "traffic_08.rou.xml",
+          "candidate_traffic_variant": "traffic_08.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10029,
+          "reference_traffic_variant": "traffic_09.rou.xml",
+          "candidate_traffic_variant": "traffic_09.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10030,
+          "reference_traffic_variant": "traffic_10.rou.xml",
+          "candidate_traffic_variant": "traffic_10.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10031,
+          "reference_traffic_variant": "traffic_11.rou.xml",
+          "candidate_traffic_variant": "traffic_11.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10032,
+          "reference_traffic_variant": "traffic_12.rou.xml",
+          "candidate_traffic_variant": "traffic_12.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10033,
+          "reference_traffic_variant": "traffic_13.rou.xml",
+          "candidate_traffic_variant": "traffic_13.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10034,
+          "reference_traffic_variant": "traffic_14.rou.xml",
+          "candidate_traffic_variant": "traffic_14.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10035,
+          "reference_traffic_variant": "traffic_15.rou.xml",
+          "candidate_traffic_variant": "traffic_15.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10036,
+          "reference_traffic_variant": "traffic_16.rou.xml",
+          "candidate_traffic_variant": "traffic_16.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10037,
+          "reference_traffic_variant": "traffic_17.rou.xml",
+          "candidate_traffic_variant": "traffic_17.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10038,
+          "reference_traffic_variant": "traffic_18.rou.xml",
+          "candidate_traffic_variant": "traffic_18.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10039,
+          "reference_traffic_variant": "traffic_19.rou.xml",
+          "candidate_traffic_variant": "traffic_19.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        }
+      ]
+    },
+    "b_times_off": {
+      "orientation": "reference row -> intervention column",
+      "paired_count": 40,
+      "traffic_variant_mismatch_seeds": [],
+      "matrix": {
+        "success": {
+          "success": 3,
+          "collision": 9,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "collision": {
+          "success": 6,
+          "collision": 19,
+          "timeout": 1,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "timeout": {
+          "success": 2,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0,
+          "unknown": 0
+        }
+      },
+      "pairs": [
+        {
+          "seed": 10000,
+          "reference_traffic_variant": "traffic_10.rou.xml",
+          "candidate_traffic_variant": "traffic_10.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10001,
+          "reference_traffic_variant": "traffic_11.rou.xml",
+          "candidate_traffic_variant": "traffic_11.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10002,
+          "reference_traffic_variant": "traffic_12.rou.xml",
+          "candidate_traffic_variant": "traffic_12.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10003,
+          "reference_traffic_variant": "traffic_13.rou.xml",
+          "candidate_traffic_variant": "traffic_13.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10004,
+          "reference_traffic_variant": "traffic_14.rou.xml",
+          "candidate_traffic_variant": "traffic_14.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10005,
+          "reference_traffic_variant": "traffic_15.rou.xml",
+          "candidate_traffic_variant": "traffic_15.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10006,
+          "reference_traffic_variant": "traffic_16.rou.xml",
+          "candidate_traffic_variant": "traffic_16.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10007,
+          "reference_traffic_variant": "traffic_17.rou.xml",
+          "candidate_traffic_variant": "traffic_17.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10008,
+          "reference_traffic_variant": "traffic_18.rou.xml",
+          "candidate_traffic_variant": "traffic_18.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10009,
+          "reference_traffic_variant": "traffic_19.rou.xml",
+          "candidate_traffic_variant": "traffic_19.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10010,
+          "reference_traffic_variant": "traffic_20.rou.xml",
+          "candidate_traffic_variant": "traffic_20.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10011,
+          "reference_traffic_variant": "traffic_21.rou.xml",
+          "candidate_traffic_variant": "traffic_21.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10012,
+          "reference_traffic_variant": "traffic_22.rou.xml",
+          "candidate_traffic_variant": "traffic_22.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10013,
+          "reference_traffic_variant": "traffic_23.rou.xml",
+          "candidate_traffic_variant": "traffic_23.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10014,
+          "reference_traffic_variant": "traffic_24.rou.xml",
+          "candidate_traffic_variant": "traffic_24.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10015,
+          "reference_traffic_variant": "traffic_25.rou.xml",
+          "candidate_traffic_variant": "traffic_25.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10016,
+          "reference_traffic_variant": "traffic_26.rou.xml",
+          "candidate_traffic_variant": "traffic_26.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "timeout",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10017,
+          "reference_traffic_variant": "traffic_27.rou.xml",
+          "candidate_traffic_variant": "traffic_27.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10018,
+          "reference_traffic_variant": "traffic_28.rou.xml",
+          "candidate_traffic_variant": "traffic_28.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10019,
+          "reference_traffic_variant": "traffic_29.rou.xml",
+          "candidate_traffic_variant": "traffic_29.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10020,
+          "reference_traffic_variant": "traffic_00.rou.xml",
+          "candidate_traffic_variant": "traffic_00.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10021,
+          "reference_traffic_variant": "traffic_01.rou.xml",
+          "candidate_traffic_variant": "traffic_01.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10022,
+          "reference_traffic_variant": "traffic_02.rou.xml",
+          "candidate_traffic_variant": "traffic_02.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10023,
+          "reference_traffic_variant": "traffic_03.rou.xml",
+          "candidate_traffic_variant": "traffic_03.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10024,
+          "reference_traffic_variant": "traffic_04.rou.xml",
+          "candidate_traffic_variant": "traffic_04.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10025,
+          "reference_traffic_variant": "traffic_05.rou.xml",
+          "candidate_traffic_variant": "traffic_05.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10026,
+          "reference_traffic_variant": "traffic_06.rou.xml",
+          "candidate_traffic_variant": "traffic_06.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "timeout",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10027,
+          "reference_traffic_variant": "traffic_07.rou.xml",
+          "candidate_traffic_variant": "traffic_07.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10028,
+          "reference_traffic_variant": "traffic_08.rou.xml",
+          "candidate_traffic_variant": "traffic_08.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10029,
+          "reference_traffic_variant": "traffic_09.rou.xml",
+          "candidate_traffic_variant": "traffic_09.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10030,
+          "reference_traffic_variant": "traffic_10.rou.xml",
+          "candidate_traffic_variant": "traffic_10.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10031,
+          "reference_traffic_variant": "traffic_11.rou.xml",
+          "candidate_traffic_variant": "traffic_11.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "timeout"
+        },
+        {
+          "seed": 10032,
+          "reference_traffic_variant": "traffic_12.rou.xml",
+          "candidate_traffic_variant": "traffic_12.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10033,
+          "reference_traffic_variant": "traffic_13.rou.xml",
+          "candidate_traffic_variant": "traffic_13.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10034,
+          "reference_traffic_variant": "traffic_14.rou.xml",
+          "candidate_traffic_variant": "traffic_14.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10035,
+          "reference_traffic_variant": "traffic_15.rou.xml",
+          "candidate_traffic_variant": "traffic_15.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10036,
+          "reference_traffic_variant": "traffic_16.rou.xml",
+          "candidate_traffic_variant": "traffic_16.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "success",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10037,
+          "reference_traffic_variant": "traffic_17.rou.xml",
+          "candidate_traffic_variant": "traffic_17.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "success"
+        },
+        {
+          "seed": 10038,
+          "reference_traffic_variant": "traffic_18.rou.xml",
+          "candidate_traffic_variant": "traffic_18.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        },
+        {
+          "seed": 10039,
+          "reference_traffic_variant": "traffic_19.rou.xml",
+          "candidate_traffic_variant": "traffic_19.rou.xml",
+          "traffic_variant_match": true,
+          "reference_outcome": "collision",
+          "candidate_outcome": "collision"
+        }
+      ]
+    }
+  }
+}

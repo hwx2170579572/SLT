@@ -1,0 +1,229 @@
+schema_version: topo-scene-v2.fast-iteration-contract/v1
+mode: standard
+no_fabrication: true
+created_at: 2026-08-16T11:30:00+08:00
+
+# This is an exploratory/promotion protocol.  It does not replace or mutate the
+# original confirmatory contract; every run is additionally bound to this file's
+# SHA-256 by the fast orchestrator.
+base_contract: experiments/topo_scene_v2/experiment_contract.yaml
+base_contract_sha256: fbabbade013ab2c9ae2a3c9a5b2a42b9c5d1751b244a40316790a739fff95e82
+output_root: results_topo_v2_fast
+candidate_receipt: results_topo_v2_fast/development/candidate_selection.json
+promotion_gate_receipt: results_topo_v2_fast/development/promotion_gate.json
+
+scope:
+  objective: >-
+    Rapidly reject unsafe mechanisms, attribute the remaining cumulative changes,
+    and promote at most one frozen V4/V5 candidate without touching the test split.
+  evidence_role: >-
+    The 20k single-seed stages are screening evidence only.  The 50k two-seed
+    stage is a promotion gate only.  Neither is used for a formal paper claim.
+  formal_rule: >-
+    Only a hash-matched passing promotion gate may unlock the unchanged 100k,
+    ten-seed, six-scenario, 50-episode formal test.
+  historical_rule: >-
+    Historical and interrupted runs may motivate the anchors but are never pooled
+    into fast-v2 outcome estimates.
+
+fixed_controls:
+  python_environment: llm_pipeline
+  device_preference: cuda
+  workers: 4
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  neighbors: 5
+  history_steps: 10
+  path_length: 10
+  ego_control_profile: direct
+  traffic_protocol: frozen_60_20_20
+  episode_limit_profile: source
+  checkpoint_frequency_raw_steps: 10000
+  evaluation_frequency_raw_steps: 0
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+
+stage_order:
+  - factorial_anchor
+  - merge_probe
+  - query_probe
+  - gated_probe
+  - soft_center
+  - soft_bracket
+  - promotion
+  - formal_test
+
+stages:
+  factorial_anchor:
+    phase: causal_2x2
+    purpose: Gross 2x2 screen of topology and hard per-sample slot normalisation.
+    methods: [temporal_graph, topology_v1, temporal_hard, full_hard]
+    scenarios: [cross, roundabout_medium]
+    seeds: [0]
+    raw_training_steps: 20000
+    final_evaluation_episodes: 12
+    evaluation_split: validation
+    condition: always
+    evidence_role: screening_only
+  merge_probe:
+    phase: v2_merge
+    purpose: Add only the audited symmetric MERGE relation.
+    methods: [v2_merge]
+    scenarios: [cross, roundabout_medium, carla]
+    seeds: [0]
+    raw_training_steps: 20000
+    final_evaluation_episodes: 12
+    evaluation_split: validation
+    condition: factorial_anchor_complete
+    evidence_role: screening_only
+  query_probe:
+    phase: v3_query
+    purpose: Add only route/direction bias, reverse masking, and compatible top-k.
+    methods: [v3_query]
+    scenarios: [cross, roundabout_medium, carla]
+    seeds: [0]
+    raw_training_steps: 20000
+    final_evaluation_episodes: 12
+    evaluation_split: validation
+    condition: merge_probe_complete
+    evidence_role: screening_only
+  gated_probe:
+    phase: v4_gated
+    purpose: Add near-zero residual gates and split route/topology pooling.
+    methods: [v4_gated]
+    scenarios: [cross, roundabout_medium, carla]
+    seeds: [0]
+    raw_training_steps: 20000
+    final_evaluation_episodes: 12
+    evaluation_split: validation
+    condition: query_probe_complete
+    evidence_role: screening_only
+  soft_center:
+    phase: v5_lambda
+    purpose: Test only the centre SoftBalancedSlots coefficient before bracketing.
+    methods: [v5_soft_1e3]
+    scenarios: [roundabout_medium, carla]
+    seeds: [0]
+    raw_training_steps: 20000
+    final_evaluation_episodes: 12
+    evaluation_split: validation
+    condition: gated_probe_safe
+    evidence_role: screening_only
+  soft_bracket:
+    phase: v5_lambda
+    purpose: Conditionally bracket the centre coefficient only after a safe balance gain.
+    methods: [v5_soft_1e4, v5_soft_1e2]
+    scenarios: [roundabout_medium, carla]
+    seeds: [0]
+    raw_training_steps: 20000
+    final_evaluation_episodes: 12
+    evaluation_split: validation
+    condition: soft_center_safe_and_balance_improved
+    evidence_role: screening_only
+  promotion:
+    phase: candidate_validation
+    purpose: Paired medium-budget promotion gate for the frozen screening winner.
+    methods: [temporal_graph, selected_candidate]
+    scenarios: [cross, roundabout_medium, carla]
+    seeds: [0, 1]
+    raw_training_steps: 50000
+    final_evaluation_episodes: 30
+    evaluation_split: validation
+    condition: candidate_frozen
+    evidence_role: promotion_only
+  formal_test:
+    phase: formal_test
+    purpose: Full untouched test comparison after the promotion gate passes.
+    methods: [temporal_graph, selected_candidate]
+    scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+    seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    raw_training_steps: 100000
+    final_evaluation_episodes: 50
+    evaluation_split: test
+    condition: promotion_gate_passed
+    evidence_role: confirmatory
+
+decision_rules:
+  episode_quantum_screen: 0.08333333333333333
+  factorial_anchor:
+    gross_success_drop: 0.08333333333333333
+    gross_collision_increase: 0.08333333333333333
+    rule: >-
+      Reject hard per-sample normalisation for downstream interpretation when its
+      macro success drops by at least one screening episode or collision rises by
+      at least one screening episode relative to matched non-hard cells.
+  merge_probe:
+    rule: >-
+      Report V2-minus-topology-V1 on available matched anchors and exact MERGE
+      diagnostics.  Continue to V3 even when the short-horizon safety effect is
+      null, because V3 tests whether localisation is the missing mediator.
+  query_probe:
+    compatible_attention_mass_min: 0.75
+    topology_fallback_rate_max: 0.15
+    topology_effective_lanes_max: 8.0
+    rule: >-
+      Treat route localisation as mechanism-positive only when all diagnostics
+      are finite and thresholds pass; continue once to V4 to test overwrite.
+  gated_probe:
+    macro_success_drop_max: 0.08333333333333333
+    per_scenario_collision_increase_max: 0.08333333333333333
+    compatible_attention_mass_min: 0.75
+    topology_fallback_rate_max: 0.15
+    topology_effective_lanes_max: 8.0
+    rule: >-
+      V4 may enter the soft-balance stage only if it is finite, mechanism-valid,
+      and does not lose more than one 12-episode outcome quantum against V3.
+  soft_center:
+    macro_success_drop_max: 0.08333333333333333
+    per_scenario_collision_increase_max: 0.08333333333333333
+    minimum_balance_score_improvement: 0.01
+    balance_score: mean_absolute_log_slot_rms_ratio
+    rule: >-
+      Run the outer coefficients only when lambda=1e-3 is safe and reduces the
+      mean absolute log slot-RMS ratio by at least 0.01 relative to V4.
+  candidate_selection:
+    v4_collision_guardrail: 0.08333333333333333
+    success_tie: 0.08333333333333333
+    order:
+      - Reject any soft coefficient exceeding V4 collision by one screening episode in any anchor.
+      - Maximise macro success over Roundabout-B and CARLA.
+      - Within one screening episode, minimise mean absolute log slot-RMS ratio.
+      - If still tied, choose the smaller coefficient, including zero.
+  promotion_gate:
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    compatible_attention_mass_min: 0.75
+    topology_fallback_rate_max: 0.15
+    topology_effective_lanes_max: 8.0
+    positive_effect_any:
+      scenarios: [cross, roundabout_medium, carla]
+      minimum_success_gain: 0.10
+      minimum_collision_reduction: 0.10
+    rule: >-
+      This is a conservative promotion decision, not inferential evidence.  Pass
+      only when all paired outcomes and mechanisms are finite, aggregate success
+      and scenario collision are non-inferior, no paired seed collapses, and one
+      diagnosed scenario shows the predeclared positive effect.
+
+statistics:
+  screening_seed_count: 1
+  promotion_seed_count: 2
+  formal_seed_count: 10
+  formal_hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260815
+  formal_seed_pairing: true
+  formal_multiplicity: Holm correction across six predeclared scenario tests
+  unknown_rule: Unexecuted, interrupted, or rejected cells remain explicit TBD; never impute.
+
+recovery:
+  accepted_runs_are_skipped: true
+  incomplete_directories_are_never_overwritten: true
+  exact_resume_supported: false
+  interruption_rule: Preserve incomplete evidence and restart that job in a new explicitly named recovery run; never splice trajectories.

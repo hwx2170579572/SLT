@@ -1,0 +1,3843 @@
+{
+  "schema_version": "behavior-comparison/v1",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\s2sm_r1_1001",
+  "protocol": {
+    "traffic_protocol": "same_complete_effective_pool_for_train_and_eval; no holdout",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "training_seed": 0,
+    "raw_step_budget": 300,
+    "expected_eval_episodes": 1,
+    "eval_outcome_denominator": "returned evaluation episode_records; a missing/short run remains visible via count vs expected and is never recoded as timeout",
+    "training_terminal_note": "training episodes closed by run truncation are counted as incomplete, not environment timeouts",
+    "continuous_metric_weighting": "raw-tick or action-scalar weighted by each metric's explicit valid sample denominator"
+  },
+  "methods": {
+    "sac_mlp_d1_st_rt_3slot": {
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\s2sm_r1_1001\\sac_mlp_d1_st_rt_3slot__intersection_sorted_depart4p0",
+      "training": {
+        "completed_raw_steps": 300,
+        "requested_raw_step_budget": 300,
+        "updates": 241,
+        "smoke": true,
+        "incomplete_episodes": 1,
+        "episode_outcome_counts_including_incomplete": {
+          "incomplete": 1
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 2.33893140851132,
+          "mean_actual_speed_denominator_speed_samples": 300.0,
+          "stopped_fraction": 0.5766666666666667,
+          "stopped_fraction_denominator_speed_samples": 300.0,
+          "near_unit_bound_fraction": 0.0297029702970297,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 6,
+          "near_unit_bound_denominator_action_scalar_samples": 202,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.0,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 0.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 300.0,
+          "covered_critical_unobserved_fraction": 0.0,
+          "covered_critical_unobserved_numerator_ticks": 0.0,
+          "covered_critical_unobserved_denominator_ticks": 300.0,
+          "coverage_speed_samples_of_raw_records": 1.0,
+          "coverage_risk_evaluable_ticks_of_raw_records": 1.0,
+          "coverage_risk_and_observation_ticks_of_raw_records": 1.0,
+          "raw_records": 300,
+          "decision_records": 101,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 1,
+          "null_reasons": {}
+        },
+        "optimization_samples": 1,
+        "optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 1,
+            "sum": 300.0,
+            "min": 300.0,
+            "max": 300.0,
+            "last": 300.0
+          },
+          "train/learning_rate": {
+            "n": 1,
+            "sum": 0.0001,
+            "min": 0.0001,
+            "max": 0.0001,
+            "last": 0.0001
+          },
+          "train/n_updates": {
+            "n": 1,
+            "sum": 241.0,
+            "min": 241.0,
+            "max": 241.0,
+            "last": 241.0
+          },
+          "train/ent_coef": {
+            "n": 1,
+            "sum": 0.19513072073459625,
+            "min": 0.19513072073459625,
+            "max": 0.19513072073459625,
+            "last": 0.19513072073459625
+          },
+          "train/actor_loss": {
+            "n": 1,
+            "sum": -0.7347067594528198,
+            "min": -0.7347067594528198,
+            "max": -0.7347067594528198,
+            "last": -0.7347067594528198
+          },
+          "train/critic_loss": {
+            "n": 1,
+            "sum": 0.016800394281744957,
+            "min": 0.016800394281744957,
+            "max": 0.016800394281744957,
+            "last": 0.016800394281744957
+          },
+          "train/ent_coef_loss": {
+            "n": 1,
+            "sum": 0.6680328845977783,
+            "min": 0.6680328845977783,
+            "max": 0.6680328845977783,
+            "last": 0.6680328845977783
+          },
+          "diagnostic/diagnostic_valid_query_count": {
+            "n": 1,
+            "sum": 60.0,
+            "min": 60.0,
+            "max": 60.0,
+            "last": 60.0
+          },
+          "diagnostic/diagnostic_batch_size": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_batch_variance_valid": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/context_ego_rms": {
+            "n": 1,
+            "sum": 0.999994695186615,
+            "min": 0.999994695186615,
+            "max": 0.999994695186615,
+            "last": 0.999994695186615
+          },
+          "diagnostic/context_social_rms": {
+            "n": 1,
+            "sum": 0.8555102944374084,
+            "min": 0.8555102944374084,
+            "max": 0.8555102944374084,
+            "last": 0.8555102944374084
+          },
+          "diagnostic/context_route_rms": {
+            "n": 1,
+            "sum": 0.15392230451107025,
+            "min": 0.15392230451107025,
+            "max": 0.15392230451107025,
+            "last": 0.15392230451107025
+          },
+          "diagnostic/context_ego_batch_std_mean": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/context_social_batch_std_mean": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/context_route_batch_std_mean": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/topology_residual_scale": {
+            "n": 1,
+            "sum": 0.0010000000474974513,
+            "min": 0.0010000000474974513,
+            "max": 0.0010000000474974513,
+            "last": 0.0010000000474974513
+          },
+          "diagnostic/goal_residual_scale": {
+            "n": 1,
+            "sum": 0.0010000000474974513,
+            "min": 0.0010000000474974513,
+            "max": 0.0010000000474974513,
+            "last": 0.0010000000474974513
+          },
+          "diagnostic/route_bias_weight": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/heading_bias_weight": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/ego_slot_rms": {
+            "n": 1,
+            "sum": 1.2386126518249512,
+            "min": 1.2386126518249512,
+            "max": 1.2386126518249512,
+            "last": 1.2386126518249512
+          },
+          "diagnostic/ego_slot_batch_std_mean": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/ego_slot_within_sample_std_mean": {
+            "n": 1,
+            "sum": 1.2308655977249146,
+            "min": 1.2308655977249146,
+            "max": 1.2308655977249146,
+            "last": 1.2308655977249146
+          },
+          "diagnostic/ego_slot_dim": {
+            "n": 1,
+            "sum": 32.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/ego_projection_weight_rms": {
+            "n": 1,
+            "sum": 0.11302743852138519,
+            "min": 0.11302743852138519,
+            "max": 0.11302743852138519,
+            "last": 0.11302743852138519
+          },
+          "diagnostic/ego_projection_parameter_count": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/ego_projection_active": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/social_slot_rms": {
+            "n": 1,
+            "sum": 1.0190908908843994,
+            "min": 1.0190908908843994,
+            "max": 1.0190908908843994,
+            "last": 1.0190908908843994
+          },
+          "diagnostic/social_slot_batch_std_mean": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/social_slot_within_sample_std_mean": {
+            "n": 1,
+            "sum": 1.0163805484771729,
+            "min": 1.0163805484771729,
+            "max": 1.0163805484771729,
+            "last": 1.0163805484771729
+          },
+          "diagnostic/social_slot_dim": {
+            "n": 1,
+            "sum": 64.0,
+            "min": 64.0,
+            "max": 64.0,
+            "last": 64.0
+          },
+          "diagnostic/social_projection_weight_rms": {
+            "n": 1,
+            "sum": 0.10175599157810211,
+            "min": 0.10175599157810211,
+            "max": 0.10175599157810211,
+            "last": 0.10175599157810211
+          },
+          "diagnostic/social_projection_parameter_count": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/social_projection_active": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/route_slot_rms": {
+            "n": 1,
+            "sum": 0.20890110731124878,
+            "min": 0.20890110731124878,
+            "max": 0.20890110731124878,
+            "last": 0.20890110731124878
+          },
+          "diagnostic/route_slot_batch_std_mean": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/route_slot_within_sample_std_mean": {
+            "n": 1,
+            "sum": 0.19917351007461548,
+            "min": 0.19917351007461548,
+            "max": 0.19917351007461548,
+            "last": 0.19917351007461548
+          },
+          "diagnostic/route_slot_dim": {
+            "n": 1,
+            "sum": 32.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/route_projection_weight_rms": {
+            "n": 1,
+            "sum": 0.11175215989351273,
+            "min": 0.11175215989351273,
+            "max": 0.11175215989351273,
+            "last": 0.11175215989351273
+          },
+          "diagnostic/route_projection_parameter_count": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/route_projection_active": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/ego_slot_energy_share": {
+            "n": 1,
+            "sum": 0.5863752961158752,
+            "min": 0.5863752961158752,
+            "max": 0.5863752961158752,
+            "last": 0.5863752961158752
+          },
+          "diagnostic/social_slot_energy_share": {
+            "n": 1,
+            "sum": 0.39694511890411377,
+            "min": 0.39694511890411377,
+            "max": 0.39694511890411377,
+            "last": 0.39694511890411377
+          },
+          "diagnostic/route_slot_energy_share": {
+            "n": 1,
+            "sum": 0.016679618507623672,
+            "min": 0.016679618507623672,
+            "max": 0.016679618507623672,
+            "last": 0.016679618507623672
+          },
+          "diagnostic/slot_sample_energy_correlation_valid": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/slot_batch_variance_valid": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/slot_output_total_dim": {
+            "n": 1,
+            "sum": 128.0,
+            "min": 128.0,
+            "max": 128.0,
+            "last": 128.0
+          },
+          "diagnostic/mlp_output_head_active": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/slot_sample_energy_ego_social_corr": {
+            "n": 1,
+            "sum": -0.6567093729972839,
+            "min": -0.6567093729972839,
+            "max": -0.6567093729972839,
+            "last": -0.6567093729972839
+          },
+          "diagnostic/slot_sample_energy_social_route_corr": {
+            "n": 1,
+            "sum": -0.11979900300502777,
+            "min": -0.11979900300502777,
+            "max": -0.11979900300502777,
+            "last": -0.11979900300502777
+          },
+          "diagnostic/slot_sample_energy_ego_route_corr": {
+            "n": 1,
+            "sum": -0.3678557276725769,
+            "min": -0.3678557276725769,
+            "max": -0.3678557276725769,
+            "last": -0.3678557276725769
+          },
+          "diagnostic/spatial_graph_input_rms": {
+            "n": 1,
+            "sum": 0.9999994039535522,
+            "min": 0.9999994039535522,
+            "max": 0.9999994039535522,
+            "last": 0.9999994039535522
+          },
+          "diagnostic/spatial_graph_output_rms": {
+            "n": 1,
+            "sum": 1.0000061988830566,
+            "min": 1.0000061988830566,
+            "max": 1.0000061988830566,
+            "last": 1.0000061988830566
+          },
+          "diagnostic/spatial_message_delta_rms": {
+            "n": 1,
+            "sum": 1.137623906135559,
+            "min": 1.137623906135559,
+            "max": 1.137623906135559,
+            "last": 1.137623906135559
+          },
+          "diagnostic/spatial_message_delta_relative_rms": {
+            "n": 1,
+            "sum": 1.1376246213912964,
+            "min": 1.1376246213912964,
+            "max": 1.1376246213912964,
+            "last": 1.1376246213912964
+          },
+          "diagnostic/spatial_valid_frame_count": {
+            "n": 1,
+            "sum": 60.0,
+            "min": 60.0,
+            "max": 60.0,
+            "last": 60.0
+          },
+          "diagnostic/history_valid_frames_per_actor_mean": {
+            "n": 1,
+            "sum": 10.0,
+            "min": 10.0,
+            "max": 10.0,
+            "last": 10.0
+          },
+          "diagnostic/history_single_valid_frame_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/history_valid_actor_count": {
+            "n": 1,
+            "sum": 6.0,
+            "min": 6.0,
+            "max": 6.0,
+            "last": 6.0
+          },
+          "diagnostic/temporal_output_rms": {
+            "n": 1,
+            "sum": 0.999972939491272,
+            "min": 0.999972939491272,
+            "max": 0.999972939491272,
+            "last": 0.999972939491272
+          },
+          "diagnostic/temporal_delta_from_last_frame_rms": {
+            "n": 1,
+            "sum": 0.7809122204780579,
+            "min": 0.7809122204780579,
+            "max": 0.7809122204780579,
+            "last": 0.7809122204780579
+          },
+          "diagnostic/temporal_delta_relative_rms": {
+            "n": 1,
+            "sum": 0.7809084057807922,
+            "min": 0.7809084057807922,
+            "max": 0.7809084057807922,
+            "last": 0.7809084057807922
+          },
+          "diagnostic/temporal_valid_actor_count": {
+            "n": 1,
+            "sum": 6.0,
+            "min": 6.0,
+            "max": 6.0,
+            "last": 6.0
+          },
+          "diagnostic/social_attention_entropy": {
+            "n": 1,
+            "sum": 1.7463252544403076,
+            "min": 1.7463252544403076,
+            "max": 1.7463252544403076,
+            "last": 1.7463252544403076
+          },
+          "diagnostic/social_attention_effective_actor_count": {
+            "n": 1,
+            "sum": 5.733495235443115,
+            "min": 5.733495235443115,
+            "max": 5.733495235443115,
+            "last": 5.733495235443115
+          },
+          "diagnostic/social_attention_ego_self_mass": {
+            "n": 1,
+            "sum": 0.1294824182987213,
+            "min": 0.1294824182987213,
+            "max": 0.1294824182987213,
+            "last": 0.1294824182987213
+          },
+          "diagnostic/social_attention_non_ego_mass": {
+            "n": 1,
+            "sum": 0.8705176115036011,
+            "min": 0.8705176115036011,
+            "max": 0.8705176115036011,
+            "last": 0.8705176115036011
+          },
+          "diagnostic/social_attention_valid_actor_count_mean": {
+            "n": 1,
+            "sum": 6.0,
+            "min": 6.0,
+            "max": 6.0,
+            "last": 6.0
+          },
+          "diagnostic/social_attention_query_count": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/route_valid_path_count_mean": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/route_empty_path_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/route_nonempty_actor_count": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/route_path_count_valid_actor_mean": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/route_attention_entropy_nonempty": {
+            "n": 1,
+            "sum": 0.6931471824645996,
+            "min": 0.6931471824645996,
+            "max": 0.6931471824645996,
+            "last": 0.6931471824645996
+          },
+          "diagnostic/route_attention_effective_paths_nonempty": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/route_attention_query_count": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_forward_index": {
+            "n": 1,
+            "sum": 6.0,
+            "min": 6.0,
+            "max": 6.0,
+            "last": 6.0
+          },
+          "diagnostic/diagnostic_sample_forward_index": {
+            "n": 1,
+            "sum": 5.0,
+            "min": 5.0,
+            "max": 5.0,
+            "last": 5.0
+          },
+          "diagnostic/diagnostic_sample_index": {
+            "n": 1,
+            "sum": 5.0,
+            "min": 5.0,
+            "max": 5.0,
+            "last": 5.0
+          },
+          "diagnostic/diagnostic_sample_count": {
+            "n": 1,
+            "sum": 5.0,
+            "min": 5.0,
+            "max": 5.0,
+            "last": 5.0
+          },
+          "diagnostic/diagnostic_sample_age_forwards": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sampled": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/diagnostic_sample_every": {
+            "n": 1,
+            "sum": 256.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/diagnostic_source_code": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_source_code": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_batch_size": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_grad_enabled": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/diagnostic_sample_site_code": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_site_forward_index": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_current_site_forward_index": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/diagnostic_sample_update_index": {
+            "n": 1,
+            "sum": -1.0,
+            "min": -1.0,
+            "max": -1.0,
+            "last": -1.0
+          },
+          "diagnostic/diagnostic_sample_output_requires_grad": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/diagnostic_sample_parameters_require_grad": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_tensors": {
+            "n": 1,
+            "sum": 135.0,
+            "min": 135.0,
+            "max": 135.0,
+            "last": 135.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_elements": {
+            "n": 1,
+            "sum": 1057988.0,
+            "min": 1057988.0,
+            "max": 1057988.0,
+            "last": 1057988.0
+          },
+          "diagnostic/encoder_grad/encoder_all/requires_grad_elements": {
+            "n": 1,
+            "sum": 1057988.0,
+            "min": 1057988.0,
+            "max": 1057988.0,
+            "last": 1057988.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_tensors": {
+            "n": 1,
+            "sum": 81.0,
+            "min": 81.0,
+            "max": 81.0,
+            "last": 81.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 586624.0,
+            "min": 586624.0,
+            "max": 586624.0,
+            "last": 586624.0
+          },
+          "diagnostic/encoder_grad/encoder_all/missing_gradient_elements": {
+            "n": 1,
+            "sum": 471364.0,
+            "min": 471364.0,
+            "max": 471364.0,
+            "last": 471364.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.5544713172550161,
+            "min": 0.5544713172550161,
+            "max": 0.5544713172550161,
+            "last": 0.5544713172550161
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_elements_examined": {
+            "n": 1,
+            "sum": 586624.0,
+            "min": 586624.0,
+            "max": 586624.0,
+            "last": 586624.0
+          },
+          "diagnostic/encoder_grad/state_encoder/parameter_tensors": {
+            "n": 1,
+            "sum": 4.0,
+            "min": 4.0,
+            "max": 4.0,
+            "last": 4.0
+          },
+          "diagnostic/encoder_grad/state_encoder/parameter_elements": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_grad/state_encoder/requires_grad_elements": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_tensors": {
+            "n": 1,
+            "sum": 4.0,
+            "min": 4.0,
+            "max": 4.0,
+            "last": 4.0
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_grad/state_encoder/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_elements_examined": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/parameter_tensors": {
+            "n": 1,
+            "sum": 12.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/parameter_elements": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/requires_grad_elements": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_tensors": {
+            "n": 1,
+            "sum": 12.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_elements_examined": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 19.0,
+            "min": 19.0,
+            "max": 19.0,
+            "last": 19.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/parameter_elements": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/requires_grad_elements": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_tensors": {
+            "n": 1,
+            "sum": 19.0,
+            "min": 19.0,
+            "max": 19.0,
+            "last": 19.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_elements_examined": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_grad/social_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/social_attention/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/social_attention/requires_grad_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/social_attention/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_elements_examined": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/parameter_tensors": {
+            "n": 1,
+            "sum": 12.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/parameter_elements": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/requires_grad_elements": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_tensors": {
+            "n": 1,
+            "sum": 12.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_elements_examined": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/requires_grad_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_elements_examined": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/requires_grad_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_elements_examined": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/route_modulation/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/route_modulation/parameter_elements": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/route_modulation/requires_grad_elements": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/route_modulation/gradient_tensors": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_modulation/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_modulation/missing_gradient_elements": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/route_modulation/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_modulation/gradient_elements_examined": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_modulation/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_modulation/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/parameter_tensors": {
+            "n": 1,
+            "sum": 24.0,
+            "min": 24.0,
+            "max": 24.0,
+            "last": 24.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/parameter_elements": {
+            "n": 1,
+            "sum": 255936.0,
+            "min": 255936.0,
+            "max": 255936.0,
+            "last": 255936.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/requires_grad_elements": {
+            "n": 1,
+            "sum": 255936.0,
+            "min": 255936.0,
+            "max": 255936.0,
+            "last": 255936.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/gradient_tensors": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/missing_gradient_elements": {
+            "n": 1,
+            "sum": 255936.0,
+            "min": 255936.0,
+            "max": 255936.0,
+            "last": 255936.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/gradient_elements_examined": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/requires_grad_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/gradient_tensors": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/missing_gradient_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/gradient_elements_examined": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/requires_grad_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/gradient_tensors": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/missing_gradient_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/gradient_elements_examined": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/parameter_tensors": {
+            "n": 1,
+            "sum": 6.0,
+            "min": 6.0,
+            "max": 6.0,
+            "last": 6.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/parameter_elements": {
+            "n": 1,
+            "sum": 514.0,
+            "min": 514.0,
+            "max": 514.0,
+            "last": 514.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/requires_grad_elements": {
+            "n": 1,
+            "sum": 514.0,
+            "min": 514.0,
+            "max": 514.0,
+            "last": 514.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 256.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/missing_gradient_elements": {
+            "n": 1,
+            "sum": 258.0,
+            "min": 258.0,
+            "max": 258.0,
+            "last": 258.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.4980544747081712,
+            "min": 0.4980544747081712,
+            "max": 0.4980544747081712,
+            "last": 0.4980544747081712
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_elements_examined": {
+            "n": 1,
+            "sum": 256.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/requires_grad_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_elements_examined": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/requires_grad_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_elements_examined": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/requires_grad_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/missing_gradient_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_elements_examined": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/parameter_tensors": {
+            "n": 1,
+            "sum": 4.0,
+            "min": 4.0,
+            "max": 4.0,
+            "last": 4.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/parameter_elements": {
+            "n": 1,
+            "sum": 65792.0,
+            "min": 65792.0,
+            "max": 65792.0,
+            "last": 65792.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/requires_grad_elements": {
+            "n": 1,
+            "sum": 65792.0,
+            "min": 65792.0,
+            "max": 65792.0,
+            "last": 65792.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/gradient_tensors": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/gradient_parameter_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/missing_gradient_elements": {
+            "n": 1,
+            "sum": 65792.0,
+            "min": 65792.0,
+            "max": 65792.0,
+            "last": 65792.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/gradient_parameter_fraction": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/gradient_elements_examined": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_l2": {
+            "n": 1,
+            "sum": 90.6567446136973,
+            "min": 90.6567446136973,
+            "max": 90.6567446136973,
+            "last": 90.6567446136973
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_l2": {
+            "n": 1,
+            "sum": 9.899190701078652,
+            "min": 9.899190701078652,
+            "max": 9.899190701078652,
+            "last": 9.899190701078652
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.5365341305732727,
+            "min": 0.5365341305732727,
+            "max": 0.5365341305732727,
+            "last": 0.5365341305732727
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 566810.0,
+            "min": 566810.0,
+            "max": 566810.0,
+            "last": 566810.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/state_encoder/parameter_l2": {
+            "n": 1,
+            "sum": 11.740213908440202,
+            "min": 11.740213908440202,
+            "max": 11.740213908440202,
+            "last": 11.740213908440202
+          },
+          "diagnostic/encoder_grad/state_encoder/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_l2": {
+            "n": 1,
+            "sum": 1.6311926017430733,
+            "min": 1.6311926017430733,
+            "max": 1.6311926017430733,
+            "last": 1.6311926017430733
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.18884585797786713,
+            "min": 0.18884585797786713,
+            "max": 0.18884585797786713,
+            "last": 0.18884585797786713
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 16747.0,
+            "min": 16747.0,
+            "max": 16747.0,
+            "last": 16747.0
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/parameter_l2": {
+            "n": 1,
+            "sum": 27.85654995651496,
+            "min": 27.85654995651496,
+            "max": 27.85654995651496,
+            "last": 27.85654995651496
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_l2": {
+            "n": 1,
+            "sum": 4.646968081623312,
+            "min": 4.646968081623312,
+            "max": 4.646968081623312,
+            "last": 4.646968081623312
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.5365341305732727,
+            "min": 0.5365341305732727,
+            "max": 0.5365341305732727,
+            "last": 0.5365341305732727
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 68096.0,
+            "min": 68096.0,
+            "max": 68096.0,
+            "last": 68096.0
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/parameter_l2": {
+            "n": 1,
+            "sum": 34.5917224644776,
+            "min": 34.5917224644776,
+            "max": 34.5917224644776,
+            "last": 34.5917224644776
+          },
+          "diagnostic/encoder_grad/temporal_attention/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_l2": {
+            "n": 1,
+            "sum": 6.232930689166001,
+            "min": 6.232930689166001,
+            "max": 6.232930689166001,
+            "last": 6.232930689166001
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.2013886570930481,
+            "min": 0.2013886570930481,
+            "max": 0.2013886570930481,
+            "last": 0.2013886570930481
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 198522.0,
+            "min": 198522.0,
+            "max": 198522.0,
+            "last": 198522.0
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/social_attention/parameter_l2": {
+            "n": 1,
+            "sum": 22.599233116370495,
+            "min": 22.599233116370495,
+            "max": 22.599233116370495,
+            "last": 22.599233116370495
+          },
+          "diagnostic/encoder_grad/social_attention/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_l2": {
+            "n": 1,
+            "sum": 4.178695381064087,
+            "min": 4.178695381064087,
+            "max": 4.178695381064087,
+            "last": 4.178695381064087
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.1997324377298355,
+            "min": 0.1997324377298355,
+            "max": 0.1997324377298355,
+            "last": 0.1997324377298355
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 66018.0,
+            "min": 66018.0,
+            "max": 66018.0,
+            "last": 66018.0
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/parameter_l2": {
+            "n": 1,
+            "sum": 15.51237882778313,
+            "min": 15.51237882778313,
+            "max": 15.51237882778313,
+            "last": 15.51237882778313
+          },
+          "diagnostic/encoder_grad/map_route_encoder/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_l2": {
+            "n": 1,
+            "sum": 1.706877127443558,
+            "min": 1.706877127443558,
+            "max": 1.706877127443558,
+            "last": 1.706877127443558
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.09464187920093536,
+            "min": 0.09464187920093536,
+            "max": 0.09464187920093536,
+            "last": 0.09464187920093536
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 78931.0,
+            "min": 78931.0,
+            "max": 78931.0,
+            "last": 78931.0
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/parameter_l2": {
+            "n": 1,
+            "sum": 22.64106414876176,
+            "min": 22.64106414876176,
+            "max": 22.64106414876176,
+            "last": 22.64106414876176
+          },
+          "diagnostic/encoder_grad/route_path_attention/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_l2": {
+            "n": 1,
+            "sum": 0.8387830162048588,
+            "min": 0.8387830162048588,
+            "max": 0.8387830162048588,
+            "last": 0.8387830162048588
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.048468396067619324,
+            "min": 0.048468396067619324,
+            "max": 0.048468396067619324,
+            "last": 0.048468396067619324
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 62720.0,
+            "min": 62720.0,
+            "max": 62720.0,
+            "last": 62720.0
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/parameter_l2": {
+            "n": 1,
+            "sum": 22.60995900228649,
+            "min": 22.60995900228649,
+            "max": 22.60995900228649,
+            "last": 22.60995900228649
+          },
+          "diagnostic/encoder_grad/route_goal_attention/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_l2": {
+            "n": 1,
+            "sum": 0.8456673245455861,
+            "min": 0.8456673245455861,
+            "max": 0.8456673245455861,
+            "last": 0.8456673245455861
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.0773729532957077,
+            "min": 0.0773729532957077,
+            "max": 0.0773729532957077,
+            "last": 0.0773729532957077
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 58752.0,
+            "min": 58752.0,
+            "max": 58752.0,
+            "last": 58752.0
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route_modulation/parameter_l2": {
+            "n": 1,
+            "sum": 0.7655489500309055,
+            "min": 0.7655489500309055,
+            "max": 0.7655489500309055,
+            "last": 0.7655489500309055
+          },
+          "diagnostic/encoder_grad/route_modulation/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/parameter_l2": {
+            "n": 1,
+            "sum": 47.68858537751806,
+            "min": 47.68858537751806,
+            "max": 47.68858537751806,
+            "last": 47.68858537751806
+          },
+          "diagnostic/encoder_grad/topology_lane_encoder/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/parameter_l2": {
+            "n": 1,
+            "sum": 22.66427108810247,
+            "min": 22.66427108810247,
+            "max": 22.66427108810247,
+            "last": 22.66427108810247
+          },
+          "diagnostic/encoder_grad/topology_vehicle_query/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_goal_query/parameter_l2": {
+            "n": 1,
+            "sum": 22.613630171884406,
+            "min": 22.613630171884406,
+            "max": 22.613630171884406,
+            "last": 22.613630171884406
+          },
+          "diagnostic/encoder_grad/topology_goal_query/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/parameter_l2": {
+            "n": 1,
+            "sum": 16.000000062500007,
+            "min": 16.000000062500007,
+            "max": 16.000000062500007,
+            "last": 16.000000062500007
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_l2": {
+            "n": 1,
+            "sum": 0.20183478175879585,
+            "min": 0.20183478175879585,
+            "max": 0.20183478175879585,
+            "last": 0.20183478175879585
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.05330974981188774,
+            "min": 0.05330974981188774,
+            "max": 0.05330974981188774,
+            "last": 0.05330974981188774
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 256.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_l2": {
+            "n": 1,
+            "sum": 7.233836032241915,
+            "min": 7.233836032241915,
+            "max": 7.233836032241915,
+            "last": 7.233836032241915
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_l2": {
+            "n": 1,
+            "sum": 2.107148702584321,
+            "min": 2.107148702584321,
+            "max": 2.107148702584321,
+            "last": 2.107148702584321
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.2194259911775589,
+            "min": 0.2194259911775589,
+            "max": 0.2194259911775589,
+            "last": 0.2194259911775589
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_l2": {
+            "n": 1,
+            "sum": 9.209968286078585,
+            "min": 9.209968286078585,
+            "max": 9.209968286078585,
+            "last": 9.209968286078585
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_l2": {
+            "n": 1,
+            "sum": 2.8959864697247113,
+            "min": 2.8959864697247113,
+            "max": 2.8959864697247113,
+            "last": 2.8959864697247113
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.18562377989292145,
+            "min": 0.18562377989292145,
+            "max": 0.18562377989292145,
+            "last": 0.18562377989292145
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_l2": {
+            "n": 1,
+            "sum": 7.151973514203998,
+            "min": 7.151973514203998,
+            "max": 7.151973514203998,
+            "last": 7.151973514203998
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_l2": {
+            "n": 1,
+            "sum": 0.4340253012445495,
+            "min": 0.4340253012445495,
+            "max": 0.4340253012445495,
+            "last": 0.4340253012445495
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_max_abs": {
+            "n": 1,
+            "sum": 0.0974811464548111,
+            "min": 0.0974811464548111,
+            "max": 0.0974811464548111,
+            "last": 0.0974811464548111
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_nonzero_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/mlp_readout/parameter_l2": {
+            "n": 1,
+            "sum": 17.90281885696163,
+            "min": 17.90281885696163,
+            "max": 17.90281885696163,
+            "last": 17.90281885696163
+          },
+          "diagnostic/encoder_grad/mlp_readout/parameter_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.10919419998214878,
+            "min": 0.10919419998214878,
+            "max": 0.10919419998214878,
+            "last": 0.10919419998214878
+          },
+          "diagnostic/encoder_grad/state_encoder/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.1389406202020209,
+            "min": 0.1389406202020209,
+            "max": 0.1389406202020209,
+            "last": 0.1389406202020209
+          },
+          "diagnostic/encoder_grad/spatial_vehicle_messages/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.16681778931265323,
+            "min": 0.16681778931265323,
+            "max": 0.16681778931265323,
+            "last": 0.16681778931265323
+          },
+          "diagnostic/encoder_grad/temporal_attention/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.1801856121957103,
+            "min": 0.1801856121957103,
+            "max": 0.1801856121957103,
+            "last": 0.1801856121957103
+          },
+          "diagnostic/encoder_grad/social_attention/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.1849043000506558,
+            "min": 0.1849043000506558,
+            "max": 0.1849043000506558,
+            "last": 0.1849043000506558
+          },
+          "diagnostic/encoder_grad/map_route_encoder/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.11003322871321905,
+            "min": 0.11003322871321905,
+            "max": 0.11003322871321905,
+            "last": 0.11003322871321905
+          },
+          "diagnostic/encoder_grad/route_path_attention/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.03704697847652765,
+            "min": 0.03704697847652765,
+            "max": 0.03704697847652765,
+            "last": 0.03704697847652765
+          },
+          "diagnostic/encoder_grad/route_goal_attention/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.03740242626977191,
+            "min": 0.03740242626977191,
+            "max": 0.03740242626977191,
+            "last": 0.03740242626977191
+          },
+          "diagnostic/encoder_grad/topology_fusion_norms_scales/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.012614673810648666,
+            "min": 0.012614673810648666,
+            "max": 0.012614673810648666,
+            "last": 0.012614673810648666
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.2912906365574991,
+            "min": 0.2912906365574991,
+            "max": 0.2912906365574991,
+            "last": 0.2912906365574991
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.3144404388560346,
+            "min": 0.3144404388560346,
+            "max": 0.3144404388560346,
+            "last": 0.3144404388560346
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_to_parameter_l2": {
+            "n": 1,
+            "sum": 0.0606860890050228,
+            "min": 0.0606860890050228,
+            "max": 0.0606860890050228,
+            "last": 0.0606860890050228
+          },
+          "diagnostic/critic_td_update_index": {
+            "n": 1,
+            "sum": 1.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_update/state_encoder/parameter_tensors": {
+            "n": 1,
+            "sum": 4.0,
+            "min": 4.0,
+            "max": 4.0,
+            "last": 4.0
+          },
+          "diagnostic/encoder_update/state_encoder/parameter_elements": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_update/state_encoder/trainable_elements": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_update/state_encoder/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 17280.0,
+            "min": 17280.0,
+            "max": 17280.0,
+            "last": 17280.0
+          },
+          "diagnostic/encoder_update/state_encoder/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/parameter_tensors": {
+            "n": 1,
+            "sum": 12.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/parameter_elements": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/trainable_elements": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 68608.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/temporal_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 19.0,
+            "min": 19.0,
+            "max": 19.0,
+            "last": 19.0
+          },
+          "diagnostic/encoder_update/temporal_attention/parameter_elements": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_update/temporal_attention/trainable_elements": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_update/temporal_attention/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 200064.0,
+            "min": 200064.0,
+            "max": 200064.0,
+            "last": 200064.0
+          },
+          "diagnostic/encoder_update/temporal_attention/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/social_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_update/social_attention/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/social_attention/trainable_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/social_attention/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/social_attention/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/parameter_tensors": {
+            "n": 1,
+            "sum": 12.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/parameter_elements": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/trainable_elements": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 85504.0,
+            "min": 85504.0,
+            "max": 85504.0,
+            "last": 85504.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_path_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_update/route_path_attention/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/route_path_attention/trainable_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/route_path_attention/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/route_path_attention/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/trainable_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_modulation/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/route_modulation/parameter_elements": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/route_modulation/trainable_elements": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/route_modulation/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/route_modulation/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/parameter_tensors": {
+            "n": 1,
+            "sum": 24.0,
+            "min": 24.0,
+            "max": 24.0,
+            "last": 24.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/parameter_elements": {
+            "n": 1,
+            "sum": 255936.0,
+            "min": 255936.0,
+            "max": 255936.0,
+            "last": 255936.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/trainable_elements": {
+            "n": 1,
+            "sum": 255936.0,
+            "min": 255936.0,
+            "max": 255936.0,
+            "last": 255936.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 255936.0,
+            "min": 255936.0,
+            "max": 255936.0,
+            "last": 255936.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/trainable_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/parameter_tensors": {
+            "n": 1,
+            "sum": 8.0,
+            "min": 8.0,
+            "max": 8.0,
+            "last": 8.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/parameter_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/trainable_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 66048.0,
+            "min": 66048.0,
+            "max": 66048.0,
+            "last": 66048.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/parameter_tensors": {
+            "n": 1,
+            "sum": 6.0,
+            "min": 6.0,
+            "max": 6.0,
+            "last": 6.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/parameter_elements": {
+            "n": 1,
+            "sum": 514.0,
+            "min": 514.0,
+            "max": 514.0,
+            "last": 514.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/trainable_elements": {
+            "n": 1,
+            "sum": 514.0,
+            "min": 514.0,
+            "max": 514.0,
+            "last": 514.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 514.0,
+            "min": 514.0,
+            "max": 514.0,
+            "last": 514.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/slot_ego/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/slot_ego/parameter_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_ego/trainable_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_ego/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_ego/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/slot_social/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/slot_social/parameter_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_update/slot_social/trainable_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_update/slot_social/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_update/slot_social/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/slot_route/parameter_tensors": {
+            "n": 1,
+            "sum": 2.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_update/slot_route/parameter_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_route/trainable_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_route/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_route/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/mlp_readout/parameter_tensors": {
+            "n": 1,
+            "sum": 4.0,
+            "min": 4.0,
+            "max": 4.0,
+            "last": 4.0
+          },
+          "diagnostic/encoder_update/mlp_readout/parameter_elements": {
+            "n": 1,
+            "sum": 65792.0,
+            "min": 65792.0,
+            "max": 65792.0,
+            "last": 65792.0
+          },
+          "diagnostic/encoder_update/mlp_readout/trainable_elements": {
+            "n": 1,
+            "sum": 65792.0,
+            "min": 65792.0,
+            "max": 65792.0,
+            "last": 65792.0
+          },
+          "diagnostic/encoder_update/mlp_readout/optimizer_owned_elements": {
+            "n": 1,
+            "sum": 65792.0,
+            "min": 65792.0,
+            "max": 65792.0,
+            "last": 65792.0
+          },
+          "diagnostic/encoder_update/mlp_readout/optimizer_nonowned_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/state_encoder/delta_l2": {
+            "n": 1,
+            "sum": 0.013639508629016554,
+            "min": 0.013639508629016554,
+            "max": 0.013639508629016554,
+            "last": 0.013639508629016554
+          },
+          "diagnostic/encoder_update/state_encoder/parameter_l2_before": {
+            "n": 1,
+            "sum": 11.740213908440202,
+            "min": 11.740213908440202,
+            "max": 11.740213908440202,
+            "last": 11.740213908440202
+          },
+          "diagnostic/encoder_update/state_encoder/parameter_l2_after": {
+            "n": 1,
+            "sum": 11.740153453931375,
+            "min": 11.740153453931375,
+            "max": 11.740153453931375,
+            "last": 11.740153453931375
+          },
+          "diagnostic/encoder_update/state_encoder/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/state_encoder/changed_elements": {
+            "n": 1,
+            "sum": 16747.0,
+            "min": 16747.0,
+            "max": 16747.0,
+            "last": 16747.0
+          },
+          "diagnostic/encoder_update/state_encoder/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/delta_l2": {
+            "n": 1,
+            "sum": 0.027563238269096187,
+            "min": 0.027563238269096187,
+            "max": 0.027563238269096187,
+            "last": 0.027563238269096187
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/parameter_l2_before": {
+            "n": 1,
+            "sum": 27.85654995651496,
+            "min": 27.85654995651496,
+            "max": 27.85654995651496,
+            "last": 27.85654995651496
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/parameter_l2_after": {
+            "n": 1,
+            "sum": 27.856723747815014,
+            "min": 27.856723747815014,
+            "max": 27.856723747815014,
+            "last": 27.856723747815014
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010567903518676758,
+            "min": 0.00010567903518676758,
+            "max": 0.00010567903518676758,
+            "last": 0.00010567903518676758
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/changed_elements": {
+            "n": 1,
+            "sum": 68096.0,
+            "min": 68096.0,
+            "max": 68096.0,
+            "last": 68096.0
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/temporal_attention/delta_l2": {
+            "n": 1,
+            "sum": 0.04668760316254322,
+            "min": 0.04668760316254322,
+            "max": 0.04668760316254322,
+            "last": 0.04668760316254322
+          },
+          "diagnostic/encoder_update/temporal_attention/parameter_l2_before": {
+            "n": 1,
+            "sum": 34.5917224644776,
+            "min": 34.5917224644776,
+            "max": 34.5917224644776,
+            "last": 34.5917224644776
+          },
+          "diagnostic/encoder_update/temporal_attention/parameter_l2_after": {
+            "n": 1,
+            "sum": 34.59159909546618,
+            "min": 34.59159909546618,
+            "max": 34.59159909546618,
+            "last": 34.59159909546618
+          },
+          "diagnostic/encoder_update/temporal_attention/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010567903518676758,
+            "min": 0.00010567903518676758,
+            "max": 0.00010567903518676758,
+            "last": 0.00010567903518676758
+          },
+          "diagnostic/encoder_update/temporal_attention/changed_elements": {
+            "n": 1,
+            "sum": 198522.0,
+            "min": 198522.0,
+            "max": 198522.0,
+            "last": 198522.0
+          },
+          "diagnostic/encoder_update/temporal_attention/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/social_attention/delta_l2": {
+            "n": 1,
+            "sum": 0.02711739705590652,
+            "min": 0.02711739705590652,
+            "max": 0.02711739705590652,
+            "last": 0.02711739705590652
+          },
+          "diagnostic/encoder_update/social_attention/parameter_l2_before": {
+            "n": 1,
+            "sum": 22.599233116370495,
+            "min": 22.599233116370495,
+            "max": 22.599233116370495,
+            "last": 22.599233116370495
+          },
+          "diagnostic/encoder_update/social_attention/parameter_l2_after": {
+            "n": 1,
+            "sum": 22.599142566055573,
+            "min": 22.599142566055573,
+            "max": 22.599142566055573,
+            "last": 22.599142566055573
+          },
+          "diagnostic/encoder_update/social_attention/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/social_attention/changed_elements": {
+            "n": 1,
+            "sum": 66018.0,
+            "min": 66018.0,
+            "max": 66018.0,
+            "last": 66018.0
+          },
+          "diagnostic/encoder_update/social_attention/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/delta_l2": {
+            "n": 1,
+            "sum": 0.029568235936239695,
+            "min": 0.029568235936239695,
+            "max": 0.029568235936239695,
+            "last": 0.029568235936239695
+          },
+          "diagnostic/encoder_update/map_route_encoder/parameter_l2_before": {
+            "n": 1,
+            "sum": 15.51237882778313,
+            "min": 15.51237882778313,
+            "max": 15.51237882778313,
+            "last": 15.51237882778313
+          },
+          "diagnostic/encoder_update/map_route_encoder/parameter_l2_after": {
+            "n": 1,
+            "sum": 15.512701774215813,
+            "min": 15.512701774215813,
+            "max": 15.512701774215813,
+            "last": 15.512701774215813
+          },
+          "diagnostic/encoder_update/map_route_encoder/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010567903518676758,
+            "min": 0.00010567903518676758,
+            "max": 0.00010567903518676758,
+            "last": 0.00010567903518676758
+          },
+          "diagnostic/encoder_update/map_route_encoder/changed_elements": {
+            "n": 1,
+            "sum": 78931.0,
+            "min": 78931.0,
+            "max": 78931.0,
+            "last": 78931.0
+          },
+          "diagnostic/encoder_update/map_route_encoder/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_path_attention/delta_l2": {
+            "n": 1,
+            "sum": 0.023981240740702965,
+            "min": 0.023981240740702965,
+            "max": 0.023981240740702965,
+            "last": 0.023981240740702965
+          },
+          "diagnostic/encoder_update/route_path_attention/parameter_l2_before": {
+            "n": 1,
+            "sum": 22.64106414876176,
+            "min": 22.64106414876176,
+            "max": 22.64106414876176,
+            "last": 22.64106414876176
+          },
+          "diagnostic/encoder_update/route_path_attention/parameter_l2_after": {
+            "n": 1,
+            "sum": 22.640895956292773,
+            "min": 22.640895956292773,
+            "max": 22.640895956292773,
+            "last": 22.640895956292773
+          },
+          "diagnostic/encoder_update/route_path_attention/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/route_path_attention/changed_elements": {
+            "n": 1,
+            "sum": 62718.0,
+            "min": 62718.0,
+            "max": 62718.0,
+            "last": 62718.0
+          },
+          "diagnostic/encoder_update/route_path_attention/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/delta_l2": {
+            "n": 1,
+            "sum": 0.025002254680359,
+            "min": 0.025002254680359,
+            "max": 0.025002254680359,
+            "last": 0.025002254680359
+          },
+          "diagnostic/encoder_update/route_goal_attention/parameter_l2_before": {
+            "n": 1,
+            "sum": 22.60995900228649,
+            "min": 22.60995900228649,
+            "max": 22.60995900228649,
+            "last": 22.60995900228649
+          },
+          "diagnostic/encoder_update/route_goal_attention/parameter_l2_after": {
+            "n": 1,
+            "sum": 22.610103473355508,
+            "min": 22.610103473355508,
+            "max": 22.610103473355508,
+            "last": 22.610103473355508
+          },
+          "diagnostic/encoder_update/route_goal_attention/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/route_goal_attention/changed_elements": {
+            "n": 1,
+            "sum": 58752.0,
+            "min": 58752.0,
+            "max": 58752.0,
+            "last": 58752.0
+          },
+          "diagnostic/encoder_update/route_goal_attention/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_modulation/delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_modulation/parameter_l2_before": {
+            "n": 1,
+            "sum": 0.7655489500309055,
+            "min": 0.7655489500309055,
+            "max": 0.7655489500309055,
+            "last": 0.7655489500309055
+          },
+          "diagnostic/encoder_update/route_modulation/parameter_l2_after": {
+            "n": 1,
+            "sum": 0.7655489500309055,
+            "min": 0.7655489500309055,
+            "max": 0.7655489500309055,
+            "last": 0.7655489500309055
+          },
+          "diagnostic/encoder_update/route_modulation/delta_max_abs": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_modulation/changed_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/route_modulation/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/parameter_l2_before": {
+            "n": 1,
+            "sum": 47.68858537751806,
+            "min": 47.68858537751806,
+            "max": 47.68858537751806,
+            "last": 47.68858537751806
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/parameter_l2_after": {
+            "n": 1,
+            "sum": 47.68858537751806,
+            "min": 47.68858537751806,
+            "max": 47.68858537751806,
+            "last": 47.68858537751806
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/delta_max_abs": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/changed_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/parameter_l2_before": {
+            "n": 1,
+            "sum": 22.66427108810247,
+            "min": 22.66427108810247,
+            "max": 22.66427108810247,
+            "last": 22.66427108810247
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/parameter_l2_after": {
+            "n": 1,
+            "sum": 22.66427108810247,
+            "min": 22.66427108810247,
+            "max": 22.66427108810247,
+            "last": 22.66427108810247
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/delta_max_abs": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/changed_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/parameter_l2_before": {
+            "n": 1,
+            "sum": 22.613630171884406,
+            "min": 22.613630171884406,
+            "max": 22.613630171884406,
+            "last": 22.613630171884406
+          },
+          "diagnostic/encoder_update/topology_goal_query/parameter_l2_after": {
+            "n": 1,
+            "sum": 22.613630171884406,
+            "min": 22.613630171884406,
+            "max": 22.613630171884406,
+            "last": 22.613630171884406
+          },
+          "diagnostic/encoder_update/topology_goal_query/delta_max_abs": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/changed_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/delta_l2": {
+            "n": 1,
+            "sum": 0.0016902189109863702,
+            "min": 0.0016902189109863702,
+            "max": 0.0016902189109863702,
+            "last": 0.0016902189109863702
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/parameter_l2_before": {
+            "n": 1,
+            "sum": 16.000000062500007,
+            "min": 16.000000062500007,
+            "max": 16.000000062500007,
+            "last": 16.000000062500007
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/parameter_l2_after": {
+            "n": 1,
+            "sum": 15.999920732116026,
+            "min": 15.999920732116026,
+            "max": 15.999920732116026,
+            "last": 15.999920732116026
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010567903518676758,
+            "min": 0.00010567903518676758,
+            "max": 0.00010567903518676758,
+            "last": 0.00010567903518676758
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/changed_elements": {
+            "n": 1,
+            "sum": 256.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/slot_ego/delta_l2": {
+            "n": 1,
+            "sum": 0.006787465442079741,
+            "min": 0.006787465442079741,
+            "max": 0.006787465442079741,
+            "last": 0.006787465442079741
+          },
+          "diagnostic/encoder_update/slot_ego/parameter_l2_before": {
+            "n": 1,
+            "sum": 7.233836032241915,
+            "min": 7.233836032241915,
+            "max": 7.233836032241915,
+            "last": 7.233836032241915
+          },
+          "diagnostic/encoder_update/slot_ego/parameter_l2_after": {
+            "n": 1,
+            "sum": 7.233756038736917,
+            "min": 7.233756038736917,
+            "max": 7.233756038736917,
+            "last": 7.233756038736917
+          },
+          "diagnostic/encoder_update/slot_ego/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/slot_ego/changed_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_ego/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/slot_social/delta_l2": {
+            "n": 1,
+            "sum": 0.009597991982502916,
+            "min": 0.009597991982502916,
+            "max": 0.009597991982502916,
+            "last": 0.009597991982502916
+          },
+          "diagnostic/encoder_update/slot_social/parameter_l2_before": {
+            "n": 1,
+            "sum": 9.209968286078585,
+            "min": 9.209968286078585,
+            "max": 9.209968286078585,
+            "last": 9.209968286078585
+          },
+          "diagnostic/encoder_update/slot_social/parameter_l2_after": {
+            "n": 1,
+            "sum": 9.209901077760817,
+            "min": 9.209901077760817,
+            "max": 9.209901077760817,
+            "last": 9.209901077760817
+          },
+          "diagnostic/encoder_update/slot_social/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/slot_social/changed_elements": {
+            "n": 1,
+            "sum": 8256.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_update/slot_social/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/slot_route/delta_l2": {
+            "n": 1,
+            "sum": 0.0067853528181252695,
+            "min": 0.0067853528181252695,
+            "max": 0.0067853528181252695,
+            "last": 0.0067853528181252695
+          },
+          "diagnostic/encoder_update/slot_route/parameter_l2_before": {
+            "n": 1,
+            "sum": 7.151973514203998,
+            "min": 7.151973514203998,
+            "max": 7.151973514203998,
+            "last": 7.151973514203998
+          },
+          "diagnostic/encoder_update/slot_route/parameter_l2_after": {
+            "n": 1,
+            "sum": 7.15213845318869,
+            "min": 7.15213845318869,
+            "max": 7.15213845318869,
+            "last": 7.15213845318869
+          },
+          "diagnostic/encoder_update/slot_route/delta_max_abs": {
+            "n": 1,
+            "sum": 0.00010564923286437988,
+            "min": 0.00010564923286437988,
+            "max": 0.00010564923286437988,
+            "last": 0.00010564923286437988
+          },
+          "diagnostic/encoder_update/slot_route/changed_elements": {
+            "n": 1,
+            "sum": 4128.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_update/slot_route/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/mlp_readout/delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/mlp_readout/parameter_l2_before": {
+            "n": 1,
+            "sum": 17.90281885696163,
+            "min": 17.90281885696163,
+            "max": 17.90281885696163,
+            "last": 17.90281885696163
+          },
+          "diagnostic/encoder_update/mlp_readout/parameter_l2_after": {
+            "n": 1,
+            "sum": 17.90281885696163,
+            "min": 17.90281885696163,
+            "max": 17.90281885696163,
+            "last": 17.90281885696163
+          },
+          "diagnostic/encoder_update/mlp_readout/delta_max_abs": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/mlp_readout/changed_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/mlp_readout/delta_nonfinite_elements": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/state_encoder/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0011617768411537137,
+            "min": 0.0011617768411537137,
+            "max": 0.0011617768411537137,
+            "last": 0.0011617768411537137
+          },
+          "diagnostic/encoder_update/spatial_vehicle_messages/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.000989470638400066,
+            "min": 0.000989470638400066,
+            "max": 0.000989470638400066,
+            "last": 0.000989470638400066
+          },
+          "diagnostic/encoder_update/temporal_attention/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0013496755823734115,
+            "min": 0.0013496755823734115,
+            "max": 0.0013496755823734115,
+            "last": 0.0013496755823734115
+          },
+          "diagnostic/encoder_update/social_attention/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0011999255424407806,
+            "min": 0.0011999255424407806,
+            "max": 0.0011999255424407806,
+            "last": 0.0011999255424407806
+          },
+          "diagnostic/encoder_update/map_route_encoder/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0019061058438878575,
+            "min": 0.0019061058438878575,
+            "max": 0.0019061058438878575,
+            "last": 0.0019061058438878575
+          },
+          "diagnostic/encoder_update/route_path_attention/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.001059192296931613,
+            "min": 0.001059192296931613,
+            "max": 0.001059192296931613,
+            "last": 0.001059192296931613
+          },
+          "diagnostic/encoder_update/route_goal_attention/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0011058071656755584,
+            "min": 0.0011058071656755584,
+            "max": 0.0011058071656755584,
+            "last": 0.0011058071656755584
+          },
+          "diagnostic/encoder_update/route_modulation/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_lane_encoder/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_vehicle_query/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_goal_query/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_update/topology_fusion_norms_scales/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.000105638681523997,
+            "min": 0.000105638681523997,
+            "max": 0.000105638681523997,
+            "last": 0.000105638681523997
+          },
+          "diagnostic/encoder_update/slot_ego/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0009382940685726555,
+            "min": 0.0009382940685726555,
+            "max": 0.0009382940685726555,
+            "last": 0.0009382940685726555
+          },
+          "diagnostic/encoder_update/slot_social/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0010421308395828954,
+            "min": 0.0010421308395828954,
+            "max": 0.0010421308395828954,
+            "last": 0.0010421308395828954
+          },
+          "diagnostic/encoder_update/slot_route/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0009487385271560904,
+            "min": 0.0009487385271560904,
+            "max": 0.0009487385271560904,
+            "last": 0.0009487385271560904
+          },
+          "diagnostic/encoder_update/mlp_readout/relative_delta_l2": {
+            "n": 1,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 1,
+            "sum": 0.7108864784240723,
+            "min": 0.7108864784240723,
+            "max": 0.7108864784240723,
+            "last": 0.7108864784240723
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 1,
+            "sum": -0.1337621808052063,
+            "min": -0.1337621808052063,
+            "max": -0.1337621808052063,
+            "last": -0.1337621808052063
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 1,
+            "sum": 0.13796591758728027,
+            "min": 0.13796591758728027,
+            "max": 0.13796591758728027,
+            "last": 0.13796591758728027
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 1,
+            "sum": 0.6268094778060913,
+            "min": 0.6268094778060913,
+            "max": 0.6268094778060913,
+            "last": 0.6268094778060913
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 1,
+            "sum": 0.3760371208190918,
+            "min": 0.3760371208190918,
+            "max": 0.3760371208190918,
+            "last": 0.3760371208190918
+          }
+        }
+      },
+      "evaluation": {
+        "expected_episodes": 1,
+        "complete_episode_denominator": 1,
+        "episode_count_matches_expected": true,
+        "outcome_counts": {
+          "success": 1,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "outcome_rates": {
+          "success": 1.0,
+          "collision": 0.0,
+          "timeout": 0.0,
+          "off_route": 0.0
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 4.8188145245773315,
+          "mean_actual_speed_denominator_speed_samples": 347.0,
+          "stopped_fraction": 0.0,
+          "stopped_fraction_denominator_speed_samples": 347.0,
+          "near_unit_bound_fraction": 0.0,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 0,
+          "near_unit_bound_denominator_action_scalar_samples": 232,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.025936599423631124,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 9.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 347.0,
+          "covered_critical_unobserved_fraction": 0.0,
+          "covered_critical_unobserved_numerator_ticks": 0.0,
+          "covered_critical_unobserved_denominator_ticks": 347.0,
+          "coverage_speed_samples_of_raw_records": 0.9971264367816092,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.9971264367816092,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.9971264367816092,
+          "raw_records": 348,
+          "decision_records": 116,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 1,
+          "null_reasons": {}
+        }
+      },
+      "artifacts": {
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\s2sm_r1_1001\\sac_mlp_d1_st_rt_3slot__intersection_sorted_depart4p0\\evaluation_results.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\s2sm_r1_1001\\sac_mlp_d1_st_rt_3slot__intersection_sorted_depart4p0\\training_complete.json",
+        "train_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\s2sm_r1_1001\\sac_mlp_d1_st_rt_3slot__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\s2sm_r1_1001\\sac_mlp_d1_st_rt_3slot__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,190 @@
+schema_version: topo-scene-v4.9.2.strict-target-only-deployment-contract/v1
+status: locked_before_implementation_and_before_promotion
+created_at_local: '2026-08-26T12:00:00+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  parent_scientific_method: v4_9_learned_collision_value_model
+  parent_scientific_contract: experiments/topo_scene_v4/experiment_contract_v4_9.yaml
+  parent_scientific_contract_sha256: 4a8f39b734357efda228e1981c0a3d1bf956dba2cdd6af0d49cfafa8b7aae16d
+  parent_scientific_freeze: results_topo_v4_9_dev/engineering/implementation_freeze.json
+  parent_scientific_freeze_sha256: 766ff1a0b4856e5f9a07afb43ac7122fdc7d9a63a3ec76e810cdf947eea22a5b
+  parent_acceptance_patch_contract: experiments/topo_scene_v4/experiment_contract_v4_9_1.yaml
+  parent_acceptance_patch_contract_sha256: c2f75d8be80c1001ccde76b36cdbfaadca098f681555c63974b0686b73c1cdd1
+  parent_acceptance_patch_freeze: results_topo_v4_9_1_dev/engineering/implementation_freeze.json
+  parent_acceptance_patch_freeze_sha256: 6f6d43454d5fcc275880a072b1b0d6e9aa2a3ba54d53e125e8f1f464b5b56146
+  completed_development_summary: results_topo_v4_9_dev/development/summary.json
+  completed_development_summary_sha256: 27dcdc5c1cf560f7364080ad4b5671887b870bb6b23ec343e6f7acfc4a6cfbe1
+  completed_development_decision: results_topo_v4_9_dev/development/development_decision.json
+  completed_development_decision_sha256: b0ffaf18245a484ec4567772ae80593887ba1eb7ec32f563a0a90063af9dbbf0
+  complete_model_attribution: results_topo_v4_9_dev/development/attribution/complete_m1_m4_learned_model.json
+  complete_model_attribution_sha256: 2211e0a01be87cde765e782299c246cfa3849de355ea6c1395447235876ea731
+  kinematic_projection_audit: experiments/topo_scene_v4/V4_9_KINEMATIC_PROJECTION_AUDIT_20260826.md
+  kinematic_projection_audit_sha256: 3ce59ffb9ecf69ef097db4d063bc4fc2467ad319d2321838758b4fd89b284072
+  formal_test_accessed: false
+
+trigger:
+  source: user_scientific_constraint
+  statement: inspect_kinematic_safety_projection_do_not_add_rules_improve_the_model
+  interpretation: >-
+    The promotable candidate may use only the learned target-critic policy.
+    A fixed actor-confidence fusion gate, external kinematic projection,
+    threshold veto, geometric unsafe label, or post-decoder action rewrite is
+    outside the allowed method even if it was inherited from an older version.
+  numeric_development_result_used_to_choose_new_hyperparameters: false
+
+single_protocol_change:
+  name: restrict_candidate_deployment_to_learned_target_critic
+  scientific_model_changed_from_v4_9: false
+  training_loss_changed_from_v4_9: false
+  collision_supervision_changed_from_v4_9: false
+  checkpoint_candidates: [highest_training_success, exact_final]
+  deployment_decoder_candidates: [target_critic]
+  checkpoint_decoder_candidate_pairs: 2
+  selector: tie_only_replicated_target_only_checkpoint_selector
+  selector_partition: train
+  validation_used_for_selection: false
+  formal_test_used_for_selection: false
+  secondary_calibration_trigger: empirical_target_checkpoint_tie_only
+  final_fallback: prefer_exact_final_if_still_tied
+  fusion_0_90_candidate_present: false
+  actor_confidence_threshold_present: false
+  external_kinematic_projection: false
+  headway_or_ttc_threshold: false
+  lane_change_veto: false
+  manual_geometry_collision_label: false
+  action_postprocessing_override: false
+
+frozen_learned_model:
+  name: learned_twin_collision_value_model
+  supervision_source: observed_environment_info_collision
+  future_or_oracle_labels_used: false
+  collision_critics: 2
+  online_and_target_networks: true
+  probability_link: sigmoid
+  pessimistic_twin_aggregation: maximum
+  actor_objective: reward_sac_objective_plus_lambda_expected_collision_value
+  deterministic_model_score: minimum_reward_q_minus_lambda_maximum_collision_value
+  collision_risk_coef: 1.0
+  reward_changed: false
+  observation_or_action_space_changed: false
+  topology_temporal_graph_slt_backbone_changed: false
+  return_estimator_changed: false
+  n_step: 16
+  bootstrap_discount: gamma_power_actual_horizon
+
+development_adoption:
+  purpose: protocol_compliance_equivalence_only
+  fresh_training_required: false
+  existing_validation_metrics_may_be_adopted_only_if_all_conditions_hold: true
+  conditions:
+    parent_development_decision_passed: true
+    all_four_parent_selected_decoders_are_target_critic: true
+    target_only_selector_recomputed_from_immutable_train_calibration: true
+    target_only_selected_checkpoint_matches_parent_for_all_four_cells: true
+    selected_source_checkpoint_sha256_matches_parent_for_all_four_cells: true
+    selected_model_parameter_state_sha256_matches_parent_for_all_four_cells: true
+    completed_run_artifacts_modified: false
+    validation_or_formal_data_used_for_reselection: false
+  ordered_cells: [M1, M2, M3, M4]
+  on_equivalence_pass: run_fresh_promotion
+  on_equivalence_fail: run_fresh_v4_9_2_development_before_promotion
+
+fixed_runtime:
+  python_executable: D:/Programs/Anaconda/envs/llm_pipeline/python.exe
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 16
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  promotion_partition: validation
+  formal_partition: test
+
+promotion:
+  fresh_training_required: true
+  execution_policy: attempt_all_then_summarize
+  failure_does_not_cancel_remaining_jobs: true
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [20, 21]
+  raw_training_steps: 50000
+  primary_calibration_seed_start_formula: 170000 + 1000 * (training_seed - 20)
+  secondary_calibration_seed_start_formula: 170100 + 1000 * (training_seed - 20)
+  primary_calibration_episodes_per_pair: 12
+  secondary_calibration_episodes_per_tied_pair: 12
+  evaluation_episodes: 30
+  evaluation_split: validation
+  evaluation_seed_start_formula: 270000 + 1000 * (training_seed - 20)
+  jobs: 12
+  thresholds:
+    candidate_development_guards_each_seed: true
+    all_candidate_off_route_zero: true
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+  on_complete_pass: unlock_untouched_formal_test
+  on_complete_fail: attribute_then_create_versioned_shared_collision_representation_model
+
+formal_test:
+  locked: true
+  accessed: false
+  unlock_condition: complete_fresh_v4_9_2_promotion_gate_pass
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  primary_calibration_seed_start_formula: 310000 + 1000 * training_seed
+  secondary_calibration_seed_start_formula: 310100 + 1000 * training_seed
+  evaluation_episodes: 50
+  evaluation_split: test
+  evaluation_seed_start_formula: 510000 + 1000 * training_seed
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260825
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+required_model_evidence:
+  selected_deployment_decoder_exactly_target_critic: true
+  fusion_candidate_absent: true
+  actor_confidence_threshold_absent: true
+  collision_label_diagnostics: true
+  collision_critic_loss_finite: true
+  collision_value_bounded: true
+  risk_adjusted_score_equation_match_rate: 1.0
+  selected_action_mask_feasible_rate: 1.0
+  learned_collision_critics_survive_serialization: true
+  external_kinematic_projection: false
+  inference_safety_rule_added: false
+  formal_test_accessed_before_unlock: false
+
+fallback_model_hypothesis_if_promotion_fails:
+  version: v4_10
+  hypothesis: >-
+    The independent sparse collision encoder and detached reward-oriented actor
+    representation limit cross-scenario risk calibration and continuous speed
+    proposals; collision heads should learn on a shared stable representation.
+  allowed_change: learned_shared_collision_representation_and_training_objective
+  forbidden_changes:
+    - kinematic_projection
+    - ttc_or_headway_threshold
+    - confidence_gate
+    - geometry_unsafe_label
+    - lane_veto
+    - post_decoder_action_rewrite
+
+unknown_rule: Missing, interrupted, rejected, or protocol-incompatible evidence remains TBD.

@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "arm": "route_lane_veto",
+  "pid": 82064,
+  "error": "NameError: name 'critical_eval_predictor_holder' is not defined",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py\", line 1974, in _evaluate_saved\n    critical_eval_predictor_holder[\"predictor\"] = evaluator_model\nNameError: name 'critical_eval_predictor_holder' is not defined\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diagnose_sorted_goalonly_causal_20261002.py\", line 719, in _worker_main\n    result = d1._evaluate_d1(\n  File \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py\", line 2270, in _evaluate_d1\n    summary, records = _evaluate_saved(\n  File \"D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py\", line 2003, in _evaluate_saved\n    critical_eval_predictor_holder[\"predictor\"] = None\nNameError: name 'critical_eval_predictor_holder' is not defined\n",
+  "failed_unix": 1790929406.325873
+}

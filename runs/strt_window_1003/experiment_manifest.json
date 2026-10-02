@@ -1,0 +1,239 @@
+{
+  "schema_version": "strt_decision_window_intervention_v1",
+  "status": "aborted",
+  "training": false,
+  "simulator_started": false,
+  "scenario": "intersection_sorted",
+  "depart_scale": 4.0,
+  "traffic_split": "validation",
+  "method": "sac_mlp_d1_st_rt",
+  "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+  "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+  "reference_evaluation": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\srtact_1002\\control\\evaluation_results.json",
+  "reference_decision_stream": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\srtact_1002\\control\\diagnostics\\eval\\decisions.jsonl.gz",
+  "case_selection": "outcome-stratified; first 8 collision and first 4 success by ascending logical validation seed; not a population-rate estimator",
+  "cases": [
+    {
+      "seed": 10004,
+      "outcome": "collision",
+      "raw_steps": 177,
+      "decision_steps": 59
+    },
+    {
+      "seed": 10006,
+      "outcome": "collision",
+      "raw_steps": 217,
+      "decision_steps": 73
+    },
+    {
+      "seed": 10007,
+      "outcome": "collision",
+      "raw_steps": 285,
+      "decision_steps": 95
+    },
+    {
+      "seed": 10008,
+      "outcome": "collision",
+      "raw_steps": 301,
+      "decision_steps": 101
+    },
+    {
+      "seed": 10010,
+      "outcome": "collision",
+      "raw_steps": 268,
+      "decision_steps": 90
+    },
+    {
+      "seed": 10013,
+      "outcome": "collision",
+      "raw_steps": 329,
+      "decision_steps": 110
+    },
+    {
+      "seed": 10015,
+      "outcome": "collision",
+      "raw_steps": 233,
+      "decision_steps": 78
+    },
+    {
+      "seed": 10016,
+      "outcome": "collision",
+      "raw_steps": 186,
+      "decision_steps": 62
+    },
+    {
+      "seed": 10000,
+      "outcome": "success",
+      "raw_steps": 372,
+      "decision_steps": 124
+    },
+    {
+      "seed": 10001,
+      "outcome": "success",
+      "raw_steps": 249,
+      "decision_steps": 83
+    },
+    {
+      "seed": 10002,
+      "outcome": "success",
+      "raw_steps": 270,
+      "decision_steps": 90
+    },
+    {
+      "seed": 10003,
+      "outcome": "success",
+      "raw_steps": 276,
+      "decision_steps": 92
+    }
+  ],
+  "identity_replay_seeds": [
+    10004,
+    10000
+  ],
+  "runtime_sources": {
+    "fast-developer/train_intersection_yield_v2.py": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e",
+    "fast-developer/train_intersection_yield_v2_d1.py": "b133deb4fa7c52b4ff7b3967e4e2e24e1ab8aa549be01e81ef5249b4b4770bfd",
+    "fast-developer/behavior_diagnostics.py": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b",
+    "algos/sb3_torch/evaluation.py": "ec3a7c652b16f9604f2e753e0467d72c5573873b84d40ac054f4b3e2fb7ebee0",
+    "algos/sb3_torch/sac.py": "06c33befdd86e62f78366d76f541483880835920ba7e716c5457c99ed13c180d",
+    "algos/sb3_torch/policies.py": "d7f44e647c14cdd8d84effd7269e826679828610ed01ac434c5b5cdda3ec5d0a",
+    "algos/sb3_torch/representation.py": "8bcac82dd4428a43a2e753ee3daab875b7b0c93f9ff0f8ee2c95b75842d0b772",
+    "algos/sb3_torch/features.py": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6",
+    "algos/sb3_torch/incremental_topo_encoder.py": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9",
+    "algos/sb3_torch/topo_temporal_features_v2.py": "443b069b3432695f750e6f453ab84325b135dc54341831cd437920320fbc0fec",
+    "envs/sumo/sumo_env.py": "4cc4317e3bc7d45b0b5753f7a4e02b67976cb7ee0c4033a381ca2c52ba2ca3f3",
+    "envs/sumo/paper_env.py": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+    "envs/sumo/high_density_env_v1.py": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c",
+    "fast-developer/diagnose_strt_decision_windows_20261003.py": "f5fe983c7de0e545037f0877c2ff014037188ee208c5d92d184cfef0d7665db2",
+    "fast-developer/analysis/decision_window_intervention_protocol_20261003.md": "a574859b53b2ce0799fe6e1ce4d4359c978456623021c475ee927700bde6e493"
+  },
+  "runtime_source_snapshot": {
+    "snapshot_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\strt_window_1003\\runtime_source_snapshot",
+    "file_count": 15,
+    "files": [
+      {
+        "path": "fast-developer/train_intersection_yield_v2.py",
+        "sha256": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e",
+        "bytes": 80344
+      },
+      {
+        "path": "fast-developer/train_intersection_yield_v2_d1.py",
+        "sha256": "b133deb4fa7c52b4ff7b3967e4e2e24e1ab8aa549be01e81ef5249b4b4770bfd",
+        "bytes": 173045
+      },
+      {
+        "path": "fast-developer/behavior_diagnostics.py",
+        "sha256": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b",
+        "bytes": 44570
+      },
+      {
+        "path": "algos/sb3_torch/evaluation.py",
+        "sha256": "ec3a7c652b16f9604f2e753e0467d72c5573873b84d40ac054f4b3e2fb7ebee0",
+        "bytes": 18923
+      },
+      {
+        "path": "algos/sb3_torch/sac.py",
+        "sha256": "06c33befdd86e62f78366d76f541483880835920ba7e716c5457c99ed13c180d",
+        "bytes": 35183
+      },
+      {
+        "path": "algos/sb3_torch/policies.py",
+        "sha256": "d7f44e647c14cdd8d84effd7269e826679828610ed01ac434c5b5cdda3ec5d0a",
+        "bytes": 5548
+      },
+      {
+        "path": "algos/sb3_torch/representation.py",
+        "sha256": "8bcac82dd4428a43a2e753ee3daab875b7b0c93f9ff0f8ee2c95b75842d0b772",
+        "bytes": 3759
+      },
+      {
+        "path": "algos/sb3_torch/features.py",
+        "sha256": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6",
+        "bytes": 21620
+      },
+      {
+        "path": "algos/sb3_torch/incremental_topo_encoder.py",
+        "sha256": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9",
+        "bytes": 82754
+      },
+      {
+        "path": "algos/sb3_torch/topo_temporal_features_v2.py",
+        "sha256": "443b069b3432695f750e6f453ab84325b135dc54341831cd437920320fbc0fec",
+        "bytes": 40931
+      },
+      {
+        "path": "envs/sumo/sumo_env.py",
+        "sha256": "4cc4317e3bc7d45b0b5753f7a4e02b67976cb7ee0c4033a381ca2c52ba2ca3f3",
+        "bytes": 113854
+      },
+      {
+        "path": "envs/sumo/paper_env.py",
+        "sha256": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+        "bytes": 32426
+      },
+      {
+        "path": "envs/sumo/high_density_env_v1.py",
+        "sha256": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c",
+        "bytes": 20415
+      },
+      {
+        "path": "fast-developer/diagnose_strt_decision_windows_20261003.py",
+        "sha256": "f5fe983c7de0e545037f0877c2ff014037188ee208c5d92d184cfef0d7665db2",
+        "bytes": 63240
+      },
+      {
+        "path": "fast-developer/analysis/decision_window_intervention_protocol_20261003.md",
+        "sha256": "a574859b53b2ce0799fe6e1ce4d4359c978456623021c475ee927700bde6e493",
+        "bytes": 6694
+      }
+    ]
+  },
+  "episode_budget": {
+    "baseline_max": 12,
+    "identity_max": 2,
+    "intervention_max": 72,
+    "total_max": 86,
+    "raw_control_steps_per_episode_max": 600,
+    "raw_control_steps_total_max": 51600,
+    "reset_warmup_raw_steps": null,
+    "reset_warmup_unavailable_reason": "SumoEnv.reset advances simulationStep before resetting local raw_steps and does not expose the exact count; recorder callback count and initial snapshot simulation time are separate observations."
+  },
+  "anchors": [
+    "three decisions before first pre-action internal-road state",
+    "first pre-action internal-road state",
+    "three decisions before baseline termination"
+  ],
+  "speed_intervention": {
+    "target_speeds_mps": [
+      0.0,
+      6.0
+    ],
+    "policy_decisions": 3,
+    "action_mapping": "environment speed=clip((a0+1)*5,0,10), inverse a0=target_mps/5-1",
+    "lateral_action": "retain deterministic policy coordinate 1",
+    "return_to_policy_after": 3
+  },
+  "prefix_match": {
+    "policy_observation_and_unmodified_action_hashes": "exact for every decision up to and including the anchor",
+    "physical_state": "exact at anchor; current ego and vehicle IDs/positions/velocities/heading/dimensions/road/lane fields only; hidden route fields excluded",
+    "mismatch_action": "do not apply intervention; finish that allocated episode for cleanup/logging, mark invalid and stop the suite"
+  },
+  "runtime_source_sha256": {
+    "fast-developer/train_intersection_yield_v2.py": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e",
+    "fast-developer/train_intersection_yield_v2_d1.py": "b133deb4fa7c52b4ff7b3967e4e2e24e1ab8aa549be01e81ef5249b4b4770bfd",
+    "fast-developer/behavior_diagnostics.py": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b",
+    "algos/sb3_torch/evaluation.py": "ec3a7c652b16f9604f2e753e0467d72c5573873b84d40ac054f4b3e2fb7ebee0",
+    "algos/sb3_torch/sac.py": "06c33befdd86e62f78366d76f541483880835920ba7e716c5457c99ed13c180d",
+    "algos/sb3_torch/policies.py": "d7f44e647c14cdd8d84effd7269e826679828610ed01ac434c5b5cdda3ec5d0a",
+    "algos/sb3_torch/representation.py": "8bcac82dd4428a43a2e753ee3daab875b7b0c93f9ff0f8ee2c95b75842d0b772",
+    "algos/sb3_torch/features.py": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6",
+    "algos/sb3_torch/incremental_topo_encoder.py": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9",
+    "algos/sb3_torch/topo_temporal_features_v2.py": "443b069b3432695f750e6f453ab84325b135dc54341831cd437920320fbc0fec",
+    "envs/sumo/sumo_env.py": "4cc4317e3bc7d45b0b5753f7a4e02b67976cb7ee0c4033a381ca2c52ba2ca3f3",
+    "envs/sumo/paper_env.py": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+    "envs/sumo/high_density_env_v1.py": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c",
+    "fast-developer/diagnose_strt_decision_windows_20261003.py": "f5fe983c7de0e545037f0877c2ff014037188ee208c5d92d184cfef0d7665db2",
+    "fast-developer/analysis/decision_window_intervention_protocol_20261003.md": "a574859b53b2ce0799fe6e1ce4d4359c978456623021c475ee927700bde6e493"
+  },
+  "abort_reason": "PrefixMismatch: identity replay failed for seed=10004: {'reason': 'prefix_full_physical_state_unavailable', 'decision_index': 0}"
+}

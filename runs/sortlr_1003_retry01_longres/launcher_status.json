@@ -1,0 +1,42 @@
+{
+  "started_at": "2026-10-02T19:57:03.422958+00:00",
+  "status": "running",
+  "supervisor_pid": 45924,
+  "max_cuda_workers": 1,
+  "workers": [
+    {
+      "method": "sac_mlp_d1_st_rt_longres_v1",
+      "pid": 56004,
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp_d1_st_rt_longres_v1",
+        "--scenario",
+        "intersection_sorted",
+        "--depart-scale",
+        "4.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics",
+        "--policy-shadow-probes",
+        "--policy-shadow-train-raw-interval",
+        "5000",
+        "--policy-shadow-eval-max-per-episode",
+        "4",
+        "--policy-shadow-critical-eval-sample"
+      ],
+      "started_at": "2026-10-02T19:57:03.433040+00:00",
+      "exit_code": null,
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres\\sac_mlp_d1_st_rt_longres_v1.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortlr_1003_retry01_longres\\sac_mlp_d1_st_rt_longres_v1.stderr.log"
+    }
+  ]
+}

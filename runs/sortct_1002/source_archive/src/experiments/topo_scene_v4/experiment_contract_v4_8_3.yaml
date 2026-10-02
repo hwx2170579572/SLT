@@ -1,0 +1,91 @@
+schema_version: topo-scene-v4.8.3.control-secondary-seed-acceptance-engineering-patch/v1
+status: preregistered_before_patch_implementation
+created_at_local: '2026-08-24T09:43:37+08:00'
+no_fabrication: true
+formal_test_locked: true
+formal_test_accessed: false
+
+parent_scientific_protocol:
+  version: v4.8_tie_only_replicated_train_calibration
+  contract_sha256: 42f54135e4d105563b0ad2113147bfef7811c80664793419538a18e9d8c08e51
+  implementation_freeze_sha256: 5827ca63caf5cfd187ac5ad0bdc2fd0fbb0fb00c324459007cf24620f0b57aa6
+  scientific_content_sha256: 0ef153763770384c9bacae780db0b6ebf19de25320a61aa976b11c3d5300aee6
+  unchanged: true
+
+parent_engineering_patch:
+  version: v4.8.2
+  runner: tools/run_topo_v4_8_2_experiments.py
+  runner_sha256: 3a51451ec894e566d0c7899d56c48e1d253213f87abbb62881a8d4e41f03d951
+  implementation_freeze_sha256: c39081844a2c8e28d9a3eeff62493f6d91402c674842a3fd52b60af938507bda
+  engineering_receipt_sha256: 11fe1516b6de2cef6aa7c1cee6b5c9b1827e4c1869ea15159739f33048ccae8e
+  reused_unchanged: true
+  development_decision: pass
+
+trigger:
+  stage: promotion
+  job: P__tg__cross__s0__p42f54135
+  algorithm: temporal_graph_v1_control
+  scenario: cross
+  seed: 0
+  subprocess_returncode: 0
+  frozen_v4_8_2_acceptance_reason: argument secondary_calibration_seed_start mismatch
+  last_execution_sha256_at_trigger: 1bcd2d401785ded6af8ce828f9ef194effd777f6f9543b12ae99f5f3d498b2d4
+  arguments_sha256: 04c16c74b2e8179ee2666aabf466a3918374b93033f944e54aab94e36fc9789b
+  selector_receipt_sha256: 4e698f7d173e3d5158dd4fc93e259e84dd184db2d856c88f58669784fa93115b
+  paper_evaluation_detailed_sha256: 0f14c62f6ccfe100dde254acafef7a6b54c9a8aff3dea2e19266766af02bdcc8
+  requested_secondary_calibration_seed_start: null
+  requested_secondary_calibration_seed_start_field_present: false
+  fidelity_secondary_calibration_seed_offset: null
+  selector_mode: checkpoint_only_parent_control
+  selector_secondary_calibration_environment_exists: false
+  validation_episodes: 30
+  validation_success_rate: 0.8333333333333334
+  validation_collision_rate: 0.16666666666666666
+  validation_off_route_rate: 0.0
+  validation_timeout_rate: 0.0
+  formal_test_accessed: false
+
+single_engineering_change:
+  name: accept_control_null_secondary_seed_against_control_semantics
+  acceptance_only: true
+  control_only: true
+  control_expected_value: null
+  control_omitted_field_allowed: true
+  candidate_expected_value: calibration_seed_start_plus_100
+  candidate_acceptance_changed: false
+  delegated_frozen_checks_changed: false
+  read_only_normalized_view: true
+  source_json_rewritten: false
+  training_changed: false
+  return_estimator_changed: false
+  selector_changed: false
+  decoder_changed: false
+  result_artifacts_changed: false
+  scientific_gates_changed: false
+  thresholds_changed: false
+  seeds_or_traffic_changed: false
+  result_root_changed: false
+  completed_promotion_job_rerun_forbidden: true
+  completed_promotion_artifact_rewrite_forbidden: true
+
+verification:
+  reproduce_original_rejection: true
+  same_artifacts_patched_acceptance: true
+  all_13_required_artifacts_hash_guarded: true
+  reject_control_non_null_mutation: true
+  reject_candidate_null_mutation: true
+  preserve_existing_candidate_acceptance: true
+  targeted_tests_required: true
+  full_regression_required: true
+
+continuation:
+  adopt_completed_promotion_job_in_place_only_if_all_artifact_hashes_match: true
+  scientific_implementation_hash_remains_parent_v4_8: true
+  engineering_patch_freeze_checked_separately: true
+  promotion_order_unchanged: true
+  baseline_first_order_unchanged: true
+  next_job_after_adoption: P__tg__cross__s1__p42f54135
+  promotion_gate_unchanged: true
+  formal_protocol_unchanged: true
+  formal_test_locked: true
+

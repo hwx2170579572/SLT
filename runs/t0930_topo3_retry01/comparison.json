@@ -1,0 +1,2943 @@
+{
+  "schema_version": "behavior-comparison/v1",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01",
+  "protocol": {
+    "traffic_protocol": "same_complete_effective_pool_for_train_and_eval; no holdout",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "training_seed": 0,
+    "raw_step_budget": 100000,
+    "expected_eval_episodes": 100,
+    "eval_outcome_denominator": "returned evaluation episode_records; a missing/short run remains visible via count vs expected and is never recoded as timeout",
+    "training_terminal_note": "training episodes closed by run truncation are counted as incomplete, not environment timeouts",
+    "continuous_metric_weighting": "raw-tick or action-scalar weighted by each metric's explicit valid sample denominator"
+  },
+  "methods": {
+    "sac_mlp_d1_st_rt_topo": {
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0",
+      "training": {
+        "completed_raw_steps": 100000,
+        "requested_raw_step_budget": 100000,
+        "updates": 95001,
+        "smoke": false,
+        "incomplete_episodes": 1,
+        "episode_outcome_counts_including_incomplete": {
+          "success": 164,
+          "collision": 351,
+          "timeout": 12,
+          "incomplete": 1
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 5.792300461981131,
+          "mean_actual_speed_denominator_speed_samples": 99836.0,
+          "stopped_fraction": 0.17004888016346809,
+          "stopped_fraction_denominator_speed_samples": 99836.0,
+          "near_unit_bound_fraction": 0.23072100313479624,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 15456,
+          "near_unit_bound_denominator_action_scalar_samples": 66990,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.14612965263031372,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 14589.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 99836.0,
+          "covered_critical_unobserved_fraction": 0.05858608117312392,
+          "covered_critical_unobserved_numerator_ticks": 5849.0,
+          "covered_critical_unobserved_denominator_ticks": 99836.0,
+          "coverage_speed_samples_of_raw_records": 0.99836,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.99836,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.99836,
+          "raw_records": 100000,
+          "decision_records": 33495,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 528,
+          "null_reasons": {}
+        },
+        "optimization_samples": 100,
+        "optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 100,
+            "sum": 5055269.0,
+            "min": 1002.0,
+            "max": 100000.0,
+            "last": 100000.0
+          },
+          "rollout/source_success_rate_last_20": {
+            "n": 72,
+            "sum": 18.949999999999996,
+            "min": 0.0,
+            "max": 0.6,
+            "last": 0.35
+          },
+          "train/learning_rate": {
+            "n": 96,
+            "sum": 0.009599999999999997,
+            "min": 0.0001,
+            "max": 0.0001,
+            "last": 0.0001
+          },
+          "train/n_updates": {
+            "n": 96,
+            "sum": 4565254.0,
+            "min": 7.0,
+            "max": 95001.0,
+            "last": 95001.0
+          },
+          "train/ent_coef": {
+            "n": 96,
+            "sum": 3.294938708888367,
+            "min": 0.0076853984501212835,
+            "max": 0.19988804310560226,
+            "last": 0.020661238580942154
+          },
+          "train/actor_loss": {
+            "n": 96,
+            "sum": 321.89985833945684,
+            "min": -1.2216841280460358,
+            "max": 7.221691608428955,
+            "last": -0.028905093669891357
+          },
+          "train/critic_loss": {
+            "n": 96,
+            "sum": 425.24118285253644,
+            "min": 0.32661527022719383,
+            "max": 13.726147651672363,
+            "last": 8.02320384979248
+          },
+          "train/ent_coef_loss": {
+            "n": 96,
+            "sum": 6.519819626642857,
+            "min": -0.04655468091368675,
+            "max": 0.6671794056892395,
+            "last": 0.005775602534413338
+          },
+          "diagnostic/topology_attention_entropy": {
+            "n": 93,
+            "sum": 98.70568710565567,
+            "min": 0.8130151629447937,
+            "max": 1.8368488550186157,
+            "last": 0.9148829579353333
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_tensors": {
+            "n": 90,
+            "sum": 12150.0,
+            "min": 135.0,
+            "max": 135.0,
+            "last": 135.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_elements": {
+            "n": 90,
+            "sum": 95218920.0,
+            "min": 1057988.0,
+            "max": 1057988.0,
+            "last": 1057988.0
+          },
+          "diagnostic/encoder_grad/encoder_all/requires_grad_elements": {
+            "n": 90,
+            "sum": 95218920.0,
+            "min": 1057988.0,
+            "max": 1057988.0,
+            "last": 1057988.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_tensors": {
+            "n": 90,
+            "sum": 11250.0,
+            "min": 125.0,
+            "max": 125.0,
+            "last": 125.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 92177640.0,
+            "min": 1024196.0,
+            "max": 1024196.0,
+            "last": 1024196.0
+          },
+          "diagnostic/encoder_grad/encoder_all/missing_gradient_elements": {
+            "n": 90,
+            "sum": 3041280.0,
+            "min": 33792.0,
+            "max": 33792.0,
+            "last": 33792.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 87.12541163037753,
+            "min": 0.9680601292264185,
+            "max": 0.9680601292264185,
+            "last": 0.9680601292264185
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_elements_examined": {
+            "n": 90,
+            "sum": 92177640.0,
+            "min": 1024196.0,
+            "max": 1024196.0,
+            "last": 1024196.0
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_elements": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_core/requires_grad_elements": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_core/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_elements_examined": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_tensors": {
+            "n": 90,
+            "sum": 1260.0,
+            "min": 14.0,
+            "max": 14.0,
+            "last": 14.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_elements": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/requires_grad_elements": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_tensors": {
+            "n": 90,
+            "sum": 1260.0,
+            "min": 14.0,
+            "max": 14.0,
+            "last": 14.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_elements_examined": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_tensors": {
+            "n": 90,
+            "sum": 1080.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/requires_grad_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_tensors": {
+            "n": 90,
+            "sum": 1080.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_elements_examined": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/requires_grad_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_tensors": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/missing_gradient_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_elements_examined": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/requires_grad_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_tensors": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/missing_gradient_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_elements_examined": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/requires_grad_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_tensors": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/missing_gradient_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_elements_examined": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/parameter_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/route/parameter_elements": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/route/requires_grad_elements": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/route/gradient_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/route/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/route/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/route/gradient_elements_examined": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_l2": {
+            "n": 90,
+            "sum": 8712.772301716865,
+            "min": 90.6567446136973,
+            "max": 102.91700324598196,
+            "last": 102.91700324598196
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_l2": {
+            "n": 90,
+            "sum": 84953.0940988715,
+            "min": 4.701919647333247,
+            "max": 12018.062831996163,
+            "last": 224.74440467585205
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_max_abs": {
+            "n": 90,
+            "sum": 76506.44251823425,
+            "min": 0.2951810359954834,
+            "max": 11962.9072265625,
+            "last": 215.2493133544922
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 83051461.0,
+            "min": 906400.0,
+            "max": 972418.0,
+            "last": 911637.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_l2": {
+            "n": 90,
+            "sum": 5140.691102046292,
+            "min": 52.80028749224598,
+            "max": 61.54688281129353,
+            "last": 61.54688281129353
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_l2": {
+            "n": 90,
+            "sum": 983.4267892812529,
+            "min": 0.013748334619071661,
+            "max": 74.62343757139882,
+            "last": 1.7497009734191278
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_max_abs": {
+            "n": 90,
+            "sum": 84.10685766662937,
+            "min": 0.001039063441567123,
+            "max": 5.637618541717529,
+            "last": 0.10351887345314026
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 24180431.0,
+            "min": 258535.0,
+            "max": 296361.0,
+            "last": 258535.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_l2": {
+            "n": 90,
+            "sum": 2710.7616975565384,
+            "min": 27.70155720443818,
+            "max": 32.07222020129227,
+            "last": 32.07222020129227
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_l2": {
+            "n": 90,
+            "sum": 81535.62936472576,
+            "min": 0.3351639902580542,
+            "max": 11971.50794333862,
+            "last": 215.36883883072645
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_max_abs": {
+            "n": 90,
+            "sum": 76506.37989987433,
+            "min": 0.23256267607212067,
+            "max": 11962.9072265625,
+            "last": 215.2493133544922
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 5977012.0,
+            "min": 66387.0,
+            "max": 66427.0,
+            "last": 66418.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_l2": {
+            "n": 90,
+            "sum": 2607.703926296174,
+            "min": 27.85654995651496,
+            "max": 30.076181760170837,
+            "last": 30.076181760170837
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_l2": {
+            "n": 90,
+            "sum": 9493.411608138114,
+            "min": 1.581546863279985,
+            "max": 856.2510178743819,
+            "last": 45.13313295256275
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_max_abs": {
+            "n": 90,
+            "sum": 1056.7707781344652,
+            "min": 0.14305682480335236,
+            "max": 74.32804870605469,
+            "last": 6.671453952789307
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_l2": {
+            "n": 90,
+            "sum": 651.045242901773,
+            "min": 7.233836032241915,
+            "max": 7.233836032241915,
+            "last": 7.233836032241915
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_l2": {
+            "n": 90,
+            "sum": 828.8971457470738,
+            "min": 9.209968286078585,
+            "max": 9.209968286078585,
+            "last": 9.209968286078585
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_l2": {
+            "n": 90,
+            "sum": 643.6776162783586,
+            "min": 7.151973514203998,
+            "max": 7.151973514203998,
+            "last": 7.151973514203998
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/parameter_l2": {
+            "n": 90,
+            "sum": 3510.4361990364496,
+            "min": 37.32355816324281,
+            "max": 40.54940266829158,
+            "last": 40.54940266829158
+          },
+          "diagnostic/encoder_grad/route/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/gradient_l2": {
+            "n": 90,
+            "sum": 5789.795230541898,
+            "min": 1.372777849759792,
+            "max": 437.900962495708,
+            "last": 17.307502388544023
+          },
+          "diagnostic/encoder_grad/route/gradient_max_abs": {
+            "n": 90,
+            "sum": 552.2741004824638,
+            "min": 0.09043563902378082,
+            "max": 45.186668395996094,
+            "last": 1.494850993156433
+          },
+          "diagnostic/encoder_grad/route/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 15788330.0,
+            "min": 168740.0,
+            "max": 204884.0,
+            "last": 171924.0
+          },
+          "diagnostic/encoder_grad/route/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 856.066601481407,
+            "min": 0.051016180577393995,
+            "max": 118.66736085874763,
+            "last": 2.1837441587634494
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 17.2689204652772,
+            "min": 0.00026038370759043085,
+            "max": 1.3230860110674263,
+            "last": 0.028428750466271656
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 2628.570135279823,
+            "min": 0.012099102869363467,
+            "max": 378.916955925904,
+            "last": 6.715120982552019
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 325.5276272359235,
+            "min": 0.05639763614129945,
+            "max": 29.673156377868665,
+            "last": 1.5006270846631027
+          },
+          "diagnostic/encoder_grad/route/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 147.5468124432371,
+            "min": 0.03564397861460908,
+            "max": 11.280738634848609,
+            "last": 0.4268250886486664
+          },
+          "diagnostic/diagnostic_valid_query_count": {
+            "n": 93,
+            "sum": 162711.0,
+            "min": 60.0,
+            "max": 1920.0,
+            "last": 1897.0
+          },
+          "diagnostic/diagnostic_batch_size": {
+            "n": 93,
+            "sum": 2759.0,
+            "min": 1.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/diagnostic_batch_variance_valid": {
+            "n": 93,
+            "sum": 86.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/context_ego_rms": {
+            "n": 93,
+            "sum": 73.67315798997879,
+            "min": 0.6123223900794983,
+            "max": 1.0068467855453491,
+            "last": 0.6333735585212708
+          },
+          "diagnostic/context_social_rms": {
+            "n": 93,
+            "sum": 87.9319651722908,
+            "min": 0.6020327806472778,
+            "max": 1.2489778995513916,
+            "last": 0.967351496219635
+          },
+          "diagnostic/context_route_rms": {
+            "n": 93,
+            "sum": 76.49061958491802,
+            "min": 0.15271271765232086,
+            "max": 1.4637401103973389,
+            "last": 0.7997836470603943
+          },
+          "diagnostic/context_ego_batch_std_mean": {
+            "n": 93,
+            "sum": 39.40205466747284,
+            "min": 0.0,
+            "max": 0.7926268577575684,
+            "last": 0.37518414855003357
+          },
+          "diagnostic/context_social_batch_std_mean": {
+            "n": 93,
+            "sum": 57.76653239130974,
+            "min": 0.0,
+            "max": 0.8736993074417114,
+            "last": 0.738037109375
+          },
+          "diagnostic/context_route_batch_std_mean": {
+            "n": 93,
+            "sum": 39.464758433401585,
+            "min": 0.0,
+            "max": 0.7032033801078796,
+            "last": 0.4222809970378876
+          },
+          "diagnostic/topology_residual_scale": {
+            "n": 93,
+            "sum": 0.9551299545564689,
+            "min": 0.0008943549473769963,
+            "max": 0.04723569378256798,
+            "last": 0.0023874794133007526
+          },
+          "diagnostic/goal_residual_scale": {
+            "n": 93,
+            "sum": 1.220845227711834,
+            "min": 0.000749558734241873,
+            "max": 0.044937923550605774,
+            "last": 0.002449654508382082
+          },
+          "diagnostic/route_bias_weight": {
+            "n": 93,
+            "sum": 101.81691193580627,
+            "min": 1.0,
+            "max": 1.1255462169647217,
+            "last": 1.1201660633087158
+          },
+          "diagnostic/heading_bias_weight": {
+            "n": 93,
+            "sum": 91.95890706777573,
+            "min": 0.9788839221000671,
+            "max": 1.0004870891571045,
+            "last": 0.9885541200637817
+          },
+          "diagnostic/topology_effective_lanes": {
+            "n": 93,
+            "sum": 292.3942801952362,
+            "min": 2.4537134170532227,
+            "max": 6.4827680587768555,
+            "last": 2.6744556427001953
+          },
+          "diagnostic/route_compatible_attention_mass": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/route_compatible_lane_count_mean": {
+            "n": 93,
+            "sum": 2172.7759952545166,
+            "min": 22.66666603088379,
+            "max": 24.66666603088379,
+            "last": 23.347917556762695
+          },
+          "diagnostic/topology_fallback_rate": {
+            "n": 93,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/topology_fallback_query_count": {
+            "n": 93,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/topology_compatible_query_count": {
+            "n": 93,
+            "sum": 162711.0,
+            "min": 60.0,
+            "max": 1920.0,
+            "last": 1897.0
+          },
+          "diagnostic/topology_valid_lane_count": {
+            "n": 93,
+            "sum": 4278.0,
+            "min": 46.0,
+            "max": 46.0,
+            "last": 46.0
+          },
+          "diagnostic/relation_pair_valid_count": {
+            "n": 93,
+            "sum": 813270.0,
+            "min": 300.0,
+            "max": 9600.0,
+            "last": 9460.0
+          },
+          "diagnostic/relation_pair_candidate_count": {
+            "n": 93,
+            "sum": 827700.0,
+            "min": 300.0,
+            "max": 9600.0,
+            "last": 9600.0
+          },
+          "diagnostic/relation_pair_valid_fraction": {
+            "n": 93,
+            "sum": 91.49687510728836,
+            "min": 0.8968750238418579,
+            "max": 1.0,
+            "last": 0.9854166507720947
+          },
+          "diagnostic/relation_pair_mask_has_valid": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/topology_conflict_directed_edge_count": {
+            "n": 93,
+            "sum": 16368.0,
+            "min": 176.0,
+            "max": 176.0,
+            "last": 176.0
+          },
+          "diagnostic/topology_merge_directed_edge_count": {
+            "n": 93,
+            "sum": 3348.0,
+            "min": 36.0,
+            "max": 36.0,
+            "last": 36.0
+          },
+          "diagnostic/topology_conflict_relation_present": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/topology_merge_relation_present": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/same_lane_attention_pair_mean": {
+            "n": 93,
+            "sum": 6.070459825918078,
+            "min": 0.01584325172007084,
+            "max": 0.11565046012401581,
+            "last": 0.06198364123702049
+          },
+          "diagnostic/conflict_attention_pair_mean": {
+            "n": 93,
+            "sum": 10.398315275320783,
+            "min": 0.0036016202066093683,
+            "max": 0.21843792498111725,
+            "last": 0.10159321129322052
+          },
+          "diagnostic/merge_attention_pair_mean": {
+            "n": 93,
+            "sum": 0.2085120969932177,
+            "min": 0.0,
+            "max": 0.01130418200045824,
+            "last": 0.007428460754454136
+          },
+          "diagnostic/conflict_or_merge_attention_pair_mean": {
+            "n": 93,
+            "sum": 10.606827339390293,
+            "min": 0.0036016202066093683,
+            "max": 0.21902313828468323,
+            "last": 0.10902166366577148
+          },
+          "diagnostic/same_lane_edge_feature_mean": {
+            "n": 93,
+            "sum": 0.0525496879745333,
+            "min": 3.115747676929459e-05,
+            "max": 0.0031993165612220764,
+            "last": 0.00014888540317770094
+          },
+          "diagnostic/conflict_or_merge_edge_feature_mean": {
+            "n": 93,
+            "sum": 0.09196398569838493,
+            "min": 3.325616489746608e-05,
+            "max": 0.00513850711286068,
+            "last": 0.0002618712605908513
+          },
+          "diagnostic/merge_pair_score": {
+            "n": 93,
+            "sum": 0.20851209676038707,
+            "min": 0.0,
+            "max": 0.011304182931780815,
+            "last": 0.007428461220115423
+          },
+          "diagnostic/mlp_output_head_active": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/ego_projection_active": {
+            "n": 93,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/social_projection_active": {
+            "n": 93,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/route_projection_active": {
+            "n": 93,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/diagnostic_forward_index": {
+            "n": 93,
+            "sum": 19135731.0,
+            "min": 4.0,
+            "max": 411652.0,
+            "last": 411652.0
+          },
+          "diagnostic/diagnostic_sample_forward_index": {
+            "n": 93,
+            "sum": 19135581.0,
+            "min": 1.0,
+            "max": 411649.0,
+            "last": 411649.0
+          },
+          "diagnostic/diagnostic_sample_index": {
+            "n": 93,
+            "sum": 74841.0,
+            "min": 1.0,
+            "max": 1609.0,
+            "last": 1609.0
+          },
+          "diagnostic/diagnostic_sample_count": {
+            "n": 93,
+            "sum": 74841.0,
+            "min": 1.0,
+            "max": 1609.0,
+            "last": 1609.0
+          },
+          "diagnostic/diagnostic_sample_age_forwards": {
+            "n": 93,
+            "sum": 150.0,
+            "min": 0.0,
+            "max": 4.0,
+            "last": 3.0
+          },
+          "diagnostic/diagnostic_sampled": {
+            "n": 93,
+            "sum": 24.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 0.0
+          },
+          "diagnostic/diagnostic_sample_every": {
+            "n": 93,
+            "sum": 23808.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/diagnostic_source_code": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_source_code": {
+            "n": 93,
+            "sum": 93.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_batch_size": {
+            "n": 93,
+            "sum": 2759.0,
+            "min": 1.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/diagnostic_sample_grad_enabled": {
+            "n": 93,
+            "sum": 61.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 90,
+            "sum": -314.4999542683363,
+            "min": -7.871812343597412,
+            "max": 2.4560911655426025,
+            "last": 0.588778555393219
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 90,
+            "sum": -313.4827725067735,
+            "min": -7.868917942047119,
+            "max": 2.4255530834198,
+            "last": 0.5232130289077759
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 90,
+            "sum": -322.3944724202156,
+            "min": -7.932244777679443,
+            "max": 2.8344202041625977,
+            "last": 0.7249436378479004
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 90,
+            "sum": 82.60184127092361,
+            "min": 0.2743862271308899,
+            "max": 2.295583724975586,
+            "last": 0.9332132935523987
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 90,
+            "sum": 82.75784930586815,
+            "min": 0.27514731884002686,
+            "max": 2.391927719116211,
+            "last": 0.95029616355896
+          }
+        }
+      },
+      "evaluation": {
+        "expected_episodes": 100,
+        "complete_episode_denominator": 100,
+        "episode_count_matches_expected": true,
+        "outcome_counts": {
+          "success": 39,
+          "collision": 39,
+          "timeout": 22,
+          "off_route": 0
+        },
+        "outcome_rates": {
+          "success": 0.39,
+          "collision": 0.39,
+          "timeout": 0.22,
+          "off_route": 0.0
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 4.514577549949915,
+          "mean_actual_speed_denominator_speed_samples": 25330.0,
+          "stopped_fraction": 0.4671930517173312,
+          "stopped_fraction_denominator_speed_samples": 25330.0,
+          "near_unit_bound_fraction": 0.2233816766890697,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 3789,
+          "near_unit_bound_denominator_action_scalar_samples": 16962,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.07860244769048559,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 1991.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 25330.0,
+          "covered_critical_unobserved_fraction": 0.03174101855507304,
+          "covered_critical_unobserved_numerator_ticks": 804.0,
+          "covered_critical_unobserved_denominator_ticks": 25330.0,
+          "coverage_speed_samples_of_raw_records": 0.9984626906854823,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.9984626906854823,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.9984626906854823,
+          "raw_records": 25369,
+          "decision_records": 8481,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 100,
+          "null_reasons": {}
+        }
+      },
+      "artifacts": {
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\evaluation_results.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\training_complete.json",
+        "train_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json"
+      }
+    },
+    "sac_mlp_d1_st_rt_topo_3slot": {
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0",
+      "training": {
+        "completed_raw_steps": 100000,
+        "requested_raw_step_budget": 100000,
+        "updates": 95001,
+        "smoke": false,
+        "incomplete_episodes": 1,
+        "episode_outcome_counts_including_incomplete": {
+          "success": 143,
+          "collision": 344,
+          "timeout": 6,
+          "incomplete": 1
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 5.329340722292436,
+          "mean_actual_speed_denominator_speed_samples": 99857.0,
+          "stopped_fraction": 0.1510760387353916,
+          "stopped_fraction_denominator_speed_samples": 99857.0,
+          "near_unit_bound_fraction": 0.2656347950685095,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 17797,
+          "near_unit_bound_denominator_action_scalar_samples": 66998,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.14795157074616702,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 14774.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 99857.0,
+          "covered_critical_unobserved_fraction": 0.059094505142353565,
+          "covered_critical_unobserved_numerator_ticks": 5901.0,
+          "covered_critical_unobserved_denominator_ticks": 99857.0,
+          "coverage_speed_samples_of_raw_records": 0.99857,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.99857,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.99857,
+          "raw_records": 100000,
+          "decision_records": 33499,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 494,
+          "null_reasons": {}
+        },
+        "optimization_samples": 100,
+        "optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 100,
+            "sum": 5055549.0,
+            "min": 1002.0,
+            "max": 100000.0,
+            "last": 100000.0
+          },
+          "rollout/source_success_rate_last_20": {
+            "n": 83,
+            "sum": 20.599999999999998,
+            "min": 0.0,
+            "max": 0.6,
+            "last": 0.35
+          },
+          "train/learning_rate": {
+            "n": 96,
+            "sum": 0.009599999999999997,
+            "min": 0.0001,
+            "max": 0.0001,
+            "last": 0.0001
+          },
+          "train/n_updates": {
+            "n": 96,
+            "sum": 4565534.0,
+            "min": 7.0,
+            "max": 95001.0,
+            "last": 95001.0
+          },
+          "train/ent_coef": {
+            "n": 96,
+            "sum": 3.135642596986145,
+            "min": 0.006683465326204896,
+            "max": 0.19988659769296646,
+            "last": 0.01976723223924637
+          },
+          "train/actor_loss": {
+            "n": 96,
+            "sum": 361.7133866548538,
+            "min": -1.5838626623153687,
+            "max": 7.705195665359497,
+            "last": -1.5838626623153687
+          },
+          "train/critic_loss": {
+            "n": 96,
+            "sum": 413.5344136580825,
+            "min": 0.2218572050333023,
+            "max": 14.686981201171875,
+            "last": 1.4239099025726318
+          },
+          "train/ent_coef_loss": {
+            "n": 96,
+            "sum": 6.4667193869827315,
+            "min": -0.028127663768827915,
+            "max": 0.5927380919456482,
+            "last": -0.016760218888521194
+          },
+          "diagnostic/topology_attention_entropy": {
+            "n": 92,
+            "sum": 115.39509904384613,
+            "min": 1.0027775764465332,
+            "max": 1.8368488550186157,
+            "last": 1.1295281648635864
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_tensors": {
+            "n": 90,
+            "sum": 12150.0,
+            "min": 135.0,
+            "max": 135.0,
+            "last": 135.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_elements": {
+            "n": 90,
+            "sum": 95218920.0,
+            "min": 1057988.0,
+            "max": 1057988.0,
+            "last": 1057988.0
+          },
+          "diagnostic/encoder_grad/encoder_all/requires_grad_elements": {
+            "n": 90,
+            "sum": 95218920.0,
+            "min": 1057988.0,
+            "max": 1057988.0,
+            "last": 1057988.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_tensors": {
+            "n": 90,
+            "sum": 11430.0,
+            "min": 127.0,
+            "max": 127.0,
+            "last": 127.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 87742440.0,
+            "min": 974916.0,
+            "max": 974916.0,
+            "last": 974916.0
+          },
+          "diagnostic/encoder_grad/encoder_all/missing_gradient_elements": {
+            "n": 90,
+            "sum": 7476480.0,
+            "min": 83072.0,
+            "max": 83072.0,
+            "last": 83072.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 82.93330359134502,
+            "min": 0.9214811510149453,
+            "max": 0.9214811510149453,
+            "last": 0.9214811510149453
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_elements_examined": {
+            "n": 90,
+            "sum": 87742440.0,
+            "min": 974916.0,
+            "max": 974916.0,
+            "last": 974916.0
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_elements": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_core/requires_grad_elements": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_core/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_elements_examined": {
+            "n": 90,
+            "sum": 28978560.0,
+            "min": 321984.0,
+            "max": 321984.0,
+            "last": 321984.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_tensors": {
+            "n": 90,
+            "sum": 1260.0,
+            "min": 14.0,
+            "max": 14.0,
+            "last": 14.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_elements": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/requires_grad_elements": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_tensors": {
+            "n": 90,
+            "sum": 1260.0,
+            "min": 14.0,
+            "max": 14.0,
+            "last": 14.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_elements_examined": {
+            "n": 90,
+            "sum": 5990580.0,
+            "min": 66562.0,
+            "max": 66562.0,
+            "last": 66562.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_tensors": {
+            "n": 90,
+            "sum": 1080.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/requires_grad_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_tensors": {
+            "n": 90,
+            "sum": 1080.0,
+            "min": 12.0,
+            "max": 12.0,
+            "last": 12.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_elements_examined": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/requires_grad_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_elements_examined": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/requires_grad_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_elements_examined": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/requires_grad_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_tensors": {
+            "n": 90,
+            "sum": 180.0,
+            "min": 2.0,
+            "max": 2.0,
+            "last": 2.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_elements_examined": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/route/parameter_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/route/parameter_elements": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/route/requires_grad_elements": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/route/gradient_tensors": {
+            "n": 90,
+            "sum": 2880.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/encoder_grad/route/gradient_parameter_elements": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/route/missing_gradient_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/gradient_parameter_fraction": {
+            "n": 90,
+            "sum": 90.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/encoder_grad/route/gradient_elements_examined": {
+            "n": 90,
+            "sum": 19607220.0,
+            "min": 217858.0,
+            "max": 217858.0,
+            "last": 217858.0
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_l2": {
+            "n": 90,
+            "sum": 8719.062711339462,
+            "min": 90.6567446136973,
+            "max": 103.16099746927368,
+            "last": 103.16099746927368
+          },
+          "diagnostic/encoder_grad/encoder_all/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_l2": {
+            "n": 90,
+            "sum": 80402.05812857687,
+            "min": 16.263752599486608,
+            "max": 12798.4929086481,
+            "last": 12798.4929086481
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_max_abs": {
+            "n": 90,
+            "sum": 70895.77501356602,
+            "min": 0.9059435129165649,
+            "max": 9048.1201171875,
+            "last": 9048.1201171875
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 79685943.0,
+            "min": 865658.0,
+            "max": 934856.0,
+            "last": 866948.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_l2": {
+            "n": 90,
+            "sum": 5103.305267140722,
+            "min": 52.80028749224598,
+            "max": 60.90473723092329,
+            "last": 60.90473723092329
+          },
+          "diagnostic/encoder_grad/topology_core/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_l2": {
+            "n": 90,
+            "sum": 1187.4019580925833,
+            "min": 0.05394777466517236,
+            "max": 87.5457736318217,
+            "last": 42.40882854675974
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_max_abs": {
+            "n": 90,
+            "sum": 94.83395807491615,
+            "min": 0.0028762524016201496,
+            "max": 9.085261344909668,
+            "last": 2.7863337993621826
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 24008563.0,
+            "min": 256454.0,
+            "max": 296354.0,
+            "last": 257611.0
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_l2": {
+            "n": 90,
+            "sum": 2847.651531842562,
+            "min": 27.70155720443818,
+            "max": 36.01385604884773,
+            "last": 36.01385604884773
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_l2": {
+            "n": 90,
+            "sum": 78799.1585627711,
+            "min": 0.8526551874400836,
+            "max": 12763.06600684013,
+            "last": 12763.06600684013
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_max_abs": {
+            "n": 90,
+            "sum": 70895.35794177651,
+            "min": 0.4888717234134674,
+            "max": 9048.1201171875,
+            "last": 9048.1201171875
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 5977146.0,
+            "min": 66389.0,
+            "max": 66433.0,
+            "last": 66409.0
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_l2": {
+            "n": 90,
+            "sum": 2615.120679897859,
+            "min": 27.85654995651496,
+            "max": 30.195417401505335,
+            "last": 30.195417401505335
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_l2": {
+            "n": 90,
+            "sum": 7475.23373680187,
+            "min": 1.7075916095116064,
+            "max": 557.507250030377,
+            "last": 557.507250030377
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_max_abs": {
+            "n": 90,
+            "sum": 812.9301281124353,
+            "min": 0.12455056607723236,
+            "max": 59.144554138183594,
+            "last": 59.144554138183594
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 6174720.0,
+            "min": 68608.0,
+            "max": 68608.0,
+            "last": 68608.0
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_l2": {
+            "n": 90,
+            "sum": 694.7810599840516,
+            "min": 7.233836032241915,
+            "max": 8.337351736262256,
+            "last": 8.337351736262256
+          },
+          "diagnostic/encoder_grad/slot_ego/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_l2": {
+            "n": 90,
+            "sum": 364.242310610583,
+            "min": 0.49593806745741453,
+            "max": 14.969871140389861,
+            "last": 6.383916045702676
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_max_abs": {
+            "n": 90,
+            "sum": 32.716337613761425,
+            "min": 0.041404321789741516,
+            "max": 1.3764654397964478,
+            "last": 0.5475286841392517
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_l2": {
+            "n": 90,
+            "sum": 878.440498488005,
+            "min": 9.209968286078585,
+            "max": 10.351493704587652,
+            "last": 10.351493704587652
+          },
+          "diagnostic/encoder_grad/slot_social/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_l2": {
+            "n": 90,
+            "sum": 614.0819084872228,
+            "min": 0.7913449511084064,
+            "max": 24.08662651892659,
+            "last": 15.838191788856328
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_max_abs": {
+            "n": 90,
+            "sum": 41.8871055431664,
+            "min": 0.05020951107144356,
+            "max": 1.6453044414520264,
+            "last": 0.9145421385765076
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 743040.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_l2": {
+            "n": 90,
+            "sum": 706.2145006676691,
+            "min": 7.151973514203998,
+            "max": 8.694070673369469,
+            "last": 8.690402153556409
+          },
+          "diagnostic/encoder_grad/slot_route/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_l2": {
+            "n": 90,
+            "sum": 159.25749684522978,
+            "min": 0.13698443680492917,
+            "max": 7.539405079659809,
+            "last": 1.3761988235804983
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_max_abs": {
+            "n": 90,
+            "sum": 16.952137736603618,
+            "min": 0.013157622888684273,
+            "max": 0.7648152709007263,
+            "last": 0.18690873682498932
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 371520.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/parameter_l2": {
+            "n": 90,
+            "sum": 3517.433599983848,
+            "min": 37.32355816324281,
+            "max": 40.430765099155565,
+            "last": 40.430765099155565
+          },
+          "diagnostic/encoder_grad/route/parameter_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/route/gradient_l2": {
+            "n": 90,
+            "sum": 4564.46225017921,
+            "min": 2.1163681009397557,
+            "max": 508.3742736449395,
+            "last": 508.3742736449395
+          },
+          "diagnostic/encoder_grad/route/gradient_max_abs": {
+            "n": 90,
+            "sum": 354.21840434521437,
+            "min": 0.10492395609617233,
+            "max": 52.66869354248047,
+            "last": 52.66869354248047
+          },
+          "diagnostic/encoder_grad/route/gradient_nonzero_elements": {
+            "n": 90,
+            "sum": 16600771.0,
+            "min": 174455.0,
+            "max": 204872.0,
+            "last": 175521.0
+          },
+          "diagnostic/encoder_grad/route/gradient_nonfinite_elements": {
+            "n": 90,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/encoder_grad/encoder_all/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 808.4737247258834,
+            "min": 0.17801421844003942,
+            "max": 124.06329157935981,
+            "last": 124.06329157935981
+          },
+          "diagnostic/encoder_grad/topology_core/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 21.18935045543038,
+            "min": 0.001021732593276029,
+            "max": 1.63497879339636,
+            "last": 0.6963141206235666
+          },
+          "diagnostic/encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 2375.255939465687,
+            "min": 0.030780045365228645,
+            "max": 354.3932088118758,
+            "last": 354.3932088118758
+          },
+          "diagnostic/encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 255.19738337741765,
+            "min": 0.06091163594887576,
+            "max": 18.463306620910746,
+            "last": 18.463306620910746
+          },
+          "diagnostic/encoder_grad/slot_ego/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 47.07308231857519,
+            "min": 0.06461586674730052,
+            "max": 2.026972478178334,
+            "last": 0.7657006982129158
+          },
+          "diagnostic/encoder_grad/slot_social/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 62.42629144379995,
+            "min": 0.08170563637948423,
+            "max": 2.3442873968198863,
+            "last": 1.5300392620474705
+          },
+          "diagnostic/encoder_grad/slot_route/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 20.46056958894826,
+            "min": 0.01779552042804206,
+            "max": 0.9919477767155302,
+            "last": 0.15835847401116077
+          },
+          "diagnostic/encoder_grad/route/gradient_to_parameter_l2": {
+            "n": 90,
+            "sum": 115.87942767072767,
+            "min": 0.0541870070359046,
+            "max": 12.573946409328705,
+            "last": 12.573946409328705
+          },
+          "diagnostic/diagnostic_valid_query_count": {
+            "n": 92,
+            "sum": 170298.0,
+            "min": 60.0,
+            "max": 1920.0,
+            "last": 1902.0
+          },
+          "diagnostic/diagnostic_batch_size": {
+            "n": 92,
+            "sum": 2882.0,
+            "min": 1.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/diagnostic_batch_variance_valid": {
+            "n": 92,
+            "sum": 90.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/context_ego_rms": {
+            "n": 92,
+            "sum": 80.34404438734055,
+            "min": 0.7605239152908325,
+            "max": 1.0101431608200073,
+            "last": 0.7668434977531433
+          },
+          "diagnostic/context_social_rms": {
+            "n": 92,
+            "sum": 120.59304010868073,
+            "min": 0.9012757539749146,
+            "max": 1.6756784915924072,
+            "last": 1.6756784915924072
+          },
+          "diagnostic/context_route_rms": {
+            "n": 92,
+            "sum": 55.55063046514988,
+            "min": 0.15271271765232086,
+            "max": 1.0191839933395386,
+            "last": 0.41334885358810425
+          },
+          "diagnostic/context_ego_batch_std_mean": {
+            "n": 92,
+            "sum": 45.42638900876045,
+            "min": 0.0,
+            "max": 0.703959584236145,
+            "last": 0.5212019681930542
+          },
+          "diagnostic/context_social_batch_std_mean": {
+            "n": 92,
+            "sum": 73.61139369010925,
+            "min": 0.0,
+            "max": 1.2424827814102173,
+            "last": 1.2424827814102173
+          },
+          "diagnostic/context_route_batch_std_mean": {
+            "n": 92,
+            "sum": 33.58400172367692,
+            "min": 0.0,
+            "max": 0.6479078531265259,
+            "last": 0.24622058868408203
+          },
+          "diagnostic/topology_residual_scale": {
+            "n": 92,
+            "sum": 1.7980321301147342,
+            "min": 0.0011056452058255672,
+            "max": 0.07076166570186615,
+            "last": 0.0027621532790362835
+          },
+          "diagnostic/goal_residual_scale": {
+            "n": 92,
+            "sum": 0.6125562145170989,
+            "min": 0.000136228947667405,
+            "max": 0.027849704027175903,
+            "last": 0.0003090692625846714
+          },
+          "diagnostic/route_bias_weight": {
+            "n": 92,
+            "sum": 99.48857343196869,
+            "min": 1.0,
+            "max": 1.1163649559020996,
+            "last": 1.1123720407485962
+          },
+          "diagnostic/heading_bias_weight": {
+            "n": 92,
+            "sum": 88.1726114153862,
+            "min": 0.9252192378044128,
+            "max": 1.0,
+            "last": 0.9252192378044128
+          },
+          "diagnostic/topology_effective_lanes": {
+            "n": 92,
+            "sum": 356.556360244751,
+            "min": 3.0742075443267822,
+            "max": 6.482769012451172,
+            "last": 3.425825595855713
+          },
+          "diagnostic/route_compatible_attention_mass": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/route_compatible_lane_count_mean": {
+            "n": 92,
+            "sum": 2146.4135417938232,
+            "min": 22.66666603088379,
+            "max": 23.78333282470703,
+            "last": 23.319664001464844
+          },
+          "diagnostic/topology_fallback_rate": {
+            "n": 92,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/topology_fallback_query_count": {
+            "n": 92,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/topology_compatible_query_count": {
+            "n": 92,
+            "sum": 170298.0,
+            "min": 60.0,
+            "max": 1920.0,
+            "last": 1902.0
+          },
+          "diagnostic/topology_valid_lane_count": {
+            "n": 92,
+            "sum": 4232.0,
+            "min": 46.0,
+            "max": 46.0,
+            "last": 46.0
+          },
+          "diagnostic/relation_pair_valid_count": {
+            "n": 92,
+            "sum": 851430.0,
+            "min": 300.0,
+            "max": 9600.0,
+            "last": 9510.0
+          },
+          "diagnostic/relation_pair_candidate_count": {
+            "n": 92,
+            "sum": 864600.0,
+            "min": 300.0,
+            "max": 9600.0,
+            "last": 9600.0
+          },
+          "diagnostic/relation_pair_valid_fraction": {
+            "n": 92,
+            "sum": 90.62812530994415,
+            "min": 0.8968750238418579,
+            "max": 1.0,
+            "last": 0.9906250238418579
+          },
+          "diagnostic/relation_pair_mask_has_valid": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/topology_conflict_directed_edge_count": {
+            "n": 92,
+            "sum": 16192.0,
+            "min": 176.0,
+            "max": 176.0,
+            "last": 176.0
+          },
+          "diagnostic/topology_merge_directed_edge_count": {
+            "n": 92,
+            "sum": 3312.0,
+            "min": 36.0,
+            "max": 36.0,
+            "last": 36.0
+          },
+          "diagnostic/topology_conflict_relation_present": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/topology_merge_relation_present": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/same_lane_attention_pair_mean": {
+            "n": 92,
+            "sum": 4.955351863056421,
+            "min": 0.0311574786901474,
+            "max": 0.07915845513343811,
+            "last": 0.05616851896047592
+          },
+          "diagnostic/conflict_attention_pair_mean": {
+            "n": 92,
+            "sum": 15.02140150219202,
+            "min": 0.0792231485247612,
+            "max": 0.264299601316452,
+            "last": 0.185557022690773
+          },
+          "diagnostic/merge_attention_pair_mean": {
+            "n": 92,
+            "sum": 0.27175569105384056,
+            "min": 3.792060670093633e-05,
+            "max": 0.021067176014184952,
+            "last": 0.004544888157397509
+          },
+          "diagnostic/conflict_or_merge_attention_pair_mean": {
+            "n": 92,
+            "sum": 15.293157301843166,
+            "min": 0.08094960451126099,
+            "max": 0.26524609327316284,
+            "last": 0.19010192155838013
+          },
+          "diagnostic/same_lane_edge_feature_mean": {
+            "n": 92,
+            "sum": 0.09896083651983645,
+            "min": 3.115747676929459e-05,
+            "max": 0.00449951458722353,
+            "last": 0.00015418333350680768
+          },
+          "diagnostic/conflict_or_merge_edge_feature_mean": {
+            "n": 92,
+            "sum": 0.3209375395817915,
+            "min": 0.00010411239054519683,
+            "max": 0.01771826110780239,
+            "last": 0.0005218323203735054
+          },
+          "diagnostic/merge_pair_score": {
+            "n": 92,
+            "sum": 0.27175569079554407,
+            "min": 3.792061033891514e-05,
+            "max": 0.021067176014184952,
+            "last": 0.004544888157397509
+          },
+          "diagnostic/ego_slot_rms": {
+            "n": 92,
+            "sum": 190.51347148418427,
+            "min": 1.2024279832839966,
+            "max": 2.8777236938476562,
+            "last": 1.735767126083374
+          },
+          "diagnostic/ego_slot_batch_std_mean": {
+            "n": 92,
+            "sum": 95.79358041286469,
+            "min": 0.0,
+            "max": 1.8066903352737427,
+            "last": 1.0509380102157593
+          },
+          "diagnostic/ego_slot_within_sample_std_mean": {
+            "n": 92,
+            "sum": 187.40751552581787,
+            "min": 1.1766908168792725,
+            "max": 2.8551409244537354,
+            "last": 1.6929084062576294
+          },
+          "diagnostic/ego_slot_dim": {
+            "n": 92,
+            "sum": 2944.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/ego_projection_weight_rms": {
+            "n": 92,
+            "sum": 10.873587481677532,
+            "min": 0.11302869021892548,
+            "max": 0.12274603545665741,
+            "last": 0.12274603545665741
+          },
+          "diagnostic/ego_projection_parameter_count": {
+            "n": 92,
+            "sum": 379776.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/ego_projection_active": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/social_slot_rms": {
+            "n": 92,
+            "sum": 242.4188312292099,
+            "min": 1.0744810104370117,
+            "max": 4.065764904022217,
+            "last": 4.065764904022217
+          },
+          "diagnostic/social_slot_batch_std_mean": {
+            "n": 92,
+            "sum": 170.0576805472374,
+            "min": 0.0,
+            "max": 3.143819808959961,
+            "last": 3.143819808959961
+          },
+          "diagnostic/social_slot_within_sample_std_mean": {
+            "n": 92,
+            "sum": 218.67374408245087,
+            "min": 1.0652124881744385,
+            "max": 3.7364768981933594,
+            "last": 3.7364768981933594
+          },
+          "diagnostic/social_slot_dim": {
+            "n": 92,
+            "sum": 5888.0,
+            "min": 64.0,
+            "max": 64.0,
+            "last": 64.0
+          },
+          "diagnostic/social_projection_weight_rms": {
+            "n": 92,
+            "sum": 9.59697538614273,
+            "min": 0.1017567366361618,
+            "max": 0.10528884828090668,
+            "last": 0.10528884828090668
+          },
+          "diagnostic/social_projection_parameter_count": {
+            "n": 92,
+            "sum": 759552.0,
+            "min": 8256.0,
+            "max": 8256.0,
+            "last": 8256.0
+          },
+          "diagnostic/social_projection_active": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/route_slot_rms": {
+            "n": 92,
+            "sum": 232.0559952110052,
+            "min": 0.1879032701253891,
+            "max": 5.501498699188232,
+            "last": 2.740058183670044
+          },
+          "diagnostic/route_slot_batch_std_mean": {
+            "n": 92,
+            "sum": 124.64692164584994,
+            "min": 0.0,
+            "max": 3.4515833854675293,
+            "last": 1.305607557296753
+          },
+          "diagnostic/route_slot_within_sample_std_mean": {
+            "n": 92,
+            "sum": 210.50507161021233,
+            "min": 0.17900463938713074,
+            "max": 4.977627754211426,
+            "last": 2.505500078201294
+          },
+          "diagnostic/route_slot_dim": {
+            "n": 92,
+            "sum": 2944.0,
+            "min": 32.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/route_projection_weight_rms": {
+            "n": 92,
+            "sum": 11.293504416942596,
+            "min": 0.11174958944320679,
+            "max": 0.13565051555633545,
+            "last": 0.13554519414901733
+          },
+          "diagnostic/route_projection_parameter_count": {
+            "n": 92,
+            "sum": 379776.0,
+            "min": 4128.0,
+            "max": 4128.0,
+            "last": 4128.0
+          },
+          "diagnostic/route_projection_active": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/ego_slot_energy_share": {
+            "n": 92,
+            "sum": 28.27381358295679,
+            "min": 0.08694171905517578,
+            "max": 0.5961963534355164,
+            "last": 0.13231608271598816
+          },
+          "diagnostic/social_slot_energy_share": {
+            "n": 92,
+            "sum": 31.959770992398262,
+            "min": 0.12353798747062683,
+            "max": 0.5412063598632812,
+            "last": 0.5412063598632812
+          },
+          "diagnostic/route_slot_energy_share": {
+            "n": 92,
+            "sum": 31.766415785998106,
+            "min": 0.013592366129159927,
+            "max": 0.7177032232284546,
+            "last": 0.326477587223053
+          },
+          "diagnostic/slot_sample_energy_correlation_valid": {
+            "n": 92,
+            "sum": 90.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/slot_batch_variance_valid": {
+            "n": 92,
+            "sum": 90.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/slot_output_total_dim": {
+            "n": 92,
+            "sum": 11776.0,
+            "min": 128.0,
+            "max": 128.0,
+            "last": 128.0
+          },
+          "diagnostic/mlp_output_head_active": {
+            "n": 92,
+            "sum": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "last": 0.0
+          },
+          "diagnostic/slot_sample_energy_ego_social_corr": {
+            "n": 92,
+            "sum": -37.468900045379996,
+            "min": -0.9073359966278076,
+            "max": 0.32781246304512024,
+            "last": -0.014859260991215706
+          },
+          "diagnostic/slot_sample_energy_social_route_corr": {
+            "n": 92,
+            "sum": -18.174177350942045,
+            "min": -0.5891376733779907,
+            "max": 0.4573824107646942,
+            "last": -0.3664378225803375
+          },
+          "diagnostic/slot_sample_energy_ego_route_corr": {
+            "n": 92,
+            "sum": 3.407429741229862,
+            "min": -0.7777547240257263,
+            "max": 0.6709901690483093,
+            "last": 0.06187700480222702
+          },
+          "diagnostic/diagnostic_forward_index": {
+            "n": 92,
+            "sum": 19188713.0,
+            "min": 4.0,
+            "max": 411651.0,
+            "last": 411651.0
+          },
+          "diagnostic/diagnostic_sample_forward_index": {
+            "n": 92,
+            "sum": 19188572.0,
+            "min": 1.0,
+            "max": 411649.0,
+            "last": 411649.0
+          },
+          "diagnostic/diagnostic_sample_index": {
+            "n": 92,
+            "sum": 75047.0,
+            "min": 1.0,
+            "max": 1609.0,
+            "last": 1609.0
+          },
+          "diagnostic/diagnostic_sample_count": {
+            "n": 92,
+            "sum": 75047.0,
+            "min": 1.0,
+            "max": 1609.0,
+            "last": 1609.0
+          },
+          "diagnostic/diagnostic_sample_age_forwards": {
+            "n": 92,
+            "sum": 141.0,
+            "min": 0.0,
+            "max": 4.0,
+            "last": 2.0
+          },
+          "diagnostic/diagnostic_sampled": {
+            "n": 92,
+            "sum": 17.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 0.0
+          },
+          "diagnostic/diagnostic_sample_every": {
+            "n": 92,
+            "sum": 23552.0,
+            "min": 256.0,
+            "max": 256.0,
+            "last": 256.0
+          },
+          "diagnostic/diagnostic_source_code": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_source_code": {
+            "n": 92,
+            "sum": 92.0,
+            "min": 1.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/diagnostic_sample_batch_size": {
+            "n": 92,
+            "sum": 2882.0,
+            "min": 1.0,
+            "max": 32.0,
+            "last": 32.0
+          },
+          "diagnostic/diagnostic_sample_grad_enabled": {
+            "n": 92,
+            "sum": 60.0,
+            "min": 0.0,
+            "max": 1.0,
+            "last": 1.0
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 90,
+            "sum": -334.1865764260292,
+            "min": -7.595980644226074,
+            "max": 1.5024206638336182,
+            "last": -0.1331898272037506
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 90,
+            "sum": -336.06390369683504,
+            "min": -7.613570213317871,
+            "max": 1.426509141921997,
+            "last": -0.08420723676681519
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 90,
+            "sum": -324.3583314269781,
+            "min": -7.637808322906494,
+            "max": 1.770451307296753,
+            "last": -0.07387153804302216
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 90,
+            "sum": 81.76168191432953,
+            "min": 0.2687112092971802,
+            "max": 2.4641008377075195,
+            "last": 1.9440600872039795
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 90,
+            "sum": 80.79597282409668,
+            "min": 0.2714536190032959,
+            "max": 2.506788730621338,
+            "last": 2.084831714630127
+          }
+        }
+      },
+      "evaluation": {
+        "expected_episodes": 100,
+        "complete_episode_denominator": 100,
+        "episode_count_matches_expected": true,
+        "outcome_counts": {
+          "success": 41,
+          "collision": 56,
+          "timeout": 3,
+          "off_route": 0
+        },
+        "outcome_rates": {
+          "success": 0.41,
+          "collision": 0.56,
+          "timeout": 0.03,
+          "off_route": 0.0
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 4.62564093129014,
+          "mean_actual_speed_denominator_speed_samples": 25804.0,
+          "stopped_fraction": 0.20008525809951946,
+          "stopped_fraction_denominator_speed_samples": 25804.0,
+          "near_unit_bound_fraction": 0.37090993178402126,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 6416,
+          "near_unit_bound_denominator_action_scalar_samples": 17298,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.11308324290807627,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 2918.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 25804.0,
+          "covered_critical_unobserved_fraction": 0.0489846535420865,
+          "covered_critical_unobserved_numerator_ticks": 1264.0,
+          "covered_critical_unobserved_denominator_ticks": 25804.0,
+          "coverage_speed_samples_of_raw_records": 0.9984136196556394,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.9984136196556394,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.9984136196556394,
+          "raw_records": 25845,
+          "decision_records": 8649,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 100,
+          "null_reasons": {}
+        }
+      },
+      "artifacts": {
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\evaluation_results.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\training_complete.json",
+        "train_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,2187 @@
+{
+  "schema_version": 1,
+  "label": "ST-RT -> Topo",
+  "reference_file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\evaluation_results.json",
+  "candidate_file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\evaluation_results.json",
+  "reference_method": "sac_mlp_d1_st_rt",
+  "candidate_method": "sac_mlp_d1_st_rt_topo",
+  "reference_identity": {
+    "method": "sac_mlp_d1_st_rt",
+    "source_script": "train_intersection_yield_v2_d1",
+    "source_method": "sac_mlp_d1_st_rt",
+    "family": "d1",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+    "episodes": 100,
+    "workers": 1,
+    "smoke": false,
+    "behavior_diagnostics": true
+  },
+  "candidate_identity": {
+    "method": "sac_mlp_d1_st_rt_topo",
+    "source_script": "train_intersection_yield_v2_d1",
+    "source_method": "sac_mlp_d1_st_rt_topo",
+    "family": "d1",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "dd3fb3849c850fc2d4ea726278b8b9aa6aeffd81254c8a6b5fc448f0b866a000",
+    "episodes": 100,
+    "workers": 1,
+    "smoke": false,
+    "behavior_diagnostics": true
+  },
+  "pairing_key": [
+    "seed",
+    "traffic_variant"
+  ],
+  "reference_episode_records": 100,
+  "candidate_episode_records": 100,
+  "expected_episode_records": 100,
+  "expected_episode_count_met": true,
+  "matched_pairs": 100,
+  "paired_outcomes_complete": true,
+  "reference_record_errors": [],
+  "candidate_record_errors": [],
+  "missing_reference_pairs": [],
+  "missing_candidate_pairs": [],
+  "matrix_rows_reference_columns_candidate": {
+    "success": {
+      "success": 23,
+      "collision": 23,
+      "timeout": 17
+    },
+    "collision": {
+      "success": 16,
+      "collision": 16,
+      "timeout": 5
+    },
+    "timeout": {
+      "success": 0,
+      "collision": 0,
+      "timeout": 0
+    }
+  },
+  "matched_reference_counts": {
+    "success": 63,
+    "collision": 37,
+    "timeout": 0
+  },
+  "matched_candidate_counts": {
+    "success": 39,
+    "collision": 39,
+    "timeout": 22
+  },
+  "matched_success_delta_count": -24,
+  "matched_timeout_delta_count": 22,
+  "collision_to_success": 16,
+  "success_to_collision": 23,
+  "new_timeouts_from_non_timeout": 22,
+  "resolved_timeouts": 0,
+  "paired_outcome_criterion_met": false,
+  "decision_hint": "analyze_current_module_before_adding_another",
+  "per_traffic_variant": {
+    "traffic_10.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 4,
+        "collision": 0,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_11.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 4,
+        "collision": 0,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 2,
+      "new_timeouts": 1
+    },
+    "traffic_12.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 2,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 2,
+        "collision": 2,
+        "timeout": 0
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 1,
+      "new_timeouts": 0
+    },
+    "traffic_13.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 3,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_14.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 3,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 2
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 1,
+      "new_timeouts": 2
+    },
+    "traffic_15.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 3,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_16.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 2,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 0,
+        "collision": 3,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 2,
+      "new_timeouts": 1
+    },
+    "traffic_17.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 2,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 1
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 0,
+      "new_timeouts": 1
+    },
+    "traffic_18.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 2,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 0,
+        "timeout": 3
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 0,
+      "new_timeouts": 3
+    },
+    "traffic_19.rou.xml": {
+      "pairs": 4,
+      "reference": {
+        "success": 3,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_20.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 0
+      },
+      "collision_to_success": 2,
+      "success_to_collision": 0,
+      "new_timeouts": 0
+    },
+    "traffic_21.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 1,
+      "new_timeouts": 0
+    },
+    "traffic_22.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 0,
+      "new_timeouts": 0
+    },
+    "traffic_23.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 0,
+        "collision": 3,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 0
+      },
+      "collision_to_success": 3,
+      "success_to_collision": 0,
+      "new_timeouts": 0
+    },
+    "traffic_24.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 0,
+      "new_timeouts": 1
+    },
+    "traffic_25.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 0
+    },
+    "traffic_26.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 0,
+      "new_timeouts": 1
+    },
+    "traffic_27.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 0,
+        "collision": 3,
+        "timeout": 0
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 2,
+      "new_timeouts": 0
+    },
+    "traffic_28.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 0
+      },
+      "collision_to_success": 2,
+      "success_to_collision": 0,
+      "new_timeouts": 0
+    },
+    "traffic_29.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 2,
+      "new_timeouts": 0
+    },
+    "traffic_00.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 0,
+        "collision": 2,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_01.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_02.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 0,
+        "timeout": 2
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 0,
+      "new_timeouts": 2
+    },
+    "traffic_03.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 0
+    },
+    "traffic_04.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 0,
+        "collision": 3,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "collision_to_success": 1,
+      "success_to_collision": 0,
+      "new_timeouts": 0
+    },
+    "traffic_05.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 0,
+        "collision": 3,
+        "timeout": 0
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 2,
+      "new_timeouts": 0
+    },
+    "traffic_06.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 2,
+        "collision": 1,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 0,
+      "new_timeouts": 1
+    },
+    "traffic_07.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 1,
+        "collision": 2,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 0,
+      "new_timeouts": 1
+    },
+    "traffic_08.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    },
+    "traffic_09.rou.xml": {
+      "pairs": 3,
+      "reference": {
+        "success": 3,
+        "collision": 0,
+        "timeout": 0
+      },
+      "candidate": {
+        "success": 1,
+        "collision": 1,
+        "timeout": 1
+      },
+      "collision_to_success": 0,
+      "success_to_collision": 1,
+      "new_timeouts": 1
+    }
+  },
+  "changed_cases": [
+    {
+      "seed": 10000,
+      "traffic_variant": "traffic_10.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 372,
+      "candidate_raw_steps": 95,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10001,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 249,
+      "candidate_raw_steps": 101,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10003,
+      "traffic_variant": "traffic_13.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 276,
+      "candidate_raw_steps": 108,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10004,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 177,
+      "candidate_raw_steps": 191,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10006,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 217,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10007,
+      "traffic_variant": "traffic_17.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 285,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10008,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 301,
+      "candidate_raw_steps": 194,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10009,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 282,
+      "candidate_raw_steps": 102,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10010,
+      "traffic_variant": "traffic_20.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 268,
+      "candidate_raw_steps": 176,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10011,
+      "traffic_variant": "traffic_21.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 342,
+      "candidate_raw_steps": 111,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10013,
+      "traffic_variant": "traffic_23.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 329,
+      "candidate_raw_steps": 180,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10014,
+      "traffic_variant": "traffic_24.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 299,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10017,
+      "traffic_variant": "traffic_27.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 273,
+      "candidate_raw_steps": 97,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10018,
+      "traffic_variant": "traffic_28.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 272,
+      "candidate_raw_steps": 231,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10019,
+      "traffic_variant": "traffic_29.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 272,
+      "candidate_raw_steps": 127,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10020,
+      "traffic_variant": "traffic_00.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 275,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10021,
+      "traffic_variant": "traffic_01.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 307,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10022,
+      "traffic_variant": "traffic_02.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 249,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10025,
+      "traffic_variant": "traffic_05.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 202,
+      "candidate_raw_steps": 106,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10026,
+      "traffic_variant": "traffic_06.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 264,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10027,
+      "traffic_variant": "traffic_07.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 167,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10028,
+      "traffic_variant": "traffic_08.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 346,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10029,
+      "traffic_variant": "traffic_09.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 227,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10031,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 257,
+      "candidate_raw_steps": 152,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10034,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 273,
+      "candidate_raw_steps": 151,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10035,
+      "traffic_variant": "traffic_15.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 222,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10036,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 275,
+      "candidate_raw_steps": 152,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10038,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 202,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10039,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 171,
+      "candidate_raw_steps": 179,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10043,
+      "traffic_variant": "traffic_23.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 358,
+      "candidate_raw_steps": 180,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10046,
+      "traffic_variant": "traffic_26.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 373,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10047,
+      "traffic_variant": "traffic_27.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 269,
+      "candidate_raw_steps": 107,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10049,
+      "traffic_variant": "traffic_29.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 281,
+      "candidate_raw_steps": 142,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10050,
+      "traffic_variant": "traffic_00.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 232,
+      "candidate_raw_steps": 104,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10051,
+      "traffic_variant": "traffic_01.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 274,
+      "candidate_raw_steps": 327,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10054,
+      "traffic_variant": "traffic_04.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 203,
+      "candidate_raw_steps": 179,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10059,
+      "traffic_variant": "traffic_09.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 412,
+      "candidate_raw_steps": 108,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10062,
+      "traffic_variant": "traffic_12.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 350,
+      "candidate_raw_steps": 149,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10064,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 306,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10066,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 291,
+      "candidate_raw_steps": 136,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10067,
+      "traffic_variant": "traffic_17.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 198,
+      "candidate_raw_steps": 210,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10068,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 365,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10070,
+      "traffic_variant": "traffic_20.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 199,
+      "candidate_raw_steps": 178,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10071,
+      "traffic_variant": "traffic_21.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 340,
+      "candidate_raw_steps": 180,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10072,
+      "traffic_variant": "traffic_22.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 256,
+      "candidate_raw_steps": 251,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10073,
+      "traffic_variant": "traffic_23.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 292,
+      "candidate_raw_steps": 189,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10075,
+      "traffic_variant": "traffic_25.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 288,
+      "candidate_raw_steps": 97,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10078,
+      "traffic_variant": "traffic_28.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 194,
+      "candidate_raw_steps": 182,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10081,
+      "traffic_variant": "traffic_01.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 260,
+      "candidate_raw_steps": 94,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10082,
+      "traffic_variant": "traffic_02.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 257,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10083,
+      "traffic_variant": "traffic_03.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 265,
+      "candidate_raw_steps": 112,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10085,
+      "traffic_variant": "traffic_05.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 495,
+      "candidate_raw_steps": 113,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10088,
+      "traffic_variant": "traffic_08.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 349,
+      "candidate_raw_steps": 124,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10090,
+      "traffic_variant": "traffic_10.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 309,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10091,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 262,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10092,
+      "traffic_variant": "traffic_12.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 202,
+      "candidate_raw_steps": 181,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10093,
+      "traffic_variant": "traffic_13.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 288,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10094,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 313,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10095,
+      "traffic_variant": "traffic_15.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 321,
+      "candidate_raw_steps": 105,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10098,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 369,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10099,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 233,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    }
+  ],
+  "all_paired_cases": [
+    {
+      "seed": 10000,
+      "traffic_variant": "traffic_10.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 372,
+      "candidate_raw_steps": 95,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10001,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 249,
+      "candidate_raw_steps": 101,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10002,
+      "traffic_variant": "traffic_12.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 270,
+      "candidate_raw_steps": 176,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10003,
+      "traffic_variant": "traffic_13.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 276,
+      "candidate_raw_steps": 108,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10004,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 177,
+      "candidate_raw_steps": 191,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10005,
+      "traffic_variant": "traffic_15.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 230,
+      "candidate_raw_steps": 174,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10006,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 217,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10007,
+      "traffic_variant": "traffic_17.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 285,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10008,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 301,
+      "candidate_raw_steps": 194,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10009,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 282,
+      "candidate_raw_steps": 102,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10010,
+      "traffic_variant": "traffic_20.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 268,
+      "candidate_raw_steps": 176,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10011,
+      "traffic_variant": "traffic_21.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 342,
+      "candidate_raw_steps": 111,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10012,
+      "traffic_variant": "traffic_22.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 239,
+      "candidate_raw_steps": 206,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10013,
+      "traffic_variant": "traffic_23.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 329,
+      "candidate_raw_steps": 180,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10014,
+      "traffic_variant": "traffic_24.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 299,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10015,
+      "traffic_variant": "traffic_25.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 233,
+      "candidate_raw_steps": 138,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10016,
+      "traffic_variant": "traffic_26.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 186,
+      "candidate_raw_steps": 102,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10017,
+      "traffic_variant": "traffic_27.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 273,
+      "candidate_raw_steps": 97,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10018,
+      "traffic_variant": "traffic_28.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 272,
+      "candidate_raw_steps": 231,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10019,
+      "traffic_variant": "traffic_29.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 272,
+      "candidate_raw_steps": 127,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10020,
+      "traffic_variant": "traffic_00.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 275,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10021,
+      "traffic_variant": "traffic_01.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 307,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10022,
+      "traffic_variant": "traffic_02.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 249,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10023,
+      "traffic_variant": "traffic_03.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 251,
+      "candidate_raw_steps": 151,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10024,
+      "traffic_variant": "traffic_04.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 190,
+      "candidate_raw_steps": 102,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10025,
+      "traffic_variant": "traffic_05.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 202,
+      "candidate_raw_steps": 106,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10026,
+      "traffic_variant": "traffic_06.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 264,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10027,
+      "traffic_variant": "traffic_07.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 167,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10028,
+      "traffic_variant": "traffic_08.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 346,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10029,
+      "traffic_variant": "traffic_09.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 227,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10030,
+      "traffic_variant": "traffic_10.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 355,
+      "candidate_raw_steps": 177,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10031,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 257,
+      "candidate_raw_steps": 152,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10032,
+      "traffic_variant": "traffic_12.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 262,
+      "candidate_raw_steps": 146,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10033,
+      "traffic_variant": "traffic_13.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 277,
+      "candidate_raw_steps": 235,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10034,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 273,
+      "candidate_raw_steps": 151,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10035,
+      "traffic_variant": "traffic_15.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 222,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10036,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 275,
+      "candidate_raw_steps": 152,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10037,
+      "traffic_variant": "traffic_17.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 281,
+      "candidate_raw_steps": 212,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10038,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 202,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10039,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 171,
+      "candidate_raw_steps": 179,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10040,
+      "traffic_variant": "traffic_20.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 314,
+      "candidate_raw_steps": 179,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10041,
+      "traffic_variant": "traffic_21.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 265,
+      "candidate_raw_steps": 176,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10042,
+      "traffic_variant": "traffic_22.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 182,
+      "candidate_raw_steps": 91,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10043,
+      "traffic_variant": "traffic_23.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 358,
+      "candidate_raw_steps": 180,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10044,
+      "traffic_variant": "traffic_24.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 233,
+      "candidate_raw_steps": 114,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10045,
+      "traffic_variant": "traffic_25.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 232,
+      "candidate_raw_steps": 173,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10046,
+      "traffic_variant": "traffic_26.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 373,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10047,
+      "traffic_variant": "traffic_27.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 269,
+      "candidate_raw_steps": 107,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10048,
+      "traffic_variant": "traffic_28.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 235,
+      "candidate_raw_steps": 176,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10049,
+      "traffic_variant": "traffic_29.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 281,
+      "candidate_raw_steps": 142,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10050,
+      "traffic_variant": "traffic_00.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 232,
+      "candidate_raw_steps": 104,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10051,
+      "traffic_variant": "traffic_01.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 274,
+      "candidate_raw_steps": 327,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10052,
+      "traffic_variant": "traffic_02.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 273,
+      "candidate_raw_steps": 184,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10053,
+      "traffic_variant": "traffic_03.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 262,
+      "candidate_raw_steps": 190,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10054,
+      "traffic_variant": "traffic_04.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 203,
+      "candidate_raw_steps": 179,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10055,
+      "traffic_variant": "traffic_05.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 214,
+      "candidate_raw_steps": 105,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10056,
+      "traffic_variant": "traffic_06.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 193,
+      "candidate_raw_steps": 89,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10057,
+      "traffic_variant": "traffic_07.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 232,
+      "candidate_raw_steps": 230,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10058,
+      "traffic_variant": "traffic_08.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 220,
+      "candidate_raw_steps": 177,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10059,
+      "traffic_variant": "traffic_09.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 412,
+      "candidate_raw_steps": 108,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10060,
+      "traffic_variant": "traffic_10.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 307,
+      "candidate_raw_steps": 174,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10061,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 229,
+      "candidate_raw_steps": 219,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10062,
+      "traffic_variant": "traffic_12.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 350,
+      "candidate_raw_steps": 149,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10063,
+      "traffic_variant": "traffic_13.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 172,
+      "candidate_raw_steps": 133,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10064,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 306,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10065,
+      "traffic_variant": "traffic_15.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 201,
+      "candidate_raw_steps": 161,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10066,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 291,
+      "candidate_raw_steps": 136,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10067,
+      "traffic_variant": "traffic_17.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 198,
+      "candidate_raw_steps": 210,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10068,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 365,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10069,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 282,
+      "candidate_raw_steps": 186,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10070,
+      "traffic_variant": "traffic_20.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 199,
+      "candidate_raw_steps": 178,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10071,
+      "traffic_variant": "traffic_21.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 340,
+      "candidate_raw_steps": 180,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10072,
+      "traffic_variant": "traffic_22.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 256,
+      "candidate_raw_steps": 251,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10073,
+      "traffic_variant": "traffic_23.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 292,
+      "candidate_raw_steps": 189,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10074,
+      "traffic_variant": "traffic_24.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 262,
+      "candidate_raw_steps": 178,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10075,
+      "traffic_variant": "traffic_25.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 288,
+      "candidate_raw_steps": 97,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10076,
+      "traffic_variant": "traffic_26.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 424,
+      "candidate_raw_steps": 175,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10077,
+      "traffic_variant": "traffic_27.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 263,
+      "candidate_raw_steps": 113,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10078,
+      "traffic_variant": "traffic_28.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 194,
+      "candidate_raw_steps": 182,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10079,
+      "traffic_variant": "traffic_29.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 270,
+      "candidate_raw_steps": 228,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10080,
+      "traffic_variant": "traffic_00.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 253,
+      "candidate_raw_steps": 112,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10081,
+      "traffic_variant": "traffic_01.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 260,
+      "candidate_raw_steps": 94,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10082,
+      "traffic_variant": "traffic_02.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 257,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10083,
+      "traffic_variant": "traffic_03.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 265,
+      "candidate_raw_steps": 112,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10084,
+      "traffic_variant": "traffic_04.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 256,
+      "candidate_raw_steps": 150,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10085,
+      "traffic_variant": "traffic_05.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 495,
+      "candidate_raw_steps": 113,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10086,
+      "traffic_variant": "traffic_06.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 278,
+      "candidate_raw_steps": 176,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10087,
+      "traffic_variant": "traffic_07.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 147,
+      "candidate_raw_steps": 100,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10088,
+      "traffic_variant": "traffic_08.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 349,
+      "candidate_raw_steps": 124,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10089,
+      "traffic_variant": "traffic_09.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 230,
+      "candidate_raw_steps": 174,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10090,
+      "traffic_variant": "traffic_10.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 309,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10091,
+      "traffic_variant": "traffic_11.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 262,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10092,
+      "traffic_variant": "traffic_12.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 202,
+      "candidate_raw_steps": 181,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10093,
+      "traffic_variant": "traffic_13.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 288,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10094,
+      "traffic_variant": "traffic_14.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 313,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10095,
+      "traffic_variant": "traffic_15.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 321,
+      "candidate_raw_steps": 105,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10096,
+      "traffic_variant": "traffic_16.rou.xml",
+      "reference_outcome": "collision",
+      "candidate_outcome": "collision",
+      "reference_raw_steps": 402,
+      "candidate_raw_steps": 95,
+      "reference_episode_return": -1.0,
+      "candidate_episode_return": -1.0
+    },
+    {
+      "seed": 10097,
+      "traffic_variant": "traffic_17.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "success",
+      "reference_raw_steps": 239,
+      "candidate_raw_steps": 191,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 1.0
+    },
+    {
+      "seed": 10098,
+      "traffic_variant": "traffic_18.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 369,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    },
+    {
+      "seed": 10099,
+      "traffic_variant": "traffic_19.rou.xml",
+      "reference_outcome": "success",
+      "candidate_outcome": "timeout",
+      "reference_raw_steps": 233,
+      "candidate_raw_steps": 600,
+      "reference_episode_return": 1.0,
+      "candidate_episode_return": 0.0
+    }
+  ],
+  "limitations": [
+    "Only saved evaluation records are compared; no additional simulation is run.",
+    "Check the experiment manifests for matched training budget, density, seeds and checkpoint selection.",
+    "A single training seed does not establish robustness across training seeds.",
+    "Partial-pair counts are descriptive only when paired_outcomes_complete is false."
+  ]
+}

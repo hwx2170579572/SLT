@@ -1,0 +1,260 @@
+schema_version: topo-scene-v4.6.joint-checkpoint-decoder-selector-contract/v1
+status: preregistered_before_implementation_and_fresh_development
+created_at_local: '2026-08-19T12:52:35+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  parent_method: v4_5_confident_actor_fusion_with_v4_5_1_event_patch
+  parent_contract: experiments/topo_scene_v4/experiment_contract_v4_5.yaml
+  parent_contract_sha256: 3c1f7f8bb2f2967f7559907386b58e67760c53dfa8e46bf581fc4824d186bb7c
+  parent_implementation_freeze: results_topo_v4_5_dev/engineering/implementation_freeze.json
+  parent_implementation_freeze_sha256: 9ab0ccc71b33110ac526f5a9f89e8f504d0f3fc0ddafd6407c6ff36dc2414666
+  parent_engineering_patch_freeze: results_topo_v4_5_dev/engineering/v4_5_1/implementation_freeze.json
+  parent_engineering_patch_freeze_sha256: 2dc362f52b80c03162d3b4875f4c667ebc976af5fd128b5c9680a0c15cea3cea
+  parent_development_decision: results_topo_v4_5_dev/development/development_decision.json
+  parent_development_decision_sha256: 3e6e2d2c403db0784b7a2c67a8205bce47fc8e7cd7765f265a0039584540a0c3
+  failure_attribution: results_topo_v4_5_dev/attribution/e1_failure/attribution_summary.json
+  failure_attribution_sha256: c32edd285d5a4a701b312bfcd57449969b2f0bf3367d50c2464f7373f09d925a
+  deep_attribution: results_topo_v4_5_dev/attribution/e1_failure/deep_attribution.md
+  deep_attribution_sha256: 070a6a911f46a466c520644da780dc14249a9335e9e418d505ffdaff87c292cf
+  attribution_tool: tools/attribute_v4_5_e1_failure.py
+  attribution_tool_sha256: 63b8ac7b739e42a30b7f4f3df9a5242c8bd5708fc08d429c0c8fcbeddc5d61fc
+  post_hoc_selector_design_declared: true
+  formal_test_accessed: false
+
+single_change:
+  name: train_only_joint_checkpoint_decoder_selector
+  checkpoint_candidates: [highest_training_success, exact_final]
+  decoder_candidates: [target_critic, fusion_0_90]
+  candidate_pairs: 4
+  target_critic_rule: keep_tie_aware_argmax_feasible_min_target_twin_q
+  fusion_rule: actor_confident_non_keep_else_target_critic
+  actor_non_keep_confidence_threshold: 0.90
+  actor_override_requires_non_keep: true
+  actor_override_requires_action_mask_feasible: true
+  scenario_name_branching: false
+  calibration_partition: train
+  calibration_episodes_per_pair: 12
+  paired_calibration: true
+  identical_unique_traffic_block_for_all_pairs: true
+  selection_order:
+    - maximize_success_count
+    - minimize_collision_count
+    - minimize_off_route_count
+    - minimize_timeout_count
+    - maximize_mean_return
+    - prefer_exact_final_on_complete_outcome_tie
+    - prefer_target_critic_on_complete_checkpoint_decoder_tie
+  missing_training_best_fallback: exact_final
+  deployment_receipt_must_predate_validation: true
+  training_changed: false
+  stochastic_actor_changed: false
+  reward_changed: false
+  encoder_changed: false
+  critic_training_changed: false
+  entropy_changed: false
+  decoder_definitions_changed: false
+  fusion_threshold_changed: false
+
+fixed_runtime:
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  episode_limit_profile: source
+  actor_encoder_detach: true
+  slot_balance_coef: 0.01
+  lane_entropy_scale: 0.0
+  speed_target_entropy: -1.0
+  exact_final_checkpoint_rule: exactly_at_requested_raw_steps
+  training_best_checkpoint_rule:
+    metric: highest_training_success_rate_last_20
+    fixed_denominator: 20
+    minimum_completed_episodes_exclusive: 20
+    tie_break: earliest_strict_improvement
+
+terminal_event_semantics:
+  source_flags_may_overlap: true
+  event_rates_imply_integral_counts: true
+  counts_bounded_by_episode_population: true
+  summary_counts_match_episode_records: true
+  every_episode_has_terminal_event_flag: true
+  overlap_evidence_recorded: true
+  event_precedence_added: false
+  event_relabeling: false
+
+decoder_integrity:
+  selected_decoder_exact_rule_match_rate: 1.00
+  selected_action_mask_feasible_rate: 1.00
+  exact_hybrid_lateral_code_rate: 1.00
+  target_decoder:
+    exact_target_critic_argmax_rate: 1.00
+    keep_tie_rule_exact_rate: 1.00
+  fusion_decoder:
+    exact_fusion_rule_match_rate: 1.00
+    actor_override_predicate_valid_rate: 1.00
+    target_fallback_rule_match_rate: 1.00
+    threshold_must_equal: 0.90
+  decoder_trace_and_episode_records_required: true
+
+selector_integrity:
+  calibration_environment_constructed_before_validation: true
+  validation_environment_forbidden_until_receipt_sealed: true
+  test_environment_forbidden_until_promotion_and_receipt_sealed: true
+  four_pairs_use_identical_calibration_seeds: true
+  four_pairs_use_identical_traffic_order: true
+  unique_train_traffic_episodes: 12
+  checkpoint_zip_crc_required: true
+  checkpoint_sha256_required: true
+  selected_model_hash_must_match_receipt: true
+  selected_decoder_must_match_receipt: true
+  calibration_trace_and_episode_records_required: true
+  partial_checkpoint_ineligible: true
+  validation_used_for_selection: false
+  formal_test_used_for_selection: false
+
+development:
+  historical_or_post_hoc_gate_inputs_forbidden: true
+  fresh_training_required: true
+  evaluation_split: validation
+  evaluation_episodes: 12
+  calibration_split: train
+  calibration_episodes_per_pair: 12
+  ordered_cells:
+    - id: F1
+      kind: fresh_training_with_train_only_joint_selection
+      scenario: cross
+      seed: 6
+      raw_steps: 20000
+      calibration_seed_start: 72000
+      evaluation_seed_start: 63000
+      role: cross_primary_joint_selector_confirmation
+    - id: F2
+      kind: fresh_training_with_train_only_joint_selection
+      scenario: carla
+      seed: 5
+      raw_steps: 20000
+      calibration_seed_start: 73000
+      evaluation_seed_start: 64000
+      requires: F1_pass
+      role: carla_preservation_and_decoder_branch_guard
+    - id: F3
+      kind: fresh_training_with_train_only_joint_selection
+      scenario: cross
+      seed: 7
+      raw_steps: 20000
+      calibration_seed_start: 74000
+      evaluation_seed_start: 65000
+      requires: F2_pass
+      role: cross_independent_seed_stability_guard
+    - id: F4
+      kind: fresh_training_with_train_only_joint_selection
+      scenario: roundabout_medium
+      seed: 2
+      raw_steps: 20000
+      calibration_seed_start: 75000
+      evaluation_seed_start: 66000
+      requires: F3_pass
+      role: third_scenario_regression_guard
+  carla_outcome_gate:
+    success_rate_min: 0.50
+    collision_rate_max: 0.10
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.50
+  non_carla_guard:
+    success_rate_min: 0.50
+    collision_rate_max: 0.45
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.30
+  selector_gate:
+    calibration_partition: train
+    calibration_episodes_each_pair: 12
+    candidate_pair_count: 4
+    paired_seed_and_traffic_rate: 1.00
+    selected_hash_match: true
+    selected_decoder_match: true
+    receipt_predates_validation: true
+  no_gate_compensation: true
+  on_fail: stop_and_create_new_versioned_attribution
+  on_pass: run_promotion
+
+promotion:
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [0, 1]
+  raw_training_steps: 50000
+  unique_calibration_traffic_episodes: 12
+  calibration_split: train
+  calibration_seed_start_formula: 80000 + 1000 * training_seed
+  candidate_selector: joint_checkpoint_decoder
+  temporal_graph_selector: own_frozen_decoder_checkpoint_only
+  evaluation_episodes: 30
+  evaluation_split: validation
+  evaluation_seed_start_formula: 90000 + 1000 * training_seed
+  jobs: 12
+  thresholds:
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+
+formal_test:
+  locked: true
+  accessed: false
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  unique_calibration_traffic_episodes: 12
+  calibration_split: train
+  calibration_seed_start_formula: 100000 + 1000 * training_seed
+  candidate_selector: joint_checkpoint_decoder
+  temporal_graph_selector: own_frozen_decoder_checkpoint_only
+  evaluation_episodes: 50
+  evaluation_split: test
+  evaluation_seed_start_formula: 200000 + 1000 * training_seed
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260817
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+result_artifacts:
+  per_pair_calibration_summary: required
+  per_pair_calibration_episode_records: required
+  per_pair_calibration_action_trace: required
+  selector_receipt: required_before_validation
+  selected_checkpoint_sha256: required
+  selected_decoder: required
+  validation_summary_and_episode_records: required
+  training_diagnostics: required
+  method_metadata: required
+  experiment_settings: required
+  development_decision: required
+  promotion_and_formal_results: forbidden_until_unlocked
+
+infrastructure_interruption_policy:
+  interrupted_cell_status: TBD
+  archive_partial_attempt: true
+  partial_checkpoint_eligible: false
+  identical_from_scratch_retries_allowed: 1
+  on_second_matching_failure: stop_for_versioned_engineering_attribution
+
+unknown_rule: Unrun, interrupted, rejected, or protocol-incompatible cells remain TBD.
+

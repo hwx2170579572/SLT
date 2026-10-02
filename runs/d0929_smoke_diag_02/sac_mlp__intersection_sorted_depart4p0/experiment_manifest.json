@@ -1,0 +1,31 @@
+{
+  "method": "sac_mlp",
+  "source_script": "train_intersection_yield_v2",
+  "source_method": "sac_mlp",
+  "family": "yv2",
+  "scenario": "intersection_sorted",
+  "depart_scale": 4.0,
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_smoke_diag_02\\sac_mlp__intersection_sorted_depart4p0",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_smoke_diag_02\\sac_mlp__intersection_sorted_depart4p0\\final_model.zip",
+  "evaluation": {
+    "episodes": 8,
+    "success_rate": 0.0,
+    "collision_rate": 0.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_return": 0.0,
+    "std_return": 0.0,
+    "mean_decision_steps": 200.0,
+    "mean_raw_steps": 600.0,
+    "mean_success_completion_time_seconds": null,
+    "std_success_completion_time_seconds": null,
+    "successful_episodes": 0
+  },
+  "training_curve": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_smoke_diag_02\\sac_mlp__intersection_sorted_depart4p0\\training_curve.png",
+  "smoke": true,
+  "behavior_diagnostics": true,
+  "raw_budget": 300,
+  "training_seed": 0,
+  "checkpoint_frequency_raw_steps": 100,
+  "note": "depart 排序版 intersection 副本：三股车流（北→南 / 东→西 / 西→东）都参与仿真 + 发车间隔 ×4.0（降密度）。"
+}

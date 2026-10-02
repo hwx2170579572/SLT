@@ -1,0 +1,73 @@
+{
+  "schema": "sac-mlp-random-pair-status/v1",
+  "status": "failed",
+  "supervisor_pid": 52540,
+  "started_at_utc": "2026-09-30T03:11:57+00:00",
+  "workers": {
+    "medium": {
+      "scenario": "intersection_random_medium_v1",
+      "pid": 15900,
+      "status": "complete",
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium.stderr.log",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp",
+        "--scenario",
+        "intersection_random_medium_v1",
+        "--depart-scale",
+        "1.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics"
+      ],
+      "exit_code": 0,
+      "finished_at_utc": "2026-09-30T04:44:33+00:00"
+    },
+    "medium_p05": {
+      "scenario": "intersection_random_medium_p05_v1",
+      "pid": 19128,
+      "status": "failed",
+      "stdout": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium_p05.stdout.log",
+      "stderr": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\launcher_logs\\medium_p05.stderr.log",
+      "command": [
+        "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "train-method",
+        "--method",
+        "sac_mlp",
+        "--scenario",
+        "intersection_random_medium_p05_v1",
+        "--depart-scale",
+        "1.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics"
+      ],
+      "exit_code": 1,
+      "finished_at_utc": "2026-09-30T03:12:30+00:00"
+    }
+  },
+  "cuda_device_0": "NVIDIA GeForce RTX 5060 Ti",
+  "updated_at_utc": "2026-09-30T04:44:33+00:00",
+  "exit_codes": {
+    "medium": 0,
+    "medium_p05": 1
+  },
+  "finished_at_utc": "2026-09-30T04:44:33+00:00"
+}

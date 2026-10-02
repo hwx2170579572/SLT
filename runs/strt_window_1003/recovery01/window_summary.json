@@ -1,0 +1,55 @@
+{
+  "status": "complete",
+  "episodes_used": 72,
+  "episodes_max": 72,
+  "ego_control_raw_steps_used": 19604,
+  "ego_control_raw_steps_max": 43200,
+  "parent_episodes_consumed": 13,
+  "parent_raw_control_steps_consumed": 3340,
+  "cumulative_episodes_used": 85,
+  "cumulative_raw_control_steps_used": 22944,
+  "cumulative_episodes_max": 86,
+  "cumulative_raw_control_steps_max": 51600,
+  "intervention_pairs_reserved": 29,
+  "intervention_pairs_executed": 29,
+  "intervention_episodes_planned": 58,
+  "intervention_episodes_used": 58,
+  "baseline_history_index_audit_summary": {
+    "scope": "supplied episode records only; selected outcome-stratified cases do not estimate the full evaluation or training distribution",
+    "episode_count": 12,
+    "decision_count": 1057,
+    "audit_unavailable_decision_count": 0,
+    "mask_rule": "trajectory[..., 0] != 0 via _nonzero_mask",
+    "exposure_definition": "among nonempty actor histories, count_minus_one_index points to a false _nonzero_mask slot",
+    "actor_groups": {
+      "ego": {
+        "actor_decision_slots": 1057,
+        "nonempty_actor_histories": 1057,
+        "selected_model_padding_count": 0,
+        "count_minus_one_matches_true_last_count": 1057,
+        "selected_model_padding_rate_among_nonempty": 0.0,
+        "count_minus_one_matches_true_last_rate_among_nonempty": 1.0,
+        "index_delta_min": 0,
+        "index_delta_max": 0,
+        "index_delta_mean": 0.0
+      },
+      "social": {
+        "actor_decision_slots": 5285,
+        "nonempty_actor_histories": 5285,
+        "selected_model_padding_count": 0,
+        "count_minus_one_matches_true_last_count": 5285,
+        "selected_model_padding_rate_among_nonempty": 0.0,
+        "count_minus_one_matches_true_last_rate_among_nonempty": 1.0,
+        "index_delta_min": 0,
+        "index_delta_max": 0,
+        "index_delta_mean": 0.0
+      }
+    }
+  },
+  "reset_warmup_raw_steps": null,
+  "reset_warmup_unavailable_reason": "SumoEnv.reset advances simulationStep before resetting local raw_steps and does not expose the exact count; see per-episode reset_raw_observer_callback_count and reset_snapshot_sim_time_s.",
+  "checkpoint_state_fingerprint_unchanged": true,
+  "n_updates_before_after": 95001,
+  "identity_replays_passed": 2,
+  "abort_reason": null
+}

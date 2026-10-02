@@ -1,0 +1,151 @@
+{
+  "method": "sac_mlp_d1_st_rt_topo",
+  "source_script": "train_intersection_yield_v2_d1",
+  "source_method": "sac_mlp_d1_st_rt_topo",
+  "family": "d1",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "depart_scale": 1.0,
+  "eval_traffic_split": "validation",
+  "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+  "traffic_config": {
+    "schema_version": 1,
+    "protocol": "intersection_bernoulli_step_schedule_v1",
+    "scenario": "intersection_random_darrl_medium_v1",
+    "density_level": "medium",
+    "source_scenario": "intersection_sorted",
+    "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+    "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+    "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+    "total_vehicles_per_hour": 3240,
+    "vehicles_per_hour_by_route": {
+      "neg_E3_to_neg_E0": 1080,
+      "E0_to_E3": 1080,
+      "E2_to_E1": 1080
+    },
+    "flows": [
+      {
+        "id": "neg_E3_to_neg_E0",
+        "edges": [
+          "-E3",
+          "-E0"
+        ],
+        "vehicles_per_hour": 1080,
+        "rate_per_second": 0.3,
+        "sumo_probability": null,
+        "probability_per_step": 0.03,
+        "mean_headway_seconds": 3.3333333333333335,
+        "depart_lane": "1",
+        "depart_pos": "0",
+        "depart_speed": "max",
+        "arrival_lane": "1"
+      },
+      {
+        "id": "E0_to_E3",
+        "edges": [
+          "E0",
+          "E3"
+        ],
+        "vehicles_per_hour": 1080,
+        "rate_per_second": 0.3,
+        "sumo_probability": null,
+        "probability_per_step": 0.03,
+        "mean_headway_seconds": 3.3333333333333335,
+        "depart_lane": "1",
+        "depart_pos": "0",
+        "depart_speed": "max",
+        "arrival_lane": "1"
+      },
+      {
+        "id": "E2_to_E1",
+        "edges": [
+          "E2",
+          "E1"
+        ],
+        "vehicles_per_hour": 1080,
+        "rate_per_second": 0.3,
+        "sumo_probability": null,
+        "probability_per_step": 0.03,
+        "mean_headway_seconds": 3.3333333333333335,
+        "depart_lane": "1",
+        "depart_pos": "0",
+        "depart_speed": "max",
+        "arrival_lane": "1"
+      }
+    ],
+    "flow_begin_seconds": 0.0,
+    "flow_end_seconds": 130.0,
+    "ego_depart_seconds": 50.0,
+    "ego_route_edges": [
+      "-E1",
+      "-E0"
+    ],
+    "ego_depart_lane": "2",
+    "ego_depart_speed": "0",
+    "step_length_seconds": 0.1,
+    "max_episode_raw_steps": 600,
+    "default_action_repeat": 3,
+    "endless_traffic": false,
+    "background_exit_behavior": "leave after the configured route ends; no recycling",
+    "depart_scale": 1.0,
+    "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+    "traffic_seed_domains": {
+      "train": {
+        "offset": 0,
+        "width": 1000000000,
+        "last_seed": 999999999
+      },
+      "validation": {
+        "offset": 1000000000,
+        "width": 500000000,
+        "last_seed": 1499999999
+      },
+      "test": {
+        "offset": 1500000000,
+        "width": 500000000,
+        "last_seed": 1999999999
+      }
+    },
+    "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+    "default_evaluation_split": "validation",
+    "default_evaluation_logical_seeds": {
+      "start": 10000,
+      "episodes": 100
+    },
+    "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+    "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+    "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+    "dynamic_episode_traffic": true,
+    "scenario_family": "darrl_lane1_v1",
+    "configuration_revision": "darrl_r2_20260930",
+    "previous_configuration_revision": "darrl_r1_20260930",
+    "terminal_outcome_protocol": "exclusive_terminal_v2",
+    "template_scenario": "intersection_random_medium_v1",
+    "collision_action": "remove",
+    "collision_detection_mode": "sumo_events_or_ego_geometry",
+    "background_vtype_overrides": {
+      "jmIgnoreFoeProb": "0"
+    },
+    "ego_vtype_overrides": {
+      "minGap": "1",
+      "jmIgnoreFoeProb": "0"
+    }
+  },
+  "training_traffic_split": "train",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.31,
+    "collision_rate": 0.69,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -0.38
+  },
+  "training_curve": null,
+  "smoke": false,
+  "behavior_diagnostics": true,
+  "raw_budget": 100000,
+  "training_seed": 0,
+  "checkpoint_frequency_raw_steps": 10000,
+  "note": "seeded randomized intersection traffic profile."
+}

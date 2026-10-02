@@ -1,0 +1,423 @@
+{
+  "schema_version": "behavior-comparison/v1",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+  "protocol": {
+    "traffic_protocol": "same_complete_effective_pool_for_train_and_eval; no holdout",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "training_seed": 0,
+    "raw_step_budget": 100000,
+    "expected_eval_episodes": 100,
+    "eval_outcome_denominator": "returned evaluation episode_records; a missing/short run remains visible via count vs expected and is never recoded as timeout",
+    "training_terminal_note": "training episodes closed by run truncation are counted as incomplete, not environment timeouts",
+    "continuous_metric_weighting": "raw-tick or action-scalar weighted by each metric's explicit valid sample denominator"
+  },
+  "methods": {
+    "sac_mlp": {
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0",
+      "training": {
+        "completed_raw_steps": 100000,
+        "requested_raw_step_budget": 100000,
+        "updates": 95001,
+        "smoke": false,
+        "incomplete_episodes": 1,
+        "episode_outcome_counts_including_incomplete": {
+          "success": 138,
+          "collision": 252,
+          "timeout": 36,
+          "incomplete": 1
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 4.723790320592484,
+          "mean_actual_speed_denominator_speed_samples": 99862.0,
+          "stopped_fraction": 0.3183793635216599,
+          "stopped_fraction_denominator_speed_samples": 99862.0,
+          "near_unit_bound_fraction": 0.2021753421382896,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 13532,
+          "near_unit_bound_denominator_action_scalar_samples": 66932,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.09655324347599688,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 9642.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 99862.0,
+          "covered_critical_unobserved_fraction": 0.03930423985099437,
+          "covered_critical_unobserved_numerator_ticks": 3925.0,
+          "covered_critical_unobserved_denominator_ticks": 99862.0,
+          "coverage_speed_samples_of_raw_records": 0.99862,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.99862,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.99862,
+          "raw_records": 100000,
+          "decision_records": 33466,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 427,
+          "null_reasons": {}
+        },
+        "optimization_samples": 100,
+        "optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 100,
+            "sum": 5055574.0,
+            "min": 1002.0,
+            "max": 100000.0,
+            "last": 100000.0
+          },
+          "rollout/source_success_rate_last_20": {
+            "n": 76,
+            "sum": 21.650000000000006,
+            "min": 0.05,
+            "max": 0.6,
+            "last": 0.3
+          },
+          "train/learning_rate": {
+            "n": 96,
+            "sum": 0.009599999999999997,
+            "min": 0.0001,
+            "max": 0.0001,
+            "last": 0.0001
+          },
+          "train/n_updates": {
+            "n": 96,
+            "sum": 4565559.0,
+            "min": 7.0,
+            "max": 95001.0,
+            "last": 95001.0
+          },
+          "train/ent_coef": {
+            "n": 96,
+            "sum": 2.9316009362228215,
+            "min": 0.0057413941249251366,
+            "max": 0.19989045709371567,
+            "last": 0.012650258839130402
+          },
+          "train/actor_loss": {
+            "n": 96,
+            "sum": 244.82124196738005,
+            "min": -0.7998906075954437,
+            "max": 5.874289512634277,
+            "last": -0.7303862571716309
+          },
+          "train/critic_loss": {
+            "n": 96,
+            "sum": 341.0392429456115,
+            "min": 0.2762565240263939,
+            "max": 11.3677519261837,
+            "last": 2.697667121887207
+          },
+          "train/ent_coef_loss": {
+            "n": 96,
+            "sum": 6.319423728535185,
+            "min": -0.00814622500911355,
+            "max": 0.5907881855964661,
+            "last": 0.0052427854388952255
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 92,
+            "sum": -237.47339891642332,
+            "min": -5.547547340393066,
+            "max": 0.5303671956062317,
+            "last": -1.4883424043655396
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 92,
+            "sum": -236.8468858897686,
+            "min": -5.601606845855713,
+            "max": 0.5042833089828491,
+            "last": -1.516891598701477
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 92,
+            "sum": -237.41558256745338,
+            "min": -5.424670219421387,
+            "max": 0.6867101788520813,
+            "last": -1.7398852109909058
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 92,
+            "sum": 79.8530658185482,
+            "min": 0.34743285179138184,
+            "max": 2.0057027339935303,
+            "last": 0.950660765171051
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 92,
+            "sum": 80.02720585465431,
+            "min": 0.35396742820739746,
+            "max": 2.03879714012146,
+            "last": 0.9645751118659973
+          }
+        }
+      },
+      "evaluation": {
+        "expected_episodes": 100,
+        "complete_episode_denominator": 100,
+        "episode_count_matches_expected": true,
+        "outcome_counts": {
+          "success": 22,
+          "collision": 38,
+          "timeout": 40,
+          "off_route": 0
+        },
+        "outcome_rates": {
+          "success": 0.22,
+          "collision": 0.38,
+          "timeout": 0.4,
+          "off_route": 0.0
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 2.6481256737627756,
+          "mean_actual_speed_denominator_speed_samples": 36773.0,
+          "stopped_fraction": 0.4951458950860686,
+          "stopped_fraction_denominator_speed_samples": 36773.0,
+          "near_unit_bound_fraction": 0.18134820483595213,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 4455,
+          "near_unit_bound_denominator_action_scalar_samples": 24566,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.05082533380469366,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 1869.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 36773.0,
+          "covered_critical_unobserved_fraction": 0.020585755853479454,
+          "covered_critical_unobserved_numerator_ticks": 757.0,
+          "covered_critical_unobserved_denominator_ticks": 36773.0,
+          "coverage_speed_samples_of_raw_records": 0.9994020926756353,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.9994020926756353,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.9994020926756353,
+          "raw_records": 36795,
+          "decision_records": 12283,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 100,
+          "null_reasons": {}
+        }
+      },
+      "artifacts": {
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\evaluation_results.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\training_complete.json",
+        "train_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\eval_worker_00\\summary.json"
+      }
+    },
+    "sac_mlp_d1_st_rt": {
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0",
+      "training": {
+        "completed_raw_steps": 100000,
+        "requested_raw_step_budget": 100000,
+        "updates": 95001,
+        "smoke": false,
+        "incomplete_episodes": 1,
+        "episode_outcome_counts_including_incomplete": {
+          "success": 165,
+          "collision": 294,
+          "timeout": 11,
+          "incomplete": 1
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 5.336948465528321,
+          "mean_actual_speed_denominator_speed_samples": 99835.0,
+          "stopped_fraction": 0.15619772624830972,
+          "stopped_fraction_denominator_speed_samples": 99835.0,
+          "near_unit_bound_fraction": 0.22925125388106044,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 15358,
+          "near_unit_bound_denominator_action_scalar_samples": 66992,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.12790103671057246,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 12769.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 99835.0,
+          "covered_critical_unobserved_fraction": 0.053197776330946064,
+          "covered_critical_unobserved_numerator_ticks": 5311.0,
+          "covered_critical_unobserved_denominator_ticks": 99835.0,
+          "coverage_speed_samples_of_raw_records": 0.99835,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.99835,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.99835,
+          "raw_records": 100000,
+          "decision_records": 33496,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 471,
+          "null_reasons": {}
+        },
+        "optimization_samples": 100,
+        "optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 100,
+            "sum": 5054934.0,
+            "min": 1002.0,
+            "max": 100000.0,
+            "last": 100000.0
+          },
+          "rollout/source_success_rate_last_20": {
+            "n": 75,
+            "sum": 24.200000000000006,
+            "min": 0.05,
+            "max": 0.6,
+            "last": 0.45
+          },
+          "train/learning_rate": {
+            "n": 96,
+            "sum": 0.009599999999999997,
+            "min": 0.0001,
+            "max": 0.0001,
+            "last": 0.0001
+          },
+          "train/n_updates": {
+            "n": 96,
+            "sum": 4564919.0,
+            "min": 7.0,
+            "max": 95001.0,
+            "last": 95001.0
+          },
+          "train/ent_coef": {
+            "n": 96,
+            "sum": 3.163052504649386,
+            "min": 0.007497001672163606,
+            "max": 0.19988801330327988,
+            "last": 0.01669512502849102
+          },
+          "train/actor_loss": {
+            "n": 96,
+            "sum": 262.5904675265774,
+            "min": -2.1114888191223145,
+            "max": 6.632206678390503,
+            "last": -2.1114888191223145
+          },
+          "train/critic_loss": {
+            "n": 96,
+            "sum": 468.7908631041646,
+            "min": 0.2243959754705429,
+            "max": 13.917890071868896,
+            "last": 6.289368152618408
+          },
+          "train/ent_coef_loss": {
+            "n": 96,
+            "sum": 6.908307054429315,
+            "min": -0.04369914159178734,
+            "max": 0.6680076122283936,
+            "last": -0.002474167849868536
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 93,
+            "sum": -257.2749220430851,
+            "min": -7.264289855957031,
+            "max": 3.7047128677368164,
+            "last": 1.521013855934143
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 93,
+            "sum": -256.8938222154975,
+            "min": -7.259514808654785,
+            "max": 3.706596851348877,
+            "last": 1.510935664176941
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 93,
+            "sum": -259.8675376176834,
+            "min": -7.605774879455566,
+            "max": 3.327906370162964,
+            "last": 1.4289906024932861
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 93,
+            "sum": 89.21604606509209,
+            "min": 0.31118834018707275,
+            "max": 2.145218849182129,
+            "last": 1.1706717014312744
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 93,
+            "sum": 89.83956149220467,
+            "min": 0.3019816279411316,
+            "max": 2.1329472064971924,
+            "last": 1.2052316665649414
+          }
+        }
+      },
+      "evaluation": {
+        "expected_episodes": 100,
+        "complete_episode_denominator": 100,
+        "episode_count_matches_expected": true,
+        "outcome_counts": {
+          "success": 63,
+          "collision": 37,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "outcome_rates": {
+          "success": 0.63,
+          "collision": 0.37,
+          "timeout": 0.0,
+          "off_route": 0.0
+        },
+        "behavior": {
+          "mean_actual_speed_mps": 5.048369286087722,
+          "mean_actual_speed_denominator_speed_samples": 26836.0,
+          "stopped_fraction": 0.10437472052466835,
+          "stopped_fraction_denominator_speed_samples": 26836.0,
+          "near_unit_bound_fraction": 0.39475730312118185,
+          "near_unit_bound_numerator_abs_action_ge_0p95": 7108,
+          "near_unit_bound_denominator_action_scalar_samples": 18006,
+          "near_unit_bound_action_space": {
+            "type": "Box",
+            "low": [
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0
+            ],
+            "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+          },
+          "low_ttc_fraction": 0.0931584438813534,
+          "low_ttc_numerator_evaluable_ticks_ttc_lt_3s": 2500.0,
+          "low_ttc_denominator_risk_evaluable_ticks": 26836.0,
+          "covered_critical_unobserved_fraction": 0.05023103294082576,
+          "covered_critical_unobserved_numerator_ticks": 1348.0,
+          "covered_critical_unobserved_denominator_ticks": 26836.0,
+          "coverage_speed_samples_of_raw_records": 0.9976579054983457,
+          "coverage_risk_evaluable_ticks_of_raw_records": 0.9976579054983457,
+          "coverage_risk_and_observation_ticks_of_raw_records": 0.9976579054983457,
+          "raw_records": 26899,
+          "decision_records": 9003,
+          "diagnostic_error_count": 0,
+          "episodes_finished": 100,
+          "null_reasons": {}
+        }
+      },
+      "artifacts": {
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\evaluation_results.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\training_complete.json",
+        "train_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json"
+      }
+    }
+  }
+}

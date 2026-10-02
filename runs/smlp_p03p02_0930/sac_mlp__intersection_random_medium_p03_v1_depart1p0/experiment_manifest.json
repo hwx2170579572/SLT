@@ -1,0 +1,140 @@
+{
+  "method": "sac_mlp",
+  "source_script": "train_intersection_yield_v2",
+  "source_method": "sac_mlp",
+  "family": "yv2",
+  "scenario": "intersection_random_medium_p03_v1",
+  "depart_scale": 1.0,
+  "eval_traffic_split": "validation",
+  "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+  "traffic_config": {
+    "schema_version": 1,
+    "protocol": "intersection_bernoulli_step_schedule_v1",
+    "scenario": "intersection_random_medium_p03_v1",
+    "density_level": "medium_p03",
+    "source_scenario": "intersection_sorted",
+    "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+    "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+    "demand_definition": "user-requested p=0.3 per 0.1-second step; 32400 veh/h requested, realized insertion is capacity-limited",
+    "total_vehicles_per_hour": 32400,
+    "vehicles_per_hour_by_route": {
+      "neg_E3_to_neg_E0": 10800,
+      "E0_to_E3": 10800,
+      "E2_to_E1": 10800
+    },
+    "flows": [
+      {
+        "id": "neg_E3_to_neg_E0",
+        "edges": [
+          "-E3",
+          "-E0"
+        ],
+        "vehicles_per_hour": 10800,
+        "rate_per_second": 3.0,
+        "sumo_probability": null,
+        "probability_per_step": 0.3,
+        "mean_headway_seconds": 0.3333333333333333,
+        "depart_lane": "0",
+        "depart_pos": "0",
+        "depart_speed": "max"
+      },
+      {
+        "id": "E0_to_E3",
+        "edges": [
+          "E0",
+          "E3"
+        ],
+        "vehicles_per_hour": 10800,
+        "rate_per_second": 3.0,
+        "sumo_probability": null,
+        "probability_per_step": 0.3,
+        "mean_headway_seconds": 0.3333333333333333,
+        "depart_lane": "0",
+        "depart_pos": "0",
+        "depart_speed": "max"
+      },
+      {
+        "id": "E2_to_E1",
+        "edges": [
+          "E2",
+          "E1"
+        ],
+        "vehicles_per_hour": 10800,
+        "rate_per_second": 3.0,
+        "sumo_probability": null,
+        "probability_per_step": 0.3,
+        "mean_headway_seconds": 0.3333333333333333,
+        "depart_lane": "0",
+        "depart_pos": "0",
+        "depart_speed": "max"
+      }
+    ],
+    "flow_begin_seconds": 0.0,
+    "flow_end_seconds": 130.0,
+    "ego_depart_seconds": 50.0,
+    "ego_route_edges": [
+      "-E1",
+      "-E0"
+    ],
+    "ego_depart_lane": "2",
+    "ego_depart_speed": "0",
+    "step_length_seconds": 0.1,
+    "max_episode_raw_steps": 600,
+    "default_action_repeat": 3,
+    "endless_traffic": false,
+    "background_exit_behavior": "leave after the configured route ends; no recycling",
+    "depart_scale": 1.0,
+    "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+    "traffic_seed_domains": {
+      "train": {
+        "offset": 0,
+        "width": 1000000000,
+        "last_seed": 999999999
+      },
+      "validation": {
+        "offset": 1000000000,
+        "width": 500000000,
+        "last_seed": 1499999999
+      },
+      "test": {
+        "offset": 1500000000,
+        "width": 500000000,
+        "last_seed": 1999999999
+      }
+    },
+    "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+    "default_evaluation_split": "validation",
+    "default_evaluation_logical_seeds": {
+      "start": 10000,
+      "episodes": 100
+    },
+    "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+    "calibration_status": "user-named medium variant; demand is not calibrated medium difficulty",
+    "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+    "dynamic_episode_traffic": true
+  },
+  "training_traffic_split": "train",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0",
+  "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\final_model.zip",
+  "evaluation": {
+    "episodes": 100,
+    "success_rate": 0.17,
+    "collision_rate": 0.83,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -0.66,
+    "std_return": 0.751265598839718,
+    "mean_decision_steps": 38.07,
+    "mean_raw_steps": 113.12,
+    "mean_success_completion_time_seconds": 18.711764705882356,
+    "std_success_completion_time_seconds": 0.10782531046954943,
+    "successful_episodes": 17
+  },
+  "training_curve": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\training_curve.png",
+  "smoke": false,
+  "behavior_diagnostics": true,
+  "raw_budget": 100000,
+  "training_seed": 0,
+  "checkpoint_frequency_raw_steps": 10000,
+  "note": "seeded randomized intersection traffic profile."
+}

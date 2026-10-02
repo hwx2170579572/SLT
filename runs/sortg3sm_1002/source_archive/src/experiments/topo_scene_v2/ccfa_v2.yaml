@@ -1,0 +1,125 @@
+schema_version: ccfa.stage-contract/v1
+project:
+  id: scene_rep_topology_temporal_v2
+  mode: standard
+  venue_family: AI/ML
+  target_venue: unknown
+  parent_state: ../../ccfa.yaml
+  objective: Merge-aware route-constrained residual topology with SoftBalancedSlots.
+runtime:
+  conda_environment: llm_pipeline
+  project_root: ../..
+artifacts:
+  experiment_contract: experiments/topo_scene_v2/experiment_contract.yaml
+  fast_iteration_contract: experiments/topo_scene_v2/fast_iteration_contract.yaml
+  freeze_manifest: artifacts/topo_v2/freeze_manifest.json
+  freeze_manifest_revalidation: artifacts/topo_v2/freeze_manifest_revalidation_20260817.json
+  topology_audit: artifacts/topo_v2/topology_graph_v2_audit.json
+  fast_orchestrator_receipt: artifacts/topo_v2/fast_orchestrator_receipt.json
+  iteration_ledger: experiments/topo_scene_v2/iteration_ledger.json
+  original_interruption_snapshot: results_topo_v2/causal_2x2/interruption_snapshot_20260816.json
+  factorial_anchor_summary: results_topo_v2_fast/stages/factorial_anchor/summary.json
+  factorial_anchor_attribution: results_topo_v2_fast/stages/factorial_anchor/attribution.json
+  factorial_anchor_decision: results_topo_v2_fast/stages/factorial_anchor/decision.json
+  factorial_anchor_deep_report: results_topo_v2_fast/stages/factorial_anchor/deep_attribution.md
+  merge_probe_summary: results_topo_v2_fast/stages/merge_probe/summary.json
+  merge_probe_attribution: results_topo_v2_fast/stages/merge_probe/attribution.json
+  merge_probe_decision: results_topo_v2_fast/stages/merge_probe/decision.json
+  merge_probe_deep_report: results_topo_v2_fast/stages/merge_probe/deep_attribution.md
+  merge_probe_completion_receipt: results_topo_v2_fast/stages/merge_probe/completion_receipt.json
+  query_probe_summary: results_topo_v2_fast/stages/query_probe/summary.json
+  query_probe_attribution: results_topo_v2_fast/stages/query_probe/attribution.json
+  query_probe_decision: results_topo_v2_fast/stages/query_probe/decision.json
+  query_probe_deep_report: results_topo_v2_fast/stages/query_probe/deep_attribution.md
+  query_probe_completion_receipt: results_topo_v2_fast/stages/query_probe/completion_receipt.json
+  gated_probe_summary: results_topo_v2_fast/stages/gated_probe/summary.json
+  gated_probe_attribution: results_topo_v2_fast/stages/gated_probe/attribution.json
+  gated_probe_decision: results_topo_v2_fast/stages/gated_probe/decision.json
+  gated_probe_deep_report: results_topo_v2_fast/stages/gated_probe/deep_attribution.md
+  gated_probe_completion_receipt: results_topo_v2_fast/stages/gated_probe/completion_receipt.json
+  soft_center_summary: results_topo_v2_fast/stages/soft_center/summary.json
+  soft_center_attribution: results_topo_v2_fast/stages/soft_center/attribution.json
+  soft_center_decision: results_topo_v2_fast/stages/soft_center/decision.json
+  soft_center_deep_report: results_topo_v2_fast/stages/soft_center/deep_attribution.md
+  soft_center_completion_receipt: results_topo_v2_fast/stages/soft_center/completion_receipt.json
+  soft_bracket_summary: results_topo_v2_fast/stages/soft_bracket/summary.json
+  soft_bracket_attribution: results_topo_v2_fast/stages/soft_bracket/attribution.json
+  soft_bracket_decision: results_topo_v2_fast/stages/soft_bracket/decision.json
+  soft_bracket_deep_report: results_topo_v2_fast/stages/soft_bracket/deep_attribution.md
+  soft_bracket_completion_receipt: results_topo_v2_fast/stages/soft_bracket/completion_receipt.json
+  candidate_selection: results_topo_v2_fast/development/candidate_selection.json
+  promotion_summary: results_topo_v2_fast/stages/promotion/summary.json
+  promotion_attribution: results_topo_v2_fast/stages/promotion/attribution.json
+  promotion_gate: results_topo_v2_fast/development/promotion_gate.json
+  promotion_deep_report: results_topo_v2_fast/stages/promotion/deep_attribution.md
+  promotion_completion_receipt: results_topo_v2_fast/stages/promotion/promotion_completion_receipt.json
+  promotion_attribution_preregistration: results_topo_v2_fast/stages/promotion/deep_attribution_preregistered_template.md
+  v3_action_calibration_contract: experiments/topo_scene_v3/action_calibration_diagnostic_contract.yaml
+  v3_action_calibration_gate: results_topo_v3_dev/stage_A_carla_activity/gate.json
+  v3_action_calibration_deep_report: results_topo_v3_dev/deep_attribution.md
+  v3_action_calibration_completion_receipt: results_topo_v3_dev/completion_receipt.json
+  bounded_final_summary: results_topo_v2_fast/bounded_final_summary.json
+  bounded_final_report: results_topo_v2_fast/BOUNDED_FINAL_REPORT.md
+  bounded_final_receipt: results_topo_v2_fast/bounded_final_receipt.json
+  formal_failed_gate_negative_test: artifacts/topo_v2/formal_failed_gate_negative_test.json
+stages:
+  - id: V2-S0
+    title: Freeze v1/v2 source and assets
+    owner: ccf-pipeline-orchestrator
+    status: passed
+    pass_condition: Freeze manifest and six-scenario topology audit both validate.
+  - id: V2-S1
+    title: Implement isolated v2 modules and unit tests
+    owner: codex-implementation
+    status: passed
+    depends_on: [V2-S0]
+    pass_condition: Targeted tests, serialization, zero-gate equivalence, and full regression pass.
+  - id: V2-S2
+    title: Freeze CCFA evidence contract
+    owner: ccf-experiment-designer
+    status: passed
+    depends_on: [V2-S1]
+    pass_condition: Contract validator expands unique jobs and formal test is gate-protected.
+  - id: V2-S3
+    title: Run fast 20k 2x2 and cumulative mechanism screens
+    owner: experiment-runner
+    status: passed
+    depends_on: [V2-S2]
+    pass_condition: Each executed validation stage is strictly accepted, deeply attributed, and stopped/promoted by its predeclared rule.
+  - id: V2-S4
+    title: Freeze candidate and pass paired 50k promotion gate
+    owner: root-cause-analysis
+    status: failed
+    depends_on: [V2-S3]
+    pass_condition: Candidate selection plus the two-seed, three-anchor promotion receipt are computed from real validation runs and the gate passes.
+    observed: 12/12 accepted, but macro-success, worst-paired-seed, and positive-effect checks failed.
+    decision: Reject v5_soft_1e2 and keep formal testing locked.
+  - id: V2-S4B
+    title: Bounded zero-training action-calibration salvage
+    owner: root-cause-analysis
+    status: failed
+    depends_on: [V2-S4]
+    pass_condition: CARLA stage A and conditional Cross stage B both pass their preregistered gates.
+    observed: CARLA success 0, timeout 1, applied lane change 0; Cross was not run.
+    decision: Reject scalar calibration and stop the rapid-iteration cycle.
+  - id: V2-S5
+    title: Ten-seed formal test
+    owner: experiment-runner
+    status: planned
+    depends_on: [V2-S4]
+    pass_condition: Hash-matched promotion gate passes and 120 matched 100k formal runs complete on the untouched test partition.
+    gate_state: locked_after_failed_dependency
+    launch_allowed: false
+    formal_test_accessed: false
+  - id: V2-S6
+    title: Integrity audit and final bounded report
+    owner: ccf-integrity-auditor
+    status: planned
+    depends_on: [V2-S5]
+    pass_condition: Settings, hashes, numeric summaries, claims, and missing-cell status agree.
+  - id: V2-S6N
+    title: Bounded negative development report
+    owner: ccf-experiment-designer
+    status: passed
+    depends_on: [V2-S4B]
+    pass_condition: Promotion and salvage failures, exact hashes, unexecuted stages, and the formal lock are recorded without invented results.

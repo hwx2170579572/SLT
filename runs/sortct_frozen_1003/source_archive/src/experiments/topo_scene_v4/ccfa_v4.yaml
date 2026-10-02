@@ -1,0 +1,383 @@
+schema_version: ccfa.stage-contract/v1
+updated_at: 2026-08-30T20:34:20+08:00
+project:
+  id: full_decision_aligned_balanced_slots_v4
+  mode: standard
+  research_stage: v4_11_1_running_v4_11_2_short_path_recovery_scheduled
+  venue_family: AI/ML
+  target_venue: unknown
+  objective: >-
+    Improve at least one scenario over TemporalGraph while limiting every other
+    scenario to at most slight success/collision degradation.
+  immediate_decision: >-
+    v4.10 failed only D1 after all four development jobs and was completely
+    attributed. v4.11 improves the learned risk model with proper soft-target
+    Bernoulli loss, continuous target-difference ranking, and detached EMA
+    consistency; it adds no rule or kinematic projection. Fresh v4.11 D1-D4
+    all passed (Cross aggregate success/collision 0.775/0.225, RAM 0.90/0.10,
+    CARLA 1.0/0.0). Both preregistered mechanism ablations completed: soft-BCE
+    only reached 0.70/0.30, ranked without EMA consistency reached
+    0.50/0.45 with 0.05 timeout, and the full model reached 0.75/0.25 on D1;
+    this supports EMA consistency as the main stability contribution in that
+    seed. The first promotion run completed, while Cross TemporalGraph seed21
+    was interrupted at 32,783/50,000 raw steps. v4.11.1 preserves that tree
+    and its attempt-all runner is now detached from the Codex session. Its first
+    versioned retry exposed a 278-character TensorBoard path failure and then
+    correctly continued to later jobs. v4.11.2 shortens only fresh runtime paths
+    to a tested 195-character representative event path. A detached waiter will
+    start it only after v4.11.1 finishes. Formal remains locked until the full
+    frozen promotion gate passes.
+runtime:
+  conda_environment: llm_pipeline
+  device_preference: cuda
+  formal_test_partition: locked
+stages:
+  - id: V4S0
+    title: Freeze initial plan and prechange verification
+    owner: ccf-pipeline-orchestrator
+    status: passed
+    outputs:
+      - experiments/topo_scene_v4/INITIAL_PLAN.md
+      - experiments/topo_scene_v4/experiment_contract.yaml
+      - experiments/topo_scene_v4/iteration_ledger.json
+    pass_condition: initial files exist and prechange regression is 206 passed
+    handoff: {next_stage: V4S1, owner: ccf-experiment-designer}
+  - id: V4S1
+    title: Identical-observation zero-training decision diagnosis
+    owner: ccf-experiment-designer
+    status: passed
+    outputs:
+      - results_topo_v4_dev/stage_0_offline_diagnosis/probe_results.json
+      - results_topo_v4_dev/stage_0_offline_diagnosis/deep_attribution.md
+    pass_condition: label coverage and episode-split probes are identifiable
+    blocker: insufficient successful behavior episodes or intent-class coverage
+    handoff: {next_stage: V4S2, owner: codex-implementation}
+  - id: V4S2
+    title: Implement the minimum diagnosis-selected v4 method
+    owner: codex-implementation
+    status: passed
+    pass_condition: unit, serialization, gradient, mask, and real-SUMO smoke tests pass
+    handoff: {next_stage: V4S3, owner: experiment-runner}
+  - id: V4S3
+    title: Bounded five-job development gate
+    owner: experiment-runner
+    status: failed
+    pass_condition: CARLA and Cross hard gates pass for both seeds
+    handoff: {next_stage: V4S4, owner: experiment-runner}
+  - id: V4S3A
+    title: Attribute v4.1 deterministic seed instability
+    owner: ccf-idea-optimizer
+    status: passed
+    outputs:
+      - results_topo_v4_dev/attribution/v4_1_seed_instability/attribution_summary.json
+      - results_topo_v4_dev/attribution/v4_1_seed_instability/deep_attribution.md
+    pass_condition: stochastic-training, actor-margin, critic-margin, and checkpoint alternatives are identified
+    handoff: {next_stage: V4S2B, owner: codex-implementation}
+  - id: V4S2B
+    title: Implement v4.2 factorized lane entropy in versioned files
+    owner: codex-implementation
+    status: passed
+    pass_condition: v4.2 method contract, tests, freeze, real-SUMO preflight, F1 run, and trace attribution are complete
+    handoff: {next_stage: V4S3B, owner: experiment-runner}
+  - id: V4S3B
+    title: Four-job v4.2 bounded development gate
+    owner: experiment-runner
+    status: failed
+    pass_condition: CARLA outcome/margin and Cross guard pass for both seeds
+    handoff: {next_stage: V4S3C, owner: ccf-idea-optimizer}
+  - id: V4S3C
+    title: v4.2-r1 route-event attribution and three-job confirmation
+    owner: experiment-runner
+    status: in_progress
+    outputs:
+      - results_topo_v4_2_dev/attribution/f1_event_gate/attribution_summary.json
+      - experiments/topo_scene_v4/experiment_contract_v4_2_r1.yaml
+      - results_topo_v4_2_r1_dev/engineering/implementation_freeze.json
+    pass_condition: F1 pilot event recomputation plus C1 CARLA and C2/C3 Cross hard gates all pass
+    blocker: any noncompensatory outcome or event gate fails
+    handoff: {next_stage: V4S4, owner: experiment-runner}
+  - id: V4S4
+    title: Twelve-job paired promotion
+    owner: experiment-runner
+    status: failed_for_v4_8
+    outputs:
+      - results_topo_v4_8_promotion/summary.json
+      - results_topo_v4_8_promotion/promotion_gate.json
+    pass_condition: every frozen promotion gate passes
+    blocker: cross collision delta +0.1833 exceeded the +0.05 noninferiority margin
+    handoff: {next_stage: V4S4A, owner: ccf-idea-optimizer}
+  - id: V4S4A
+    title: Attribute the complete v4.8 promotion failure
+    owner: ccf-idea-optimizer
+    status: passed
+    outputs:
+      - results_topo_v4_8_promotion/attribution/promotion_failure_v4_8.json
+      - results_topo_v4_8_promotion/attribution/PROMOTION_FAILURE_V4_8.md
+    pass_condition: trace-backed failure locus and model-only rescue route are identified
+    handoff: {next_stage: V4S6, owner: codex-implementation}
+  - id: V4S5
+    title: v4.8 formal test lock
+    owner: experiment-runner
+    status: not_run_promotion_failed
+    pass_condition: v4.8 promotion must pass
+    blocker: v4.8 promotion failed
+  - id: V4S6
+    title: Implement and freeze the v4.9 learned collision-value model
+    owner: codex-implementation
+    status: passed
+    outputs:
+      - experiments/topo_scene_v4/V4_9_LEARNED_COLLISION_VALUE_MODEL.md
+      - experiments/topo_scene_v4/experiment_contract_v4_9.yaml
+      - results_topo_v4_9_dev/engineering/model_integrity_audit.json
+      - results_topo_v4_9_dev/engineering/implementation_freeze.json
+      - results_topo_v4_9_dev/engineering/engineering_receipt.json
+    pass_condition: >-
+      model-only integrity audit, 22 targeted tests, current-state 413-test
+      regression, real SUMO smoke, serialization, and no-rule scan pass
+    handoff: {next_stage: V4S7, owner: experiment-runner}
+  - id: V4S7
+    title: Four-cell fresh v4.9 development gate
+    owner: experiment-runner
+    status: passed_complete_4_of_4
+    outputs:
+      - results_topo_v4_9_dev/development/stage_plan.json
+      - experiments/topo_scene_v4/V4_9_KINEMATIC_PROJECTION_AUDIT_20260826.md
+      - results_topo_v4_9_dev/development/summary.json
+      - results_topo_v4_9_dev/development/development_decision.json
+      - results_topo_v4_9_dev/development/attribution/complete_m1_m4_learned_model.json
+    pass_condition: >-
+      attempt M1-M4, accept all artifacts, satisfy every per-cell gate and the
+      preregistered aggregate Cross gate, then write one development decision
+    blocker: incomplete matrix or any noncompensatory outcome/model-integrity gate failure
+    handoff: {next_stage: V4S7A, owner: ccf-idea-optimizer}
+  - id: V4S7A
+    title: Strict target-only protocol compliance and development equivalence
+    owner: ccf-idea-optimizer
+    status: passed_and_frozen
+    outputs:
+      - experiments/topo_scene_v4/experiment_contract_v4_9_2.yaml
+      - experiments/topo_scene_v4/V4_9_2_STRICT_TARGET_ONLY_PROTOCOL.md
+      - results_topo_v4_9_2_dev/development/target_only_equivalence.json
+      - results_topo_v4_9_2_dev/engineering/model_only_integrity_audit.json
+      - results_topo_v4_9_2_dev/engineering/implementation_freeze.json
+    pass_condition: >-
+      all four immutable target-only reselections preserve the original
+      checkpoint and sealed parameter state; 14 targeted tests, 449-test
+      current-state regression, and fresh real-SUMO target-only smoke pass
+    handoff: {next_stage: V4S8, owner: experiment-runner}
+  - id: V4S7B
+    title: v4.9.2.1 read-only formal-access provenance acceptance patch
+    owner: codex-implementation
+    status: passed_on_all_7_completed_runs
+    outputs:
+      - experiments/topo_scene_v4/V4_9_2_1_ACCEPTANCE_METADATA_PATCH.md
+      - tools/run_topo_v4_9_2_1_experiments.py
+      - tools/run_all_v4_9_2_1_promotion.py
+      - tools/run_all_pending_promotions_v4_9_2_1.py
+      - results_topo_v4_9_2_dev/engineering/v4_9_2_1_acceptance_patch_receipt.json
+    pass_condition: >-
+      frozen runner and run trees are unchanged; 21 targeted tests pass; every
+      completed run is accepted from consistent validation-split and absent
+      formal-unlock evidence; contradictory explicit markers remain rejected
+    handoff: {next_stage: V4S8, owner: experiment-runner}
+  - id: V4S7C
+    title: v4.9.2.2 immutable interrupted-run recovery and attempt-all dispatcher
+    owner: codex-implementation
+    status: passed_engineering_dispatcher_running
+    outputs:
+      - experiments/topo_scene_v4/V4_9_2_2_INTERRUPTED_RUN_RECOVERY.md
+      - tools/run_all_v4_9_2_2_recovery.py
+      - tools/run_all_pending_promotions_v4_9_2_2.py
+      - results_topo_v4_9_2_dev/engineering/v4_9_2_2_recovery_receipt.json
+    pass_condition: >-
+      preserve every incomplete source, never resume or overwrite it, attempt
+      every remaining logical job despite individual failures, and aggregate
+      only after the dispatcher has visited the complete registry
+    handoff: {next_stage: V4S7D, owner: codex-implementation}
+  - id: V4S7D
+    title: v4.9.2.3 Windows short-path recovery and automatic process handoff
+    owner: codex-implementation
+    status: passed_and_armed_waiting_for_v4_9_2_2_exit
+    outputs:
+      - experiments/topo_scene_v4/V4_9_2_3_WINDOWS_SHORT_PATH_RECOVERY.md
+      - tools/run_all_v4_9_2_3_short_recovery.py
+      - tools/run_all_pending_promotions_v4_9_2_3.py
+      - tools/wait_then_run_v4_9_2_3.py
+      - results_topo_v4_9_2_dev/engineering/v4_9_2_3_short_path_receipt.json
+    pass_condition: >-
+      wait for the active dispatcher, use a tested short runtime path for every
+      unresolved job, preserve all prior attempts, retain attempt-all semantics,
+      and never launch formal testing
+    handoff: {next_stage: V4S8, owner: experiment-runner}
+  - id: V4S7E
+    title: v4.9.2.4 automatic post-promotion evidence finalizer
+    owner: codex-implementation
+    status: passed_and_armed_waiting_for_v4_9_2_3_exit
+    outputs:
+      - experiments/topo_scene_v4/V4_9_2_4_AUTOMATIC_POST_PROMOTION_FINALIZER.md
+      - tools/wait_then_finalize_v4_9_2_4.py
+      - results_topo_v4_9_2_dev/engineering/v4_9_2_4_post_promotion_finalizer_receipt.json
+      - results_topo_v4_9_2_promotion/engineering_finalizer_v4_9_2_4/automatic_finalization.json
+      - results_topo_v4_9_2_promotion/attribution/promotion_model_attribution.json
+    pass_condition: >-
+      wait for v4.9.2.3 to exit, attempt every registered analysis even after an
+      earlier failure, require 12/12 accepted jobs and 6/6 attribution pairs for
+      a scientific decision, aggregate all errors, and never launch formal
+    handoff: {next_stage: V4S8A, owner: ccf-idea-optimizer}
+  - id: V4S8
+    title: Twelve-job fresh strict-model-only paired promotion
+    owner: experiment-runner
+    status: failed_complete_12_of_12
+    outputs:
+      - tools/run_all_v4_9_2_promotion.py
+      - tools/run_all_pending_promotions.py
+      - tools/run_all_pending_promotions_v4_9_2_1.py
+      - tools/run_all_pending_promotions_v4_9_2_2.py
+      - tools/run_all_pending_promotions_v4_9_2_3.py
+      - results_topo_v4_9_2_promotion/automation/all_promotion_attempt_summary.json
+      - results_topo_v4_9_2_promotion/engineering_patch_v4_9_2_1/revalidation_report.json
+    pass_condition: every frozen promotion gate passes after all 12 jobs are attempted
+    handoff: {next_stage: V4S8A, owner: ccf-idea-optimizer}
+  - id: V4S8A
+    title: Complete paired promotion attribution and model-only successor decision
+    owner: ccf-idea-optimizer
+    status: passed_complete_6_of_6_pairs
+    outputs:
+      - experiments/topo_scene_v4/V4_9_2_KINEMATIC_SAFETY_MODEL_REAUDIT_20260827.md
+      - tools/audit_v4_9_2_kinematic_safety_model.py
+      - tools/attribute_v4_9_2_promotion.py
+      - tools/wait_then_finalize_v4_9_2_4.py
+      - results_topo_v4_9_2_dev/engineering/kinematic_safety_model_reaudit.json
+      - results_topo_v4_9_2_promotion/attribution/provisional_partial/promotion_model_attribution_current.json
+      - results_topo_v4_9_2_promotion/attribution/promotion_model_attribution.json
+    pass_condition: >-
+      all six exact validation-seed pairs are accepted and attributed before a
+      new model contract is frozen; no partial result may choose the successor
+    blocker: none
+    handoff: {next_stage: V4S10, owner: codex-implementation}
+  - id: V4S10
+    title: Implement and freeze the v4.10 shared-risk supported-mixture model
+    owner: codex-implementation
+    status: passed_and_frozen_before_scientific_development
+    outputs:
+      - experiments/topo_scene_v4/V4_10_SHARED_SUPPORTED_MIXTURE_MODEL.md
+      - experiments/topo_scene_v4/experiment_contract_v4_10.yaml
+      - experiments/topo_scene_v4/V4_10_NO_KINEMATIC_PROJECTION_AUDIT_20260829.md
+      - results_topo_v4_10_dev/engineering/no_kinematic_projection_audit.json
+      - results_topo_v4_10_dev/engineering/implementation_freeze.json
+      - results_topo_v4_10_dev/engineering/engineering_receipt.json
+    pass_condition: >-
+      36 targeted tests, 522-test current-state regression, candidate/control
+      real-SUMO smokes, serialization and optimizer ownership, and static plus
+      runtime no-projection audit all pass before any D1-D4 training
+    handoff: {next_stage: V4S11, owner: experiment-runner}
+  - id: V4S11
+    title: Four-cell fresh v4.10 model development gate
+    owner: experiment-runner
+    status: failed_complete_4_of_4
+    outputs:
+      - results_topo_v4_10_dev/development/summary.json
+      - results_topo_v4_10_dev/development/development_decision.json
+    pass_condition: >-
+      attempt D1-D4 before aggregation, accept all artifacts, pass every frozen
+      outcome and model-integrity check, and preserve the formal lock
+    blocker: D1 Cross collision 0.50 exceeded the 0.40 per-run ceiling
+    handoff: {next_stage: V4S13, owner: ccf-idea-optimizer}
+  - id: V4S12
+    title: Required v4.10 ablations and twelve-job paired promotion
+    owner: experiment-runner
+    status: not_run_v4_10_development_failed
+    pass_condition: >-
+      both mechanism ablations complete, all twelve promotion jobs are attempted,
+      and every preregistered promotion gate passes
+  - id: V4S13
+    title: Complete v4.10 Cross instability attribution and preregister v4.11
+    owner: ccf-idea-optimizer
+    status: passed_complete_paired_attribution
+    outputs:
+      - results_topo_v4_10_dev/development/attribution/d1_d2_cross_instability/attribution.json
+      - results_topo_v4_10_dev/development/attribution/d1_d2_cross_instability/ATTRIBUTION_V4_10_CROSS.md
+      - experiments/topo_scene_v4/experiment_contract_v4_11.yaml
+      - experiments/topo_scene_v4/V4_11_PROPER_CALIBRATED_RANKED_RISK_MODEL.md
+    pass_condition: >-
+      paired scenarios, replay labels, selector choices, learned risk ranking and
+      terminal action traces localize the failure without introducing a rule
+    handoff: {next_stage: V4S14, owner: codex-implementation}
+  - id: V4S14
+    title: Implement, audit and freeze the v4.11 PRCR model
+    owner: codex-implementation
+    status: passed_and_frozen_before_scientific_development
+    outputs:
+      - experiments/topo_scene_v4/V4_11_NO_KINEMATIC_PROJECTION_AUDIT_20260830.md
+      - results_topo_v4_11_dev/engineering/no_kinematic_projection_audit.json
+      - results_topo_v4_11_dev/engineering/implementation_freeze.json
+      - results_topo_v4_11_dev/engineering/engineering_receipt.json
+      - tools/run_all_pending_promotions_v4_11.py
+    pass_condition: >-
+      42 targeted and 564 current-state tests, paired real-SUMO smokes, proper
+      risk diagnostics, transitive source/runtime no-projection audit, and
+      attempt-all automation pass before D1-D4
+    handoff: {next_stage: V4S15, owner: experiment-runner}
+  - id: V4S15
+    title: Four-cell fresh v4.11 PRCR development gate
+    owner: experiment-runner
+    status: passed_complete_4_of_4
+    outputs:
+      - results_topo_v4_11_dev/development/summary.json
+      - results_topo_v4_11_dev/development/development_decision.json
+    pass_condition: >-
+      all D1-D4 outcome, learned-model diagnostic, optimizer, exact-action and
+      no-rule gates pass after the complete matrix is attempted
+    blocker: none
+    handoff: {next_stage: V4S16, owner: experiment-runner}
+  - id: V4S16
+    title: v4.11 mechanism ablations and twelve-job paired promotion
+    owner: experiment-runner
+    status: promotion_interrupted_after_1_complete_recovery_ready
+    outputs:
+      - results_topo_v4_11_dev/ablation/summary.json
+      - results_topo_v4_11_dev/ablation/ablation_decision.json
+      - results_topo_v4_11_promotion/stage_plan.json
+    pass_condition: >-
+      both ablations are accepted before promotion; all twelve paired promotion
+      jobs are attempted before aggregation; every noninferiority and positive-
+      effect gate passes
+    blocker: incomplete promotion matrix or a preregistered gate failure
+    handoff: {next_stage: V4S17, owner: experiment-runner}
+  - id: V4S17
+    title: v4.11.1 immutable interrupted-promotion recovery
+    owner: experiment-runner
+    status: detached_running_attempt_all_after_one_path_failure
+    outputs:
+      - experiments/topo_scene_v4/V4_11_1_PROMOTION_INTERRUPTION_RECOVERY.md
+      - tools/run_all_v4_11_1_pipeline.py
+      - tests_sb3_sumo/test_run_all_v4_11_1_pipeline.py
+      - results_promotion_automation/v4_11_1_dry_run.json
+    pass_condition: >-
+      preserve every incomplete source, attempt all unresolved logical jobs,
+      accept exactly twelve frozen promotion jobs through source mapping, and
+      compute the unchanged v4.11 gate once after all attempts
+    blocker: one recovery path exceeded the Windows TensorBoard path budget
+    handoff: {next_stage: V4S18, owner: experiment-runner}
+  - id: V4S18
+    title: v4.11.2 Windows short-path immutable promotion recovery
+    owner: experiment-runner
+    status: engineering_verified_detached_waiter_active
+    outputs:
+      - experiments/topo_scene_v4/V4_11_2_WINDOWS_SHORT_PATH_RECOVERY.md
+      - tools/run_all_v4_11_2_pipeline.py
+      - tools/wait_then_run_v4_11_2.ps1
+      - tests_sb3_sumo/test_run_all_v4_11_2_pipeline.py
+      - results_promotion_automation/v4_11_2_dry_run.json
+      - results_promotion_automation/v4_11_2_detached_schedule_receipt.json
+    pass_condition: >-
+      wait for v4.11.1 to finish; preserve all prior attempts; accept exactly
+      twelve frozen logical jobs using canonical or compact recovery sources;
+      aggregate once after all attempts and apply the unchanged v4.11 gate
+    blocker: promotion compute remains incomplete
+    handoff: {next_stage: V4S9, owner: experiment-runner}
+  - id: V4S9
+    title: Untouched 120-job formal test and final audit
+    owner: experiment-runner
+    status: locked_pending_v4_11_promotion_pass
+    pass_condition: full artifact matrix, statistics, integrity audit, and final acceptance decision exist

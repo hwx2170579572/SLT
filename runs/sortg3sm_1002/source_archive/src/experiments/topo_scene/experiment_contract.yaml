@@ -1,0 +1,272 @@
+schema_version: topo-scene.experiment-contract/v1
+mode: design
+venue_family: AI/ML
+target_venue: unknown
+no_fabrication: true
+output_root: results_topo_scene
+
+storyline:
+  scientific_origin: Early temporal pooling can discard when and how vehicles interact.
+  gap: The released encoder has neither per-frame interaction nor persistent lane connectivity.
+  core_insight: Query lane topology at every vehicle-time token, interact vehicles, then aggregate time.
+  bounded_claim: >-
+    A claim of overall improvement is allowed only if Full improves success or
+    return while collision does not worsen under matched held-out traffic.
+
+research_questions:
+  RQ1: Does Full improve closed-loop driving over MST+SLT?
+  RQ2: Are gains caused by temporal vehicle interaction or by topology query?
+  RQ3: What parameter, update-time, inference-time, and memory overhead is added?
+
+methods:
+  scene_rep:
+    label: MST+SLT
+    cli_algorithm: scene_rep
+    implementation_id: released_scene_rep_pytorch_port_v1
+    role: closest released baseline
+    topology_query: false
+    temporal_vehicle_graph: false
+    graph_slt: false
+  temporal_graph:
+    label: TemporalGraph+Graph-SLT
+    cli_algorithm: temporal_graph
+    implementation_id: temporal_vehicle_graph_slt_pytorch_v1
+    role: mechanism ablation
+    topology_query: false
+    temporal_vehicle_graph: true
+    graph_slt: true
+  topo_scene:
+    label: Full
+    cli_algorithm: topo_scene
+    implementation_id: topo_temporal_graph_slt_pytorch_v1
+    role: proposed L1 method
+    topology_query: true
+    temporal_vehicle_graph: true
+    graph_slt: true
+  topo_scene_balanced:
+    label: Full+BalancedSlots
+    cli_algorithm: topo_scene_balanced
+    implementation_id: topo_temporal_graph_slt_balanced_slots_v1
+    role: post-development single-variable stability iteration
+    topology_query: true
+    temporal_vehicle_graph: true
+    graph_slt: true
+    slot_normalization: non-affine LayerNorm on 32/64/32 outputs
+
+baseline_matrix:
+  - baseline: scene_rep
+    why_included: Closest released MST+SLT method under the same SAC and environment stack.
+    source_or_citation_needed: local released-source migration
+    implementation_source: configs/sb3_configs.py
+    fairness_constraints: Same latent width, SAC, reward, replay, action repeat, raw-step budget, and traffic.
+    expected_metric: success, collision, return
+    can_run: true
+  - baseline: temporal_graph
+    why_included: Isolates per-timestep vehicle interaction from road topology.
+    source_or_citation_needed: this implementation
+    implementation_source: algos/sb3_torch/topo_temporal_features.py
+    fairness_constraints: Same structured latent, Graph-SLT, SAC, and training protocol as Full.
+    expected_metric: success, collision, return, probes
+    can_run: true
+
+phases:
+  pilot:
+    purpose: Engineering throughput and artifact smoke test; never used for a scientific claim.
+    methods: [topo_scene]
+    scenarios: [left_turn]
+    seeds: [0]
+    raw_training_steps: 600
+    learning_starts_raw_steps: 128
+    checkpoint_frequency_raw_steps: 0
+    evaluation_frequency_raw_steps: 0
+    final_evaluation_episodes: 2
+    traffic_protocol: frozen_80_20
+    episode_limit_profile: source
+  development:
+    purpose: Matched L1 screening before any large confirmation matrix.
+    methods: [scene_rep, topo_scene]
+    scenarios: [left_turn]
+    seeds: [0]
+    raw_training_steps: 50000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 10000
+    final_evaluation_episodes: 20
+    traffic_protocol: frozen_80_20
+    episode_limit_profile: source
+  diagnostic:
+    purpose: Attribute a development-stage effect to temporal interaction versus topology.
+    methods: [temporal_graph]
+    scenarios: [left_turn]
+    seeds: [0]
+    raw_training_steps: 50000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 10000
+    final_evaluation_episodes: 20
+    traffic_protocol: frozen_80_20
+    episode_limit_profile: source
+  iteration:
+    purpose: >-
+      Diagnose whether per-slot scale drift caused the late policy saturation;
+      this post-development phase is not part of the original positive gate.
+    methods: [topo_scene_balanced]
+    scenarios: [left_turn]
+    seeds: [0]
+    raw_training_steps: 50000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 10000
+    evaluation_frequency_raw_steps: 10000
+    final_evaluation_episodes: 20
+    traffic_protocol: frozen_80_20
+    episode_limit_profile: source
+  confirmation:
+    purpose: Final matched multi-scenario confirmation if and only if the development gate passes.
+    methods: [scene_rep, temporal_graph, topo_scene]
+    scenarios: [left_turn, cross, roundabout_medium]
+    seeds: [0, 1, 2]
+    raw_training_steps: 1000000
+    learning_starts_raw_steps: 5000
+    checkpoint_frequency_raw_steps: 20000
+    evaluation_frequency_raw_steps: 20000
+    final_evaluation_episodes: 50
+    traffic_protocol: frozen_80_20
+    episode_limit_profile: source
+
+fixed_controls:
+  latent_dim: 128
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  buffer_size: 20000
+  action_repeat: 3
+  deterministic_final_policy: true
+  final_checkpoint_rule: last raw-step checkpoint; never select by evaluation traffic
+  evaluation_seed_offset: 10000
+  traffic_pairing: Same ordered evaluation traffic variants and episode seeds for every method.
+  periodic_callback_seed_stream: Reset to training_seed + 10000 at every evaluation point for new runs.
+  historical_curve_repair: >-
+    Checkpoints created before the seed-stream fix are re-evaluated with
+    explicit episode seeds 10000..10019; their original evaluations.npz is
+    retained as exploratory evidence only.
+
+metrics:
+  primary:
+    success_rate: higher
+    collision_rate: lower
+  secondary:
+    mean_return: higher
+    off_route_rate: lower
+    timeout_rate: lower
+    successful_completion_time_seconds: lower
+  diagnostics:
+    graph_slt_ego_loss: finite_and_decreasing
+    graph_slt_social_loss: finite_and_decreasing
+    graph_slt_route_loss: finite_and_decreasing
+    topology_attention_entropy: finite
+    latent_std: positive
+    ego_latent_std: positive
+    social_latent_std: positive
+    route_latent_std: positive
+    slot_scale_ratio: finite_and_near_one_for_balanced_iteration
+    graph_mean_edge_weight: finite
+    attention_mass_within_40m: at_least_0.5
+  efficiency:
+    parameter_count: report
+    train_ms_per_gradient_step: report
+    inference_ms_per_action: report
+    peak_gpu_memory_mb: report
+
+statistics:
+  seed_aggregation: mean_and_population_std
+  episode_rate_interval: bootstrap_95_percent
+  bootstrap_resamples: 2000
+  bootstrap_seed: 20260805
+  learning_curve_clock: raw_sumo_steps
+  learning_curve_source: fixed explicit-seed checkpoint re-evaluation
+  prohibited_selection: best single-seed evaluation checkpoint
+
+development_gate:
+  finite_required: true
+  maximum_collision_rate_increase: 0.02
+  positive_effect_any:
+    minimum_success_rate_increase: 0.05
+    minimum_return_increase: 0.0
+  attention_locality:
+    top1_distance_p90_max_m: 40.0
+    minimum_mean_mass_within_40m: 0.5
+  decision_rules:
+    pass: Positive effect, collision guardrail, finite diagnostics, and attention locality all pass.
+    diagnose: Finite run completes but one mechanism/safety gate fails.
+    stop: NaN, graph overflow, corrupted checkpoint, or repeated safety degradation.
+
+ablation_logic:
+  - component: temporal vehicle graph
+    removal_or_replacement: scene_rep performs early actor temporal pooling.
+    metric_affected: success, collision, TTC/min-distance probes
+    interpretation_if_failure: Interaction timing is not policy-limiting or the graph optimizer is ineffective.
+  - component: topology query
+    removal_or_replacement: temporal_graph zeros topology context and topology edge features.
+    metric_affected: success, collision, route probe, attention locality
+    interpretation_if_failure: Check map alignment, coordinate transform, conflict edges, then topology utility.
+  - component: structured Graph-SLT
+    removal_or_replacement: scene_rep uses the original monolithic SLT.
+    metric_affected: slot losses, latent probes, policy return
+    interpretation_if_failure: Rich representation is not necessarily consumed by the policy.
+
+robustness_and_failure:
+  - condition: cross intersection
+    reviewer_question: Does the method handle multi-direction crossing rather than one turn geometry?
+    failure_threshold: collision rate worsens by more than 0.02 versus scene_rep.
+  - condition: roundabout_medium
+    reviewer_question: Does the method handle merge and sustained interaction?
+    failure_threshold: no success/return gain across all three seeds.
+  - condition: topology attention locality
+    reviewer_question: Is the model attending to nearby relevant lanes rather than diffuse map tokens?
+    failure_threshold: mean mass within 40 m below 0.5 or top-1 distance p90 above 40 m.
+
+execution_priority:
+  - priority: P0
+    experiment: pilot/topo_scene/left_turn/seed0
+    claim_defended: engineering validity only
+    cost: low
+    dependency: S5
+    stop_condition: Any non-finite value or missing artifact.
+  - priority: P1
+    experiment: development scene_rep versus topo_scene
+    claim_defended: C1 preliminary screen
+    cost: medium
+    dependency: P0
+    stop_condition: Apply development_gate; do not extrapolate to a paper claim.
+  - priority: P2
+    experiment: diagnostic temporal_graph
+    claim_defended: C2/C3 mechanism attribution
+    cost: medium
+    dependency: P1
+    stop_condition: Stop adding depth if both graph variants fail.
+  - priority: P3
+    experiment: iteration topo_scene_balanced
+    claim_defended: Failure-attribution and stability repair only
+    cost: medium
+    dependency: P2 diagnostic evidence plus checkpoint action-sensitivity evidence
+    stop_condition: Stop if action saturation or collision degradation repeats.
+  - priority: P4
+    experiment: confirmation three methods x three scenarios x three seeds
+    claim_defended: C1-C4
+    cost: high
+    dependency: development gate pass and attribution decision
+    stop_condition: Matched final checkpoints complete or contract records missing cells as TBD.
+
+result_artifacts:
+  run_required:
+    - arguments.json
+    - final_model.zip
+    - checkpoint_audit.json
+    - paper_evaluation_detailed.json
+    - training_diagnostics.json
+    - performance_profile.json
+  phase_summary:
+    - summary.json
+    - summary.csv
+    - gate_decision.json
+  no_fabrication_note: All unknown or unfinished cells remain TBD; only parsed run artifacts become results.

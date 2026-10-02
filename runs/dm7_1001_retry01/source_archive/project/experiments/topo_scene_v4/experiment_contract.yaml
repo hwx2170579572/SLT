@@ -1,0 +1,138 @@
+schema_version: topo-scene-v4.decision-aligned-contract/v1
+mode: standard
+status: preregistered_initial
+created_at_local: '2026-08-17T21:30:00+08:00'
+no_fabrication: true
+formal_test_locked: true
+
+lineage:
+  initial_plan: experiments/topo_scene_v4/INITIAL_PLAN.md
+  source_plan_sha256: 0d3124be9743105c04289700f3444351c956f9a4d860820228b3b4fccfbad9ff
+  v2_fast_protocol_sha256: 42b6b32c343125ca4e97cbdb26019fa0bbf63b785edd13612b996a8710090455
+  v2_promotion_decision: fail
+  v3_contract_sha256: d9b630d45d6f96b5273dd538b952e454e88d8694b7658d42451e9cf6edf35218
+  v3_decision: reject_topo_v3_lateral_scale5
+
+claim_evidence:
+  - claim: Runtime route connectivity yields a non-oracle lane-intent target.
+    evidence: unit tests, real-SUMO context audit, label coverage receipt
+  - claim: The route slot retains action-relevant route intent.
+    evidence: episode-split route-intent probe on identical observations
+  - claim: A masked hybrid head converts that information into executable actions.
+    evidence: action-head unit tests, CARLA activity gate, route-window trace
+  - claim: Full+DA-BS improves at least one scene without material regression elsewhere.
+    evidence: paired promotion followed by untouched formal test
+
+fixed_runtime:
+  conda_environment: llm_pipeline
+  device: cuda
+  batch_size: 32
+  learning_rate: 0.0001
+  discount: 0.99
+  replay_buffer_capacity: 20000
+  n_step: 4
+  learning_starts_raw_steps: 5000
+  action_repeat: 3
+  traffic_protocol: frozen_60_20_20
+  training_partition: train
+  development_partition: validation
+  formal_partition: test
+  episode_limit_profile: source
+  reward_change_allowed: false
+  actor_encoder_detach_initially: true
+
+stage_0_offline_diagnosis:
+  training_jobs: 0
+  scenario: carla
+  behavior: temporal_graph seed-0 promotion checkpoint
+  comparison_models: [temporal_graph, v2_failed_candidate]
+  evaluation_split: validation
+  requested_episodes: 40
+  seed_start: 30000
+  keep_only_successful_behavior_episodes: true
+  split_unit: episode
+  probe_train_fraction: 0.70
+  probe_seed: 73
+  minimum_successful_episodes: 4
+  minimum_valid_route_intent_samples: 40
+  minimum_non_keep_route_intent_samples: 10
+  thresholds:
+    probe_balanced_accuracy_present: 0.70
+    probe_balanced_accuracy_absent: 0.65
+    route_window_action_match_usable: 0.50
+  decision_order:
+    - If data coverage fails, mark unidentifiable and stop.
+    - If candidate route-slot probe passes but action match fails, select action_head_only.
+    - If full-latent passes and route-slot fails, select intent_supervision_plus_action_head.
+    - If full-latent fails, select variance_intent_representation_plus_action_head.
+
+development:
+  max_new_training_jobs: 5
+  raw_steps_per_job: 20000
+  evaluation_episodes: 12
+  evaluation_split: validation
+  ordered_jobs:
+    - {id: D1, scenario: carla, seed: 0, role: diagnosed_single_change}
+    - {id: D2, scenario: cross, seed: 0, role: regression_guard, requires: D1_pass}
+    - {id: D3, scenario: carla, seed: 0, role: key_ablation, requires: D2_pass}
+    - {id: D4, scenario: carla, seed: 1, role: stability, requires: D3_complete}
+    - {id: D5, scenario: cross, seed: 1, role: stability, requires: D4_pass}
+  carla_hard_gate:
+    success_rate_min: 0.30
+    collision_rate_max: 0.10
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.70
+    lane_command_keep_rate_max: 0.90
+    lane_change_applied_rate_min: 0.02
+  cross_guard:
+    success_rate_min: 0.50
+    collision_rate_max: 0.45
+    off_route_rate_max: 0.00
+    timeout_rate_max: 0.30
+  no_gate_compensation: true
+
+promotion:
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [cross, roundabout_medium, carla]
+  seeds: [0, 1]
+  raw_training_steps: 50000
+  evaluation_episodes: 30
+  evaluation_split: validation
+  jobs: 12
+  hard_order:
+    - per_scene_success_and_action_activity
+    - collision_and_off_route
+    - worst_paired_seed
+    - macro_success_and_collision
+    - representation_mechanism
+    - compute_cost
+  thresholds:
+    macro_success_noninferiority_margin: 0.05
+    per_scenario_collision_noninferiority_margin: 0.05
+    worst_paired_seed_success_margin: 0.15
+    positive_effect_success_gain: 0.10
+    positive_effect_collision_reduction: 0.10
+  on_fail: lock_formal_test_and_start_new_versioned_attribution
+  on_pass: unlock_hash_matched_formal_test
+
+formal_test:
+  locked: true
+  methods: [temporal_graph, selected_v4_candidate]
+  scenarios: [left_turn, cross, roundabout_easy, roundabout_medium, roundabout, carla]
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  raw_training_steps: 100000
+  evaluation_episodes: 50
+  evaluation_split: test
+  jobs: 120
+  paired_seed_analysis: true
+  hierarchical_bootstrap_resamples: 10000
+  bootstrap_seed: 20260817
+  multiplicity: Holm across 6 scenarios x 2 primary metrics
+  final_acceptance:
+    every_scenario_success_delta_min: -0.05
+    every_scenario_collision_delta_max: 0.05
+    positive_effect_any_success_delta_min: 0.10
+    positive_effect_any_collision_delta_max: -0.10
+
+unknown_rule: Unrun, interrupted, rejected, or protocol-incompatible cells remain TBD.
+

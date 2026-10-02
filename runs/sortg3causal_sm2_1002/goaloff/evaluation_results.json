@@ -1,0 +1,94 @@
+{
+  "identity": {
+    "method": "sac_mlp_d1_st_rt_topo_goalonly_v1",
+    "source_script": "train_intersection_yield_v2_d1",
+    "source_method": "sac_mlp_d1_st_rt_topo_goalonly_v1",
+    "family": "d1",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "eval_traffic_split": "validation",
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_1002\\sac_mlp_d1_st_rt_topo_goalonly_v1__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "17465d202736d4640d46459f78bc4b55cef939ab6e3aa39b9cad63a981f1c5f5",
+    "episodes": 1,
+    "workers": 1,
+    "smoke": false,
+    "behavior_diagnostics": true,
+    "policy_shadow_probes": false,
+    "policy_shadow_eval_max_per_episode": 3,
+    "policy_shadow_critical_eval_sample": false,
+    "diagnostic_experiment": "sorted_goalonly_causal_v1",
+    "causal_arm": "topology_goal_off",
+    "base_checkpoint_sha256": "17465d202736d4640d46459f78bc4b55cef939ab6e3aa39b9cad63a981f1c5f5",
+    "eval_device": "cpu",
+    "learning_or_replay_updates": 0,
+    "input_reward_observation_done_protocol": "unchanged D1 evaluator; no reward/obs/terminal edits",
+    "route_veto_sidecar": null,
+    "model_policy_fingerprint": [
+      {
+        "phase": "before_eval",
+        "sha256": "58e158ea62699bd4ece05ff9179b0558ea1e2aae85e002c52ba55beb8954a328",
+        "state_dict_tensors": 472,
+        "updates": 95001
+      },
+      {
+        "phase": "after_eval",
+        "sha256": "58e158ea62699bd4ece05ff9179b0558ea1e2aae85e002c52ba55beb8954a328",
+        "state_dict_tensors": 472,
+        "updates": 95001
+      }
+    ]
+  },
+  "summary": {
+    "episodes": 1,
+    "success_rate": 0.0,
+    "collision_rate": 1.0,
+    "off_route_rate": 0.0,
+    "timeout_rate": 0.0,
+    "mean_return": -8.542761775255203,
+    "std_return": 0.0,
+    "raw_mean_return": -1.0,
+    "raw_std_return": 0.0,
+    "raw_return_coverage": 1,
+    "reward_component_means": {
+      "reward_success": 0.0,
+      "reward_collision": -10.0,
+      "reward_off_route": 0.0,
+      "reward_timeout": 0.0,
+      "reward_step_cost": -0.36000000000000015,
+      "reward_progress": 1.817238224744797
+    },
+    "reward_component_coverage": 1,
+    "reward_component_reconciliation_max_abs_error": 0.0,
+    "evaluation_return_protocol_version": "environment_step_reward_v2",
+    "raw_return_protocol_version": "info_undiscounted_reward_or_step_reward_fallback_v1",
+    "reward_component_protocol_version": "yield_v2_cumulative_reward_branches_v1"
+  },
+  "episode_records": [
+    {
+      "episode": 0,
+      "seed": 10011,
+      "episode_return": -8.542761775255203,
+      "decision_steps": 36,
+      "environment_steps": 36,
+      "raw_steps": 107,
+      "completion_time_seconds": null,
+      "success": false,
+      "collision": true,
+      "off_route": false,
+      "timeout": false,
+      "traffic_variant": "traffic_21.rou.xml",
+      "raw_episode_return": -1.0,
+      "raw_return_source": "info.undiscounted_reward",
+      "reward_success": 0.0,
+      "reward_collision": -10.0,
+      "reward_off_route": 0.0,
+      "reward_timeout": 0.0,
+      "reward_step_cost": -0.36000000000000015,
+      "reward_progress": 1.817238224744797,
+      "evaluation_return_protocol_version": "environment_step_reward_v2",
+      "raw_return_protocol_version": "info_undiscounted_reward_or_step_reward_fallback_v1",
+      "reward_component_protocol_version": "yield_v2_cumulative_reward_branches_v1",
+      "reward_component_reconciliation_error": 0.0
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "scenario-revision-note/v1",
+  "created_at_utc": "2026-09-30T14:17:32Z",
+  "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930",
+  "status": "historical completed run; original artifacts preserved",
+  "profile_revision_in_this_run": {
+    "low": {
+      "scenario": "intersection_random_darrl_low_v1",
+      "probability_per_0_1s_tick_per_inlet": 0.03,
+      "requested_total_vehicles_per_hour": 3240,
+      "trained": true
+    },
+    "medium": {
+      "scenario": "intersection_random_darrl_medium_v1",
+      "probability_per_0_1s_tick_per_inlet": 0.05,
+      "requested_total_vehicles_per_hour": 5400,
+      "trained": true
+    },
+    "high": {
+      "scenario": "intersection_random_darrl_high_v1",
+      "probability_per_0_1s_tick_per_inlet": 0.07,
+      "trained": false
+    }
+  },
+  "subsequent_same_name_revision": {
+    "low_probability_per_0_1s_tick_per_inlet": 0.015,
+    "medium_probability_per_0_1s_tick_per_inlet": 0.03,
+    "high_probability_per_0_1s_tick_per_inlet": 0.05,
+    "source": "user-authorized profile revision; see the current scenario configuration and its source snapshot for implementation provenance"
+  },
+  "interpretation": "This run uses the pre-revision same-name DARRL profile settings .03/.05/.07. Its low and medium results must not be presented as results for a later same-name profile revision with different probabilities. The embedded experiment manifests and launcher source hashes preserve the run-time configuration provenance.",
+  "outcome_audit": "../../Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/analysis/darrl_r1_outcome_audit_20260930.json",
+  "outcome_warning": "The original records contain episodes where success and collision are both true. The training reward wrapper chose the success branch for these episodes; offline collision-priority counts do not correct the already-trained models or their training targets.",
+  "preservation": "No original evaluation, training, manifest, checkpoint, or log artifact was edited."
+}

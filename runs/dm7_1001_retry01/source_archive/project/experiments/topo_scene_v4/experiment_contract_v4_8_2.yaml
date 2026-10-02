@@ -1,0 +1,62 @@
+schema_version: topo-scene-v4.8.2.selector-gate-interface-engineering-patch/v1
+status: preregistered_before_patch_implementation
+created_at_local: '2026-08-20T11:24:07+08:00'
+no_fabrication: true
+formal_test_locked: true
+formal_test_accessed: false
+
+parent_scientific_protocol:
+  version: v4.8_tie_only_replicated_train_calibration
+  contract_sha256: 42f54135e4d105563b0ad2113147bfef7811c80664793419538a18e9d8c08e51
+  implementation_freeze_sha256: 5827ca63caf5cfd187ac5ad0bdc2fd0fbb0fb00c324459007cf24620f0b57aa6
+  scientific_content_sha256: 0ef153763770384c9bacae780db0b6ebf19de25320a61aa976b11c3d5300aee6
+  unchanged: true
+
+parent_acceptance_patch:
+  version: v4.8.1
+  runner: tools/run_topo_v4_8_1_experiments.py
+  runner_sha256: ead5e5bb65c95464f5978e27686c3f3f89dd2a7bcc342186faaf9f6bc0a33795
+  contract_sha256: b28251fd39d6c59b0fc3676bedf25b78fd7b9e5dd8d30c767676a63cfe25c2b5
+  preregistration_sha256: f016cf8cd4f751c519051a12feb4437fd1f0e64b0a43d39ca930ca2a01d5a42c
+  acceptance_adapter_reused_unchanged: true
+  overall_engineering_preflight_passed: false
+  scientific_job_started_under_patch: false
+
+trigger:
+  failure_record: results_topo_v4_8_1_dev/engineering/preflight_failure.json
+  inherited_candidate_gate_passed: false
+  only_failed_check: selector_mode
+  observed_selector_mode: tie_only_replicated_joint_checkpoint_decoder
+  inherited_expected_selector_mode: joint_checkpoint_decoder
+  h1_outcome_gate_metrics_passed: true
+  h1_mechanism_checks_passed: true
+  h1_other_selector_checks_passed: true
+  formal_test_accessed: false
+
+single_engineering_change:
+  name: align_candidate_gate_selector_mode_with_frozen_v4_8_selector
+  old_expected_mode: joint_checkpoint_decoder
+  new_expected_mode: tie_only_replicated_joint_checkpoint_decoder
+  candidate_only: true
+  acceptance_adapter_changed: false
+  training_changed: false
+  return_estimator_changed: false
+  selector_changed: false
+  decoder_changed: false
+  result_artifacts_changed: false
+  thresholds_changed: false
+  seeds_or_traffic_changed: false
+  result_root_changed: false
+  h1_rerun_forbidden: true
+  h1_artifact_rewrite_forbidden: true
+
+continuation:
+  adopt_h1_in_place_only_if_all_artifact_hashes_match: true
+  scientific_implementation_hash_remains_parent_v4_8: true
+  engineering_patch_freeze_checked_separately: true
+  next_job_after_adoption: H2
+  development_order_unchanged: [H1, H2, H3, H4]
+  promotion_unchanged: true
+  formal_protocol_unchanged: true
+  formal_test_locked: true
+

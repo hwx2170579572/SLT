@@ -1,0 +1,32 @@
+{
+  "schema_version": "sorted_st_rt_routeact_pairs_v1",
+  "reference_model_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+  "episodes": 1,
+  "seed_start": 10000,
+  "seed_end_inclusive": 10000,
+  "orientation": "frozen_control outcome rows -> routeact outcome columns",
+  "outcome_matrix": {
+    "success": {
+      "success": 1
+    }
+  },
+  "changed_outcomes": [],
+  "traffic_variant_identity": {
+    "control_vs_routeact_exact_pairs": 1,
+    "control_vs_routeact_mismatches": [],
+    "reference_vs_control_exact_pairs": 1,
+    "reference_vs_control_mismatches": [],
+    "selected_template_sha256": [
+      {
+        "traffic_variant": "traffic_10.rou.xml",
+        "sha256": "bfcb79e4ce5f46d2f88501e3db397e051333adfecbe5d89fcb189d1a294b0f8a"
+      }
+    ],
+    "template_hash_source": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\eval\\manifest.json"
+  },
+  "interpretation_limit": "paired fixed-checkpoint intervention on one trained seed; not a multi-training-seed estimate",
+  "source_results": {
+    "control": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\srtact_sm_1002\\control\\evaluation_results.json",
+    "routeact": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\srtact_sm_1002\\routeact\\evaluation_results.json"
+  }
+}
