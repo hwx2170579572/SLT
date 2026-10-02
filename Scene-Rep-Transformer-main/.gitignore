@@ -1,0 +1,54 @@
+# --- Office lock / temp files ---
+~$*
+*.tmp
+*.log
+
+# --- Python caches & build artifacts ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Test / pytest caches ---
+.pytest_cache/
+.pytest_v451_full/
+
+# --- Hidden scratch dirs anywhere (pytest_tmp, codex_tmp, jupyter runtime, .t*) ---
+.*/
+
+# --- Large generated artifacts (training results, models, temp) — NOT code ---
+tmp/
+results_sb3_sumo_paper/
+
+# --- pytorch_sb3_sumo: training artifacts, screens, diagnostics (NOT code) ---
+pytorch_sb3_sumo/results_*/
+pytorch_sb3_sumo/r[0-9]*/
+pytorch_sb3_sumo/r_*/
+pytorch_sb3_sumo/p[0-9]*/
+pytorch_sb3_sumo/q[0-9]*/
+pytorch_sb3_sumo/_*/
+pytorch_sb3_sumo/.*/
+pytorch_sb3_sumo/pytest_tmp_*/
+pytorch_sb3_sumo/artifacts/
+pytorch_sb3_sumo/outputs/
+pytorch_sb3_sumo/runs/
+pytorch_sb3_sumo/launcher.*.log
+pytorch_sb3_sumo/t/
+pytorch_sb3_sumo/u/
+pytorch_sb3_sumo/v/
+pytorch_sb3_sumo/x/
+
+# --- IDE / editor ---
+.idea/
+.vscode/
+*.swp
+
+# --- OS ---
+Thumbs.db
+.DS_Store
+
+# --- 训练 checkpoint zip（每个 ~31MB，仅保留 final_model / best_model） ---
+**/checkpoints/*.zip
