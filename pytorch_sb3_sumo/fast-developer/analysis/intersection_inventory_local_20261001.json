@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "inventory_date": "2026-10-01",
+  "scope": {
+    "workspace": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1",
+    "local_source_root": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer",
+    "searched": [
+      "fast-developer/analysis research records",
+      "fast-developer method directories containing evaluation_results.json, experiment_manifest.json, arguments.json, and training completion/diagnostic files"
+    ],
+    "not_scanned": "Workspace runs/ tree; the coordinating agent's separate run audit owns fresh verification there.",
+    "new_training_or_evaluation": false,
+    "result_policy": "Keep distinct scenario, demand scale, and training-budget protocols separate. Counts are S/C/T/O and N is evaluation episodes."
+  },
+  "research_roles": {
+    "full": "Complete method under investigation.",
+    "mst_slt": "Strong baseline; do not relabel as the proposed full method.",
+    "sac_mlp": "Pure reinforcement-learning baseline and incremental starting point."
+  },
+  "corrected_sorted_three_flow": {
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "traffic_protocol_evidence": {
+      "description": "30 fixed route-template XMLs; each template has all three background routes active with 200, 150, and 240 vehicles (590 total), background lane 0. Depart times are scaled by 4; the controlled interval selects a subset of each template. The historical environment also recycles background vehicles.",
+      "source": "analysis/scenario_medium_calibration_20260930.md",
+      "source_detail": "The three routes are -E3→-E0, E0→E3, and E2→E1. The record states 30 templates and 200/150/240 route counts."
+    },
+    "fresh_100k_local_results": [
+      {
+        "method": "MST+SLT",
+        "method_code": "mst_slt",
+        "training_seed": 0,
+        "raw_steps": 100000,
+        "updates": 95001,
+        "evaluation_checkpoint": "final_model.zip",
+        "eval_seed_range": [10000, 10099],
+        "eval_seed_evidence": "All 100 episode records present.",
+        "outcome_counts_S_C_T_O": [53, 47, 0, 0],
+        "evaluation_n": 100,
+        "source": "mst_slt__intersection_sorted_depart4p0/evaluation_results.json",
+        "training_source": "mst_slt__intersection_sorted_depart4p0/arguments.json and training_diagnostics.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "D1-ST",
+        "method_code": "sac_mlp_d1_st",
+        "training_seed": 0,
+        "raw_steps": 100000,
+        "updates": 95001,
+        "evaluation_checkpoint": "final_model.zip",
+        "eval_seed_range": [10000, 10099],
+        "eval_seed_evidence": "All 100 episode records present.",
+        "outcome_counts_S_C_T_O": [50, 50, 0, 0],
+        "evaluation_n": 100,
+        "source": "sac_mlp_d1_st__intersection_sorted_depart4p0/evaluation_results.json",
+        "training_source": "sac_mlp_d1_st__intersection_sorted_depart4p0/arguments.json and training_complete.json",
+        "checkpoint_identity_matches_local_final_model": true
+      }
+    ],
+    "fresh_100k_run_root_cross_references": {
+      "note": "These rows are documented in the research record but their run files are not re-read in this local inventory; parent run audit is the source of fresh verification.",
+      "source_record": "analysis/experiment_history.md, sections 7-8 and 20",
+      "results": [
+        {
+          "method": "SAC+MLP",
+          "method_code": "sac_mlp",
+          "run_root": "runs/d0929_100k_diag",
+          "raw_steps": 100000,
+          "training_seed": 0,
+          "outcome_counts_S_C_T_O": [22, 38, 40, 0],
+          "evaluation_n": 100
+        },
+        {
+          "method": "D1-ST-RT",
+          "method_code": "sac_mlp_d1_st_rt",
+          "run_root": "runs/d0929_100k_diag",
+          "raw_steps": 100000,
+          "training_seed": 0,
+          "outcome_counts_S_C_T_O": [63, 37, 0, 0],
+          "evaluation_n": 100
+        },
+        {
+          "method": "D1-ST-RT-Topo",
+          "method_code": "sac_mlp_d1_st_rt_topo",
+          "run_root": "runs/t0930_topo3_retry01",
+          "raw_steps": 100000,
+          "training_seed": 0,
+          "outcome_counts_S_C_T_O": [39, 39, 22, 0],
+          "evaluation_n": 100
+        },
+        {
+          "method": "D1-ST-RT-Topo+3slot",
+          "method_code": "sac_mlp_d1_st_rt_topo_3slot",
+          "run_root": "runs/t0930_topo3_retry01",
+          "raw_steps": 100000,
+          "training_seed": 0,
+          "outcome_counts_S_C_T_O": [41, 56, 3, 0],
+          "evaluation_n": 100
+        }
+      ]
+    },
+    "fresh_50k_results": [
+      {
+        "method": "MST+SLT",
+        "method_code": "mst_slt",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [51, 49, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": true,
+        "source": "mst_slt__intersection_sorted_depart4p0__bak_50k/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "SAC+MLP",
+        "method_code": "sac_mlp",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [37, 63, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": true,
+        "source": "sac_mlp_depart4p0__intersection_sorted/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "D1-ST",
+        "method_code": "sac_mlp_d1_st",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [48, 52, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": false,
+        "source": "sac_mlp_d1_st__intersection_sorted_depart4p0__bak_50k/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "D1-ST-RT",
+        "method_code": "sac_mlp_d1_st_rt",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [31, 67, 2, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": false,
+        "source": "sac_mlp_d1_st_rt__intersection_sorted_depart4p0/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "D1-ST-Attn",
+        "method_code": "sac_mlp_d1_st_attn",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [43, 56, 1, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": false,
+        "source": "sac_mlp_d1_st_attn__intersection_sorted_depart4p0/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Late",
+        "method_code": "sac_mlp_d1_st_rt_late",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [46, 54, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": false,
+        "source": "sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Gate",
+        "method_code": "sac_mlp_d1_st_rt_gate",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [40, 60, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": false,
+        "source": "sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Ego",
+        "method_code": "sac_mlp_d1_st_rt_ego",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [44, 56, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Edge",
+        "method_code": "sac_mlp_d1_st_rt_edge",
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [39, 61, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      }
+    ],
+    "fresh_50k_depart_scale_sensitivity": [
+      {
+        "method": "SAC+MLP",
+        "method_code": "sac_mlp",
+        "scenario": "intersection_sorted",
+        "depart_scale": 2.5,
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [30, 70, 0, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "checkpoint_identity_matches_local_final_model": true,
+        "source": "sac_mlp_depart2p5__intersection_sorted/evaluation_results.json"
+      },
+      {
+        "method": "SAC+MLP",
+        "method_code": "sac_mlp",
+        "scenario": "intersection_sorted",
+        "depart_scale": 3.0,
+        "training_seed": 0,
+        "raw_steps": 50000,
+        "updates": 45001,
+        "outcome_counts_S_C_T_O": [0, 98, 2, 0],
+        "evaluation_n": 100,
+        "eval_seed_range": [10000, 10099],
+        "checkpoint_identity_matches_local_final_model": true,
+        "source": "sac_mlp_depart3p0__intersection_sorted/evaluation_results.json"
+      }
+    ],
+    "continuation_50k_plus_50k_results": [
+      {
+        "method": "MST+SLT",
+        "method_code": "mst_slt",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [25, 75, 0, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "mst_slt__intersection_sorted_depart4p0__bak_50k/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "SAC+MLP",
+        "method_code": "sac_mlp",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [35, 65, 0, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "sac_mlp_depart4p0__intersection_sorted/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "D1-ST",
+        "method_code": "sac_mlp_d1_st",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [33, 67, 0, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st__intersection_sorted_depart4p0__bak_50k/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Late",
+        "method_code": "sac_mlp_d1_st_rt_late",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [29, 71, 0, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Gate",
+        "method_code": "sac_mlp_d1_st_rt_gate",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [24, 76, 0, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Ego",
+        "method_code": "sac_mlp_d1_st_rt_ego",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [36, 62, 2, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      },
+      {
+        "method": "RT-Edge",
+        "method_code": "sac_mlp_d1_st_rt_edge",
+        "base_raw_steps": 50000,
+        "extra_raw_steps": 50000,
+        "global_raw_steps": 100000,
+        "updates": 94502,
+        "training_seed": "base run seed 0; continuation metadata has no independent seed field",
+        "outcome_counts_S_C_T_O": [25, 68, 7, 0],
+        "evaluation_n": 100,
+        "episode_records_present": true,
+        "source": "sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0/c100000/evaluation_results.json",
+        "checkpoint_identity_matches_local_final_model": true
+      }
+    ],
+    "integrity_and_limitations": {
+      "final_checkpoint_hash_matches_evaluation_identity": "All 20 local sorted result directories checked here (2 fresh 100k, 9 fresh 50k at depart_scale=4, 2 additional SAC density sweeps, and 7 continuation evaluations) matched evaluation identity SHA-256 to that directory's final_model.zip.",
+      "same_seed": "Fresh 50k arguments identify training seed 0. The two local fresh 100k runs identify seed 0. Continuation uses the seed-0 base run, but continuation metadata does not independently prove restoration of RNG state.",
+      "evaluation_records": "Every row has an evaluation summary with N=100. Several 50k D1 JSONs omit episode_records; the 10000–10099 evaluation seed range for those runs is supported by runner configuration/history rather than 100 retained per-episode records.",
+      "continuation_not_fresh": "The c100000 directories mean 50k base plus 50k extra, not a fresh continuous 100k run. Replay buffer was not restored; learning warmup changed from 5000 to 500 raw steps. Do not compare these as the same budget trajectory as fresh 100k.",
+      "traffic_pool": "The evaluation reuses 30 route variants with repeated episodes; 100 episodes are not 100 independent traffic templates. Historical factory code returned the full scaled route pool despite the MST argument label frozen_80_20; no held-out-template generalization claim is supported."
+    },
+    "full_method_status": {
+      "status": "No formal evaluated full-method result found for this corrected sorted three-flow cohort.",
+      "clarification": "MST+SLT is the user-designated strong baseline, not the full method. D1-Full artifacts are from older yield_v2 records and lack an eligible final evaluation for this cohort."
+    },
+    "version_and_exclusion_basis": {
+      "three_flow_evidence": "The checked-in intersection_sorted/.depart_sorted marker and analysis/intersection_scenario_catalog_20261001.json identify the correction: traffic XMLs sorted by (depart, departLane) activate all three flows. analysis/scenario_medium_calibration_20260930.md independently describes 30 templates with all three routes and per-template counts 200/150/240.",
+      "one_flow_predecessor_exclusion": "The erroneous predecessor is the separately named scene intersection / early yield_v2, not a result from corrected intersection_sorted. The scenario catalog cites the archived trainer note that departures in the unsorted source caused later flows to be ignored and that traffic_00 had only E2→E1 active entries. Exclude those predecessor results from the three-flow table.",
+      "one_flow_error": "No result directory labeled intersection_sorted was found whose manifest or traffic asset contradicts the .depart_sorted three-flow marker. Do not label corrected sorted results as one-flow.",
+      "different_legacy_scenario": "fast-developer/mst_slt__intersection_fixed/evaluation_results.json identifies scenario=intersection, not intersection_sorted; keep it outside the corrected sorted tables.",
+      "non-result_folders": "The _p4_lowdensity_* directories did not contain evaluation_results.json in this scan and are not listed as formal outcome results."
+    }
+  },
+  "other_intersection_result_sources_for_parent_run_audit": [
+    {
+      "scenario": "intersection_random_medium_v1 and intersection_random_medium_p05_v1",
+      "record": "analysis/experiment_history.md section 14",
+      "note": "The record documents SAC+MLP fresh100k results and protocol; run files are handled by the separate workspace-runs audit."
+    },
+    {
+      "scenario": "intersection_random_medium_p02_v1 and intersection_random_medium_p03_v1",
+      "record": "analysis/experiment_history.md section 16",
+      "note": "The record documents SAC+MLP fresh100k results and paired diagnostics; p=.2/.3 per inlet per 0.1s, not p=.02/.03."
+    },
+    {
+      "scenario": "intersection_random_darrl_*",
+      "record": "analysis/experiment_history.md sections 17-21; analysis/darrl_r1_outcome_audit_20260930.json; analysis/darrl_medium_7methods_results_20261001.json",
+      "note": "Use configuration revision and terminal protocol. R1 has dual success/collision training episodes and contaminated rewards; do not repair only the displayed counts and treat those checkpoints as valid. Retry02 snapshots may be stale; parent run audit owns latest status."
+    }
+  ],
+  "older_records_excluded_from_primary_corrected_sorted_comparison": [
+    {
+      "record": "mst_slt__intersection_fixed/evaluation_results.json",
+      "reason": "Scenario identity is intersection rather than intersection_sorted; it is a different legacy environment."
+    },
+    {
+      "record": "hold35k__intersection_yield_v2/evaluation_results.json",
+      "reason": "Current argument/completion artifacts identify a 300-step smoke (smoke=true), so its 100% timeout is not a formal long-training result."
+    },
+    {
+      "record": "DARRL r1 results",
+      "reason": "Same-tick arrival and collision could be dual-labeled; training episodes received success reward despite collision. Use only as invalid historical observation with the audit caveat."
+    },
+    {
+      "record": "Failed or interrupted run roots",
+      "reason": "No completed fresh training plus final evaluation; retain as failures, not performance outcomes."
+    }
+  ],
+  "primary_local_record_sources": [
+    "experiment_history.md",
+    "scenario_medium_calibration_20260930.md",
+    "continuous_100k_mst_vs_st.md",
+    "../RESEARCH_CONTEXT.md"
+  ]
+}

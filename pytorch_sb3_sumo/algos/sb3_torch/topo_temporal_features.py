@@ -542,7 +542,9 @@ class TopoTemporalGraphExtractor(BaseFeaturesExtractor):
         self,
         trajectories: Tensor,
         valid: Tensor,
-        topology_attention: Tensor,
+        topology_attention: Tensor | None,
+        *,
+        include_topology_relations: bool | None = None,
     ) -> tuple[Tensor, Tensor, Tensor, Tensor]:
         # Use [B,H,N,*] for explicit target/source pair construction.
         states = trajectories.permute(0, 2, 1, 3)
@@ -561,7 +563,16 @@ class TopoTemporalGraphExtractor(BaseFeaturesExtractor):
             torch.full_like(closing, 20.0),
         ).clamp(0.0, 20.0) / 20.0
 
-        if self.use_topology:
+        use_relations = (
+            self.use_topology
+            if include_topology_relations is None
+            else bool(include_topology_relations)
+        )
+        if use_relations:
+            if topology_attention is None:
+                raise ValueError(
+                    "topology_attention is required when topology relations are enabled"
+                )
             alpha = topology_attention.permute(0, 2, 1, 3)
             same_lane = torch.einsum("bhim,bhjm->bhij", alpha, alpha)
             conflict = torch.einsum(

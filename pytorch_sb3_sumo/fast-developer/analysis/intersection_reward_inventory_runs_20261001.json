@@ -1,0 +1,1835 @@
+{
+  "schema_version": "intersection_reward_inventory_v1",
+  "created_at_local": "2026-10-01T20:58:46.285952+08:00",
+  "workspace_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1",
+  "scope": {
+    "source_run_inventory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\intersection_inventory_runs_20261001.json",
+    "included_completed_final_eval_runs": 18,
+    "included_run_roots": [
+      "d0929_100k_diag",
+      "dm7_1001_retry02",
+      "smlp_darrl_0930",
+      "smlp_dr2_0930",
+      "smlp_p03p02_0930",
+      "smlp_p05_a0930",
+      "smlp_p05_b0930",
+      "t0930_topo3_retry01"
+    ],
+    "selection_rule": "Only the 18 completed final-evaluation rows in the 2026-10-01 inventory snapshot: sorted 4, standard/random 4, DARRL r1 2, DARRL r2 8. Partial, smoke, rerun checkpoints, 50k and continuation runs are excluded.",
+    "inventory_snapshot_as_of_utc": "2026-10-01T12:22:52+00:00",
+    "not_a_complete_audit_of_all_historical_rows": true,
+    "known_coverage_gap": "Older MST 50k and seven continuation records do not retain complete reward arguments; this artifact does not claim their exact reward setup. They are outside these 18 selected final 100k rows."
+  },
+  "nominal_training_reward": {
+    "version_label": "generalized reward shaping v2",
+    "coefficients": {
+      "success_reward": 10.0,
+      "collision_reward": -10.0,
+      "off_route_reward": -10.0,
+      "timeout_reward": -5.0,
+      "progress_scale": 0.02,
+      "step_cost": 0.01
+    },
+    "application": "The wrapper replaces the reward returned by the wrapped environment with the shaped reward. Terminal bonus is selected from final-step info; progress and step-cost are added once per policy/environment step.",
+    "terminal_branch_priority_in_wrapper": [
+      "success",
+      "collision",
+      "off_route",
+      "timeout"
+    ],
+    "process_terms": {
+      "progress": "0.02 * (current ego route distance in meters - previous route distance); no clipping in wrapper implementation.",
+      "step_cost": "-0.01 per wrapper step (policy decision); with action_repeat=3, this is not charged once per raw SUMO substep."
+    },
+    "wrapper_output": "The wrapper returns shaped reward, rather than adding shaping to the underlying env reward.",
+    "arguments_evidence": {
+      "explicit_reward_shaping_dicts": 17,
+      "selected_run_count": 18,
+      "only_missing_explicit_arguments_row": "mst_slt in dm7_1001_retry02; it uses the base trainer entrypoint/default REWARD configuration, and its train_monitor.csv contains the same six reward-component columns and expected branch magnitudes.",
+      "all_explicit_dicts_match_coefficients": true
+    }
+  },
+  "raw_environment_and_eval_return": {
+    "raw_reward_per_sumo_substep": "float(success) - float(collision)",
+    "raw_reward_accounting": "The env sums raw reward across the action-repeat substeps in info.undiscounted_reward; the evaluation helper accumulates that field into episode_return.",
+    "evaluation_mean_return_semantics": "The evaluation_results.json summary mean_return is the mean of raw episode_return records, not the shaped training reward or SAC discounted/entropy objective.",
+    "raw_dual_flag_semantics": "If success and collision are both true on the same terminal substep under r1, raw success-collision reward is 0 for that substep; the shaping wrapper still selects its success-first branch.",
+    "computed_consistency_check": {
+      "rows_checked": 18,
+      "all_mean_return_equal_mean_episode_record_return": true,
+      "all_mean_return_equal_success_minus_collision_flag_rate_difference": true,
+      "r1_dual_eval_episode_returns_are_zero": "Verified in the archived DARRL r1 outcome audit: all overlapping episodes have episode_return 0.0."
+    }
+  },
+  "terminal_event_version_comparison": {
+    "darrl_r1_20260930": {
+      "runs": [
+        "smlp_darrl_0930/intersection_random_darrl_low_v1",
+        "smlp_darrl_0930/intersection_random_darrl_medium_v1"
+      ],
+      "event_resolution": "SUMO success and collision are detected independently; no mutual-exclusion resolver before raw reward/termination.",
+      "shaping_effect_on_dual_flag_training_episodes": "Success-first wrapper branch selected +10 and collision branch 0 for each dual-flag episode; this changes training reward targets and cannot be undone by offline outcome recoding.",
+      "training_dual_flag_episode_counts": {
+        "low": 29,
+        "medium": 10
+      },
+      "evaluation_dual_flag_episode_counts": {
+        "low": 3,
+        "medium": 5
+      },
+      "source_archive": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\scenario_revisions\\darrl_r1_20260930\\archive_manifest.json",
+      "audit_source": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\darrl_r1_outcome_audit_20260930.json"
+    },
+    "darrl_r2_20260930": {
+      "runs": [
+        "dm7_1001_retry02/intersection_random_darrl_medium_v1",
+        "dm7_1001_retry02/intersection_random_darrl_medium_v1",
+        "dm7_1001_retry02/intersection_random_darrl_medium_v1",
+        "dm7_1001_retry02/intersection_random_darrl_medium_v1",
+        "dm7_1001_retry02/intersection_random_darrl_medium_v1",
+        "dm7_1001_retry02/intersection_random_darrl_medium_v1",
+        "smlp_dr2_0930/intersection_random_darrl_low_v1",
+        "smlp_dr2_0930/intersection_random_darrl_medium_v1"
+      ],
+      "event_resolution": "The environment resolves collision > off_route > success > timeout before computing the raw terminal reward; same v2 shaping coefficients remain in use.",
+      "dual_flag_training_episodes_observed": 0,
+      "dual_flag_eval_episodes_observed": 0,
+      "source_archive_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\source_archive\\manifest.json"
+    },
+    "legacy_sorted_and_pre_r2_random_runs": {
+      "runs": [
+        "d0929_100k_diag/intersection_sorted",
+        "d0929_100k_diag/intersection_sorted",
+        "smlp_p03p02_0930/intersection_random_medium_p02_v1",
+        "smlp_p03p02_0930/intersection_random_medium_p03_v1",
+        "smlp_p05_a0930/intersection_random_medium_v1",
+        "smlp_p05_b0930/intersection_random_medium_p05_v1",
+        "t0930_topo3_retry01/intersection_sorted",
+        "t0930_topo3_retry01/intersection_sorted"
+      ],
+      "observed_dual_training_episodes": 0,
+      "observed_dual_eval_episodes": 0,
+      "interpretation": "No dual flags were observed in these selected completed Monitor/evaluation records. That is evidence against an observed branch-priority effect in these data, not proof of the exact archived terminal resolver for every legacy run."
+    },
+    "attribution_limit": "The r1-to-r2 DARRL comparison is not an isolated reward ablation: terminal-event resolution changed, and the same-named traffic profiles were revised. The nominal shaping coefficients and reward wrapper bytes are unchanged."
+  },
+  "source_provenance": {
+    "current_wrapper_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\reward_shaping_v2.py",
+    "wrapper_sha256": "d09caedb887379e2b316f60d7c3648e817ca75ea090f2a0d6abcf45604d3a969",
+    "r1_archived_wrapper_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\scenario_revisions\\darrl_r1_20260930\\source\\fast-developer\\reward_shaping_v2.py",
+    "r1_archived_wrapper_sha256": "d09caedb887379e2b316f60d7c3648e817ca75ea090f2a0d6abcf45604d3a969",
+    "r2_archived_wrapper_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\source_archive\\project\\fast-developer\\reward_shaping_v2.py",
+    "r2_archived_wrapper_sha256": "d09caedb887379e2b316f60d7c3648e817ca75ea090f2a0d6abcf45604d3a969",
+    "wrapper_bytes_match_current_r1_r2": true,
+    "r1_archived_sumo_env": {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\scenario_revisions\\darrl_r1_20260930\\source\\envs\\sumo\\sumo_env.py",
+      "sha256": "df4350776efea5bbdcdcd58ffba89a3bf124e63b0be53562a6d08514a5feceb7"
+    },
+    "r2_archived_sumo_env": {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\source_archive\\project\\envs\\sumo\\sumo_env.py",
+      "sha256": "5faa5f3d0adaeb59fc6224d4fa23897109e925160049782ba58bdf1787053d7f"
+    },
+    "sorted_topo_source_snapshot": {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\source_snapshot.json",
+      "sumo_env_sha256": "df4350776efea5bbdcdcd58ffba89a3bf124e63b0be53562a6d08514a5feceb7",
+      "note": "Snapshot includes the sumo_env.py source hash matching the archived r1 env source; it does not include a frozen reward_shaping_v2.py copy."
+    },
+    "historical_freeze_coverage": "DARRL r1 archive and DARRL r2 suite source archive include exact wrapper/environment source. The d0929 sorted and non-r1/non-r2 random run roots do not all have full frozen source copies; their explicit arguments and Monitor component logs support the nominal coefficients, but exact historical terminal event code cannot be claimed for every row."
+  },
+  "source_references": [
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\reward_shaping_v2.py",
+      "lines": "50-60, 79-107, 110-115",
+      "supports": "Wrapper configuration, success-first if/elif, one step cost and unclipped route-distance progress, cumulative reward component info, shaped reward return."
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py",
+      "lines": "158-166, 270-293",
+      "supports": "Base REWARD coefficients and environment factory attaching the shaping wrapper."
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+      "lines": "585-586",
+      "supports": "D1 caller passes base.REWARD."
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\sumo_env.py",
+      "lines": "600-605, 648, 1461-1473",
+      "supports": "Raw per-substep reward = success - collision, raw undiscounted accumulator in info, and r2 failure-priority resolver."
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\evaluation.py",
+      "lines": "210-211",
+      "supports": "Evaluator accumulates info.undiscounted_reward into episode return."
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\scenario_revisions\\darrl_r1_20260930\\source\\envs\\sumo\\sumo_env.py",
+      "lines": "Archived DARRL r1 source; see archive manifest and darrl_r1_outcome_audit_20260930.json",
+      "supports": "R1 independent success/collision event flags and raw success-minus-collision behavior."
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\source_archive\\project\\envs\\sumo\\sumo_env.py",
+      "lines": "1461-1473",
+      "supports": "Archived r2 collision > off_route > success > timeout resolver."
+    }
+  ],
+  "runs": [
+    {
+      "run_root": "d0929_100k_diag",
+      "run_lineage_group": "sorted_legacy_100k_main",
+      "method": "sac_mlp",
+      "scenario": "intersection_sorted",
+      "scenario_revision": null,
+      "traffic_protocol": null,
+      "probability_per_step_by_route": [],
+      "depart_scale": 4.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-29T11:39:51.677256+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\train_monitor.csv",
+        "completed_episode_rows": 426,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1380.0,
+          "reward_collision": -2520.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -180.0,
+          "reward_step_cost": -333.98,
+          "reward_progress": 936.323914
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": null,
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "59b7279b6c42d5f97f5aa4c11e163720288e628a1430fda7db23f30380c2167a",
+        "terminal_event_flag_counts": {
+          "success": 22,
+          "collision": 38,
+          "timeout": 40,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.16,
+        "mean_episode_return_record_field": -0.16,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.16,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.22,
+          "collision_rate": 0.38,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.4,
+          "mean_return": -0.16,
+          "std_return": 0.7578918128598565,
+          "mean_decision_steps": 122.83,
+          "mean_raw_steps": 367.95,
+          "mean_success_completion_time_seconds": 27.063636363636366,
+          "std_success_completion_time_seconds": 4.595704066600524,
+          "successful_episodes": 22
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "d0929_100k_diag",
+      "run_lineage_group": "sorted_legacy_100k_main",
+      "method": "sac_mlp_d1_st_rt",
+      "scenario": "intersection_sorted",
+      "scenario_revision": null,
+      "traffic_protocol": null,
+      "probability_per_step_by_route": [],
+      "depart_scale": 4.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-29T13:27:14.321259+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\train_monitor.csv",
+        "completed_episode_rows": 470,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1650.0,
+          "reward_collision": -2940.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -55.0,
+          "reward_step_cost": -334.27,
+          "reward_progress": 1058.503761
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": null,
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+        "terminal_event_flag_counts": {
+          "success": 63,
+          "collision": 37,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": 0.26,
+        "mean_episode_return_record_field": 0.26,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": 0.26,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.63,
+          "collision_rate": 0.37,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": 0.26
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "dm7_1001_retry02",
+      "run_lineage_group": "DARRL_r2_7method_retry2",
+      "method": "mst_slt",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": null,
+        "training_complete_marker": false,
+        "training_completed_at": "2026-09-30T21:07:56.525029+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": null,
+        "arguments_contain_explicit_reward_config": false,
+        "explicit_config_matches_v2_coefficients": null,
+        "configuration_evidence": "base trainer REWARD defaults/entrypoint plus train_monitor branch columns; MST arguments omit reward_shaping"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 386,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 770.0,
+          "reward_collision": -2810.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -140.0,
+          "reward_step_cost": -334.09,
+          "reward_progress": 778.090695
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "16ff0b2073ea68c51ca823156b4a7e2d694a2c29d89d6c6bde65ca79a46be03a",
+        "terminal_event_flag_counts": {
+          "success": 16,
+          "collision": 53,
+          "timeout": 31,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.37,
+        "mean_episode_return_record_field": -0.37,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.37,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.16,
+          "collision_rate": 0.53,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.31,
+          "mean_return": -0.37,
+          "std_return": 0.7437069315261221,
+          "mean_decision_steps": 126.21,
+          "mean_raw_steps": 378.02,
+          "mean_success_completion_time_seconds": 34.28125,
+          "std_success_completion_time_seconds": 15.661346475878121,
+          "successful_episodes": 16
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "dm7_1001_retry02",
+      "run_lineage_group": "DARRL_r2_7method_retry2",
+      "method": "sac_mlp_d1_st",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T21:41:09.778126+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 493,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 750.0,
+          "reward_collision": -3880.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -150.0,
+          "reward_step_cost": -334.6,
+          "reward_progress": 960.743299
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "5080d3cba98ee8cf57b9e1dbd0c628ecd7951c86b246fbeaf007c5e0d212cb47",
+        "terminal_event_flag_counts": {
+          "success": 16,
+          "collision": 83,
+          "timeout": 1,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.67,
+        "mean_episode_return_record_field": -0.67,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.67,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.16,
+          "collision_rate": 0.83,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.01,
+          "mean_return": -0.67
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "dm7_1001_retry02",
+      "run_lineage_group": "DARRL_r2_7method_retry2",
+      "method": "sac_mlp_d1_st_rt_3slot",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-10-01T08:03:39.765311+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 602,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1550.0,
+          "reward_collision": -4300.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -85.0,
+          "reward_step_cost": -335.11,
+          "reward_progress": 1272.598562
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "99570d79baf7dee912e72dea993401ff1d27590d8ba272cd810f6416b1fdbd47",
+        "terminal_event_flag_counts": {
+          "success": 30,
+          "collision": 70,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.4,
+        "mean_episode_return_record_field": -0.4,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.4,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.3,
+          "collision_rate": 0.7,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.4
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "dm7_1001_retry02",
+      "run_lineage_group": "DARRL_r2_7method_retry2",
+      "method": "sac_mlp_d1_st_rt",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-10-01T01:30:18.354409+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 444,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 920.0,
+          "reward_collision": -3330.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -95.0,
+          "reward_step_cost": -333.56,
+          "reward_progress": 899.693586
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "9f27300384e7ba7810c66bf8fc5e8e465310a3274a995196791cdffa691adb50",
+        "terminal_event_flag_counts": {
+          "success": 14,
+          "collision": 66,
+          "timeout": 20,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.52,
+        "mean_episode_return_record_field": -0.52,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.52,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.14,
+          "collision_rate": 0.66,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.2,
+          "mean_return": -0.52
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "dm7_1001_retry02",
+      "run_lineage_group": "DARRL_r2_7method_retry2",
+      "method": "sac_mlp_d1_st_rt_topo",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-10-01T03:47:04.951657+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 500,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1160.0,
+          "reward_collision": -3730.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -55.0,
+          "reward_step_cost": -334.58,
+          "reward_progress": 1039.08645
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "ce0d658d7e20abdabec03dbc004219c3b116032005b7d6f172f5558bfe134b01",
+        "terminal_event_flag_counts": {
+          "success": 31,
+          "collision": 69,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.38,
+        "mean_episode_return_record_field": -0.38,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.38,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_rate": 0.69,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.38
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "dm7_1001_retry02",
+      "run_lineage_group": "DARRL_r2_7method_retry2",
+      "method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-10-01T08:02:18.733236+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 521,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1290.0,
+          "reward_collision": -3800.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -60.0,
+          "reward_step_cost": -334.51,
+          "reward_progress": 1097.091932
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "c0ca3ac892409a480cc6b8166fd5650675b1700855e9fefa2a7a504de2ae5801",
+        "terminal_event_flag_counts": {
+          "success": 31,
+          "collision": 45,
+          "timeout": 24,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.14,
+        "mean_episode_return_record_field": -0.14,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.14,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_rate": 0.45,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.24,
+          "mean_return": -0.14
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_darrl_0930",
+      "run_lineage_group": "DARRL_r1_completed_runs",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_darrl_low_v1",
+      "scenario_revision": "darrl_r1_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T13:16:12.410846+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 435,
+        "success_and_collision_dual_flag_rows": 29,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1130.0,
+          "reward_collision": -2950.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -135.0,
+          "reward_step_cost": -334.38,
+          "reward_progress": 878.52289
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "f188477fa3eb148481f24683d44e0037ea33c959af544cb051e5fc216a9aa17b",
+        "terminal_event_flag_counts": {
+          "success": 30,
+          "collision": 73,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 3,
+        "mean_return_field": -0.43,
+        "mean_episode_return_record_field": -0.43,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.43,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.3,
+          "collision_rate": 0.73,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.43,
+          "std_return": 0.8860586888011426,
+          "mean_decision_steps": 89.53,
+          "mean_raw_steps": 267.71,
+          "mean_success_completion_time_seconds": 30.72000000000001,
+          "std_success_completion_time_seconds": 8.103349101863172,
+          "successful_episodes": 30
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_darrl_0930",
+      "run_lineage_group": "DARRL_r1_completed_runs",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r1_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.05
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T13:30:39.230553+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 332,
+        "success_and_collision_dual_flag_rows": 10,
+        "observed_shaping_branch_totals": {
+          "reward_success": 130.0,
+          "reward_collision": -2880.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -155.0,
+          "reward_step_cost": -333.97,
+          "reward_progress": 547.525626
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "e6516d29bb529e7b52ef0bc08d2640d30f4d320f0d16940c9745c7c39ee8cc49",
+        "terminal_event_flag_counts": {
+          "success": 13,
+          "collision": 92,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 5,
+        "mean_return_field": -0.79,
+        "mean_episode_return_record_field": -0.79,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.79,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.13,
+          "collision_rate": 0.92,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.79,
+          "std_return": 0.5708765190476834,
+          "mean_decision_steps": 125.67,
+          "mean_raw_steps": 375.97,
+          "mean_success_completion_time_seconds": 43.45384615384616,
+          "std_success_completion_time_seconds": 4.781473121026676,
+          "successful_episodes": 13
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_dr2_0930",
+      "run_lineage_group": "DARRL_r2_completed_SAC_runs",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_darrl_low_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.015
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T15:40:32.381966+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 417,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 2430.0,
+          "reward_collision": -1630.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -55.0,
+          "reward_step_cost": -334.33,
+          "reward_progress": 1106.153714
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "e293fdcec1b6cf2451559084acbd701342fd8cda2b7ab3b99d5d6aca5aeb4355",
+        "terminal_event_flag_counts": {
+          "success": 62,
+          "collision": 34,
+          "timeout": 4,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": 0.28,
+        "mean_episode_return_record_field": 0.28,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": 0.28,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.62,
+          "collision_rate": 0.34,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.04,
+          "mean_return": 0.28,
+          "std_return": 0.9389355675444402,
+          "mean_decision_steps": 72.65,
+          "mean_raw_steps": 217.06,
+          "mean_success_completion_time_seconds": 22.37741935483871,
+          "std_success_completion_time_seconds": 7.191446966313721,
+          "successful_episodes": 62
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_dr2_0930",
+      "run_lineage_group": "DARRL_r2_completed_SAC_runs",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "scenario_revision": "darrl_r2_20260930",
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.03
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T15:55:13.658043+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 433,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1030.0,
+          "reward_collision": -3080.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -110.0,
+          "reward_step_cost": -334.68,
+          "reward_progress": 908.202986
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "40ed0d2242ba3e6a2a8753c0acba8f8f9568d41cb5596e0475ea79d24a9a44f4",
+        "terminal_event_flag_counts": {
+          "success": 31,
+          "collision": 62,
+          "timeout": 7,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.31,
+        "mean_episode_return_record_field": -0.31,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.31,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_rate": 0.62,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.07,
+          "mean_return": -0.31,
+          "std_return": 0.913181252545189,
+          "mean_decision_steps": 140.36,
+          "mean_raw_steps": 420.21,
+          "mean_success_completion_time_seconds": 43.274193548387096,
+          "std_success_completion_time_seconds": 10.231197317185522,
+          "successful_episodes": 31
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_p03p02_0930",
+      "run_lineage_group": "medium_probability_p02_p03_final_pair",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_medium_p02_v1",
+      "scenario_revision": null,
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.2
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T08:49:13.568527+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 487,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 740.0,
+          "reward_collision": -3980.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -75.0,
+          "reward_step_cost": -333.55,
+          "reward_progress": 930.175982
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "031bb4bd5330f38a9cd4c764269779fab76c201fb6fa16a2f6ce4cc6cc9c5a83",
+        "terminal_event_flag_counts": {
+          "success": 5,
+          "collision": 25,
+          "timeout": 70,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.2,
+        "mean_episode_return_record_field": -0.2,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.2,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.05,
+          "collision_rate": 0.25,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.7,
+          "mean_return": -0.2,
+          "std_return": 0.5099019513592785,
+          "mean_decision_steps": 178.18,
+          "mean_raw_steps": 534.28,
+          "mean_success_completion_time_seconds": 44.279999999999994,
+          "std_success_completion_time_seconds": 6.693100925580011,
+          "successful_episodes": 5
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_p03p02_0930",
+      "run_lineage_group": "medium_probability_p02_p03_final_pair",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_medium_p03_v1",
+      "scenario_revision": null,
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.3
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T08:52:45.856933+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 605,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 990.0,
+          "reward_collision": -4950.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -55.0,
+          "reward_step_cost": -335.1,
+          "reward_progress": 1163.180227
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "8057eb34e5abcad679a230a4d38e326867fecde646268023563aa2420e65a114",
+        "terminal_event_flag_counts": {
+          "success": 17,
+          "collision": 83,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.66,
+        "mean_episode_return_record_field": -0.66,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.66,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.17,
+          "collision_rate": 0.83,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.66,
+          "std_return": 0.751265598839718,
+          "mean_decision_steps": 38.07,
+          "mean_raw_steps": 113.12,
+          "mean_success_completion_time_seconds": 18.711764705882356,
+          "std_success_completion_time_seconds": 0.10782531046954943,
+          "successful_episodes": 17
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_p05_a0930",
+      "run_lineage_group": "medium_and_p05_initial_pair; p05 failed attempt retained",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_medium_v1",
+      "scenario_revision": null,
+      "traffic_protocol": "intersection_bernoulli_v1",
+      "probability_per_step_by_route": [
+        0.008333333333333333,
+        0.011111111111111112,
+        0.013333333333333334
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T04:39:52.652819+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 485,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 3640.0,
+          "reward_collision": -1160.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -25.0,
+          "reward_step_cost": -334.76,
+          "reward_progress": 1415.923378
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "8cf533c9f311a28eeea3f74840e95aacc1c1e534a298f55eca338f26e61dc786",
+        "terminal_event_flag_counts": {
+          "success": 75,
+          "collision": 25,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": 0.5,
+        "mean_episode_return_record_field": 0.5,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": 0.5,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.75,
+          "collision_rate": 0.25,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": 0.5,
+          "std_return": 0.8660254037844386,
+          "mean_decision_steps": 54.06,
+          "mean_raw_steps": 161.16,
+          "mean_success_completion_time_seconds": 18.370666666666672,
+          "std_success_completion_time_seconds": 0.8893103445304622,
+          "successful_episodes": 75
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "smlp_p05_b0930",
+      "run_lineage_group": "p05_fresh_restart",
+      "method": "sac_mlp",
+      "scenario": "intersection_random_medium_p05_v1",
+      "scenario_revision": null,
+      "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+      "probability_per_step_by_route": [
+        0.5
+      ],
+      "depart_scale": 1.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T05:26:56.199200+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\train_monitor.csv",
+        "completed_episode_rows": 311,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 240.0,
+          "reward_collision": -2340.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -265.0,
+          "reward_step_cost": -334.12,
+          "reward_progress": 544.627428
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": "validation",
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "bc23976618a6c59dc04464405a2d2e6693e962b697f97e661bb1be572d93bc50",
+        "terminal_event_flag_counts": {
+          "success": 12,
+          "collision": 88,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.76,
+        "mean_episode_return_record_field": -0.76,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.76,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.12,
+          "collision_rate": 0.88,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.76,
+          "std_return": 0.6499230723708769,
+          "mean_decision_steps": 69.31,
+          "mean_raw_steps": 206.88,
+          "mean_success_completion_time_seconds": 38.9,
+          "std_success_completion_time_seconds": 1.5811388300841904,
+          "successful_episodes": 12
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "t0930_topo3_retry01",
+      "run_lineage_group": "sorted_topo3_fresh_retry",
+      "method": "sac_mlp_d1_st_rt_topo_3slot",
+      "scenario": "intersection_sorted",
+      "scenario_revision": null,
+      "traffic_protocol": null,
+      "probability_per_step_by_route": [],
+      "depart_scale": 4.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T01:13:27.871909+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\train_monitor.csv",
+        "completed_episode_rows": 493,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1430.0,
+          "reward_collision": -3440.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -30.0,
+          "reward_step_cost": -334.4,
+          "reward_progress": 1056.261243
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": null,
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "b56c58b78386b05bdc527c33a85e12aa1ead3c5c711af21056508443a9d87e1e",
+        "terminal_event_flag_counts": {
+          "success": 41,
+          "collision": 56,
+          "timeout": 3,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": -0.15,
+        "mean_episode_return_record_field": -0.15,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": -0.15,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.41,
+          "collision_rate": 0.56,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.03,
+          "mean_return": -0.15
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\experiment_manifest.json"
+      }
+    },
+    {
+      "run_root": "t0930_topo3_retry01",
+      "run_lineage_group": "sorted_topo3_fresh_retry",
+      "method": "sac_mlp_d1_st_rt_topo",
+      "scenario": "intersection_sorted",
+      "scenario_revision": null,
+      "traffic_protocol": null,
+      "probability_per_step_by_route": [],
+      "depart_scale": 4.0,
+      "run_directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0",
+      "training": {
+        "classification": "completed_final_eval",
+        "requested_raw_step_budget": 100000,
+        "raw_steps_completed": 100000,
+        "updates_completed": 95001,
+        "training_seed_from_arguments": 0,
+        "training_complete_marker": true,
+        "training_completed_at": "2026-09-30T01:14:09.132444+00:00",
+        "final_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\final_model.zip",
+        "final_checkpoint_kind": "final",
+        "checkpoint_hash_matches_training_evidence": true
+      },
+      "reward_configuration": {
+        "arguments_reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "arguments_contain_explicit_reward_config": true,
+        "explicit_config_matches_v2_coefficients": true,
+        "configuration_evidence": "arguments.json"
+      },
+      "training_monitor": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\train_monitor.csv",
+        "completed_episode_rows": 527,
+        "success_and_collision_dual_flag_rows": 0,
+        "observed_shaping_branch_totals": {
+          "reward_success": 1640.0,
+          "reward_collision": -3510.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": -60.0,
+          "reward_step_cost": -334.31,
+          "reward_progress": 1148.844258
+        },
+        "note": "Monitor branch totals describe shaped training reward components for completed episodes; they are not optimizer objective/loss totals."
+      },
+      "final_evaluation": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\evaluation_results.json",
+        "n_records": 100,
+        "split": null,
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "unique_seed_count": 100,
+        "checkpoint_identity_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "dd3fb3849c850fc2d4ea726278b8b9aa6aeffd81254c8a6b5fc448f0b866a000",
+        "terminal_event_flag_counts": {
+          "success": 39,
+          "collision": 39,
+          "timeout": 22,
+          "off_route": 0
+        },
+        "success_collision_overlap_episodes": 0,
+        "mean_return_field": 0.0,
+        "mean_episode_return_record_field": 0.0,
+        "mean_return_equals_mean_record_episode_return": true,
+        "mean_raw_episode_return_from_success_minus_collision": 0.0,
+        "mean_return_equals_success_minus_collision_rate_difference": true,
+        "summary": {
+          "episodes": 100,
+          "success_rate": 0.39,
+          "collision_rate": 0.39,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.22,
+          "mean_return": 0.0
+        },
+        "interpretation": "mean_return is the evaluator accumulation of info.undiscounted_reward (raw SUMO reward), not the shaped policy reward; in r1 a dual success/collision terminal contributes raw 0."
+      },
+      "evidence_paths": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\arguments.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\evaluation_results.json",
+        "train_monitor": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\train_monitor.csv",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\experiment_manifest.json"
+      }
+    }
+  ],
+  "limitations": [
+    "This artifact audits the selected 18 final 100k rows from the 2026-10-01 inventory snapshot; it does not establish identical reward code for every historical experiment in the 38-row overall inventory.",
+    "Older 50k and continuation records have missing reward arguments; their Monitor averages are only indirect evidence and are not included as verified same-reward runs.",
+    "For the MST row, arguments.json omits a reward_shaping object; the entrypoint and Monitor branch columns verify use of the base configuration, but argument-file evidence alone is absent.",
+    "DARRL r1 has observed success/collision overlap; nominal coefficients are the same but success-first branch selection gave dual training transitions a success bonus. The resulting trained model is affected; correcting report counts does not repair it.",
+    "For runs without a complete frozen source archive, arguments and train Monitor provide strong evidence for configured/observed reward coefficients but not exhaustive proof of every runtime reward/terminal-code byte.",
+    "No training, evaluation, or SUMO environment was run for this audit."
+  ]
+}

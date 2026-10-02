@@ -1,0 +1,155 @@
+{
+  "audit_protocol": "route_conflict_path_deviation_code_audit_v1",
+  "audit_date": "2026-10-03",
+  "historical_run": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/sortct_1002/sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0",
+  "historical_calibration_file": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/sortct_1002/sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0/diagnostics/eval/task_conflict_calibration.jsonl.gz",
+  "historical_coverage": {
+    "calibration_rows": 15881,
+    "candidate_path_deviation_rows": 10297,
+    "rows_with_new_path_deviation_evidence": 0,
+    "historical_rows_modified": false
+  },
+  "historical_first_three_deviation_rows_in_file_order": [
+    {
+      "episode_seed": 10000,
+      "episode_index": 0,
+      "decision_index": 18,
+      "raw_step_pre_action": 57,
+      "actor_path_status": {
+        "ego": "tracking",
+        "foe": "route_or_candidate_path_deviation"
+      },
+      "selected_paths": {
+        "ego": "-E1_2>:J1_14_0>:J1_21_0>-E0_1",
+        "foe": ":J1_1_2>E1_2"
+      },
+      "selected_lane_ids": {
+        "ego": ["-E1_2", ":J1_14_0", ":J1_21_0", "-E0_1"],
+        "foe": [":J1_1_2", "E1_2"]
+      },
+      "candidate_counts": {
+        "ego": 2,
+        "foe": 1
+      },
+      "candidate_enumeration_truncated": {
+        "ego": false,
+        "foe": false
+      },
+      "entry_intervals": {
+        "ego": null,
+        "foe": null
+      },
+      "interpretation": "The foe later follows a lane sequence different from the selected candidate. This record does not preserve the mismatch-time lane/position or selected path termination reason, so it cannot distinguish a legal alternate lane change from incomplete candidate coverage."
+    },
+    {
+      "episode_seed": 10000,
+      "episode_index": 0,
+      "decision_index": 19,
+      "raw_step_pre_action": 60,
+      "actor_path_status": {
+        "ego": "tracking",
+        "foe": "route_or_candidate_path_deviation"
+      },
+      "selected_paths": {
+        "ego": "-E1_2>:J1_14_0>:J1_21_0>-E0_1",
+        "foe": ":J1_1_2>E1_2"
+      },
+      "candidate_counts": {
+        "ego": 2,
+        "foe": 1
+      },
+      "candidate_enumeration_truncated": {
+        "ego": false,
+        "foe": false
+      },
+      "interpretation": "This is a repeated forecast for the same episode/foe encounter as the preceding row, not an independent event."
+    },
+    {
+      "episode_seed": 10000,
+      "episode_index": 0,
+      "decision_index": 5,
+      "raw_step_pre_action": 18,
+      "actor_path_status": {
+        "ego": "route_or_candidate_path_deviation",
+        "foe": "tracking"
+      },
+      "selected_paths": {
+        "ego": "-E1_2>:J1_11_2",
+        "foe": ":J1_16_0>E3_0"
+      },
+      "candidate_counts": {
+        "ego": 2,
+        "foe": 1
+      },
+      "candidate_enumeration_truncated": {
+        "ego": false,
+        "foe": false
+      },
+      "entry_intervals": {
+        "ego": null,
+        "foe": {
+          "left_censored_at_prediction": true,
+          "lower_raw_step": 18,
+          "upper_raw_step": 21
+        }
+      },
+      "interpretation": "The ego's selected static path was later left, while the foe had a left-censored entry interval. Without the ego mismatch-time state and matched lane-transition evidence, the reason for deviation remains unknown."
+    }
+  ],
+  "existing_deviation_rule": {
+    "source": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/conflict_timing_observation.py",
+    "source_lines": "871-904",
+    "decision": "At each next policy-decision observation, mark side route_or_candidate_path_deviation if projected lateral distance is strictly greater than 5.0 m OR a known current lane_id is absent from the selected path lane_ids.",
+    "does_not_prove": [
+      "A physically/legal lane change versus a route error",
+      "That the selected static candidate set was complete",
+      "That the actor could not recover to the planned route",
+      "The exact raw tick inside the action-repeat interval when divergence began"
+    ]
+  },
+  "new_passive_evidence": {
+    "schema": "route_conflict_path_deviation_v1",
+    "calibration_field": "path_deviation_evidence",
+    "capture": "First observed deviation per actor side on an existing next-observation snapshot; no extra prediction/calibration row and no extra TraCI read.",
+    "fields": [
+      "first_detected_raw_step",
+      "first_detected_decision_index",
+      "detection_resolution",
+      "actor_key",
+      "observed_road_id",
+      "observed_lane_id",
+      "observed_position_xy",
+      "projected_path_s_m",
+      "projected_lateral_distance_m",
+      "lateral_deviation_threshold_m",
+      "lane_in_selected_path",
+      "trigger_reasons",
+      "selected_path_id",
+      "selected_path_lane_ids",
+      "selected_path_termination_reason",
+      "candidate_path_count",
+      "candidate_paths_truncated",
+      "candidate_enumeration_complete",
+      "known_prefix_not_full_route_reachability",
+      "candidate_termination_reasons",
+      "candidate_termination_counts"
+    ],
+    "missing_semantics": "Unknown fields remain null or the explicit string unknown; social future routes are not queried. A missing selected candidate termination reason does not imply a dead end or a complete path.",
+    "interval_preservation": "Existing entry_intervals and clearance_intervals are copied unchanged, including a valid interval for one actor when the other actor deviates.",
+    "dynamics_changed": false,
+    "historical_rows_rewritten": false
+  },
+  "tests": {
+    "module": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/tests_sb3_sumo/test_route_conflict_timing_observation.py",
+    "command": "D:/Programs/Anaconda/envs/pytorch/python.exe -m pytest tests_sb3_sumo/test_route_conflict_timing_observation.py -q",
+    "result": "7 passed",
+    "coverage": [
+      "Strict greater-than 5 m threshold and lane-membership reason",
+      "First decision-sample evidence capture",
+      "Observed lane/position and available selected-path cutoff metadata",
+      "Explicit unknown when selected path termination metadata is absent",
+      "Preservation of previously recorded single-sided entry and clearance intervals"
+    ],
+    "real_sumo_invoked": false
+  }
+}

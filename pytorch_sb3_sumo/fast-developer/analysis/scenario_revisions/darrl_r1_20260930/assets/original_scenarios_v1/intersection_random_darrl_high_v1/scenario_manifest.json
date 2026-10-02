@@ -1,0 +1,169 @@
+{
+  "configuration": {
+    "schema_version": 1,
+    "protocol": "intersection_bernoulli_step_schedule_v1",
+    "scenario": "intersection_random_darrl_high_v1",
+    "density_level": "high",
+    "source_scenario": "intersection_sorted",
+    "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+    "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+    "demand_definition": "user-requested p=0.07 per 0.1-second step; 7560 veh/h requested, realized insertion is capacity-limited",
+    "total_vehicles_per_hour": 7560,
+    "vehicles_per_hour_by_route": {
+      "neg_E3_to_neg_E0": 2520,
+      "E0_to_E3": 2520,
+      "E2_to_E1": 2520
+    },
+    "flows": [
+      {
+        "id": "neg_E3_to_neg_E0",
+        "edges": [
+          "-E3",
+          "-E0"
+        ],
+        "vehicles_per_hour": 2520,
+        "rate_per_second": 0.7,
+        "sumo_probability": null,
+        "probability_per_step": 0.07,
+        "mean_headway_seconds": 1.4285714285714286,
+        "depart_lane": "1",
+        "depart_pos": "0",
+        "depart_speed": "max",
+        "arrival_lane": "1"
+      },
+      {
+        "id": "E0_to_E3",
+        "edges": [
+          "E0",
+          "E3"
+        ],
+        "vehicles_per_hour": 2520,
+        "rate_per_second": 0.7,
+        "sumo_probability": null,
+        "probability_per_step": 0.07,
+        "mean_headway_seconds": 1.4285714285714286,
+        "depart_lane": "1",
+        "depart_pos": "0",
+        "depart_speed": "max",
+        "arrival_lane": "1"
+      },
+      {
+        "id": "E2_to_E1",
+        "edges": [
+          "E2",
+          "E1"
+        ],
+        "vehicles_per_hour": 2520,
+        "rate_per_second": 0.7,
+        "sumo_probability": null,
+        "probability_per_step": 0.07,
+        "mean_headway_seconds": 1.4285714285714286,
+        "depart_lane": "1",
+        "depart_pos": "0",
+        "depart_speed": "max",
+        "arrival_lane": "1"
+      }
+    ],
+    "flow_begin_seconds": 0.0,
+    "flow_end_seconds": 130.0,
+    "ego_depart_seconds": 50.0,
+    "ego_route_edges": [
+      "-E1",
+      "-E0"
+    ],
+    "ego_depart_lane": "2",
+    "ego_depart_speed": "0",
+    "step_length_seconds": 0.1,
+    "max_episode_raw_steps": 600,
+    "default_action_repeat": 3,
+    "endless_traffic": false,
+    "background_exit_behavior": "leave after the configured route ends; no recycling",
+    "depart_scale": 1.0,
+    "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+    "traffic_seed_domains": {
+      "train": {
+        "offset": 0,
+        "width": 1000000000,
+        "last_seed": 999999999
+      },
+      "validation": {
+        "offset": 1000000000,
+        "width": 500000000,
+        "last_seed": 1499999999
+      },
+      "test": {
+        "offset": 1500000000,
+        "width": 500000000,
+        "last_seed": 1999999999
+      }
+    },
+    "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+    "default_evaluation_split": "validation",
+    "default_evaluation_logical_seeds": {
+      "start": 10000,
+      "episodes": 100
+    },
+    "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+    "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+    "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+    "dynamic_episode_traffic": true,
+    "scenario_family": "darrl_lane1_v1",
+    "template_scenario": "intersection_random_high_v1",
+    "collision_action": "remove",
+    "collision_detection_mode": "sumo_events_or_ego_geometry",
+    "background_vtype_overrides": {
+      "jmIgnoreFoeProb": "0"
+    },
+    "ego_vtype_overrides": {
+      "minGap": "1",
+      "jmIgnoreFoeProb": "0"
+    }
+  },
+  "source_sha256": {
+    "map.net.xml": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+    "ego.rou.xml": "e9b0d992510dca46ac0d7fd258956a11dff1d821b51744e649c2ebbd3fc8cb57",
+    "traffic": {
+      "traffic_00.rou.xml": "d2fede6206b44f142a2cf3803eb0532612fb031727ff4ad65b192c1cf3010a2a",
+      "traffic_01.rou.xml": "a275d5caa1cf43100adbfc51b2ce5f1a7d0ab03e735e5a627cfccd782adb6730",
+      "traffic_02.rou.xml": "d84da6724cc50ef536a26fcbb53e75d709cae5337d5f448666e9f8950357bd02",
+      "traffic_03.rou.xml": "de33abca28bc114428a98d5435f9ec17ddd9c4ba6103f610735b0af304517eea",
+      "traffic_04.rou.xml": "90888ee8b148df740110c26e126f32f92c237daa7ed022623f51e9b7f9b1c433",
+      "traffic_05.rou.xml": "7cefd8055fb9b9ecfb291aa307b90085558a9a0f70354d096c73c0a9cbe3bfbd",
+      "traffic_06.rou.xml": "aebd3efc00ad084e2a9a89f926818bf1a0e25eee5ee94e601eee5de0adecd00d",
+      "traffic_07.rou.xml": "13c18beac99e70bdcb19a088776b7a7cddb6f123a9f47a9e9cbcfffa155f49aa",
+      "traffic_08.rou.xml": "58330ac560d4d96a5066b9dc3a9b8bd458b7a8b165b9f19ccf4d4f919cd02b05",
+      "traffic_09.rou.xml": "da103eadbe86258625853c4604de63f6352ae5f308a23cc9b30f5e9b09290dc5",
+      "traffic_10.rou.xml": "6811892037adb7b03dce7fd07d7443022ece53a9bd3e64be4b8b7daeec69fff5",
+      "traffic_11.rou.xml": "324d1184a46cba298e0998ec85784cd6aa04feb838757296d931aedf59975448",
+      "traffic_12.rou.xml": "72ac33ce27a0a75ec0e8980e6407b5cf296e99b6dae918facdee6b471aa3f601",
+      "traffic_13.rou.xml": "5aacce0944ee41f0160c9107d27fbf45d1d87526179bbcc4c822badd58bc9327",
+      "traffic_14.rou.xml": "ca4125cf9379c62e069305627350daf8b587b796c0bebafcac0e4b0b11af6396",
+      "traffic_15.rou.xml": "1629b39c45249828c3377340703bc81ef441048e2f78ddc076c08553b53cad76",
+      "traffic_16.rou.xml": "ae1a6834f4fcdce8d5629b14caf3fc33157d28bda4eee9940fd9ec05230e3730",
+      "traffic_17.rou.xml": "8e3897f96bdb3b47dba751f2bd3085b177279b497d34b0bee8c20ec62eac608d",
+      "traffic_18.rou.xml": "f921ea2ba0f5a38db91370acebd1d7cbd659c5fc94e3d4b6f1f662505c56ec92",
+      "traffic_19.rou.xml": "26b1131309406d7fe6bd7666290246c08457905720f250cead2cdb5978edac67",
+      "traffic_20.rou.xml": "bb05013e2292028eb28f425587a956ae1cc459e3c92ba410bfb696c2eb80eb83",
+      "traffic_21.rou.xml": "7072a4e2c5adadeb718b22e194f40127064b1f335dd4548372aeb643d5f1f404",
+      "traffic_22.rou.xml": "cd40baf5c0557f8364d191998a758d696f33dc78ab8dfe995f1f3cfcb325c118",
+      "traffic_23.rou.xml": "59a1d061662cd1150a6ad578fd953ee9a79eaca3ad9c346753a90ef07fb34517",
+      "traffic_24.rou.xml": "b9f3f2b90b0469dacff02698ee09bd3244885e4cff099fe1753b8aba4ae06a58",
+      "traffic_25.rou.xml": "9031088838bd9cbd80e58ae6c42eb48f6df2113f9a46ca63bbf534e4330e7ca8",
+      "traffic_26.rou.xml": "0c2c57631f049a02d25edbdb693a2fef3f9864dd549a78c4e0d55042f3d48041",
+      "traffic_27.rou.xml": "e26bcdec86632a49254f3a073bb630e58eba2764a513d4f53385fbe5b7285001",
+      "traffic_28.rou.xml": "6ae37da13dd3a4fb8e5077e37e25b66ab30545c686207a633d39c8f89a469e14",
+      "traffic_29.rou.xml": "edcd54a2d86de9f7a1a74d220bcb35825f1e742aa66cfc6061fb2e15981de0bd"
+    }
+  },
+  "asset_sha256": {
+    "map.net.xml": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+    "ego.rou.xml": "d250b9375e0dfe438e01814895e0dc649fa0e2b911995a0a76a43cb3fe31fe60",
+    "traffic/traffic_00000.rou.xml": "dd76bc2bfbc8eb77fdfc7f103f9df9d02437d23a65ebb4cec06236798f416513"
+  },
+  "driver_types": 120,
+  "source_vehicle_counts_by_route": {
+    "-E3 -E0": 6000,
+    "E0 E3": 4500,
+    "E2 E1": 7200
+  }
+}

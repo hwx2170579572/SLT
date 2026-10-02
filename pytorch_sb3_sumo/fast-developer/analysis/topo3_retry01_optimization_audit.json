@@ -1,0 +1,3094 @@
+{
+  "title": "Topo vs 3slot offline optimization and representation diagnostics audit",
+  "created": "2026-09-30 (workspace timezone Asia/Shanghai)",
+  "scope": "Read-only analysis of saved runs. No training, SUMO, evaluation, or production source changes.",
+  "primary_question": "Whether the Topo vs Topo+3slot behavior change is supported by saved optimization/representation evidence, including gate activity, route/topology utilization, slot gradients and allocation.",
+  "definitions_and_sampling": {
+    "optimization_rows": "100 callback rows per completed retry01 run. Row timing is latest_available_logger_values_at_callback, not necessarily same-update measurements. Includes an initial/warm-up section; reported segment starts at 5k raw steps.",
+    "optimizer_metrics": "Actor/critic losses and alpha are logger snapshots. Q and mean absolute TD fields are sparse sampled critic minibatches, not replay-wide calibration.",
+    "train_activation": "1609 rows per completed retry01 run; diagnostic_source_code and diagnostic_sample_source_code are 1, which source maps to train_replay; sample every 256 extractor forwards. Batch=32 for 1478 Topo and 1487 3slot activation rows; batch=1 for 131 and 122. `diagnostic_sample_grad_enabled` true for 1136 and 1111 respectively. Sample age is 0–4 forwards at collection. These are replay-batch forward snapshots, not current rollout episode state.",
+    "critic_td_gradient": "96 rows per run; first sampled at update 1 and then periodic critic updates. The SAC code collects after critic_loss.backward and before clipping; actor gradients are not included. The custom scalar L2 ratio is group gradient L2 / parameter L2.",
+    "eval_activation": "100-episode deterministic final_model evaluations; 8481 Topo / 8649 3slot prediction rows, one per policy prediction, batch size 1. Cross-batch variance and sample-energy correlations are invalid at batch 1.",
+    "episode_conditioning": "Evaluation representation rows were averaged within episode, then group median/mean across episodes. This avoids longer timeout episodes dominating, but does not match state/traffic risk distributions.",
+    "not_logged": "No actor parameter-gradient norm, direct policy entropy/log_std, post-LayerNorm delta norm, frozen identical-input representation/Q comparison, nor replay-wide Q calibration."
+  },
+  "runs": {
+    "st_rt_route_only": {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0",
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt",
+        "scenario": "intersection_sorted",
+        "raw_budget": 100000,
+        "seed": 0,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "use_route": true,
+        "use_topology": false,
+        "use_slots": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "smoke": false
+      },
+      "training_complete": {
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "smoke": false
+      },
+      "eval_summary": {
+        "episodes": 100,
+        "success_rate": 0.63,
+        "collision_rate": 0.37,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.0,
+        "mean_return": 0.26
+      },
+      "train_diagnostics_counts": {
+        "episodes_finished": 471,
+        "raw_records": 100000,
+        "decision_records": 33496,
+        "diagnostic_error_count": 0,
+        "outcome_counts": {
+          "success": 165,
+          "collision": 294,
+          "timeout": 11,
+          "incomplete": 1
+        },
+        "optimization_samples": 100,
+        "representation_samples": null,
+        "representation_samples_by_source": null
+      },
+      "eval_diagnostics_counts": {
+        "episodes_finished": 100,
+        "raw_records": 26899,
+        "decision_records": 9003,
+        "diagnostic_error_count": 0,
+        "outcome_counts": {
+          "success": 63,
+          "collision": 37
+        },
+        "optimization_samples": 0,
+        "representation_samples": null,
+        "representation_samples_by_source": null
+      },
+      "optimization_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 15,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 15,
+              "median": 4.13171053,
+              "mean": 3.21188322
+            },
+            "train/critic_loss": {
+              "n": 15,
+              "median": 1.44444072,
+              "mean": 2.37313332
+            },
+            "train/ent_coef": {
+              "n": 15,
+              "median": 0.10454131,
+              "mean": 0.11309299
+            },
+            "train/ent_coef_loss": {
+              "n": 15,
+              "median": 0.34272903,
+              "mean": 0.36848928
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 15,
+              "median": -3.37421679,
+              "mean": -3.41117931
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 15,
+              "median": -3.38015127,
+              "mean": -3.40097301
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 15,
+              "median": -3.34441495,
+              "mean": -3.4251728
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 15,
+              "median": 0.77276933,
+              "mean": 0.74345991
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 15,
+              "median": 0.75962603,
+              "mean": 0.74325669
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 70,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 70,
+              "median": 3.77198023,
+              "mean": 3.21609275
+            },
+            "train/critic_loss": {
+              "n": 70,
+              "median": 4.62351425,
+              "mean": 5.04691336
+            },
+            "train/ent_coef": {
+              "n": 70,
+              "median": 0.01691075,
+              "mean": 0.01826035
+            },
+            "train/ent_coef_loss": {
+              "n": 70,
+              "median": 0.00772254,
+              "mean": 0.0196131
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 67,
+              "median": -3.96957159,
+              "mean": -3.1978297
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 67,
+              "median": -3.90986514,
+              "mean": -3.19775671
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 67,
+              "median": -3.68526626,
+              "mean": -3.1915572
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 67,
+              "median": 0.96338058,
+              "mean": 0.98712012
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 67,
+              "median": 1.00353837,
+              "mean": 0.99582218
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 11,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 11,
+              "median": -0.87705034,
+              "mean": -0.97402482
+            },
+            "train/critic_loss": {
+              "n": 11,
+              "median": 7.03646374,
+              "mean": 7.26453892
+            },
+            "train/ent_coef": {
+              "n": 11,
+              "median": 0.01713503,
+              "mean": 0.01713027
+            },
+            "train/ent_coef_loss": {
+              "n": 11,
+              "median": 0.0024465,
+              "mean": 0.00073191
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 11,
+              "median": 0.64919448,
+              "mean": 0.74066884
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 11,
+              "median": 0.62811041,
+              "mean": 0.76095204
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 11,
+              "median": 0.12834167,
+              "mean": 0.48585332
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 11,
+              "median": 1.09602141,
+              "mean": 1.08428178
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 11,
+              "median": 1.10046697,
+              "mean": 1.08823865
+            }
+          }
+        }
+      },
+      "representation_availability": {
+        "representation_rows": 0,
+        "activation_rows": 0,
+        "critic_gradient_rows": 0,
+        "note": "this completed historical run saved optimization and behavior outcomes but no train/eval representation.jsonl"
+      },
+      "eval_provenance": {
+        "evaluation_seed_start": 10000,
+        "evaluation_episode_start": 0,
+        "evaluation_episode_end": 100,
+        "evaluation_episodes": 100,
+        "deterministic": true,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+        "training_seed": 0,
+        "action_repeat": 3,
+        "scenario": "intersection_sorted",
+        "depart_scale": 4.0
+      }
+    },
+    "topo": {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0",
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt_topo",
+        "scenario": "intersection_sorted",
+        "raw_budget": 100000,
+        "seed": 0,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "use_route": true,
+        "use_topology": true,
+        "use_slots": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "smoke": false
+      },
+      "training_complete": {
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "smoke": false
+      },
+      "eval_summary": {
+        "episodes": 100,
+        "success_rate": 0.39,
+        "collision_rate": 0.39,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.22,
+        "mean_return": 0.0
+      },
+      "train_diagnostics_counts": {
+        "episodes_finished": 528,
+        "raw_records": 100000,
+        "decision_records": 33495,
+        "diagnostic_error_count": 0,
+        "outcome_counts": {
+          "success": 164,
+          "collision": 351,
+          "timeout": 12,
+          "incomplete": 1
+        },
+        "optimization_samples": 100,
+        "representation_samples": 1705,
+        "representation_samples_by_source": {
+          "critic_td_gradient_pre_clip": 96,
+          "train_forward_activation": 1609
+        }
+      },
+      "eval_diagnostics_counts": {
+        "episodes_finished": 100,
+        "raw_records": 25369,
+        "decision_records": 8481,
+        "diagnostic_error_count": 0,
+        "outcome_counts": {
+          "collision": 39,
+          "success": 39,
+          "timeout": 22
+        },
+        "optimization_samples": 0,
+        "representation_samples": 8481,
+        "representation_samples_by_source": {
+          "eval_policy": 8481
+        }
+      },
+      "optimization_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 15,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 15,
+              "median": 4.18326545,
+              "mean": 3.79011496
+            },
+            "train/critic_loss": {
+              "n": 15,
+              "median": 1.25494245,
+              "mean": 2.41325594
+            },
+            "train/ent_coef": {
+              "n": 15,
+              "median": 0.10440206,
+              "mean": 0.11309401
+            },
+            "train/ent_coef_loss": {
+              "n": 15,
+              "median": 0.33694336,
+              "mean": 0.36467893
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 14,
+              "median": -4.02991819,
+              "mean": -3.61743584
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 14,
+              "median": -4.03276372,
+              "mean": -3.60018437
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 14,
+              "median": -4.31684661,
+              "mean": -3.63880679
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 14,
+              "median": 0.59449923,
+              "mean": 0.64973187
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 14,
+              "median": 0.60254568,
+              "mean": 0.64794641
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 70,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 70,
+              "median": 3.9917537,
+              "mean": 3.81242536
+            },
+            "train/critic_loss": {
+              "n": 70,
+              "median": 3.99737501,
+              "mean": 4.58039045
+            },
+            "train/ent_coef": {
+              "n": 70,
+              "median": 0.01984301,
+              "mean": 0.01961654
+            },
+            "train/ent_coef_loss": {
+              "n": 70,
+              "median": 0.00450057,
+              "mean": 0.01511145
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 66,
+              "median": -4.22756124,
+              "mean": -4.12353372
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 66,
+              "median": -4.22553468,
+              "mean": -4.11321148
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 66,
+              "median": -4.43508434,
+              "mean": -4.23060428
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 66,
+              "median": 0.82683003,
+              "mean": 0.88758039
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 66,
+              "median": 0.81717992,
+              "mean": 0.8880991
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 11,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 11,
+              "median": -0.02890509,
+              "mean": -0.16560377
+            },
+            "train/critic_loss": {
+              "n": 11,
+              "median": 6.60851151,
+              "mean": 6.21954658
+            },
+            "train/ent_coef": {
+              "n": 11,
+              "median": 0.02035504,
+              "mean": 0.02048822
+            },
+            "train/ent_coef_loss": {
+              "n": 11,
+              "median": 0.00274739,
+              "mean": -0.00074235
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 10,
+              "median": 0.6617336,
+              "mean": 0.82973728
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 10,
+              "median": 0.67463034,
+              "mean": 0.83917661
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 10,
+              "median": 0.58771527,
+              "mean": 0.77687054
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 10,
+              "median": 1.49304241,
+              "mean": 1.49252895
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 10,
+              "median": 1.49240279,
+              "mean": 1.50720589
+            }
+          }
+        }
+      },
+      "optimization_last_callback_row": {
+        "train/actor_loss": -0.028905093669891357,
+        "train/critic_loss": 8.02320384979248,
+        "train/ent_coef": 0.020661238580942154,
+        "train/ent_coef_loss": 0.005775602534413338,
+        "diagnostic/q1_mean_sampled": 0.588778555393219,
+        "diagnostic/q2_mean_sampled": 0.5232130289077759,
+        "diagnostic/target_q_mean_sampled": 0.7249436378479004,
+        "diagnostic/q1_abs_td_mean_sampled": 0.9332132935523987,
+        "diagnostic/q2_abs_td_mean_sampled": 0.95029616355896
+      },
+      "representation_sampling": {
+        "total_rows": 1705,
+        "activation_rows": 1609,
+        "critic_td_gradient_rows": 96,
+        "activation_batch_size_counts": {
+          "1.0": 131,
+          "32.0": 1478
+        },
+        "activation_source_code_counts": {
+          "1.0": 1609
+        },
+        "activation_grad_enabled_counts": {
+          "0.0": 473,
+          "1.0": 1136
+        },
+        "activation_age_forwards_counts": {
+          "0.0": 368,
+          "1.0": 342,
+          "2.0": 370,
+          "3.0": 398,
+          "4.0": 131
+        },
+        "gradient_record_first_update": 1,
+        "activation_timing_example": "collection_training_position; replay samples are not the current rollout episode"
+      },
+      "train_activation_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 253,
+          "metrics": {
+            "topology_residual_scale": {
+              "n": 253,
+              "median": 0.0423869,
+              "mean": 0.04075271
+            },
+            "goal_residual_scale": {
+              "n": 253,
+              "median": 0.03617254,
+              "mean": 0.03465831
+            },
+            "topology_attention_entropy": {
+              "n": 253,
+              "median": 1.37969816,
+              "mean": 1.36397052
+            },
+            "topology_effective_lanes": {
+              "n": 253,
+              "median": 4.23466015,
+              "mean": 4.18674249
+            },
+            "route_compatible_attention_mass": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 253,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 253,
+              "median": 1912.0,
+              "mean": 1748.83003953
+            },
+            "relation_pair_valid_fraction": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 0.98493907
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 253,
+              "median": 0.05065681,
+              "mean": 0.05054403
+            },
+            "conflict_attention_pair_mean": {
+              "n": 253,
+              "median": 0.09688361,
+              "mean": 0.09911157
+            },
+            "merge_attention_pair_mean": {
+              "n": 253,
+              "median": 0.00237242,
+              "mean": 0.00323916
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 253,
+              "median": 0.00208385,
+              "mean": 0.00204218
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 253,
+              "median": 0.00404446,
+              "mean": 0.00412644
+            },
+            "context_ego_rms": {
+              "n": 253,
+              "median": 0.99945945,
+              "mean": 0.99379546
+            },
+            "context_social_rms": {
+              "n": 253,
+              "median": 1.1251359,
+              "mean": 1.14060914
+            },
+            "context_route_rms": {
+              "n": 253,
+              "median": 0.87667024,
+              "mean": 0.83927464
+            },
+            "ego_projection_active": {
+              "n": 253,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "social_projection_active": {
+              "n": 253,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "route_projection_active": {
+              "n": 253,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "mlp_output_head_active": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 1.0
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 1186,
+          "metrics": {
+            "topology_residual_scale": {
+              "n": 1186,
+              "median": 0.00223049,
+              "mean": 0.0054925
+            },
+            "goal_residual_scale": {
+              "n": 1186,
+              "median": 0.0037273,
+              "mean": 0.01049152
+            },
+            "topology_attention_entropy": {
+              "n": 1186,
+              "median": 0.99128288,
+              "mean": 1.00424768
+            },
+            "topology_effective_lanes": {
+              "n": 1186,
+              "median": 2.8901788,
+              "mean": 2.93934445
+            },
+            "route_compatible_attention_mass": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 1186,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 1186,
+              "median": 1884.0,
+              "mean": 1730.83052277
+            },
+            "relation_pair_valid_fraction": {
+              "n": 1186,
+              "median": 0.99062502,
+              "mean": 0.9765019
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 1186,
+              "median": 0.06652819,
+              "mean": 0.06772611
+            },
+            "conflict_attention_pair_mean": {
+              "n": 1186,
+              "median": 0.12338385,
+              "mean": 0.12292973
+            },
+            "merge_attention_pair_mean": {
+              "n": 1186,
+              "median": 0.00132564,
+              "mean": 0.00196672
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 1186,
+              "median": 0.00015793,
+              "mean": 0.00033844
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 1186,
+              "median": 0.0003118,
+              "mean": 0.00058463
+            },
+            "context_ego_rms": {
+              "n": 1186,
+              "median": 0.753663,
+              "mean": 0.77237305
+            },
+            "context_social_rms": {
+              "n": 1186,
+              "median": 0.88101685,
+              "mean": 0.91573277
+            },
+            "context_route_rms": {
+              "n": 1186,
+              "median": 0.80854523,
+              "mean": 0.81262767
+            },
+            "ego_projection_active": {
+              "n": 1186,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "social_projection_active": {
+              "n": 1186,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "route_projection_active": {
+              "n": 1186,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "mlp_output_head_active": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 1.0
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 169,
+          "metrics": {
+            "topology_residual_scale": {
+              "n": 169,
+              "median": 0.00155982,
+              "mean": 0.00158343
+            },
+            "goal_residual_scale": {
+              "n": 169,
+              "median": 0.0022222,
+              "mean": 0.00219561
+            },
+            "topology_attention_entropy": {
+              "n": 169,
+              "median": 0.95275515,
+              "mean": 0.94891617
+            },
+            "topology_effective_lanes": {
+              "n": 169,
+              "median": 2.83467245,
+              "mean": 2.82101999
+            },
+            "route_compatible_attention_mass": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 169,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 169,
+              "median": 1884.0,
+              "mean": 1723.81065089
+            },
+            "relation_pair_valid_fraction": {
+              "n": 169,
+              "median": 0.98541665,
+              "mean": 0.97433432
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 169,
+              "median": 0.07154467,
+              "mean": 0.07186699
+            },
+            "conflict_attention_pair_mean": {
+              "n": 169,
+              "median": 0.12526858,
+              "mean": 0.12435376
+            },
+            "merge_attention_pair_mean": {
+              "n": 169,
+              "median": 0.00239062,
+              "mean": 0.00310297
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 169,
+              "median": 0.00011096,
+              "mean": 0.00011343
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 169,
+              "median": 0.00019927,
+              "mean": 0.00020032
+            },
+            "context_ego_rms": {
+              "n": 169,
+              "median": 0.63178986,
+              "mean": 0.63239359
+            },
+            "context_social_rms": {
+              "n": 169,
+              "median": 0.94678205,
+              "mean": 0.94734378
+            },
+            "context_route_rms": {
+              "n": 169,
+              "median": 0.87026125,
+              "mean": 0.85782526
+            },
+            "ego_projection_active": {
+              "n": 169,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "social_projection_active": {
+              "n": 169,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "route_projection_active": {
+              "n": 169,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "mlp_output_head_active": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 1.0
+            }
+          }
+        }
+      },
+      "critic_td_gradient_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 15,
+          "metrics": {
+            "encoder_grad/encoder_all/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 0.96806013,
+              "mean": 0.96806013
+            },
+            "encoder_grad/encoder_all/gradient_l2": {
+              "n": 15,
+              "median": 29.78101734,
+              "mean": 64.42157856
+            },
+            "encoder_grad/encoder_all/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.3254551,
+              "mean": 0.70091873
+            },
+            "encoder_grad/topology_core/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_core/gradient_l2": {
+              "n": 15,
+              "median": 7.13160786,
+              "mean": 9.10017931
+            },
+            "encoder_grad/topology_core/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.13315456,
+              "mean": 0.16997322
+            },
+            "encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_fusion_goal/gradient_l2": {
+              "n": 15,
+              "median": 24.05901684,
+              "mean": 42.7884644
+            },
+            "encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.84751421,
+              "mean": 1.51067948
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_l2": {
+              "n": 15,
+              "median": 13.14118434,
+              "mean": 27.31791864
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.46774518,
+              "mean": 0.97444692
+            },
+            "encoder_grad/slot_ego/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/slot_social/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/slot_route/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/route/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/route/gradient_l2": {
+              "n": 15,
+              "median": 12.53969047,
+              "mean": 17.21925585
+            },
+            "encoder_grad/route/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.33161049,
+              "mean": 0.45591399
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 70,
+          "metrics": {
+            "encoder_grad/encoder_all/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 0.96806013,
+              "mean": 0.96806013
+            },
+            "encoder_grad/encoder_all/gradient_l2": {
+              "n": 70,
+              "median": 353.50307777,
+              "mean": 1128.65268564
+            },
+            "encoder_grad/encoder_all/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 3.65097218,
+              "mean": 11.39581469
+            },
+            "encoder_grad/topology_core/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_core/gradient_l2": {
+              "n": 70,
+              "median": 4.59995239,
+              "mean": 11.59491481
+            },
+            "encoder_grad/topology_core/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.07809017,
+              "mean": 0.2023845
+            },
+            "encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_fusion_goal/gradient_l2": {
+              "n": 70,
+              "median": 302.7556755,
+              "mean": 1086.28280231
+            },
+            "encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 9.89470461,
+              "mean": 35.0917046
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_l2": {
+              "n": 70,
+              "median": 37.43848916,
+              "mean": 118.72131053
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 1.25767698,
+              "mean": 4.07469571
+            },
+            "encoder_grad/slot_ego/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/slot_social/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/slot_route/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/route/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/route/gradient_l2": {
+              "n": 70,
+              "median": 24.10938552,
+              "mean": 73.53977487
+            },
+            "encoder_grad/route/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.61524263,
+              "mean": 1.87531126
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 10,
+          "metrics": {
+            "encoder_grad/encoder_all/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 0.96806013,
+              "mean": 0.96806013
+            },
+            "encoder_grad/encoder_all/gradient_l2": {
+              "n": 10,
+              "median": 638.36443259,
+              "mean": 903.52479762
+            },
+            "encoder_grad/encoder_all/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 6.22528275,
+              "mean": 8.81868737
+            },
+            "encoder_grad/topology_core/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_core/gradient_l2": {
+              "n": 10,
+              "median": 3.48463103,
+              "mean": 5.77313219
+            },
+            "encoder_grad/topology_core/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 0.05696715,
+              "mean": 0.09428301
+            },
+            "encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_fusion_goal/gradient_l2": {
+              "n": 10,
+              "median": 629.86782045,
+              "mean": 888.35626514
+            },
+            "encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 19.71001975,
+              "mean": 27.80141042
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_l2": {
+              "n": 10,
+              "median": 48.39363302,
+              "mean": 101.39070481
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 1.60956994,
+              "mean": 3.38110757
+            },
+            "encoder_grad/slot_ego/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/slot_social/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/slot_route/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "encoder_grad/route/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/route/gradient_l2": {
+              "n": 10,
+              "median": 30.81209617,
+              "mean": 56.18277873
+            },
+            "encoder_grad/route/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 0.76410598,
+              "mean": 1.39084316
+            }
+          }
+        }
+      },
+      "eval_diagnostics_method": "within each episode average sampled representation values; then report median and mean of episode means, so long episodes do not dominate group statistics",
+      "eval_conditioned_by_outcome": {
+        "success": {
+          "episode_count": 39,
+          "episode_mean_medians": {
+            "topology_residual_scale": {
+              "n": 39,
+              "median": 0.00227241,
+              "mean": 0.00227241
+            },
+            "goal_residual_scale": {
+              "n": 39,
+              "median": 0.00272864,
+              "mean": 0.00272864
+            },
+            "topology_attention_entropy": {
+              "n": 39,
+              "median": 0.9453912,
+              "mean": 0.94126632
+            },
+            "topology_effective_lanes": {
+              "n": 39,
+              "median": 2.77277443,
+              "mean": 2.75996959
+            },
+            "route_compatible_attention_mass": {
+              "n": 39,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 39,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 39,
+              "median": 58.2,
+              "mean": 58.27394196
+            },
+            "conflict_attention_pair_mean": {
+              "n": 39,
+              "median": 0.0761623,
+              "mean": 0.07291828
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 39,
+              "median": 0.00018114,
+              "mean": 0.0001743
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 39,
+              "median": 0.07094444,
+              "mean": 0.07604433
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 39,
+              "median": 0.00016121,
+              "mean": 0.0001728
+            }
+          },
+          "behavior_episode_medians": {
+            "mean_actual_speed_mps": {
+              "n": 39,
+              "median": 9.3054056,
+              "mean": 8.79921399
+            },
+            "stopped_fraction_of_speed_samples": {
+              "n": 39,
+              "median": 0.0,
+              "mean": 0.0367425
+            },
+            "raw_steps": {
+              "n": 39,
+              "median": 180.0,
+              "mean": 194.20512821
+            },
+            "decisions": {
+              "n": 39,
+              "median": 60.0,
+              "mean": 65.0
+            },
+            "low_ttc_fraction_of_evaluable_ticks": {
+              "n": 39,
+              "median": 0.08938547,
+              "mean": 0.10412591
+            }
+          }
+        },
+        "collision": {
+          "episode_count": 39,
+          "episode_mean_medians": {
+            "topology_residual_scale": {
+              "n": 39,
+              "median": 0.00227241,
+              "mean": 0.00227241
+            },
+            "goal_residual_scale": {
+              "n": 39,
+              "median": 0.00272864,
+              "mean": 0.00272864
+            },
+            "topology_attention_entropy": {
+              "n": 39,
+              "median": 0.99510211,
+              "mean": 0.99481093
+            },
+            "topology_effective_lanes": {
+              "n": 39,
+              "median": 2.93621109,
+              "mean": 2.94415593
+            },
+            "route_compatible_attention_mass": {
+              "n": 39,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 39,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 39,
+              "median": 57.08108108,
+              "mean": 57.19367577
+            },
+            "conflict_attention_pair_mean": {
+              "n": 39,
+              "median": 0.12256739,
+              "mean": 0.12497682
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 39,
+              "median": 0.00028351,
+              "mean": 0.00028665
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 39,
+              "median": 0.04048475,
+              "mean": 0.04711194
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 39,
+              "median": 9.2e-05,
+              "mean": 0.00010706
+            }
+          },
+          "behavior_episode_medians": {
+            "mean_actual_speed_mps": {
+              "n": 39,
+              "median": 8.11145343,
+              "mean": 7.56614004
+            },
+            "stopped_fraction_of_speed_samples": {
+              "n": 39,
+              "median": 0.0,
+              "mean": 0.0686751
+            },
+            "raw_steps": {
+              "n": 39,
+              "median": 111.0,
+              "mean": 117.82051282
+            },
+            "decisions": {
+              "n": 39,
+              "median": 37.0,
+              "mean": 39.64102564
+            },
+            "low_ttc_fraction_of_evaluable_ticks": {
+              "n": 39,
+              "median": 0.24074074,
+              "mean": 0.23666761
+            }
+          }
+        },
+        "timeout": {
+          "episode_count": 22,
+          "episode_mean_medians": {
+            "topology_residual_scale": {
+              "n": 22,
+              "median": 0.00227241,
+              "mean": 0.00227241
+            },
+            "goal_residual_scale": {
+              "n": 22,
+              "median": 0.00272864,
+              "mean": 0.00272864
+            },
+            "topology_attention_entropy": {
+              "n": 22,
+              "median": 0.91183433,
+              "mean": 0.91085351
+            },
+            "topology_effective_lanes": {
+              "n": 22,
+              "median": 2.61912287,
+              "mean": 2.61792653
+            },
+            "route_compatible_attention_mass": {
+              "n": 22,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 22,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 22,
+              "median": 59.46,
+              "mean": 59.46
+            },
+            "conflict_attention_pair_mean": {
+              "n": 22,
+              "median": 0.06979777,
+              "mean": 0.06741157
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 22,
+              "median": 0.00015864,
+              "mean": 0.00015322
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 22,
+              "median": 0.06126103,
+              "mean": 0.06399319
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 22,
+              "median": 0.00013921,
+              "mean": 0.00014542
+            }
+          },
+          "behavior_episode_medians": {
+            "mean_actual_speed_mps": {
+              "n": 22,
+              "median": 1.16706609,
+              "mean": 1.16747894
+            },
+            "stopped_fraction_of_speed_samples": {
+              "n": 22,
+              "median": 0.8375,
+              "mean": 0.83886364
+            },
+            "raw_steps": {
+              "n": 22,
+              "median": 600.0,
+              "mean": 600.0
+            },
+            "decisions": {
+              "n": 22,
+              "median": 200.0,
+              "mean": 200.0
+            },
+            "low_ttc_fraction_of_evaluable_ticks": {
+              "n": 22,
+              "median": 0.00916667,
+              "mean": 0.01128788
+            }
+          }
+        }
+      },
+      "eval_provenance": {
+        "evaluation_seed_start": 10000,
+        "evaluation_episode_start": 0,
+        "evaluation_episode_end": 100,
+        "evaluation_episodes": 100,
+        "deterministic": true,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0\\final_model.zip",
+        "training_seed": 0,
+        "action_repeat": 3,
+        "scenario": "intersection_sorted",
+        "depart_scale": 4.0
+      }
+    },
+    "topo_3slot": {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0",
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt_topo_3slot",
+        "scenario": "intersection_sorted",
+        "raw_budget": 100000,
+        "seed": 0,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "use_route": true,
+        "use_topology": true,
+        "use_slots": true,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "smoke": false
+      },
+      "training_complete": {
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "smoke": false
+      },
+      "eval_summary": {
+        "episodes": 100,
+        "success_rate": 0.41,
+        "collision_rate": 0.56,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.03,
+        "mean_return": -0.15
+      },
+      "train_diagnostics_counts": {
+        "episodes_finished": 494,
+        "raw_records": 100000,
+        "decision_records": 33499,
+        "diagnostic_error_count": 0,
+        "outcome_counts": {
+          "success": 143,
+          "collision": 344,
+          "timeout": 6,
+          "incomplete": 1
+        },
+        "optimization_samples": 100,
+        "representation_samples": 1705,
+        "representation_samples_by_source": {
+          "critic_td_gradient_pre_clip": 96,
+          "train_forward_activation": 1609
+        }
+      },
+      "eval_diagnostics_counts": {
+        "episodes_finished": 100,
+        "raw_records": 25845,
+        "decision_records": 8649,
+        "diagnostic_error_count": 0,
+        "outcome_counts": {
+          "collision": 56,
+          "success": 41,
+          "timeout": 3
+        },
+        "optimization_samples": 0,
+        "representation_samples": 8649,
+        "representation_samples_by_source": {
+          "eval_policy": 8649
+        }
+      },
+      "optimization_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 15,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 15,
+              "median": 3.4812417,
+              "mean": 3.21766486
+            },
+            "train/critic_loss": {
+              "n": 15,
+              "median": 2.94985443,
+              "mean": 3.39656525
+            },
+            "train/ent_coef": {
+              "n": 15,
+              "median": 0.10434759,
+              "mean": 0.11300767
+            },
+            "train/ent_coef_loss": {
+              "n": 15,
+              "median": 0.32969786,
+              "mean": 0.35112918
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 15,
+              "median": -2.99764729,
+              "mean": -3.02692521
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 15,
+              "median": -3.0995369,
+              "mean": -3.11679794
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 15,
+              "median": -2.93190861,
+              "mean": -2.99831144
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 15,
+              "median": 0.63839948,
+              "mean": 0.78728439
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 15,
+              "median": 0.66368687,
+              "mean": 0.74177589
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 70,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 70,
+              "median": 4.8249737,
+              "mean": 4.29002519
+            },
+            "train/critic_loss": {
+              "n": 70,
+              "median": 3.57287358,
+              "mean": 4.25660932
+            },
+            "train/ent_coef": {
+              "n": 70,
+              "median": 0.0148273,
+              "mean": 0.01728902
+            },
+            "train/ent_coef_loss": {
+              "n": 70,
+              "median": 0.0031304,
+              "mean": 0.0180934
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 64,
+              "median": -4.95259714,
+              "mean": -4.34130809
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 64,
+              "median": -4.97290325,
+              "mean": -4.34503338
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 64,
+              "median": -4.7193749,
+              "mean": -4.23651016
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 64,
+              "median": 0.78969872,
+              "mean": 0.87457226
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 64,
+              "median": 0.78218603,
+              "mean": 0.87155066
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 11,
+          "metrics": {
+            "train/actor_loss": {
+              "n": 11,
+              "median": 1.2934109,
+              "mean": 1.19515001
+            },
+            "train/critic_loss": {
+              "n": 11,
+              "median": 5.90361094,
+              "mean": 5.87484387
+            },
+            "train/ent_coef": {
+              "n": 11,
+              "median": 0.02115806,
+              "mean": 0.02093599
+            },
+            "train/ent_coef_loss": {
+              "n": 11,
+              "median": -0.00930172,
+              "mean": -0.00606879
+            },
+            "diagnostic/q1_mean_sampled": {
+              "n": 11,
+              "median": -0.99988848,
+              "mean": -0.99445277
+            },
+            "diagnostic/q2_mean_sampled": {
+              "n": 11,
+              "median": -1.05314827,
+              "mean": -1.02089076
+            },
+            "diagnostic/target_q_mean_sampled": {
+              "n": 11,
+              "median": -0.7319414,
+              "mean": -0.74972812
+            },
+            "diagnostic/q1_abs_td_mean_sampled": {
+              "n": 11,
+              "median": 1.03859115,
+              "mean": 1.27089014
+            },
+            "diagnostic/q2_abs_td_mean_sampled": {
+              "n": 11,
+              "median": 1.01102328,
+              "mean": 1.26273564
+            }
+          }
+        }
+      },
+      "optimization_last_callback_row": {
+        "train/actor_loss": -1.5838626623153687,
+        "train/critic_loss": 1.4239099025726318,
+        "train/ent_coef": 0.01976723223924637,
+        "train/ent_coef_loss": -0.016760218888521194,
+        "diagnostic/q1_mean_sampled": -0.1331898272037506,
+        "diagnostic/q2_mean_sampled": -0.08420723676681519,
+        "diagnostic/target_q_mean_sampled": -0.07387153804302216,
+        "diagnostic/q1_abs_td_mean_sampled": 1.9440600872039795,
+        "diagnostic/q2_abs_td_mean_sampled": 2.084831714630127
+      },
+      "representation_sampling": {
+        "total_rows": 1705,
+        "activation_rows": 1609,
+        "critic_td_gradient_rows": 96,
+        "activation_batch_size_counts": {
+          "1.0": 122,
+          "32.0": 1487
+        },
+        "activation_source_code_counts": {
+          "1.0": 1609
+        },
+        "activation_grad_enabled_counts": {
+          "0.0": 498,
+          "1.0": 1111
+        },
+        "activation_age_forwards_counts": {
+          "0.0": 373,
+          "1.0": 376,
+          "2.0": 355,
+          "3.0": 383,
+          "4.0": 122
+        },
+        "gradient_record_first_update": 1,
+        "activation_timing_example": "collection_training_position; replay samples are not the current rollout episode"
+      },
+      "train_activation_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 253,
+          "metrics": {
+            "topology_residual_scale": {
+              "n": 253,
+              "median": 0.06481262,
+              "mean": 0.06091182
+            },
+            "goal_residual_scale": {
+              "n": 253,
+              "median": 0.0186311,
+              "mean": 0.01809578
+            },
+            "topology_attention_entropy": {
+              "n": 253,
+              "median": 1.36148572,
+              "mean": 1.35752415
+            },
+            "topology_effective_lanes": {
+              "n": 253,
+              "median": 4.22012949,
+              "mean": 4.2163708
+            },
+            "route_compatible_attention_mass": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 253,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 253,
+              "median": 1915.0,
+              "mean": 1757.22529644
+            },
+            "relation_pair_valid_fraction": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 0.98780468
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 253,
+              "median": 0.06027299,
+              "mean": 0.06123144
+            },
+            "conflict_attention_pair_mean": {
+              "n": 253,
+              "median": 0.16430292,
+              "mean": 0.16745179
+            },
+            "merge_attention_pair_mean": {
+              "n": 253,
+              "median": 0.00109984,
+              "mean": 0.00140474
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 253,
+              "median": 0.00376297,
+              "mean": 0.00370126
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 253,
+              "median": 0.01054385,
+              "mean": 0.01046673
+            },
+            "context_ego_rms": {
+              "n": 253,
+              "median": 1.00581646,
+              "mean": 1.00320065
+            },
+            "context_social_rms": {
+              "n": 253,
+              "median": 1.38233685,
+              "mean": 1.36602468
+            },
+            "context_route_rms": {
+              "n": 253,
+              "median": 0.70822912,
+              "mean": 0.67890821
+            },
+            "ego_slot_rms": {
+              "n": 253,
+              "median": 2.64184451,
+              "mean": 2.4913654
+            },
+            "social_slot_rms": {
+              "n": 253,
+              "median": 2.82573223,
+              "mean": 2.74866257
+            },
+            "route_slot_rms": {
+              "n": 253,
+              "median": 2.13973141,
+              "mean": 2.20414693
+            },
+            "ego_slot_energy_share": {
+              "n": 253,
+              "median": 0.36711931,
+              "mean": 0.37141636
+            },
+            "social_slot_energy_share": {
+              "n": 253,
+              "median": 0.39966273,
+              "mean": 0.39728941
+            },
+            "route_slot_energy_share": {
+              "n": 253,
+              "median": 0.22066143,
+              "mean": 0.23129422
+            },
+            "ego_slot_within_sample_std_mean": {
+              "n": 253,
+              "median": 2.60713649,
+              "mean": 2.45692293
+            },
+            "social_slot_within_sample_std_mean": {
+              "n": 253,
+              "median": 2.69363022,
+              "mean": 2.63439448
+            },
+            "route_slot_within_sample_std_mean": {
+              "n": 253,
+              "median": 1.9619956,
+              "mean": 2.00181266
+            },
+            "ego_projection_active": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "social_projection_active": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "route_projection_active": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "mlp_output_head_active": {
+              "n": 253,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "slot_sample_energy_correlation_valid": {
+              "n": 253,
+              "median": 1.0,
+              "mean": 0.92490119
+            },
+            "slot_sample_energy_ego_social_corr": {
+              "n": 253,
+              "median": -0.21475059,
+              "mean": -0.18158143
+            },
+            "slot_sample_energy_social_route_corr": {
+              "n": 253,
+              "median": 0.01248349,
+              "mean": 0.04547179
+            },
+            "slot_sample_energy_ego_route_corr": {
+              "n": 253,
+              "median": -0.26997459,
+              "mean": -0.22679658
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 1186,
+          "metrics": {
+            "topology_residual_scale": {
+              "n": 1186,
+              "median": 0.00484964,
+              "mean": 0.01369894
+            },
+            "goal_residual_scale": {
+              "n": 1186,
+              "median": 0.00593074,
+              "mean": 0.00544322
+            },
+            "topology_attention_entropy": {
+              "n": 1186,
+              "median": 1.20699638,
+              "mean": 1.2394868
+            },
+            "topology_effective_lanes": {
+              "n": 1186,
+              "median": 3.69240022,
+              "mean": 3.81586221
+            },
+            "route_compatible_attention_mass": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 1186,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 1186,
+              "median": 1902.0,
+              "mean": 1745.82799325
+            },
+            "relation_pair_valid_fraction": {
+              "n": 1186,
+              "median": 0.99062502,
+              "mean": 0.98092327
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 1186,
+              "median": 0.05232431,
+              "mean": 0.05307604
+            },
+            "conflict_attention_pair_mean": {
+              "n": 1186,
+              "median": 0.16090316,
+              "mean": 0.16335574
+            },
+            "merge_attention_pair_mean": {
+              "n": 1186,
+              "median": 0.00263115,
+              "mean": 0.00306395
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 1186,
+              "median": 0.00026499,
+              "mean": 0.00070192
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 1186,
+              "median": 0.00074296,
+              "mean": 0.00258382
+            },
+            "context_ego_rms": {
+              "n": 1186,
+              "median": 0.85353652,
+              "mean": 0.86152879
+            },
+            "context_social_rms": {
+              "n": 1186,
+              "median": 1.2755211,
+              "mean": 1.27787481
+            },
+            "context_route_rms": {
+              "n": 1186,
+              "median": 0.58469376,
+              "mean": 0.59601304
+            },
+            "ego_slot_rms": {
+              "n": 1186,
+              "median": 2.00713086,
+              "mean": 2.04930109
+            },
+            "social_slot_rms": {
+              "n": 1186,
+              "median": 2.47618842,
+              "mean": 2.49915262
+            },
+            "route_slot_rms": {
+              "n": 1186,
+              "median": 2.20639086,
+              "mean": 2.4263003
+            },
+            "ego_slot_energy_share": {
+              "n": 1186,
+              "median": 0.32151967,
+              "mean": 0.3199292
+            },
+            "social_slot_energy_share": {
+              "n": 1186,
+              "median": 0.3302431,
+              "mean": 0.33230426
+            },
+            "route_slot_energy_share": {
+              "n": 1186,
+              "median": 0.34137517,
+              "mean": 0.34776654
+            },
+            "ego_slot_within_sample_std_mean": {
+              "n": 1186,
+              "median": 1.97775668,
+              "mean": 2.01556968
+            },
+            "social_slot_within_sample_std_mean": {
+              "n": 1186,
+              "median": 2.20761609,
+              "mean": 2.23969751
+            },
+            "route_slot_within_sample_std_mean": {
+              "n": 1186,
+              "median": 2.04541802,
+              "mean": 2.20825548
+            },
+            "ego_projection_active": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "social_projection_active": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "route_projection_active": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "mlp_output_head_active": {
+              "n": 1186,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "slot_sample_energy_correlation_valid": {
+              "n": 1186,
+              "median": 1.0,
+              "mean": 0.9232715
+            },
+            "slot_sample_energy_ego_social_corr": {
+              "n": 1186,
+              "median": -0.56669536,
+              "mean": -0.52735406
+            },
+            "slot_sample_energy_social_route_corr": {
+              "n": 1186,
+              "median": -0.26868187,
+              "mean": -0.22293403
+            },
+            "slot_sample_energy_ego_route_corr": {
+              "n": 1186,
+              "median": 0.12565609,
+              "mean": 0.0785652
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 169,
+          "metrics": {
+            "topology_residual_scale": {
+              "n": 169,
+              "median": 0.00311848,
+              "mean": 0.00313304
+            },
+            "goal_residual_scale": {
+              "n": 169,
+              "median": 0.00031654,
+              "mean": 0.0003435
+            },
+            "topology_attention_entropy": {
+              "n": 169,
+              "median": 1.10563505,
+              "mean": 1.10368037
+            },
+            "topology_effective_lanes": {
+              "n": 169,
+              "median": 3.38828111,
+              "mean": 3.38466953
+            },
+            "route_compatible_attention_mass": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 169,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 169,
+              "median": 1884.0,
+              "mean": 1747.43195266
+            },
+            "relation_pair_valid_fraction": {
+              "n": 169,
+              "median": 0.99062502,
+              "mean": 0.97867357
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 169,
+              "median": 0.05287372,
+              "mean": 0.05273513
+            },
+            "conflict_attention_pair_mean": {
+              "n": 169,
+              "median": 0.15757816,
+              "mean": 0.1613962
+            },
+            "merge_attention_pair_mean": {
+              "n": 169,
+              "median": 0.00538226,
+              "mean": 0.00611431
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 169,
+              "median": 0.00016426,
+              "mean": 0.00016556
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 169,
+              "median": 0.0004998,
+              "mean": 0.00052626
+            },
+            "context_ego_rms": {
+              "n": 169,
+              "median": 0.77152997,
+              "mean": 0.77146496
+            },
+            "context_social_rms": {
+              "n": 169,
+              "median": 1.4981432,
+              "mean": 1.49477623
+            },
+            "context_route_rms": {
+              "n": 169,
+              "median": 0.49166834,
+              "mean": 0.49662851
+            },
+            "ego_slot_rms": {
+              "n": 169,
+              "median": 1.73121798,
+              "mean": 1.72880315
+            },
+            "social_slot_rms": {
+              "n": 169,
+              "median": 3.38164115,
+              "mean": 3.38554236
+            },
+            "route_slot_rms": {
+              "n": 169,
+              "median": 3.3119173,
+              "mean": 3.26464011
+            },
+            "ego_slot_energy_share": {
+              "n": 169,
+              "median": 0.13685751,
+              "mean": 0.14313595
+            },
+            "social_slot_energy_share": {
+              "n": 169,
+              "median": 0.41070896,
+              "mean": 0.42480761
+            },
+            "route_slot_energy_share": {
+              "n": 169,
+              "median": 0.45240906,
+              "mean": 0.43205644
+            },
+            "ego_slot_within_sample_std_mean": {
+              "n": 169,
+              "median": 1.69281578,
+              "mean": 1.69390773
+            },
+            "social_slot_within_sample_std_mean": {
+              "n": 169,
+              "median": 3.08587646,
+              "mean": 3.09819909
+            },
+            "route_slot_within_sample_std_mean": {
+              "n": 169,
+              "median": 2.98673058,
+              "mean": 2.95792296
+            },
+            "ego_projection_active": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "social_projection_active": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "route_projection_active": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "mlp_output_head_active": {
+              "n": 169,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "slot_sample_energy_correlation_valid": {
+              "n": 169,
+              "median": 1.0,
+              "mean": 0.92899408
+            },
+            "slot_sample_energy_ego_social_corr": {
+              "n": 169,
+              "median": -0.2053818,
+              "mean": -0.2026404
+            },
+            "slot_sample_energy_social_route_corr": {
+              "n": 169,
+              "median": -0.37500241,
+              "mean": -0.37002065
+            },
+            "slot_sample_energy_ego_route_corr": {
+              "n": 169,
+              "median": 0.11066678,
+              "mean": 0.08506231
+            }
+          }
+        }
+      },
+      "critic_td_gradient_by_segment": {
+        "early_5_20k_raw": {
+          "row_count": 15,
+          "metrics": {
+            "encoder_grad/encoder_all/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 0.92148115,
+              "mean": 0.92148115
+            },
+            "encoder_grad/encoder_all/gradient_l2": {
+              "n": 15,
+              "median": 115.99893245,
+              "mean": 170.28354197
+            },
+            "encoder_grad/encoder_all/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 1.25338931,
+              "mean": 1.8472335
+            },
+            "encoder_grad/topology_core/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_core/gradient_l2": {
+              "n": 15,
+              "median": 7.21972479,
+              "mean": 21.49324313
+            },
+            "encoder_grad/topology_core/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.13428221,
+              "mean": 0.40129065
+            },
+            "encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_fusion_goal/gradient_l2": {
+              "n": 15,
+              "median": 93.08037023,
+              "mean": 145.19963976
+            },
+            "encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 3.14338176,
+              "mean": 5.01750898
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_l2": {
+              "n": 15,
+              "median": 20.61004222,
+              "mean": 47.67980986
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.73254795,
+              "mean": 1.7007291
+            },
+            "encoder_grad/slot_ego/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_ego/gradient_l2": {
+              "n": 15,
+              "median": 2.06797684,
+              "mean": 2.65793332
+            },
+            "encoder_grad/slot_ego/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.28140153,
+              "mean": 0.36222087
+            },
+            "encoder_grad/slot_social/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_social/gradient_l2": {
+              "n": 15,
+              "median": 2.83931364,
+              "mean": 4.7596448
+            },
+            "encoder_grad/slot_social/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.30369177,
+              "mean": 0.50805865
+            },
+            "encoder_grad/slot_route/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_route/gradient_l2": {
+              "n": 15,
+              "median": 1.26084144,
+              "mean": 2.08394197
+            },
+            "encoder_grad/slot_route/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.16628163,
+              "mean": 0.27968355
+            },
+            "encoder_grad/route/gradient_parameter_fraction": {
+              "n": 15,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/route/gradient_l2": {
+              "n": 15,
+              "median": 13.68682783,
+              "mean": 28.92796864
+            },
+            "encoder_grad/route/gradient_to_parameter_l2": {
+              "n": 15,
+              "median": 0.36059301,
+              "mean": 0.76592166
+            }
+          }
+        },
+        "mid_20_90k_raw": {
+          "row_count": 70,
+          "metrics": {
+            "encoder_grad/encoder_all/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 0.92148115,
+              "mean": 0.92148115
+            },
+            "encoder_grad/encoder_all/gradient_l2": {
+              "n": 70,
+              "median": 496.50687778,
+              "mean": 901.93059352
+            },
+            "encoder_grad/encoder_all/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 5.08954536,
+              "mean": 9.17193617
+            },
+            "encoder_grad/topology_core/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_core/gradient_l2": {
+              "n": 70,
+              "median": 7.3513763,
+              "mean": 12.25211406
+            },
+            "encoder_grad/topology_core/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.12810195,
+              "mean": 0.21660262
+            },
+            "encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_fusion_goal/gradient_l2": {
+              "n": 70,
+              "median": 454.29022604,
+              "mean": 885.58798206
+            },
+            "encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 14.35307573,
+              "mean": 27.536479
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_l2": {
+              "n": 70,
+              "median": 57.62841836,
+              "mean": 85.46387045
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 1.93149587,
+              "mean": 2.92292556
+            },
+            "encoder_grad/slot_ego/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_ego/gradient_l2": {
+              "n": 70,
+              "median": 4.16446417,
+              "mean": 4.46302784
+            },
+            "encoder_grad/slot_ego/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.53598801,
+              "mean": 0.57598478
+            },
+            "encoder_grad/slot_social/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_social/gradient_l2": {
+              "n": 70,
+              "median": 5.90725971,
+              "mean": 7.15223164
+            },
+            "encoder_grad/slot_social/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.59911297,
+              "mean": 0.72703147
+            },
+            "encoder_grad/slot_route/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_route/gradient_l2": {
+              "n": 70,
+              "median": 1.48774405,
+              "mean": 1.87200026
+            },
+            "encoder_grad/slot_route/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.18789695,
+              "mean": 0.23878593
+            },
+            "encoder_grad/route/gradient_parameter_fraction": {
+              "n": 70,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/route/gradient_l2": {
+              "n": 70,
+              "median": 34.67273342,
+              "mean": 50.02969668
+            },
+            "encoder_grad/route/gradient_to_parameter_l2": {
+              "n": 70,
+              "median": 0.86752728,
+              "mean": 1.27253086
+            }
+          }
+        },
+        "late_90_100k_raw": {
+          "row_count": 10,
+          "metrics": {
+            "encoder_grad/encoder_all/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 0.92148115,
+              "mean": 0.92148115
+            },
+            "encoder_grad/encoder_all/gradient_l2": {
+              "n": 10,
+              "median": 1178.63089518,
+              "mean": 2720.51302836
+            },
+            "encoder_grad/encoder_all/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 11.51806699,
+              "mean": 26.44796089
+            },
+            "encoder_grad/topology_core/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_core/gradient_l2": {
+              "n": 10,
+              "median": 10.29446136,
+              "mean": 13.72817553
+            },
+            "encoder_grad/topology_core/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 0.17006222,
+              "mean": 0.2262611
+            },
+            "encoder_grad/topology_fusion_goal/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_fusion_goal/gradient_l2": {
+              "n": 10,
+              "median": 1156.80656205,
+              "mean": 2702.74740019
+            },
+            "encoder_grad/topology_fusion_goal/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 32.68604563,
+              "mean": 75.46510266
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_l2": {
+              "n": 10,
+              "median": 143.3354794,
+              "mean": 172.45872544
+            },
+            "encoder_grad/topology_vehicle_relations/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 4.75761902,
+              "mean": 5.72223791
+            },
+            "encoder_grad/slot_ego/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_ego/gradient_l2": {
+              "n": 10,
+              "median": 3.87519486,
+              "mean": 4.01941821
+            },
+            "encoder_grad/slot_ego/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 0.46834051,
+              "mean": 0.48577581
+            },
+            "encoder_grad/slot_social/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_social/gradient_l2": {
+              "n": 10,
+              "median": 5.8890981,
+              "mean": 10.07910117
+            },
+            "encoder_grad/slot_social/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 0.57389982,
+              "mean": 0.97813913
+            },
+            "encoder_grad/slot_route/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/slot_route/gradient_l2": {
+              "n": 10,
+              "median": 0.79704171,
+              "mean": 0.93687556
+            },
+            "encoder_grad/slot_route/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 0.09214803,
+              "mean": 0.10862499
+            },
+            "encoder_grad/route/gradient_parameter_fraction": {
+              "n": 10,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "encoder_grad/route/gradient_l2": {
+              "n": 10,
+              "median": 86.69592409,
+              "mean": 112.41765706
+            },
+            "encoder_grad/route/gradient_to_parameter_l2": {
+              "n": 10,
+              "median": 2.14912401,
+              "mean": 2.78455489
+            }
+          }
+        }
+      },
+      "eval_diagnostics_method": "within each episode average sampled representation values; then report median and mean of episode means, so long episodes do not dominate group statistics",
+      "eval_conditioned_by_outcome": {
+        "success": {
+          "episode_count": 41,
+          "episode_mean_medians": {
+            "topology_residual_scale": {
+              "n": 41,
+              "median": 0.00276105,
+              "mean": 0.00276105
+            },
+            "goal_residual_scale": {
+              "n": 41,
+              "median": 0.00014315,
+              "mean": 0.00014315
+            },
+            "topology_attention_entropy": {
+              "n": 41,
+              "median": 1.14373439,
+              "mean": 1.14380716
+            },
+            "topology_effective_lanes": {
+              "n": 41,
+              "median": 3.52236971,
+              "mean": 3.51575205
+            },
+            "route_compatible_attention_mass": {
+              "n": 41,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 41,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 41,
+              "median": 58.77272727,
+              "mean": 58.81041367
+            },
+            "conflict_attention_pair_mean": {
+              "n": 41,
+              "median": 0.14567308,
+              "mean": 0.14519073
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 41,
+              "median": 0.0004078,
+              "mean": 0.00040846
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 41,
+              "median": 0.05053373,
+              "mean": 0.05209145
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 41,
+              "median": 0.00013953,
+              "mean": 0.00014383
+            },
+            "ego_slot_rms": {
+              "n": 41,
+              "median": 1.7174274,
+              "mean": 1.71163371
+            },
+            "social_slot_rms": {
+              "n": 41,
+              "median": 3.21219596,
+              "mean": 3.26547974
+            },
+            "route_slot_rms": {
+              "n": 41,
+              "median": 1.42875433,
+              "mean": 1.42550236
+            },
+            "ego_slot_energy_share": {
+              "n": 41,
+              "median": 0.20160559,
+              "mean": 0.20225336
+            },
+            "social_slot_energy_share": {
+              "n": 41,
+              "median": 0.63846448,
+              "mean": 0.64443201
+            },
+            "route_slot_energy_share": {
+              "n": 41,
+              "median": 0.15178742,
+              "mean": 0.15331463
+            }
+          },
+          "behavior_episode_medians": {
+            "mean_actual_speed_mps": {
+              "n": 41,
+              "median": 6.19857242,
+              "mean": 6.05496327
+            },
+            "stopped_fraction_of_speed_samples": {
+              "n": 41,
+              "median": 0.13090909,
+              "mean": 0.13793611
+            },
+            "raw_steps": {
+              "n": 41,
+              "median": 271.0,
+              "mean": 280.7804878
+            },
+            "decisions": {
+              "n": 41,
+              "median": 91.0,
+              "mean": 93.90243902
+            },
+            "low_ttc_fraction_of_evaluable_ticks": {
+              "n": 41,
+              "median": 0.08108108,
+              "mean": 0.08796801
+            }
+          }
+        },
+        "collision": {
+          "episode_count": 56,
+          "episode_mean_medians": {
+            "topology_residual_scale": {
+              "n": 56,
+              "median": 0.00276105,
+              "mean": 0.00276105
+            },
+            "goal_residual_scale": {
+              "n": 56,
+              "median": 0.00014315,
+              "mean": 0.00014315
+            },
+            "topology_attention_entropy": {
+              "n": 56,
+              "median": 1.10609258,
+              "mean": 1.11342229
+            },
+            "topology_effective_lanes": {
+              "n": 56,
+              "median": 3.36978096,
+              "mean": 3.39553565
+            },
+            "route_compatible_attention_mass": {
+              "n": 56,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 56,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 56,
+              "median": 58.52054795,
+              "mean": 58.47074224
+            },
+            "conflict_attention_pair_mean": {
+              "n": 56,
+              "median": 0.187664,
+              "mean": 0.1804824
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 56,
+              "median": 0.00052002,
+              "mean": 0.00050191
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 56,
+              "median": 0.04471258,
+              "mean": 0.04797189
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 56,
+              "median": 0.00012345,
+              "mean": 0.00013245
+            },
+            "ego_slot_rms": {
+              "n": 56,
+              "median": 1.64642062,
+              "mean": 1.64801591
+            },
+            "social_slot_rms": {
+              "n": 56,
+              "median": 3.30079381,
+              "mean": 3.36244616
+            },
+            "route_slot_rms": {
+              "n": 56,
+              "median": 1.53441517,
+              "mean": 1.5287263
+            },
+            "ego_slot_energy_share": {
+              "n": 56,
+              "median": 0.18901423,
+              "mean": 0.18978088
+            },
+            "social_slot_energy_share": {
+              "n": 56,
+              "median": 0.64267411,
+              "mean": 0.64179409
+            },
+            "route_slot_energy_share": {
+              "n": 56,
+              "median": 0.1672988,
+              "mean": 0.16842503
+            }
+          },
+          "behavior_episode_medians": {
+            "mean_actual_speed_mps": {
+              "n": 56,
+              "median": 3.77101353,
+              "mean": 4.03480166
+            },
+            "stopped_fraction_of_speed_samples": {
+              "n": 56,
+              "median": 0.1682309,
+              "mean": 0.17471052
+            },
+            "raw_steps": {
+              "n": 56,
+              "median": 218.0,
+              "mean": 223.80357143
+            },
+            "decisions": {
+              "n": 56,
+              "median": 73.0,
+              "mean": 74.98214286
+            },
+            "low_ttc_fraction_of_evaluable_ticks": {
+              "n": 56,
+              "median": 0.15451176,
+              "mean": 0.15501856
+            }
+          }
+        },
+        "timeout": {
+          "episode_count": 3,
+          "episode_mean_medians": {
+            "topology_residual_scale": {
+              "n": 3,
+              "median": 0.00276105,
+              "mean": 0.00276105
+            },
+            "goal_residual_scale": {
+              "n": 3,
+              "median": 0.00014315,
+              "mean": 0.00014315
+            },
+            "topology_attention_entropy": {
+              "n": 3,
+              "median": 1.05949905,
+              "mean": 1.05656408
+            },
+            "topology_effective_lanes": {
+              "n": 3,
+              "median": 3.3406344,
+              "mean": 3.32515578
+            },
+            "route_compatible_attention_mass": {
+              "n": 3,
+              "median": 1.0,
+              "mean": 1.0
+            },
+            "topology_fallback_rate": {
+              "n": 3,
+              "median": 0.0,
+              "mean": 0.0
+            },
+            "topology_compatible_query_count": {
+              "n": 3,
+              "median": 59.46,
+              "mean": 59.46
+            },
+            "conflict_attention_pair_mean": {
+              "n": 3,
+              "median": 0.17484441,
+              "mean": 0.16239756
+            },
+            "conflict_or_merge_edge_feature_mean": {
+              "n": 3,
+              "median": 0.00048442,
+              "mean": 0.00044977
+            },
+            "same_lane_attention_pair_mean": {
+              "n": 3,
+              "median": 0.03738398,
+              "mean": 0.04391175
+            },
+            "same_lane_edge_feature_mean": {
+              "n": 3,
+              "median": 0.00010322,
+              "mean": 0.00012124
+            },
+            "ego_slot_rms": {
+              "n": 3,
+              "median": 1.60706076,
+              "mean": 1.6267642
+            },
+            "social_slot_rms": {
+              "n": 3,
+              "median": 3.28765173,
+              "mean": 3.22354745
+            },
+            "route_slot_rms": {
+              "n": 3,
+              "median": 1.37234693,
+              "mean": 1.37608366
+            },
+            "ego_slot_energy_share": {
+              "n": 3,
+              "median": 0.19360533,
+              "mean": 0.19671822
+            },
+            "social_slot_energy_share": {
+              "n": 3,
+              "median": 0.66102568,
+              "mean": 0.66072806
+            },
+            "route_slot_energy_share": {
+              "n": 3,
+              "median": 0.14536899,
+              "mean": 0.14255372
+            }
+          },
+          "behavior_episode_medians": {
+            "mean_actual_speed_mps": {
+              "n": 3,
+              "median": 1.4030758,
+              "mean": 1.7802911
+            },
+            "stopped_fraction_of_speed_samples": {
+              "n": 3,
+              "median": 0.61166667,
+              "mean": 0.625
+            },
+            "raw_steps": {
+              "n": 3,
+              "median": 600.0,
+              "mean": 600.0
+            },
+            "decisions": {
+              "n": 3,
+              "median": 200.0,
+              "mean": 200.0
+            },
+            "low_ttc_fraction_of_evaluable_ticks": {
+              "n": 3,
+              "median": 0.025,
+              "mean": 0.01888889
+            }
+          }
+        }
+      },
+      "eval_provenance": {
+        "evaluation_seed_start": 10000,
+        "evaluation_episode_start": 0,
+        "evaluation_episode_end": 100,
+        "evaluation_episodes": 100,
+        "deterministic": true,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0\\final_model.zip",
+        "training_seed": 0,
+        "action_repeat": 3,
+        "scenario": "intersection_sorted",
+        "depart_scale": 4.0
+      }
+    }
+  },
+  "incomplete_prior_attempt": {
+    "sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0": {
+      "status": "failed",
+      "raw_steps_status": 5651,
+      "error": "PermissionError(13, '拒绝访问。')",
+      "latest_progress_raw_steps": 5382,
+      "latest_updates": 382,
+      "eval_results_present": false,
+      "train_diag": {
+        "raw_records": 5653,
+        "episodes_finished": 21,
+        "outcome_counts": {
+          "success": 4,
+          "collision": 17
+        },
+        "optimization_samples": 5,
+        "representation_samples": 13,
+        "diagnostic_error_count": 0
+      }
+    },
+    "sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0": {
+      "status": "training",
+      "raw_steps_status": null,
+      "error": null,
+      "latest_progress_raw_steps": 18864,
+      "latest_updates": 13864,
+      "eval_results_present": false,
+      "train_diag": {
+        "raw_records": 18907,
+        "episodes_finished": 50,
+        "outcome_counts": {
+          "success": 7,
+          "collision": 32,
+          "timeout": 11
+        },
+        "optimization_samples": 18,
+        "representation_samples": 250,
+        "diagnostic_error_count": 0
+      }
+    }
+  },
+  "source_fidelity": {
+    "snapshot_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\t0930_topo3_retry01\\source_snapshot.json",
+    "status_by_file": [
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+        "snapshot_sha256": "0d3d4c748d443798f05462a8a53d06490d8d4fabb922ebaee413700d3fc1ed61",
+        "current_sha256": "da62554efc9412038202b8d6b38a80973860569d18084206a1468083ce997fcf",
+        "status": "mismatch"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py",
+        "snapshot_sha256": "cccf94780743f349118426867da46d1b934f118c1e052f121f959ec37a80e251",
+        "current_sha256": "4d2fb354d8dcc963a74544f0381e5d7a79f7a74c9895c5c8c782ed65e1b3f0f2",
+        "status": "mismatch"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\behavior_diagnostics.py",
+        "snapshot_sha256": "f419c550fcdc0e1ffbc3c72b8b276e5beac37da29dddbca7caf7a2122130597f",
+        "current_sha256": "f419c550fcdc0e1ffbc3c72b8b276e5beac37da29dddbca7caf7a2122130597f",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\paired_stage_comparison.py",
+        "snapshot_sha256": "b46e4b7556e40ab639b55dceb7d0a0aec4b35643a91176f1a8b546f710ff26fa",
+        "current_sha256": "b46e4b7556e40ab639b55dceb7d0a0aec4b35643a91176f1a8b546f710ff26fa",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac.py",
+        "snapshot_sha256": "4364fc65c9cb693eb9da201ca55507d0a4f284e2f9d9938fa4d02bf95d406a28",
+        "current_sha256": "4364fc65c9cb693eb9da201ca55507d0a4f284e2f9d9938fa4d02bf95d406a28",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v2.py",
+        "snapshot_sha256": "d43a9f67fa023b913e460465a76b783fe048d597a93bd6ead3afcaa3484174a4",
+        "current_sha256": "d43a9f67fa023b913e460465a76b783fe048d597a93bd6ead3afcaa3484174a4",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\module_diagnostics.py",
+        "snapshot_sha256": "b7811de3398531b3e42ff3d60081da708a1aa0d318d276aaf548c747102d7ce4",
+        "current_sha256": "b7811de3398531b3e42ff3d60081da708a1aa0d318d276aaf548c747102d7ce4",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\incremental_topo_encoder.py",
+        "snapshot_sha256": "dfdf6c666a3c2636fe8fe7d850dc1851bf0981f5f0156861a0b15b18402c45b4",
+        "current_sha256": "dfdf6c666a3c2636fe8fe7d850dc1851bf0981f5f0156861a0b15b18402c45b4",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features.py",
+        "snapshot_sha256": "efd29674777a5ab273539ae9cf82bc9f1d22e82e7094fd2e4c46e3d5f7e165e1",
+        "current_sha256": "efd29674777a5ab273539ae9cf82bc9f1d22e82e7094fd2e4c46e3d5f7e165e1",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+        "snapshot_sha256": "94109debb0579aa402669962dafec53814e3d4c1e0dfa0a0f4a287bf66f9b06f",
+        "current_sha256": "94109debb0579aa402669962dafec53814e3d4c1e0dfa0a0f4a287bf66f9b06f",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\policies.py",
+        "snapshot_sha256": "d7f44e647c14cdd8d84effd7269e826679828610ed01ac434c5b5cdda3ec5d0a",
+        "current_sha256": "d7f44e647c14cdd8d84effd7269e826679828610ed01ac434c5b5cdda3ec5d0a",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\sumo_env.py",
+        "snapshot_sha256": "df4350776efea5bbdcdcd58ffba89a3bf124e63b0be53562a6d08514a5feceb7",
+        "current_sha256": "6a52c73e90bd399298661d561f09969f7fe6747895528653ade43c6456e3d8af",
+        "status": "mismatch"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\callbacks.py",
+        "snapshot_sha256": "53648fc19a0ed45188622f995012e22900e72f8d6355ab18a5aee96feeee4401",
+        "current_sha256": "53648fc19a0ed45188622f995012e22900e72f8d6355ab18a5aee96feeee4401",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\features.py",
+        "snapshot_sha256": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6",
+        "current_sha256": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\topology_graph_v2.py",
+        "snapshot_sha256": "9ffba5e3d78d6c8e10ee602c69eab1e2f74f1d58f4ada1b91fb5d0679d3170fd",
+        "current_sha256": "9ffba5e3d78d6c8e10ee602c69eab1e2f74f1d58f4ada1b91fb5d0679d3170fd",
+        "status": "match"
+      },
+      {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\test_atomic_json_write.py",
+        "snapshot_sha256": "010a6e430090af3a093b5c99a6ec13082619232491f2ef18e75496db2ebf29d7",
+        "current_sha256": "010a6e430090af3a093b5c99a6ec13082619232491f2ef18e75496db2ebf29d7",
+        "status": "match"
+      }
+    ],
+    "interpretation": "The completed retry01 topology/policy/SAC/diagnostic implementation files match the captured hashes. The two training entrypoints and sumo_env.py differ from current live files; old run outcomes must be interpreted using its manifests and captured source hashes, not current terminal/environment code. The older d0929 route-only run has no equivalent source_snapshot.json and its diagnostics manifest source_script is train_intersection_yield_v2.py while its evaluation manifest identifies the D1 entrypoint; treat its reported configuration/outcome as historical context, not a byte-frozen implementation comparison."
+  },
+  "code_semantics": {
+    "source_locations": [
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\incremental_topo_encoder.py",
+        "lines": "469-475, 481-507, 552-581",
+        "fact": "Source code 1 denotes train_replay; parameter groups define topology_core, topology_fusion_goal, topology_vehicle_relations, slot projections and route."
+      },
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac.py",
+        "lines": "421-478",
+        "fact": "Critic TD gradient telemetry is collected after critic backward and before clipping; actor backward follows; sampled activation snapshots are serialized only when sample id changes."
+      },
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\module_diagnostics.py",
+        "lines": "10-92",
+        "fact": "Gradient parameter coverage and L2 metrics read existing gradients; gradient_to_parameter_l2 is group gradient norm divided by group parameter norm."
+      },
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+        "lines": "427-453, 495-521",
+        "fact": "Route-heading compatibility is a hard mask and top-K selection; nearest global lane is fallback only if no compatible lane."
+      },
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+        "lines": "584-657",
+        "fact": "Same-lane and conflict/merge lane-distribution scores are multiplied by topology_residual_scale and appended as vehicle graph edge features; diagnostics expose pre-gate pair scores and post-gate edge-feature means."
+      },
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+        "lines": "721-773, 832-858",
+        "fact": "Topology context is added through the topology gate before topology LayerNorm; goal uses Delta-LN `r + LN(r + gate*t) - LN(r)`. Diagnostics expose scalar gates but not post-LN residual norms."
+      },
+      {
+        "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\full_mst_slt_implementation.md",
+        "lines": "255-267",
+        "fact": "Defines relation score, route-mass/fallback and edge-feature diagnostic semantics."
+      }
+    ],
+    "gate_and_layernorm": "Topology and goal gate values are learned scalar parameters. Topology norm can change direction of a small residual; no post-LN delta telemetry exists, so gate magnitude is not equal to final contribution. At goal gate 0, the Delta-LN formula exactly returns route_base."
+  },
+  "evidence_assessment": {
+    "dead_slots": "Not supported. Topo configuration disables the structured projections and keeps the MLP head active; slot gradient coverage zero is expected inactive-path behavior. In 3slot, all three projection groups have 100% critic TD gradient coverage in all 96 samples.",
+    "gradient_starvation": "No dead-gradient evidence for Topo core, goal fusion or relation modules: each is 100% covered across the 96 TD-gradient samples. Later gradient-to-parameter medians are concentrated in goal fusion relative to topology_core, but this is an observation, not proof of bad conditioning; gradients are critic-only and modules differ in scale/role.",
+    "slot_redundancy": "Not established. Train batch32 scalar energy correlations are logged for 3slot but correlate per-sample slot energies, not slot vectors; eval batch1 correlations are invalid. Slot energy shares drift late toward social/route (.411/.452) while ego falls to .137; outputs remain nonzero and receive gradients. No cosine/CKA/information-content/equal-input probe exists.",
+    "topology_use": "Topology relation branch is computationally active: positive pre-gate pair scores, nonzero gates, and full TD-gradient coverage. Route-compatible mass=1 coincides with zero fallback and is mainly enforced by hard masking; it is not evidence the policy chose a route-correct behavior. Late scaled relation edge features are small (~2e-4 median), but state and goal residual effect after LayerNorm is unmeasured.",
+    "optimization": "3slot does not show a uniformly worse late critic fit: last-10k median critic loss ~5.90 vs Topo ~6.61; sparse mean abs TD ~1.02 vs ~1.49; alpha ~.0212 vs ~.0204. These sampled metrics are not risk-calibrated and cannot establish the 3slot policy is safer; its collision fraction is higher.",
+    "behavior_context_from_parallel_run_audit": "The parent reports all 22 Topo timeout episodes end at wrong-exit lane -E1_0; requested target speed remains about 5.02 m/s, ego starts on lane 2 and only lane 2 connects -E1 to -E0, while lane-change requests were 16 right / 6 keep. This supports a wrong-lane route deadlock as a proximal timeout mechanism. It does not show the attention/gate caused the lane action.",
+    "causal_limit": "One completed training seed per architecture and policy-dependent state/replay distributions. No architecture-only causal attribution or identical-state intervention is possible from these logs. The incomplete prior run is not an evaluation replication."
+  }
+}

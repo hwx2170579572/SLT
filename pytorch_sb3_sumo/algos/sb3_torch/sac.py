@@ -18,6 +18,11 @@ from .graph_representation import (
     StructuredGraphRepresentationObjective,
 )
 from .representation import FutureRepresentationObjective
+from .module_diagnostics import (
+    collect_parameter_gradient_diagnostics,
+    collect_parameter_update_diagnostics,
+    snapshot_parameter_groups,
+)
 from .topo_temporal_features import StructuredLatent
 
 
@@ -77,6 +82,7 @@ class SceneRepresentationSAC(SAC):
         self._representation_parameters: list[th.nn.Parameter] = []
         self._last_graph_slt_losses: dict[str, th.Tensor] = {}
         self._training_diagnostic_stats: dict[str, dict[str, float | int]] = {}
+        self._q_td_diagnostics_sampled = False
         super().__init__(*args, **kwargs)
 
     def _accumulate_training_stat(self, name: str, value: float) -> None:
@@ -110,6 +116,93 @@ class SceneRepresentationSAC(SAC):
                 "last": float(row["last"]),
             }
         return output
+
+    def _queue_module_diagnostic_event(self, source, update, metrics):
+        """Retain sampled telemetry until the normal rollout callback saves it."""
+        if not hasattr(self, "_module_diagnostic_events"):
+            self._module_diagnostic_events = []
+        self._module_diagnostic_events.append({
+            "source": str(source),
+            "updates": None if update is None else int(update),
+            "raw_steps": int(getattr(self, "_raw_steps_seen", self.num_timesteps)),
+            "decision_steps": int(self.num_timesteps),
+            "metrics": dict(metrics),
+            "timing": "collection_training_position; replay samples are not the current rollout episode",
+        })
+
+    def pop_module_diagnostic_events(self):
+        """Drain detached scalar events; never retains a computation graph."""
+        events = getattr(self, "_module_diagnostic_events", [])
+        self._module_diagnostic_events = []
+        return events
+
+    def _record_encoder_activation_snapshot(
+        self,
+        extractor,
+        diagnostic_values: dict[str, list[float]],
+    ) -> None:
+        """Queue a newly sampled forward snapshot immediately at its call site."""
+        if not getattr(extractor, "behavior_diagnostics_enabled", False):
+            return
+        sample_id = getattr(extractor, "diagnostic_sample_index", None)
+        if (
+            sample_id is None
+            or int(sample_id) <= 0
+            or sample_id == getattr(self, "_last_encoder_diagnostic_sample", None)
+        ):
+            return
+        self._last_encoder_diagnostic_sample = int(sample_id)
+        current = extractor.diagnostic_values() if hasattr(extractor, "diagnostic_values") else {}
+        metrics: dict[str, float | int | None] = {}
+        scalar_items: list[tuple[str, th.Tensor]] = []
+        for name, value in current.items():
+            if value is None:
+                metrics[str(name)] = None
+                continue
+            tensor = th.as_tensor(value).detach()
+            if tensor.numel() != 1:
+                continue
+            scalar_items.append((str(name), tensor.reshape(())))
+        if scalar_items:
+            device = scalar_items[0][1].device
+            numbers = th.stack([value.to(device) for _, value in scalar_items]).cpu().tolist()
+            for (name, _), number in zip(scalar_items, numbers):
+                numeric = float(number)
+                metrics[name] = numeric if np.isfinite(numeric) else None
+                if np.isfinite(numeric):
+                    diagnostic_values.setdefault(name, []).append(numeric)
+
+        sampled_update = metrics.get("diagnostic_sample_update_index")
+        event_update = (
+            int(sampled_update)
+            if sampled_update is not None and np.isfinite(float(sampled_update))
+            and int(sampled_update) > 0
+            else None
+        )
+        self._queue_module_diagnostic_event(
+            "train_forward_activation",
+            event_update,
+            metrics,
+        )
+
+    @staticmethod
+    def _run_encoder_callsite(
+        extractor,
+        site: str,
+        update_number: int | None,
+        force_sample: bool,
+        forward_call,
+    ):
+        setter = getattr(extractor, "set_diagnostic_context", None)
+        if not getattr(extractor, "behavior_diagnostics_enabled", False) or not callable(setter):
+            return forward_call()
+        previous = setter(site, update_number, force_sample=force_sample)
+        try:
+            return forward_call()
+        finally:
+            restore = getattr(extractor, "restore_diagnostic_context", None)
+            if callable(restore):
+                restore(previous)
 
     def _setup_model(self) -> None:
         super()._setup_model()
@@ -259,6 +352,16 @@ class SceneRepresentationSAC(SAC):
             "graph_slt_social_loss": [],
             "graph_slt_route_loss": [],
         }
+        # Sparse optimizer telemetry reuses the already-computed SAC tensors.
+        # It adds no forward/backward pass and only synchronizes a few scalars
+        # on the first actual update and every 1,000 subsequent updates.
+        q_td_diagnostics: dict[str, list[float]] = {
+            "q1_mean_sampled": [],
+            "q2_mean_sampled": [],
+            "target_q_mean_sampled": [],
+            "q1_abs_td_mean_sampled": [],
+            "q2_abs_td_mean_sampled": [],
+        }
         diagnostic_values: dict[str, list[float]] = {
             "topology_attention_entropy": [],
             "latent_std": [],
@@ -273,11 +376,21 @@ class SceneRepresentationSAC(SAC):
             replay_data = self.replay_buffer.sample(
                 batch_size, env=self._vec_normalize_env
             )
+            update_number = int(self._n_updates) + gradient_step + 1
+            extractor = self.critic.features_extractor
+            force_update_sample = update_number == 1 or update_number % 1000 == 0
             discounts = replay_data.discounts if replay_data.discounts is not None else self.gamma
 
             if self.representation is not None:
-                representation_loss = self._representation_step(replay_data)
+                representation_loss = self._run_encoder_callsite(
+                    extractor,
+                    "representation_objective_online",
+                    update_number,
+                    False,
+                    lambda: self._representation_step(replay_data),
+                )
                 representation_losses.append(float(representation_loss.cpu()))
+                self._record_encoder_activation_snapshot(extractor, diagnostic_values)
                 for name in graph_slt_slot_losses:
                     value = self._last_graph_slt_losses.get(name)
                     if value is not None:
@@ -289,10 +402,24 @@ class SceneRepresentationSAC(SAC):
             # Match the released persistent GradientTape forward order.  Each
             # encoder call draws its own source random rotation, so this order
             # is also part of seeded experiment behavior.
-            current_q_values = self.critic(
-                replay_data.observations, replay_data.actions
+            current_q_values = self._run_encoder_callsite(
+                extractor,
+                "critic_td_current",
+                update_number,
+                force_update_sample,
+                lambda: self.critic(
+                    replay_data.observations, replay_data.actions
+                ),
             )
-            actions_pi, log_prob = self.actor.action_log_prob(replay_data.observations)
+            self._record_encoder_activation_snapshot(extractor, diagnostic_values)
+            actions_pi, log_prob = self._run_encoder_callsite(
+                extractor,
+                "actor_policy_current",
+                update_number,
+                False,
+                lambda: self.actor.action_log_prob(replay_data.observations),
+            )
+            self._record_encoder_activation_snapshot(extractor, diagnostic_values)
             log_prob = log_prob.reshape(-1, 1)
 
             entropy_loss = None
@@ -314,9 +441,16 @@ class SceneRepresentationSAC(SAC):
             target_was_training = target_extractor.training
             target_extractor.train(True)
             with th.no_grad():
-                next_actions, next_log_prob = self.actor.action_log_prob(
-                    replay_data.next_observations
+                next_actions, next_log_prob = self._run_encoder_callsite(
+                    extractor,
+                    "actor_policy_next_action_no_grad",
+                    update_number,
+                    False,
+                    lambda: self.actor.action_log_prob(
+                        replay_data.next_observations
+                    ),
                 )
+                self._record_encoder_activation_snapshot(extractor, diagnostic_values)
                 next_q_values = th.cat(
                     self.critic_target(replay_data.next_observations, next_actions), dim=1
                 )
@@ -332,6 +466,28 @@ class SceneRepresentationSAC(SAC):
                 for current_q in current_q_values
             )
             critic_losses.append(float(critic_loss.detach().cpu()))
+            if (
+                getattr(extractor, "behavior_diagnostics_enabled", False)
+                and (
+                    not self._q_td_diagnostics_sampled
+                    or update_number == 1
+                    or update_number % 1000 == 0
+                )
+            ):
+                self._q_td_diagnostics_sampled = True
+                detached_target = target_q_values.detach()
+                for critic_index, current_q in enumerate(current_q_values, start=1):
+                    q_td_diagnostics[f"q{critic_index}_mean_sampled"].append(
+                        float(current_q.detach().mean().cpu())
+                    )
+                    q_td_diagnostics[
+                        f"q{critic_index}_abs_td_mean_sampled"
+                    ].append(
+                        float((current_q.detach() - detached_target).abs().mean().cpu())
+                    )
+                q_td_diagnostics["target_q_mean_sampled"].append(
+                    float(detached_target.mean().cpu())
+                )
 
             # Q weights are constants for the policy update, while gradients
             # through Q with respect to actions remain available. Build this
@@ -343,8 +499,16 @@ class SceneRepresentationSAC(SAC):
             for parameter in critic_parameters:
                 parameter.requires_grad_(False)
             q_values_pi = th.cat(
-                self.critic(replay_data.observations, actions_pi), dim=1
+                self._run_encoder_callsite(
+                    extractor,
+                    "critic_actor_value",
+                    update_number,
+                    False,
+                    lambda: self.critic(replay_data.observations, actions_pi),
+                ),
+                dim=1,
             )
+            self._record_encoder_activation_snapshot(extractor, diagnostic_values)
             min_qf_pi = th.min(q_values_pi, dim=1, keepdim=True).values
             actor_loss = (entropy_coefficient * log_prob - min_qf_pi).mean()
             actor_losses.append(float(actor_loss.detach().cpu()))
@@ -366,12 +530,50 @@ class SceneRepresentationSAC(SAC):
             if entropy_loss is not None and self.ent_coef_optimizer is not None:
                 self.ent_coef_optimizer.zero_grad()
             critic_loss.backward()
+            # Inspect the existing critic TD gradients before clipping. This is
+            # read-only and does not add an optimizer step or another backward.
+            encoder_diagnostic_update = (
+                getattr(extractor, "behavior_diagnostics_enabled", False)
+                and (not getattr(self, "_encoder_grad_diagnostics_sampled", False)
+                     or update_number % 1000 == 0)
+            )
+            update_snapshot = None
+            if encoder_diagnostic_update:
+                group_factory = getattr(extractor, "diagnostic_parameter_groups", None)
+                groups = group_factory() if callable(group_factory) else {"encoder_all": ("",)}
+                gradient_metrics = collect_parameter_gradient_diagnostics(extractor, groups)
+                gradient_metrics["critic_td_update_index"] = float(update_number)
+                self._encoder_grad_diagnostics_sampled = True
+                self._queue_module_diagnostic_event(
+                    "critic_td_gradient_pre_clip", update_number, gradient_metrics
+                )
+                for name, value in gradient_metrics.items():
+                    if value is not None and np.isfinite(value):
+                        diagnostic_values.setdefault(name, []).append(float(value))
             actor_loss.backward()
             if entropy_loss is not None:
                 entropy_loss.backward()
             _clip_gradients_like_keras(critic_parameters, self.max_grad_norm)
             _clip_gradients_like_keras(actor_parameters, self.max_grad_norm)
+            if encoder_diagnostic_update:
+                snapshot_groups = {
+                    name: prefixes
+                    for name, prefixes in groups.items()
+                    if name != "encoder_all"
+                }
+                update_snapshot = snapshot_parameter_groups(
+                    extractor, snapshot_groups, self.critic.optimizer
+                )
             self.critic.optimizer.step()
+            if update_snapshot is not None:
+                update_metrics = collect_parameter_update_diagnostics(update_snapshot)
+                update_metrics["critic_td_update_index"] = float(update_number)
+                self._queue_module_diagnostic_event(
+                    "critic_td_parameter_update", update_number, update_metrics
+                )
+                for name, value in update_metrics.items():
+                    if value is not None and np.isfinite(value):
+                        diagnostic_values.setdefault(name, []).append(float(value))
 
             if gradient_step % self.target_update_interval == 0:
                 polyak_update(self.critic.parameters(), self.critic_target.parameters(), self.tau)
@@ -383,13 +585,38 @@ class SceneRepresentationSAC(SAC):
             if entropy_loss is not None and self.ent_coef_optimizer is not None:
                 self.ent_coef_optimizer.step()
 
-            extractor = self.critic.features_extractor
             if hasattr(extractor, "diagnostic_values"):
                 current_diagnostics = extractor.diagnostic_values()  # type: ignore[attr-defined]
-                for name in diagnostic_values:
-                    value = current_diagnostics.get(name)
-                    if value is not None and bool(th.isfinite(value).all()):
-                        diagnostic_values[name].append(float(value.mean().cpu()))
+                if getattr(extractor, "behavior_diagnostics_enabled", False):
+                    # The extractor publishes detached scalar snapshots only on
+                    # its sampling schedule. Do not count a cached snapshot as
+                    # a fresh measurement on every SAC update.
+                    sample_id = getattr(extractor, "diagnostic_sample_index", None)
+                    if (sample_id is not None and int(sample_id) > 0
+                            and sample_id != getattr(self, "_last_encoder_diagnostic_sample", None)):
+                        self._last_encoder_diagnostic_sample = sample_id
+                        event_metrics = {}
+                        for name, value in current_diagnostics.items():
+                            if value is None:
+                                event_metrics[name] = None
+                                continue
+                            tensor = th.as_tensor(value).detach()
+                            if tensor.numel() != 1:
+                                continue
+                            number = float(tensor.cpu())
+                            event_metrics[name] = number if np.isfinite(number) else None
+                            if np.isfinite(number):
+                                diagnostic_values.setdefault(name, []).append(number)
+                        event_metrics["diagnostic_sample_index"] = int(sample_id)
+                        self._queue_module_diagnostic_event(
+                            "train_forward_activation", update_number, event_metrics
+                        )
+                else:
+                    # Keep the legacy diagnostic behavior for existing models.
+                    for name in diagnostic_values:
+                        value = current_diagnostics.get(name)
+                        if value is not None and bool(th.isfinite(value).all()):
+                            diagnostic_values[name].append(float(value.mean().cpu()))
 
         self._n_updates += gradient_steps
         self.logger.record("train/n_updates", self._n_updates, exclude="tensorboard")
@@ -424,6 +651,11 @@ class SceneRepresentationSAC(SAC):
                 self.logger.record(f"train/{name}", value)
                 self._accumulate_training_stat(f"train/{name}", value)
         for name, values in diagnostic_values.items():
+            if values:
+                value = float(np.mean(values))
+                self.logger.record(f"diagnostic/{name}", value)
+                self._accumulate_training_stat(f"diagnostic/{name}", value)
+        for name, values in q_td_diagnostics.items():
             if values:
                 value = float(np.mean(values))
                 self.logger.record(f"diagnostic/{name}", value)

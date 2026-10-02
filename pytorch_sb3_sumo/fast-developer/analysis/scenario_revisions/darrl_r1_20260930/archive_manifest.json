@@ -1,0 +1,573 @@
+{
+  "archive_schema": "darrl-scenario-revision-archive/v1",
+  "archived_revision": "darrl_r1_20260930",
+  "created_local": "2026-09-30T22:09:05.2986804+08:00",
+  "purpose": "Immutable byte-verified snapshot of the original DARRL low/medium/high configuration before same-name probability revision.",
+  "old_run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930",
+  "old_run_status": "complete",
+  "old_run_started_at_utc": "2026-09-30T19:40:57+08:00",
+  "old_run_finished_at_utc": "2026-09-30T21:49:41+08:00",
+  "scenes": [
+    "intersection_random_darrl_low_v1",
+    "intersection_random_darrl_medium_v1",
+    "intersection_random_darrl_high_v1"
+  ],
+  "old_configurations": [
+    {
+      "schema_version": 1,
+      "protocol": "intersection_bernoulli_step_schedule_v1",
+      "scenario": "intersection_random_darrl_low_v1",
+      "density_level": "low",
+      "source_scenario": "intersection_sorted",
+      "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+      "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+      "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+      "total_vehicles_per_hour": 3240,
+      "vehicles_per_hour_by_route": {
+        "neg_E3_to_neg_E0": 1080,
+        "E0_to_E3": 1080,
+        "E2_to_E1": 1080
+      },
+      "flows": [
+        {
+          "id": "neg_E3_to_neg_E0",
+          "edges": [
+            "-E3",
+            "-E0"
+          ],
+          "vehicles_per_hour": 1080,
+          "rate_per_second": 0.3,
+          "sumo_probability": null,
+          "probability_per_step": 0.03,
+          "mean_headway_seconds": 3.3333333333333335,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        },
+        {
+          "id": "E0_to_E3",
+          "edges": [
+            "E0",
+            "E3"
+          ],
+          "vehicles_per_hour": 1080,
+          "rate_per_second": 0.3,
+          "sumo_probability": null,
+          "probability_per_step": 0.03,
+          "mean_headway_seconds": 3.3333333333333335,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        },
+        {
+          "id": "E2_to_E1",
+          "edges": [
+            "E2",
+            "E1"
+          ],
+          "vehicles_per_hour": 1080,
+          "rate_per_second": 0.3,
+          "sumo_probability": null,
+          "probability_per_step": 0.03,
+          "mean_headway_seconds": 3.3333333333333335,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        }
+      ],
+      "flow_begin_seconds": 0.0,
+      "flow_end_seconds": 130.0,
+      "ego_depart_seconds": 50.0,
+      "ego_route_edges": [
+        "-E1",
+        "-E0"
+      ],
+      "ego_depart_lane": "2",
+      "ego_depart_speed": "0",
+      "step_length_seconds": 0.1,
+      "max_episode_raw_steps": 600,
+      "default_action_repeat": 3,
+      "endless_traffic": false,
+      "background_exit_behavior": "leave after the configured route ends; no recycling",
+      "depart_scale": 1.0,
+      "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+      "traffic_seed_domains": {
+        "train": {
+          "offset": 0,
+          "width": 1000000000,
+          "last_seed": 999999999
+        },
+        "validation": {
+          "offset": 1000000000,
+          "width": 500000000,
+          "last_seed": 1499999999
+        },
+        "test": {
+          "offset": 1500000000,
+          "width": 500000000,
+          "last_seed": 1999999999
+        }
+      },
+      "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+      "default_evaluation_split": "validation",
+      "default_evaluation_logical_seeds": {
+        "start": 10000,
+        "episodes": 100
+      },
+      "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+      "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+      "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+      "dynamic_episode_traffic": true,
+      "scenario_family": "darrl_lane1_v1",
+      "template_scenario": "intersection_random_low_v1",
+      "collision_action": "remove",
+      "collision_detection_mode": "sumo_events_or_ego_geometry",
+      "background_vtype_overrides": {
+        "jmIgnoreFoeProb": "0"
+      },
+      "ego_vtype_overrides": {
+        "minGap": "1",
+        "jmIgnoreFoeProb": "0"
+      }
+    },
+    {
+      "schema_version": 1,
+      "protocol": "intersection_bernoulli_step_schedule_v1",
+      "scenario": "intersection_random_darrl_medium_v1",
+      "density_level": "medium",
+      "source_scenario": "intersection_sorted",
+      "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+      "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+      "demand_definition": "user-requested p=0.05 per 0.1-second step; 5400 veh/h requested, realized insertion is capacity-limited",
+      "total_vehicles_per_hour": 5400,
+      "vehicles_per_hour_by_route": {
+        "neg_E3_to_neg_E0": 1800,
+        "E0_to_E3": 1800,
+        "E2_to_E1": 1800
+      },
+      "flows": [
+        {
+          "id": "neg_E3_to_neg_E0",
+          "edges": [
+            "-E3",
+            "-E0"
+          ],
+          "vehicles_per_hour": 1800,
+          "rate_per_second": 0.5,
+          "sumo_probability": null,
+          "probability_per_step": 0.05,
+          "mean_headway_seconds": 2.0,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        },
+        {
+          "id": "E0_to_E3",
+          "edges": [
+            "E0",
+            "E3"
+          ],
+          "vehicles_per_hour": 1800,
+          "rate_per_second": 0.5,
+          "sumo_probability": null,
+          "probability_per_step": 0.05,
+          "mean_headway_seconds": 2.0,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        },
+        {
+          "id": "E2_to_E1",
+          "edges": [
+            "E2",
+            "E1"
+          ],
+          "vehicles_per_hour": 1800,
+          "rate_per_second": 0.5,
+          "sumo_probability": null,
+          "probability_per_step": 0.05,
+          "mean_headway_seconds": 2.0,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        }
+      ],
+      "flow_begin_seconds": 0.0,
+      "flow_end_seconds": 130.0,
+      "ego_depart_seconds": 50.0,
+      "ego_route_edges": [
+        "-E1",
+        "-E0"
+      ],
+      "ego_depart_lane": "2",
+      "ego_depart_speed": "0",
+      "step_length_seconds": 0.1,
+      "max_episode_raw_steps": 600,
+      "default_action_repeat": 3,
+      "endless_traffic": false,
+      "background_exit_behavior": "leave after the configured route ends; no recycling",
+      "depart_scale": 1.0,
+      "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+      "traffic_seed_domains": {
+        "train": {
+          "offset": 0,
+          "width": 1000000000,
+          "last_seed": 999999999
+        },
+        "validation": {
+          "offset": 1000000000,
+          "width": 500000000,
+          "last_seed": 1499999999
+        },
+        "test": {
+          "offset": 1500000000,
+          "width": 500000000,
+          "last_seed": 1999999999
+        }
+      },
+      "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+      "default_evaluation_split": "validation",
+      "default_evaluation_logical_seeds": {
+        "start": 10000,
+        "episodes": 100
+      },
+      "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+      "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+      "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+      "dynamic_episode_traffic": true,
+      "scenario_family": "darrl_lane1_v1",
+      "template_scenario": "intersection_random_medium_v1",
+      "collision_action": "remove",
+      "collision_detection_mode": "sumo_events_or_ego_geometry",
+      "background_vtype_overrides": {
+        "jmIgnoreFoeProb": "0"
+      },
+      "ego_vtype_overrides": {
+        "minGap": "1",
+        "jmIgnoreFoeProb": "0"
+      }
+    },
+    {
+      "schema_version": 1,
+      "protocol": "intersection_bernoulli_step_schedule_v1",
+      "scenario": "intersection_random_darrl_high_v1",
+      "density_level": "high",
+      "source_scenario": "intersection_sorted",
+      "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+      "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+      "demand_definition": "user-requested p=0.07 per 0.1-second step; 7560 veh/h requested, realized insertion is capacity-limited",
+      "total_vehicles_per_hour": 7560,
+      "vehicles_per_hour_by_route": {
+        "neg_E3_to_neg_E0": 2520,
+        "E0_to_E3": 2520,
+        "E2_to_E1": 2520
+      },
+      "flows": [
+        {
+          "id": "neg_E3_to_neg_E0",
+          "edges": [
+            "-E3",
+            "-E0"
+          ],
+          "vehicles_per_hour": 2520,
+          "rate_per_second": 0.7,
+          "sumo_probability": null,
+          "probability_per_step": 0.07,
+          "mean_headway_seconds": 1.4285714285714286,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        },
+        {
+          "id": "E0_to_E3",
+          "edges": [
+            "E0",
+            "E3"
+          ],
+          "vehicles_per_hour": 2520,
+          "rate_per_second": 0.7,
+          "sumo_probability": null,
+          "probability_per_step": 0.07,
+          "mean_headway_seconds": 1.4285714285714286,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        },
+        {
+          "id": "E2_to_E1",
+          "edges": [
+            "E2",
+            "E1"
+          ],
+          "vehicles_per_hour": 2520,
+          "rate_per_second": 0.7,
+          "sumo_probability": null,
+          "probability_per_step": 0.07,
+          "mean_headway_seconds": 1.4285714285714286,
+          "depart_lane": "1",
+          "depart_pos": "0",
+          "depart_speed": "max",
+          "arrival_lane": "1"
+        }
+      ],
+      "flow_begin_seconds": 0.0,
+      "flow_end_seconds": 130.0,
+      "ego_depart_seconds": 50.0,
+      "ego_route_edges": [
+        "-E1",
+        "-E0"
+      ],
+      "ego_depart_lane": "2",
+      "ego_depart_speed": "0",
+      "step_length_seconds": 0.1,
+      "max_episode_raw_steps": 600,
+      "default_action_repeat": 3,
+      "endless_traffic": false,
+      "background_exit_behavior": "leave after the configured route ends; no recycling",
+      "depart_scale": 1.0,
+      "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+      "traffic_seed_domains": {
+        "train": {
+          "offset": 0,
+          "width": 1000000000,
+          "last_seed": 999999999
+        },
+        "validation": {
+          "offset": 1000000000,
+          "width": 500000000,
+          "last_seed": 1499999999
+        },
+        "test": {
+          "offset": 1500000000,
+          "width": 500000000,
+          "last_seed": 1999999999
+        }
+      },
+      "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+      "default_evaluation_split": "validation",
+      "default_evaluation_logical_seeds": {
+        "start": 10000,
+        "episodes": 100
+      },
+      "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+      "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+      "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+      "dynamic_episode_traffic": true,
+      "scenario_family": "darrl_lane1_v1",
+      "template_scenario": "intersection_random_high_v1",
+      "collision_action": "remove",
+      "collision_detection_mode": "sumo_events_or_ego_geometry",
+      "background_vtype_overrides": {
+        "jmIgnoreFoeProb": "0"
+      },
+      "ego_vtype_overrides": {
+        "minGap": "1",
+        "jmIgnoreFoeProb": "0"
+      }
+    }
+  ],
+  "copied_file_count": 32,
+  "file_hashes": [
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_low_v1\\traffic\\traffic_00000.rou.xml",
+      "sha256": "dd76bc2bfbc8eb77fdfc7f103f9df9d02437d23a65ebb4cec06236798f416513",
+      "bytes": 54881,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_low_v1\\traffic\\traffic_00000.rou.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_low_v1\\ego.rou.xml",
+      "sha256": "d250b9375e0dfe438e01814895e0dc649fa0e2b911995a0a76a43cb3fe31fe60",
+      "bytes": 446,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_low_v1\\ego.rou.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_low_v1\\map.net.xml",
+      "sha256": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+      "bytes": 15050,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_low_v1\\map.net.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_low_v1\\scenario_manifest.json",
+      "sha256": "cd412db94999c4bcefbe3c268b9b562a2480de2e34d67d4b44ba31d8efd35b6d",
+      "bytes": 7444,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_low_v1\\scenario_manifest.json"
+    },
+    {
+      "relative_path": "assets\\scenarios\\intersection_random_darrl_low_v1\\routes.rou.xml",
+      "sha256": "8cb7100ce5f9e358fab60e072597ccb59fcd12fcd16bd1cab40bf4cc7e355c4d",
+      "bytes": 50,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenarios\\intersection_random_darrl_low_v1\\routes.rou.xml"
+    },
+    {
+      "relative_path": "assets\\scenarios\\intersection_random_darrl_low_v1\\scenario.sumocfg",
+      "sha256": "b8fd9000a93f9f41a063a9afe7b5ea2d0962a656d82196566fd250f3249c97c4",
+      "bytes": 210,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenarios\\intersection_random_darrl_low_v1\\scenario.sumocfg"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\traffic\\traffic_00000.rou.xml",
+      "sha256": "dd76bc2bfbc8eb77fdfc7f103f9df9d02437d23a65ebb4cec06236798f416513",
+      "bytes": 54881,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\traffic\\traffic_00000.rou.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\ego.rou.xml",
+      "sha256": "d250b9375e0dfe438e01814895e0dc649fa0e2b911995a0a76a43cb3fe31fe60",
+      "bytes": 446,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\ego.rou.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\map.net.xml",
+      "sha256": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+      "bytes": 15050,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\map.net.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\scenario_manifest.json",
+      "sha256": "825e422ec23bedbd9841f0b36a5eb92c9762eca326d6aa0210871f127c510d52",
+      "bytes": 7408,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_medium_v1\\scenario_manifest.json"
+    },
+    {
+      "relative_path": "assets\\scenarios\\intersection_random_darrl_medium_v1\\routes.rou.xml",
+      "sha256": "8cb7100ce5f9e358fab60e072597ccb59fcd12fcd16bd1cab40bf4cc7e355c4d",
+      "bytes": 50,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenarios\\intersection_random_darrl_medium_v1\\routes.rou.xml"
+    },
+    {
+      "relative_path": "assets\\scenarios\\intersection_random_darrl_medium_v1\\scenario.sumocfg",
+      "sha256": "b8fd9000a93f9f41a063a9afe7b5ea2d0962a656d82196566fd250f3249c97c4",
+      "bytes": 210,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenarios\\intersection_random_darrl_medium_v1\\scenario.sumocfg"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_high_v1\\traffic\\traffic_00000.rou.xml",
+      "sha256": "dd76bc2bfbc8eb77fdfc7f103f9df9d02437d23a65ebb4cec06236798f416513",
+      "bytes": 54881,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_high_v1\\traffic\\traffic_00000.rou.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_high_v1\\ego.rou.xml",
+      "sha256": "d250b9375e0dfe438e01814895e0dc649fa0e2b911995a0a76a43cb3fe31fe60",
+      "bytes": 446,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_high_v1\\ego.rou.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_high_v1\\map.net.xml",
+      "sha256": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+      "bytes": 15050,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_high_v1\\map.net.xml"
+    },
+    {
+      "relative_path": "assets\\original_scenarios_v1\\intersection_random_darrl_high_v1\\scenario_manifest.json",
+      "sha256": "e42cf3151822b64b777bcbeba3985356bd9487d5949e19f9cd3dbb93c3ba54b4",
+      "bytes": 7447,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_darrl_high_v1\\scenario_manifest.json"
+    },
+    {
+      "relative_path": "assets\\scenarios\\intersection_random_darrl_high_v1\\routes.rou.xml",
+      "sha256": "8cb7100ce5f9e358fab60e072597ccb59fcd12fcd16bd1cab40bf4cc7e355c4d",
+      "bytes": 50,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenarios\\intersection_random_darrl_high_v1\\routes.rou.xml"
+    },
+    {
+      "relative_path": "assets\\scenarios\\intersection_random_darrl_high_v1\\scenario.sumocfg",
+      "sha256": "b8fd9000a93f9f41a063a9afe7b5ea2d0962a656d82196566fd250f3249c97c4",
+      "bytes": 210,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenarios\\intersection_random_darrl_high_v1\\scenario.sumocfg"
+    },
+    {
+      "relative_path": "source\\envs\\sumo\\random_intersection.py",
+      "sha256": "8eacb2bcf9ba46b3ac45c7b47a80c2a18e98ec0591aa007a7b9683c870e94ff7",
+      "bytes": 20963,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\random_intersection.py"
+    },
+    {
+      "relative_path": "source\\envs\\sumo\\paper_env.py",
+      "sha256": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+      "bytes": 32426,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_env.py"
+    },
+    {
+      "relative_path": "source\\envs\\sumo\\sumo_env.py",
+      "sha256": "df4350776efea5bbdcdcd58ffba89a3bf124e63b0be53562a6d08514a5feceb7",
+      "bytes": 91069,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\sumo_env.py"
+    },
+    {
+      "relative_path": "source\\envs\\sumo\\high_density_env_v1.py",
+      "sha256": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c",
+      "bytes": 20415,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\high_density_env_v1.py"
+    },
+    {
+      "relative_path": "source\\fast-developer\\reward_shaping_v2.py",
+      "sha256": "d09caedb887379e2b316f60d7c3648e817ca75ea090f2a0d6abcf45604d3a969",
+      "bytes": 6477,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\reward_shaping_v2.py"
+    },
+    {
+      "relative_path": "source\\fast-developer\\train_intersection_yield_v2.py",
+      "sha256": "4d2fb354d8dcc963a74544f0381e5d7a79f7a74c9895c5c8c782ed65e1b3f0f2",
+      "bytes": 73573,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py"
+    },
+    {
+      "relative_path": "source\\fast-developer\\train_intersection_yield_v2_d1.py",
+      "sha256": "da62554efc9412038202b8d6b38a80973860569d18084206a1468083ce997fcf",
+      "bytes": 78976,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py"
+    },
+    {
+      "relative_path": "source\\fast-developer\\launch_sac_mlp_random_pair.py",
+      "sha256": "e3697206388a813aae79d648c2a2390dda714ceb99ca936ddef930ab9df04ddf",
+      "bytes": 11670,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\launch_sac_mlp_random_pair.py"
+    },
+    {
+      "relative_path": "source\\fast-developer\\validate_random_intersection_darrl.py",
+      "sha256": "075282381c3093c8310d99ce2f49c092b2e77890f74b458f0804892ab07c7c4d",
+      "bytes": 14583,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\validate_random_intersection_darrl.py"
+    },
+    {
+      "relative_path": "source\\fast-developer\\test_random_intersection_darrl.py",
+      "sha256": "fb47ecd08292020cb57aa696bba745045a85d2ab6743559293adfa3d6cbbf9db",
+      "bytes": 11929,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\test_random_intersection_darrl.py"
+    },
+    {
+      "relative_path": "old_run\\launcher_manifest.json",
+      "sha256": "f0502d8452a28165da6a7777b6a78b22e49a402d41885f28ca38efea9d7f646e",
+      "bytes": 5171,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\launcher_manifest.json"
+    },
+    {
+      "relative_path": "old_run\\launcher_status.json",
+      "sha256": "911f8892c32c2cd99743aa07f7a2b701d4690c8de090f546d1d0ae0768131caa",
+      "bytes": 2874,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\launcher_status.json"
+    },
+    {
+      "relative_path": "old_run\\low\\experiment_manifest.json",
+      "sha256": "238d929f2d775a1f137ed9e9fd4e163a3830873563d84aa1eec6e7a84ff9d06d",
+      "bytes": 5541,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_low_v1_depart1p0\\experiment_manifest.json"
+    },
+    {
+      "relative_path": "old_run\\medium\\experiment_manifest.json",
+      "sha256": "1b93afeb40d529958fb845b19006f04992835f5956ec7eb7afdfc98f1ffea87f",
+      "bytes": 5519,
+      "source_absolute_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_darrl_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json"
+    }
+  ],
+  "note": "This archive does not modify production sources, scenario assets, or the historical run root."
+}

@@ -1,0 +1,963 @@
+{
+  "title": "Random medium traffic evidence and legacy sorted comparison",
+  "date": "2026-09-30",
+  "scope": "Read-only aggregation of existing final evaluation episodes and source XML; no new simulation or training.",
+  "sources": {
+    "intersection_sorted": {
+      "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\arguments.json",
+      "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\evaluation_results.json",
+      "evaluation_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\eval_worker_00\\episodes.jsonl"
+    },
+    "intersection_random_medium_v1": {
+      "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\arguments.json",
+      "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\evaluation_results.json",
+      "evaluation_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_a0930\\sac_mlp__intersection_random_medium_v1_depart1p0\\diagnostics\\eval_worker_00\\episodes.jsonl"
+    },
+    "intersection_random_medium_p05_v1": {
+      "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\arguments.json",
+      "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\evaluation_results.json",
+      "evaluation_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p05_b0930\\sac_mlp__intersection_random_medium_p05_v1_depart1p0\\diagnostics\\eval_worker_00\\episodes.jsonl"
+    }
+  },
+  "code_sources": {
+    "depart_scale": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py",
+    "paper_env": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_env.py",
+    "random_traffic_config": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\random_intersection.py",
+    "protocol": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\random_intersection_v1_protocol.md"
+  },
+  "protocol": {
+    "training_common": {
+      "method": "sac_mlp",
+      "raw_budget": 100000,
+      "checkpoint_frequency": 10000,
+      "learning_starts_raw_steps": 5000,
+      "batch_size": 32,
+      "learning_rate": 0.0001,
+      "buffer_size": 20000,
+      "discount": 0.99,
+      "action_repeat": 3,
+      "seed": 0,
+      "device": "cuda",
+      "smoke": false,
+      "behavior_diagnostics": true,
+      "env_contract": "base",
+      "env_class": "YieldObsIndependentV2EnvV1 (改法 1+2)",
+      "reward_shaping": {
+        "success_reward": 10.0,
+        "collision_reward": -10.0,
+        "off_route_reward": -10.0,
+        "timeout_reward": -5.0,
+        "progress_scale": 0.02,
+        "step_cost": 0.01
+      },
+      "density": {
+        "vehicle_scale": 1.0,
+        "pedestrian_scale": 1.0,
+        "clone_depart_jitter_seconds": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "random_medium": {
+      "protocol": "intersection_bernoulli_v1",
+      "route_q_veh_per_hour": {
+        "neg_E3_to_neg_E0": 400,
+        "E0_to_E3": 300,
+        "E2_to_E1": 480
+      },
+      "step_probabilities_at_dt_0.1": {
+        "neg_E3_to_neg_E0": 0.011111111111111112,
+        "E0_to_E3": 0.008333333333333333,
+        "E2_to_E1": 0.013333333333333334
+      },
+      "total_requested_veh_per_hour": 1180
+    },
+    "p05": {
+      "protocol": "intersection_bernoulli_step_schedule_v1",
+      "per_inlet_per_step_probability": 0.5,
+      "per_route_expected_requests_per_hour": 18000,
+      "total_requested_requests_per_hour": 54000,
+      "sampling": "actual SUMO seed + route SHA256 derived seed; Python Random.random per tick, [0,130)s"
+    },
+    "common_environment": {
+      "ego_route": "-E1 -> -E0",
+      "ego_depart_seconds": 50,
+      "ego_lane": 2,
+      "ego_position": 0,
+      "ego_speed_mps": 0,
+      "step_seconds": 0.1,
+      "control_cap_raw_steps": 600,
+      "control_cap_seconds": 60,
+      "action_repeat": 3,
+      "ego_insert_grace_seconds": 10,
+      "background_routes": [
+        "-E3 -> -E0",
+        "E0 -> E3",
+        "E2 -> E1"
+      ],
+      "background_depart_lane": 0,
+      "request_generation_seconds": [
+        0,
+        130
+      ],
+      "background_end": "leaves after route; no endless reinsertion",
+      "vehicle_scale": 1.0,
+      "pedestrian_scale": 1.0,
+      "clone_depart_jitter_seconds": [
+        0.0,
+        0.0
+      ],
+      "map_ego_sha256": {
+        "intersection_sorted": {
+          "map.net.xml": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+          "ego.rou.xml": "e9b0d992510dca46ac0d7fd258956a11dff1d821b51744e649c2ebbd3fc8cb57"
+        },
+        "intersection_random_medium_v1": {
+          "map.net.xml": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+          "ego.rou.xml": "e9b0d992510dca46ac0d7fd258956a11dff1d821b51744e649c2ebbd3fc8cb57"
+        },
+        "intersection_random_medium_p05_v1": {
+          "map.net.xml": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+          "ego.rou.xml": "e9b0d992510dca46ac0d7fd258956a11dff1d821b51744e649c2ebbd3fc8cb57"
+        }
+      },
+      "same_map_and_ego_all_three": true,
+      "training_seed": 0,
+      "validation_logical_seed_range": [
+        10000,
+        10099
+      ],
+      "validation_sumo_seed_range": [
+        1000010000,
+        1000010099
+      ],
+      "test_seed_domain_reserved": true,
+      "background_vehicle_type_definitions": 120,
+      "route_conditional_driver_distributions": 3
+    }
+  },
+  "legacy_sorted_source_plan": {
+    "template_count": 30,
+    "vehicles_per_template": 590,
+    "route_count_pattern_per_template": {
+      "{\"-E3 -E0\": 200, \"E0 E3\": 150, \"E2 E1\": 240}": 30
+    },
+    "depart_lane_values": [
+      "0"
+    ],
+    "depart_speed_values": [
+      "max"
+    ],
+    "first_depart_source_range_seconds": [
+      0.0,
+      0.56
+    ],
+    "last_depart_source_range_seconds": [
+      596.79,
+      598.49
+    ],
+    "first_depart_after_scale4_range_seconds": [
+      0.0,
+      2.24
+    ],
+    "last_depart_after_scale4_range_seconds": [
+      2387.16,
+      2393.96
+    ],
+    "global_scaled_depart_range_seconds": [
+      0.0,
+      2393.96
+    ],
+    "scaled_control_window_seconds": [
+      50,
+      110
+    ],
+    "corresponding_source_depart_window_seconds": [
+      12.5,
+      27.5
+    ],
+    "requests_in_window_across_30_templates": 434,
+    "requests_per_template_in_window": {
+      "n": 30,
+      "mean": 14.466666666666667,
+      "min": 13,
+      "max": 17
+    },
+    "one_template_selected_per_episode": true,
+    "selection": "PaperEnv fixed seed-42 roll then cyclic template selection"
+  },
+  "evaluation": {
+    "intersection_sorted": {
+      "episodes": 100,
+      "outcomes": {
+        "success": 22,
+        "collision": 38,
+        "timeout": 40
+      },
+      "logical_seed_range": [
+        null,
+        null
+      ],
+      "sumo_seed_range": [
+        10000,
+        10099
+      ],
+      "unique_sumo_seeds": 100,
+      "warmup_checkpoints": "not present in legacy episode diagnostics",
+      "active_vehicles_reset_field": {
+        "n": 100,
+        "mean": 14.93,
+        "median": 15.0,
+        "p10": 14.0,
+        "p90": 16.0,
+        "min": 12.0,
+        "max": 16.0
+      },
+      "active_vehicles_terminal_field": {
+        "n": 100,
+        "mean": 22.83,
+        "median": 20.0,
+        "p10": 18.0,
+        "p90": 29.0,
+        "min": 16.0,
+        "max": 30.0
+      },
+      "source_endless_traffic": {
+        "True": 100
+      },
+      "endless_reinsertions_reset": {
+        "n": 100,
+        "mean": 15.38,
+        "median": 15.0,
+        "p10": 13.0,
+        "p90": 17.0,
+        "min": 9.0,
+        "max": 21.0
+      },
+      "endless_reinsertions_terminal": {
+        "n": 100,
+        "mean": 49.79,
+        "median": 36.0,
+        "p10": 26.0,
+        "p90": 81.0,
+        "min": 19.0,
+        "max": 94.0
+      }
+    },
+    "intersection_random_medium_v1": {
+      "episodes": 100,
+      "outcomes": {
+        "success": 75,
+        "collision": 25
+      },
+      "logical_seed_range": [
+        10000,
+        10099
+      ],
+      "sumo_seed_range": [
+        1000010000,
+        1000010099
+      ],
+      "unique_sumo_seeds": 100,
+      "warmup_checkpoints": {
+        "30": {
+          "simulation_time_seconds": {
+            "n": 100,
+            "mean": 30.0,
+            "median": 30.0,
+            "p10": 30.0,
+            "p90": 30.0,
+            "min": 30.0,
+            "max": 30.0
+          },
+          "in_network_background_vehicles": {
+            "n": 100,
+            "mean": 5.3,
+            "median": 5.0,
+            "p10": 3.0,
+            "p90": 8.0,
+            "min": 0.0,
+            "max": 12.0
+          },
+          "halting_background_vehicles": {
+            "n": 100,
+            "mean": 0.0,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "requested_background_due": {
+            "n": 100,
+            "mean": 9.83,
+            "median": 10.0,
+            "p10": 7.0,
+            "p90": 13.0,
+            "min": 4.0,
+            "max": 19.0
+          },
+          "actually_inserted_background_cumulative": {
+            "n": 100,
+            "mean": 9.82,
+            "median": 10.0,
+            "p10": 7.0,
+            "p90": 13.0,
+            "min": 4.0,
+            "max": 19.0
+          },
+          "pending_background_insertions": {
+            "n": 100,
+            "mean": 0.01,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "mean_departure_delay_seconds": {
+            "n": 100,
+            "mean": 0.039,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.112,
+            "min": 0.0,
+            "max": 0.47
+          },
+          "max_departure_delay_seconds": {
+            "n": 100,
+            "mean": 0.298,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 1.0,
+            "min": 0.0,
+            "max": 2.4
+          },
+          "checkpoint_coverage": 100,
+          "ego_present_counts": {
+            "False": 100
+          },
+          "request_count_sources": {
+            "native_flow_inserted_plus_pending": 100
+          }
+        },
+        "40": {
+          "simulation_time_seconds": {
+            "n": 100,
+            "mean": 40.0,
+            "median": 40.0,
+            "p10": 40.0,
+            "p90": 40.0,
+            "min": 40.0,
+            "max": 40.0
+          },
+          "in_network_background_vehicles": {
+            "n": 100,
+            "mean": 5.57,
+            "median": 6.0,
+            "p10": 3.0,
+            "p90": 8.0,
+            "min": 0.0,
+            "max": 12.0
+          },
+          "halting_background_vehicles": {
+            "n": 100,
+            "mean": 0.0,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "requested_background_due": {
+            "n": 100,
+            "mean": 13.23,
+            "median": 13.0,
+            "p10": 9.0,
+            "p90": 18.0,
+            "min": 7.0,
+            "max": 24.0
+          },
+          "actually_inserted_background_cumulative": {
+            "n": 100,
+            "mean": 13.22,
+            "median": 13.0,
+            "p10": 9.0,
+            "p90": 18.0,
+            "min": 7.0,
+            "max": 24.0
+          },
+          "pending_background_insertions": {
+            "n": 100,
+            "mean": 0.01,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "mean_departure_delay_seconds": {
+            "n": 100,
+            "mean": 0.038,
+            "median": 0.013,
+            "p10": 0.0,
+            "p90": 0.1,
+            "min": 0.0,
+            "max": 0.379
+          },
+          "max_departure_delay_seconds": {
+            "n": 100,
+            "mean": 0.372,
+            "median": 0.2,
+            "p10": 0.0,
+            "p90": 1.0,
+            "min": 0.0,
+            "max": 2.4
+          },
+          "checkpoint_coverage": 100,
+          "ego_present_counts": {
+            "False": 100
+          },
+          "request_count_sources": {
+            "native_flow_inserted_plus_pending": 100
+          }
+        },
+        "50": {
+          "simulation_time_seconds": {
+            "n": 100,
+            "mean": 50.0,
+            "median": 50.0,
+            "p10": 50.0,
+            "p90": 50.0,
+            "min": 50.0,
+            "max": 50.0
+          },
+          "in_network_background_vehicles": {
+            "n": 100,
+            "mean": 5.65,
+            "median": 5.5,
+            "p10": 3.0,
+            "p90": 9.0,
+            "min": 1.0,
+            "max": 13.0
+          },
+          "halting_background_vehicles": {
+            "n": 100,
+            "mean": 0.0,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "requested_background_due": {
+            "n": 100,
+            "mean": 16.73,
+            "median": 17.0,
+            "p10": 12.0,
+            "p90": 21.0,
+            "min": 8.0,
+            "max": 28.0
+          },
+          "actually_inserted_background_cumulative": {
+            "n": 100,
+            "mean": 16.7,
+            "median": 17.0,
+            "p10": 12.0,
+            "p90": 21.0,
+            "min": 8.0,
+            "max": 28.0
+          },
+          "pending_background_insertions": {
+            "n": 100,
+            "mean": 0.03,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "mean_departure_delay_seconds": {
+            "n": 100,
+            "mean": 0.04,
+            "median": 0.021,
+            "p10": 0.0,
+            "p90": 0.1,
+            "min": 0.0,
+            "max": 0.312
+          },
+          "max_departure_delay_seconds": {
+            "n": 100,
+            "mean": 0.467,
+            "median": 0.3,
+            "p10": 0.0,
+            "p90": 1.2,
+            "min": 0.0,
+            "max": 3.0
+          },
+          "checkpoint_coverage": 100,
+          "ego_present_counts": {
+            "False": 100
+          },
+          "request_count_sources": {
+            "native_flow_inserted_plus_pending": 100
+          }
+        }
+      },
+      "warmup_request_balance_nonzero_count": 0,
+      "control": {
+        "departed_background_control": {
+          "n": 100,
+          "mean": 5.14,
+          "median": 5.0,
+          "p10": 2.0,
+          "p90": 8.0,
+          "min": 0.0,
+          "max": 14.0
+        },
+        "control_elapsed_seconds": {
+          "n": 100,
+          "mean": 16.116,
+          "median": 17.8,
+          "p10": 8.8,
+          "p90": 19.4,
+          "min": 8.0,
+          "max": 21.3
+        },
+        "realized_departure_rate_vph_control": {
+          "n": 100,
+          "mean": 1170.68,
+          "median": 1164.429,
+          "p10": 586.957,
+          "p90": 1800.0,
+          "min": 0.0,
+          "max": 3036.145
+        },
+        "arrived_background_total": {
+          "n": 100,
+          "mean": 16.55,
+          "median": 16.0,
+          "p10": 11.0,
+          "p90": 22.0,
+          "min": 8.0,
+          "max": 31.0
+        },
+        "pending_background_insertions": {
+          "n": 100,
+          "mean": 0.01,
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "peak_background_vehicles": {
+          "n": 100,
+          "mean": 9.08,
+          "median": 9.0,
+          "p10": 6.0,
+          "p90": 11.0,
+          "min": 5.0,
+          "max": 16.0
+        },
+        "departure_delay_samples": {
+          "n": 100,
+          "mean": 21.86,
+          "median": 21.5,
+          "p10": 16.0,
+          "p90": 28.0,
+          "min": 10.0,
+          "max": 38.0
+        },
+        "mean_departure_delay_seconds": {
+          "n": 100,
+          "mean": 0.041,
+          "median": 0.024,
+          "p10": 0.0,
+          "p90": 0.115,
+          "min": 0.0,
+          "max": 0.279
+        },
+        "max_departure_delay_seconds": {
+          "n": 100,
+          "mean": 0.521,
+          "median": 0.4,
+          "p10": 0.0,
+          "p90": 1.2,
+          "min": 0.0,
+          "max": 3.0
+        }
+      },
+      "pooled_realized_entry_vph": 1148.176
+    },
+    "intersection_random_medium_p05_v1": {
+      "episodes": 100,
+      "outcomes": {
+        "collision": 88,
+        "success": 12
+      },
+      "logical_seed_range": [
+        10000,
+        10099
+      ],
+      "sumo_seed_range": [
+        1000010000,
+        1000010099
+      ],
+      "unique_sumo_seeds": 100,
+      "warmup_checkpoints": {
+        "30": {
+          "simulation_time_seconds": {
+            "n": 100,
+            "mean": 30.0,
+            "median": 30.0,
+            "p10": 30.0,
+            "p90": 30.0,
+            "min": 30.0,
+            "max": 30.0
+          },
+          "in_network_background_vehicles": {
+            "n": 100,
+            "mean": 29.1,
+            "median": 29.0,
+            "p10": 27.0,
+            "p90": 31.0,
+            "min": 25.0,
+            "max": 33.0
+          },
+          "halting_background_vehicles": {
+            "n": 100,
+            "mean": 0.0,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "requested_background_due": {
+            "n": 100,
+            "mean": 449.75,
+            "median": 451.0,
+            "p10": 429.0,
+            "p90": 470.0,
+            "min": 407.0,
+            "max": 493.0
+          },
+          "actually_inserted_background_cumulative": {
+            "n": 100,
+            "mean": 50.74,
+            "median": 51.0,
+            "p10": 50.0,
+            "p90": 52.0,
+            "min": 48.0,
+            "max": 53.0
+          },
+          "pending_background_insertions": {
+            "n": 100,
+            "mean": 399.01,
+            "median": 400.5,
+            "p10": 377.0,
+            "p90": 419.0,
+            "min": 354.0,
+            "max": 442.0
+          },
+          "mean_departure_delay_seconds": {
+            "n": 100,
+            "mean": 11.742,
+            "median": 11.769,
+            "p10": 11.31,
+            "p90": 12.108,
+            "min": 10.668,
+            "max": 12.904
+          },
+          "max_departure_delay_seconds": {
+            "n": 100,
+            "mean": 26.301,
+            "median": 26.3,
+            "p10": 25.6,
+            "p90": 26.9,
+            "min": 25.4,
+            "max": 27.3
+          },
+          "checkpoint_coverage": 100,
+          "ego_present_counts": {
+            "False": 100
+          },
+          "request_count_sources": {
+            "seeded_schedule_depart_time_less_than_snapshot_time": 100
+          }
+        },
+        "40": {
+          "simulation_time_seconds": {
+            "n": 100,
+            "mean": 40.0,
+            "median": 40.0,
+            "p10": 40.0,
+            "p90": 40.0,
+            "min": 40.0,
+            "max": 40.0
+          },
+          "in_network_background_vehicles": {
+            "n": 100,
+            "mean": 29.31,
+            "median": 29.0,
+            "p10": 27.0,
+            "p90": 31.0,
+            "min": 26.0,
+            "max": 33.0
+          },
+          "halting_background_vehicles": {
+            "n": 100,
+            "mean": 0.0,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "requested_background_due": {
+            "n": 100,
+            "mean": 600.12,
+            "median": 602.5,
+            "p10": 575.0,
+            "p90": 624.0,
+            "min": 556.0,
+            "max": 647.0
+          },
+          "actually_inserted_background_cumulative": {
+            "n": 100,
+            "mean": 65.77,
+            "median": 66.0,
+            "p10": 64.0,
+            "p90": 67.0,
+            "min": 61.0,
+            "max": 69.0
+          },
+          "pending_background_insertions": {
+            "n": 100,
+            "mean": 534.35,
+            "median": 536.0,
+            "p10": 508.0,
+            "p90": 557.0,
+            "min": 489.0,
+            "max": 582.0
+          },
+          "mean_departure_delay_seconds": {
+            "n": 100,
+            "mean": 16.164,
+            "median": 16.192,
+            "p10": 15.688,
+            "p90": 16.638,
+            "min": 14.813,
+            "max": 16.881
+          },
+          "max_departure_delay_seconds": {
+            "n": 100,
+            "mean": 35.383,
+            "median": 35.3,
+            "p10": 34.7,
+            "p90": 36.1,
+            "min": 34.2,
+            "max": 36.7
+          },
+          "checkpoint_coverage": 100,
+          "ego_present_counts": {
+            "False": 100
+          },
+          "request_count_sources": {
+            "seeded_schedule_depart_time_less_than_snapshot_time": 100
+          }
+        },
+        "50": {
+          "simulation_time_seconds": {
+            "n": 100,
+            "mean": 50.0,
+            "median": 50.0,
+            "p10": 50.0,
+            "p90": 50.0,
+            "min": 50.0,
+            "max": 50.0
+          },
+          "in_network_background_vehicles": {
+            "n": 100,
+            "mean": 29.19,
+            "median": 29.0,
+            "p10": 27.0,
+            "p90": 31.0,
+            "min": 25.0,
+            "max": 32.0
+          },
+          "halting_background_vehicles": {
+            "n": 100,
+            "mean": 0.0,
+            "median": 0.0,
+            "p10": 0.0,
+            "p90": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "requested_background_due": {
+            "n": 100,
+            "mean": 750.16,
+            "median": 752.0,
+            "p10": 722.0,
+            "p90": 774.0,
+            "min": 690.0,
+            "max": 808.0
+          },
+          "actually_inserted_background_cumulative": {
+            "n": 100,
+            "mean": 80.75,
+            "median": 81.0,
+            "p10": 79.0,
+            "p90": 83.0,
+            "min": 76.0,
+            "max": 84.0
+          },
+          "pending_background_insertions": {
+            "n": 100,
+            "mean": 669.41,
+            "median": 671.5,
+            "p10": 642.0,
+            "p90": 694.0,
+            "min": 609.0,
+            "max": 728.0
+          },
+          "mean_departure_delay_seconds": {
+            "n": 100,
+            "mean": 20.595,
+            "median": 20.619,
+            "p10": 20.169,
+            "p90": 21.096,
+            "min": 19.105,
+            "max": 21.33
+          },
+          "max_departure_delay_seconds": {
+            "n": 100,
+            "mean": 44.368,
+            "median": 44.35,
+            "p10": 43.5,
+            "p90": 45.1,
+            "min": 42.9,
+            "max": 45.9
+          },
+          "checkpoint_coverage": 100,
+          "ego_present_counts": {
+            "False": 100
+          },
+          "request_count_sources": {
+            "seeded_schedule_depart_time_less_than_snapshot_time": 100
+          }
+        }
+      },
+      "warmup_request_balance_nonzero_count": 0,
+      "control": {
+        "departed_background_control": {
+          "n": 100,
+          "mean": 31.07,
+          "median": 28.0,
+          "p10": 24.0,
+          "p90": 54.0,
+          "min": 19.0,
+          "max": 63.0
+        },
+        "control_elapsed_seconds": {
+          "n": 100,
+          "mean": 20.688,
+          "median": 18.55,
+          "p10": 16.0,
+          "p90": 36.5,
+          "min": 12.7,
+          "max": 41.7
+        },
+        "realized_departure_rate_vph_control": {
+          "n": 100,
+          "mean": 5409.877,
+          "median": 5410.405,
+          "p10": 5172.414,
+          "p90": 5604.79,
+          "min": 5052.632,
+          "max": 5906.25
+        },
+        "arrived_background_total": {
+          "n": 100,
+          "mean": 82.13,
+          "median": 79.0,
+          "p10": 75.0,
+          "p90": 104.0,
+          "min": 68.0,
+          "max": 115.0
+        },
+        "pending_background_insertions": {
+          "n": 100,
+          "mean": 949.51,
+          "median": 927.5,
+          "p10": 865.0,
+          "p90": 1149.0,
+          "min": 824.0,
+          "max": 1275.0
+        },
+        "peak_background_vehicles": {
+          "n": 100,
+          "mean": 33.16,
+          "median": 33.0,
+          "p10": 32.0,
+          "p90": 35.0,
+          "min": 31.0,
+          "max": 36.0
+        },
+        "departure_delay_samples": {
+          "n": 100,
+          "mean": 112.0,
+          "median": 109.0,
+          "p10": 105.0,
+          "p90": 135.0,
+          "min": 98.0,
+          "max": 146.0
+        },
+        "mean_departure_delay_seconds": {
+          "n": 100,
+          "mean": 29.885,
+          "median": 28.943,
+          "p10": 27.655,
+          "p90": 37.046,
+          "min": 26.125,
+          "max": 39.81
+        },
+        "max_departure_delay_seconds": {
+          "n": 100,
+          "mean": 63.278,
+          "median": 61.45,
+          "p10": 58.5,
+          "p90": 77.4,
+          "min": 56.8,
+          "max": 82.9
+        }
+      },
+      "pooled_realized_entry_vph": 5406.613
+    }
+  },
+  "interpretation": {
+    "same_logical_validation_seed_set_medium_p05": true,
+    "legacy_eval_sumo_seeds": [
+      10000,
+      10099
+    ],
+    "new_random_eval_sumo_seeds": [
+      1000010000,
+      1000010099
+    ],
+    "pending_definition": "SUMO off-network pending insertion requests, not in-network halted vehicles",
+    "warmup_50s_boundary": "ego_present=false at t=50 in all 200 random episodes; initial episode snapshot at 50.1 s",
+    "active_vehicles_boundary": "legacy active_vehicles fields are raw logged counts; do not reinterpret as background-only or subtract ego without a definition"
+  },
+  "limits": [
+    "Training is single seed 0 per method; 100 episodes are evaluation episodes, not training replicates.",
+    "Medium is a working traffic-demand candidate, not calibrated learning difficulty.",
+    "p05 has large off-network pending backlog but zero halting background vehicles at 30/40/50s; do not describe as a road jam.",
+    "Legacy sorted has no 30/40/50 warmup checkpoints.",
+    "Legacy scaled XML counts are per one of 30 templates per episode; endless recycling adds further traffic.",
+    "Outcome gaps across sorted and random scenarios do not isolate a model variable."
+  ]
+}

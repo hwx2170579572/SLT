@@ -321,6 +321,7 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
         self.last_route_compatible_mask: Tensor | None = None
         self.last_topology_key_mask: Tensor | None = None
         self.last_topology_fallback_mask: Tensor | None = None
+        self._last_edge_diagnostics: dict[str, Tensor] = {}
 
     @staticmethod
     def _inverse_softplus(value: float) -> float:
@@ -459,7 +460,9 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
         topology_tokens: Tensor,
         rotated_map: Tensor,
         map_valid: Tensor,
-    ) -> tuple[Tensor, Tensor, Tensor, Tensor, Tensor]:
+        *,
+        compute_context: bool = True,
+    ) -> tuple[Tensor | None, Tensor | None, Tensor, Tensor, Tensor]:
         batch, actors, history, feature_dim = vehicle_tokens.shape
         squared_distance = (
             vehicle_positions[:, :, :, None, None, :]
@@ -514,6 +517,13 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
         else:
             key_mask = global_nodes & vehicle_valid[..., None]
 
+        self.last_route_squared_distance = route_distance.detach()
+        self.last_route_compatible_mask = compatible.detach()
+        self.last_topology_key_mask = key_mask.detach()
+        self.last_topology_fallback_mask = fallback.detach()
+        if not compute_context:
+            return None, None, key_mask, compatible, fallback
+
         assert self.topology_attention is not None
         query = vehicle_tokens.reshape(batch, actors * history, feature_dim)
         context, attention = self.topology_attention(
@@ -526,11 +536,6 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
         attention = attention.reshape(batch, actors, history, -1)
         valid = vehicle_valid[..., None].to(context.dtype)
         attention = attention * valid
-
-        self.last_route_squared_distance = route_distance.detach()
-        self.last_route_compatible_mask = compatible.detach()
-        self.last_topology_key_mask = key_mask.detach()
-        self.last_topology_fallback_mask = fallback.detach()
         return context * valid, attention, key_mask, compatible, fallback
 
     def _vehicle_edge_features_v2(
@@ -538,6 +543,9 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
         trajectories: Tensor,
         valid: Tensor,
         topology_attention: Tensor,
+        *,
+        topology_key_mask: Tensor | None = None,
+        collect_diagnostics: bool = False,
     ) -> tuple[Tensor, Tensor, Tensor, Tensor, Tensor]:
         states = trajectories.permute(0, 2, 1, 3)
         positions = states[..., :2]
@@ -556,12 +564,12 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
         ).clamp(0.0, 20.0) / 20.0
 
         alpha = topology_attention.permute(0, 2, 1, 3)
-        same_lane = torch.einsum("bhim,bhjm->bhij", alpha, alpha)
+        same_lane_score = torch.einsum("bhim,bhjm->bhij", alpha, alpha)
         risk_adjacency = torch.maximum(
             self.topology_conflict_adjacency,
             self.topology_merge_adjacency,
         )
-        conflict_or_merge = torch.einsum(
+        conflict_or_merge_score = torch.einsum(
             "bhim,mn,bhjn->bhij", alpha, risk_adjacency, alpha
         )
         merge_score = torch.einsum(
@@ -570,9 +578,17 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
             self.topology_merge_adjacency,
             alpha,
         )
+        conflict_score = None
+        if collect_diagnostics:
+            conflict_score = torch.einsum(
+                "bhim,mn,bhjn->bhij",
+                alpha,
+                self.topology_conflict_adjacency,
+                alpha,
+            )
         topology_scale = self.topology_residual_scale
-        same_lane = same_lane * topology_scale
-        conflict_or_merge = conflict_or_merge * topology_scale
+        same_lane = same_lane_score * topology_scale
+        conflict_or_merge = conflict_or_merge_score * topology_scale
         edge_features = torch.cat(
             [
                 delta_position,
@@ -600,7 +616,180 @@ class TopoTemporalGraphExtractorV2(TopoTemporalGraphExtractor):
             if merge_values.numel()
             else torch.zeros((), device=trajectories.device)
         )
+        self._last_edge_diagnostics = {}
+        if collect_diagnostics:
+            pair_weights = pair_valid.to(merge_score.dtype)
+            valid_pair_count = pair_weights.sum()
+            candidate_pair_count = torch.tensor(
+                pair_valid.shape[0]
+                * pair_valid.shape[1]
+                * pair_valid.shape[2]
+                * max(pair_valid.shape[3] - 1, 0),
+                device=trajectories.device,
+                dtype=merge_score.dtype,
+            )
+
+            def pair_mean(values: Tensor) -> Tensor:
+                return (values * pair_weights).sum() / valid_pair_count.clamp_min(1.0)
+
+            assert conflict_score is not None
+            conflict_edge_count = self.topology_conflict_adjacency.sum()
+            merge_edge_count = self.topology_merge_adjacency.sum()
+            edge_diagnostics = {
+                "relation_pair_valid_count": valid_pair_count.detach(),
+                "relation_pair_candidate_count": candidate_pair_count,
+                "relation_pair_valid_fraction": (
+                    valid_pair_count / candidate_pair_count.clamp_min(1.0)
+                ).detach(),
+                "relation_pair_mask_has_valid": (
+                    valid_pair_count > 0
+                ).to(merge_score.dtype),
+                "topology_conflict_directed_edge_count": conflict_edge_count.detach(),
+                "topology_merge_directed_edge_count": merge_edge_count.detach(),
+                "topology_conflict_relation_present": (conflict_edge_count > 0).to(
+                    merge_score.dtype
+                ),
+                "topology_merge_relation_present": (merge_edge_count > 0).to(
+                    merge_score.dtype
+                ),
+                "same_lane_attention_pair_mean": pair_mean(same_lane_score).detach(),
+                "conflict_attention_pair_mean": pair_mean(conflict_score).detach(),
+                "merge_attention_pair_mean": pair_mean(merge_score).detach(),
+                "conflict_or_merge_attention_pair_mean": pair_mean(
+                    conflict_or_merge_score
+                ).detach(),
+                "same_lane_edge_feature_mean": pair_mean(same_lane).detach(),
+                "conflict_or_merge_edge_feature_mean": pair_mean(
+                    conflict_or_merge
+                ).detach(),
+                "merge_pair_score": mean_merge_score.detach(),
+            }
+            # Compare learned attention-induced relation scores with a uniform
+            # distribution over the exact key support used by each query. The
+            # support also masks the actor pairs, so attention and null baselines
+            # share both the candidate set and pair denominator.
+            relation_uniform_metrics = self._uniform_relation_support_diagnostics(
+                same_lane_score=same_lane_score,
+                conflict_score=conflict_score,
+                merge_score=merge_score,
+                conflict_or_merge_score=conflict_or_merge_score,
+                pair_valid=pair_valid,
+                topology_key_mask=topology_key_mask,
+                reference=merge_score,
+            )
+            edge_diagnostics.update(relation_uniform_metrics)
+            self._last_edge_diagnostics = edge_diagnostics
         return edge_features, edge_weights, pair_valid, node_valid, mean_merge_score
+
+    def _uniform_relation_support_diagnostics(
+        self,
+        *,
+        same_lane_score: Tensor,
+        conflict_score: Tensor,
+        merge_score: Tensor,
+        conflict_or_merge_score: Tensor,
+        pair_valid: Tensor,
+        topology_key_mask: Tensor | None,
+        reference: Tensor,
+    ) -> dict[str, Tensor]:
+        """Compare relation attention mass to a uniform null on identical support.
+
+        ``topology_key_mask`` is the post-top-k/fallback support actually passed
+        to lane attention, with shape [B, actors, history, lanes]. The uniform
+        baseline is formed independently per actor/history query on that mask,
+        and both observed and null relation masses use the same valid actor-pair
+        mask. These are descriptive selectivity statistics, not causal effects.
+        """
+        zero = reference.new_zeros(())
+        result: dict[str, Tensor] = {
+            "relation_uniform_candidate_query_count": zero,
+            "relation_uniform_candidate_count_mean": zero,
+            "relation_uniform_support_pair_count": zero,
+            "relation_uniform_support_valid": zero,
+        }
+        relation_names = (
+            "same_lane",
+            "conflict",
+            "merge",
+            "conflict_or_merge",
+        )
+        if topology_key_mask is None:
+            for name in relation_names:
+                result[f"{name}_attention_matched_support_mean"] = zero
+                result[f"{name}_uniform_support_mean"] = zero
+                result[f"{name}_attention_minus_uniform_support"] = zero
+            return result
+
+        candidates = topology_key_mask.permute(0, 2, 1, 3).to(reference.dtype)
+        candidate_counts = candidates.sum(dim=-1)
+        query_valid = candidate_counts > 0
+        candidate_query_count = query_valid.to(reference.dtype).sum()
+        uniform = candidates / candidate_counts.clamp_min(1.0)[..., None]
+        actor_has_candidates = query_valid
+        supported_pairs = (
+            pair_valid
+            & actor_has_candidates.unsqueeze(-1)
+            & actor_has_candidates.unsqueeze(-2)
+        )
+        pair_weights = supported_pairs.to(reference.dtype)
+        support_pair_count = pair_weights.sum()
+        support_valid = (support_pair_count > 0).to(reference.dtype)
+
+        def matched_mean(values: Tensor) -> Tensor:
+            return (values * pair_weights).sum() / support_pair_count.clamp_min(1.0)
+
+        same_uniform = torch.einsum("bhim,bhjm->bhij", uniform, uniform)
+        conflict_uniform = torch.einsum(
+            "bhim,mn,bhjn->bhij",
+            uniform,
+            self.topology_conflict_adjacency,
+            uniform,
+        )
+        merge_uniform = torch.einsum(
+            "bhim,mn,bhjn->bhij",
+            uniform,
+            self.topology_merge_adjacency,
+            uniform,
+        )
+        risk_adjacency = torch.maximum(
+            self.topology_conflict_adjacency,
+            self.topology_merge_adjacency,
+        )
+        conflict_or_merge_uniform = torch.einsum(
+            "bhim,mn,bhjn->bhij", uniform, risk_adjacency, uniform
+        )
+        observed = {
+            "same_lane": same_lane_score,
+            "conflict": conflict_score,
+            "merge": merge_score,
+            "conflict_or_merge": conflict_or_merge_score,
+        }
+        baselines = {
+            "same_lane": same_uniform,
+            "conflict": conflict_uniform,
+            "merge": merge_uniform,
+            "conflict_or_merge": conflict_or_merge_uniform,
+        }
+        result.update(
+            {
+                "relation_uniform_candidate_query_count": candidate_query_count,
+                "relation_uniform_candidate_count_mean": (
+                    (candidate_counts * query_valid.to(reference.dtype)).sum()
+                    / candidate_query_count.clamp_min(1.0)
+                ),
+                "relation_uniform_support_pair_count": support_pair_count,
+                "relation_uniform_support_valid": support_valid,
+            }
+        )
+        for name in relation_names:
+            observed_mean = matched_mean(observed[name])
+            uniform_mean = matched_mean(baselines[name])
+            result[f"{name}_attention_matched_support_mean"] = observed_mean
+            result[f"{name}_uniform_support_mean"] = uniform_mean
+            result[f"{name}_attention_minus_uniform_support"] = (
+                observed_mean - uniform_mean
+            )
+        return result
 
     def _last_query_mask(self, key_mask: Tensor, valid: Tensor) -> Tensor:
         last_index = valid.long().sum(dim=-1).sub(1).clamp(min=0)

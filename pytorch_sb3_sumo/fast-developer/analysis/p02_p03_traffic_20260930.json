@@ -1,0 +1,129 @@
+{
+  "schema": "p02-p03-traffic-audit/v1",
+  "date": "2026-09-30",
+  "scope": "Read-only aggregation of completed evaluation diagnostics and static SUMO network configuration; no simulation or training was run.",
+  "runs": {
+    "root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p03p02_0930",
+    "evaluation_split": "validation",
+    "episodes_per_profile": 100,
+    "logical_seed_range": [10000, 10099],
+    "sumo_seed_range": [1000010000, 1000010099],
+    "same_logical_and_sumo_seeds_across_profiles": true,
+    "p02": {
+      "scenario": "intersection_random_medium_p02_v1",
+      "outcomes_success_collision_timeout": [5, 25, 70],
+      "eval_episodes_jsonl": "runs/smlp_p03p02_0930/sac_mlp__intersection_random_medium_p02_v1_depart1p0/diagnostics/eval_worker_00/episodes.jsonl"
+    },
+    "p03": {
+      "scenario": "intersection_random_medium_p03_v1",
+      "outcomes_success_collision_timeout": [17, 83, 0],
+      "eval_episodes_jsonl": "runs/smlp_p03p02_0930/sac_mlp__intersection_random_medium_p03_v1_depart1p0/diagnostics/eval_worker_00/episodes.jsonl"
+    }
+  },
+  "warmup": {
+    "checkpoint_seconds": [30, 40, 50],
+    "episodes_with_each_checkpoint_per_profile": 100,
+    "ego_present_count_per_checkpoint_per_profile": [0, 0, 0],
+    "request_balance_errors_per_profile": 0,
+    "queue_semantics": "pending insertions are outside the road network; halting counts apply only to in-network background vehicles with speed <0.1 m/s",
+    "means_by_profile_and_checkpoint": {
+      "p02": {
+        "30": {"in_network_background": 29.12, "halting_background": 0, "requested_due": 181.14, "inserted_cumulative": 50.15, "pending_outside": 130.99, "mean_departure_delay_s": 9.38},
+        "40": {"in_network_background": 29.24, "halting_background": 0, "requested_due": 240.35, "inserted_cumulative": 65.25, "pending_outside": 175.10, "mean_departure_delay_s": 13.059},
+        "50": {"in_network_background": 29.39, "halting_background": 0, "requested_due": 300.28, "inserted_cumulative": 80.36, "pending_outside": 219.92, "mean_departure_delay_s": 16.755}
+      },
+      "p03": {
+        "30": {"in_network_background": 29.36, "halting_background": 0, "requested_due": 270.14, "inserted_cumulative": 50.64, "pending_outside": 219.50, "mean_departure_delay_s": 10.672},
+        "40": {"in_network_background": 29.24, "halting_background": 0, "requested_due": 359.90, "inserted_cumulative": 65.65, "pending_outside": 294.25, "mean_departure_delay_s": 14.752},
+        "50": {"in_network_background": 29.25, "halting_background": 0, "requested_due": 449.20, "inserted_cumulative": 80.71, "pending_outside": 368.49, "mean_departure_delay_s": 18.877}
+      }
+    },
+    "paired_p03_minus_p02_by_checkpoint": {
+      "30": {"requested_due_mean": 89.00, "requested_due_positive_pairs": 100, "pending_mean": 88.51, "inserted_mean": 0.49, "in_network_background_mean": 0.24, "halting_pairs_nonzero": 0},
+      "40": {"requested_due_mean": 119.55, "requested_due_positive_pairs": 100, "pending_mean": 119.15, "inserted_mean": 0.40, "in_network_background_mean": 0.00, "halting_pairs_nonzero": 0},
+      "50": {
+        "requested_due_mean": 148.92,
+        "requested_due_positive_pairs": 100,
+        "requested_due_range": [127, 182],
+        "pending_mean": 148.57,
+        "pending_positive_pairs": 100,
+        "pending_range": [128, 181],
+        "inserted_mean": 0.35,
+        "inserted_difference_sign_counts": {"positive": 43, "zero": 40, "negative": 17},
+        "inserted_range": [-2, 3],
+        "in_network_background_mean": -0.14,
+        "in_network_background_difference_sign_counts": {"positive": 35, "zero": 21, "negative": 44},
+        "in_network_background_range": [-4, 7],
+        "halting_difference_sign_counts": {"positive": 0, "zero": 100, "negative": 0}
+      }
+    },
+    "route_means_at_50s": {
+      "route_order": ["neg_E3_to_neg_E0", "E0_to_E3", "E2_to_E1"],
+      "p02": {
+        "requested_due": [99.76, 100.59, 99.93],
+        "inserted_cumulative": [26.57, 26.71, 27.08],
+        "pending_outside": [73.19, 73.88, 72.85],
+        "in_network": [9.83, 9.71, 9.85]
+      },
+      "p03": {
+        "requested_due": [149.17, 149.93, 150.10],
+        "inserted_cumulative": [26.83, 26.84, 27.04],
+        "pending_outside": [122.34, 123.09, 123.06],
+        "in_network": [9.71, 9.71, 9.83]
+      },
+      "mean_inlet_lane_occupancy": {
+        "p02": {"-E3_0": 4.23, "E0_0": 4.22, "E2_0": 4.14},
+        "p03": {"-E3_0": 4.24, "E0_0": 4.08, "E2_0": 4.25}
+      }
+    },
+    "interpretation_boundary": "p03 has consistently more scheduled requests and pending insertions, while observed pre-control in-network counts, cumulative inserted counts, lane occupancy, and halting counts are similar. These snapshots do not establish that p03 has higher in-road congestion."
+  },
+  "control_period_terminal_traffic_by_outcome": {
+    "note": "Each rate is normalized by that episode's control_elapsed_seconds. Cumulative departures are exposure-dependent because collision and success terminate episodes at different times.",
+    "p02": {
+      "timeout_n70": {"mean_elapsed_s": 60.0, "mean_control_departures": 90.157, "mean_realized_rate_vph": 5409.429, "mean_pending_outside": 488.029, "mean_peak_in_network_background": 33.6},
+      "collision_n25": {"mean_elapsed_s": 36.856, "mean_control_departures": 55.2, "mean_realized_rate_vph": 5373.179, "mean_pending_outside": 387.36, "mean_peak_in_network_background": 33.12},
+      "success_n5": {"mean_elapsed_s": 44.28, "mean_control_departures": 66.8, "mean_realized_rate_vph": 5414.604, "mean_pending_outside": 430.6, "mean_peak_in_network_background": 34.0}
+    },
+    "p03": {
+      "collision_n83": {"mean_elapsed_s": 9.796, "mean_control_departures": 14.675, "mean_realized_rate_vph": 5395.005, "mean_pending_outside": 443.349, "mean_peak_in_network_background": 32.735},
+      "success_n17": {"mean_elapsed_s": 18.712, "mean_control_departures": 28.059, "mean_realized_rate_vph": 5398.37, "mean_pending_outside": 502.353, "mean_peak_in_network_background": 33.0}
+    },
+    "interpretation_boundary": "Both profiles show roughly 5.4k realized departures/hour in these logs despite different requested rates. Do not compare cumulative departures without accounting for episode exposure; the terminal groups are selected by outcome and duration."
+  },
+  "arrival_and_type_pairing": {
+    "arrival_seed_material": "intersection_bernoulli_step_schedule_v1:<actual_sumo_seed>:<route_id>:arrival",
+    "probability_is_in_seed_material": false,
+    "same_seed_same_route_tick_relation": "p02 arrival ticks are a subset of p03 arrival ticks, because both profiles apply their threshold to the same per-route RNG draws",
+    "scheduled_file_sha256_equal_across_profiles": false,
+    "vehicle_type_assignment": "Generated per-vehicle requests reference the same route-specific SUMO vTypeDistribution; Python schedule generation does not choose a concrete vType.",
+    "type_id_recorded_in_evaluation_actor_snapshots": false,
+    "common_initial_vehicle_ids_checked": 2630,
+    "common_initial_vehicle_ids_with_equal_length_and_width": 2630,
+    "type_pairing_conclusion": "Vehicle dimensions matched for common initial-snapshot IDs, but exact vType/driver-parameter pairing is unobserved and should not be claimed."
+  },
+  "network_route_check": {
+    "ego_route_edges": ["-E1", "-E0"],
+    "ego_depart_lane": 2,
+    "lane_lengths_m": {"-E1_0": 70.0, "-E1_1": 70.0, "-E1_2": 70.0},
+    "direct_connections_from_E1": [
+      {"from_lane": 0, "to_edge": "E3", "to_lane": 0, "direction": "right"},
+      {"from_lane": 0, "to_edge": "-E2", "to_lane": 0, "direction": "straight"},
+      {"from_lane": 1, "to_edge": "-E2", "to_lane": 1, "direction": "straight"},
+      {"from_lane": 2, "to_edge": "-E2", "to_lane": 2, "direction": "straight"},
+      {"from_lane": 2, "to_edge": "-E0", "to_lane": 1, "direction": "left"}
+    ],
+    "p02_timeout_terminal_positions": {"n": 70, "still_on_E1_route_index_0": 69, "lane_counts": {"-E1_0": 56, "-E1_1": 13, ":J1_14_0": 1}, "mean_distance_m": 70.055, "distance_range_m": [70.0, 73.853]},
+    "p02_timeout_terminal_lane_action": {"lane_command_counts": {"-1": 54, "1": 9, "0": 7}, "lane_command_minus1_and_not_applied": 46},
+    "p03_collision_terminal_positions": {"n": 83, "internal_lane_counts": {":J1_21_0": 55, ":J1_14_0": 28}, "mean_speed_mps": 9.271, "lane_command_plus1_and_not_applied": 83},
+    "network_interpretation_boundary": "Most p02 timeouts end in inbound lanes with no direct connection to the requested -E0 route. This is consistent with a route/lane incompatibility at termination, but does not identify why the policy selected those lanes or whether SUMO lane-change constraints caused it."
+  },
+  "source_paths": {
+    "p02_eval_episodes": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p03p02_0930/sac_mlp__intersection_random_medium_p02_v1_depart1p0/diagnostics/eval_worker_00/episodes.jsonl",
+    "p03_eval_episodes": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p03p02_0930/sac_mlp__intersection_random_medium_p03_v1_depart1p0/diagnostics/eval_worker_00/episodes.jsonl",
+    "random_traffic_generator": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/random_intersection.py:173-267",
+    "warmup_and_terminal_traffic_logging": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/paper_env.py:315-438, 638-679",
+    "network_connections": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/intersection_random_medium_v1/map.net.xml:97-102, 165-169",
+    "ego_route_and_depart_lane": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/intersection_random_medium_v1/ego.rou.xml:5"
+  }
+}

@@ -1,0 +1,3039 @@
+{
+  "schema_version": 1,
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+  "launcher_status": "launching",
+  "suite_methods": [
+    "mst_slt",
+    "sac_mlp_d1_st",
+    "sac_mlp_d1_st_rt",
+    "sac_mlp_d1_st_rt_topo",
+    "sac_mlp_d1_st_rt_topo_routeaware_v1",
+    "sac_mlp_d1_st_rt_3slot",
+    "sac_mlp_d1_st_rt_topo_3slot"
+  ],
+  "suite_manifest": {
+    "scenario": "intersection_random_darrl_medium_v1",
+    "scenario_revision": null,
+    "traffic_protocol": null,
+    "traffic_config": null,
+    "seed": 0,
+    "raw_step_budget": null,
+    "eval_episodes": null,
+    "eval_traffic_split": null,
+    "smoke": null
+  },
+  "methods": {
+    "mst_slt": {
+      "suite_status": "complete",
+      "suite_exit_code": 0,
+      "train_raw_steps": 100000,
+      "train_updates": 95001,
+      "train_wall_seconds": 10723.749486099929,
+      "completion_present": true,
+      "training_status": "trained",
+      "training_complete": true,
+      "arguments": {
+        "implementation_fidelity": {
+          "implementation_id": "released_scene_rep_pytorch_port_v1",
+          "source_primary": true,
+          "research_extension": false,
+          "reconstruction_required": false,
+          "reconstruction_reason": null
+        },
+        "runtime_paths": {
+          "tensorboard_log": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\tb\\d73f71a3b637ef92",
+          "tensorboard_short_root_injected": true
+        },
+        "requested_raw_steps": {
+          "scenario": "intersection_random_darrl_medium_v1",
+          "algo": "scene_rep",
+          "max_steps": 100000,
+          "seed": 0,
+          "device": "cuda",
+          "batch_size": 32,
+          "learning_rate": 0.0001,
+          "discount": 0.99,
+          "learning_starts": 5000,
+          "buffer_size": 20000,
+          "neighbors": 5,
+          "history_steps": 10,
+          "path_length": 10,
+          "action_repeat": 3,
+          "ego_control_profile": "direct",
+          "traffic_protocol": "frozen_80_20",
+          "episode_limit_profile": "source",
+          "checkpoint_freq": 10000,
+          "eval_freq": 0,
+          "eval_episodes": 100,
+          "output_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+          "model_name": "mst_slt__intersection_random_darrl_medium_v1_depart1p0",
+          "gui": false,
+          "check_only": false
+        },
+        "effective_sb3_decision_steps": {
+          "expected_total_without_partial_repeats": 33334,
+          "learn_loop_upper_bound": 100000,
+          "learning_starts_decisions": 1667,
+          "model_learning_starts_argument": 5000,
+          "checkpoint_freq": 3334,
+          "eval_freq": 0,
+          "gradient_steps_per_decision": 3,
+          "source_ppo_horizon": null,
+          "source_ppo_expected_collected_raw_steps": null,
+          "source_ppo_test_checkpoint_raw_step": null
+        }
+      },
+      "experiment_manifest": {
+        "method": "mst_slt",
+        "source_script": "train_intersection_yield_v2",
+        "source_method": "mst_slt",
+        "family": "yv2",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+        "traffic_config": {
+          "schema_version": 1,
+          "protocol": "intersection_bernoulli_step_schedule_v1",
+          "scenario": "intersection_random_darrl_medium_v1",
+          "density_level": "medium",
+          "source_scenario": "intersection_sorted",
+          "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+          "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+          "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+          "total_vehicles_per_hour": 3240,
+          "vehicles_per_hour_by_route": {
+            "neg_E3_to_neg_E0": 1080,
+            "E0_to_E3": 1080,
+            "E2_to_E1": 1080
+          },
+          "flows": [
+            {
+              "id": "neg_E3_to_neg_E0",
+              "edges": [
+                "-E3",
+                "-E0"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E0_to_E3",
+              "edges": [
+                "E0",
+                "E3"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E2_to_E1",
+              "edges": [
+                "E2",
+                "E1"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            }
+          ],
+          "flow_begin_seconds": 0.0,
+          "flow_end_seconds": 130.0,
+          "ego_depart_seconds": 50.0,
+          "ego_route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "ego_depart_lane": "2",
+          "ego_depart_speed": "0",
+          "step_length_seconds": 0.1,
+          "max_episode_raw_steps": 600,
+          "default_action_repeat": 3,
+          "endless_traffic": false,
+          "background_exit_behavior": "leave after the configured route ends; no recycling",
+          "depart_scale": 1.0,
+          "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+          "traffic_seed_domains": {
+            "train": {
+              "offset": 0,
+              "width": 1000000000,
+              "last_seed": 999999999
+            },
+            "validation": {
+              "offset": 1000000000,
+              "width": 500000000,
+              "last_seed": 1499999999
+            },
+            "test": {
+              "offset": 1500000000,
+              "width": 500000000,
+              "last_seed": 1999999999
+            }
+          },
+          "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+          "default_evaluation_split": "validation",
+          "default_evaluation_logical_seeds": {
+            "start": 10000,
+            "episodes": 100
+          },
+          "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+          "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+          "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+          "dynamic_episode_traffic": true,
+          "scenario_family": "darrl_lane1_v1",
+          "configuration_revision": "darrl_r2_20260930",
+          "previous_configuration_revision": "darrl_r1_20260930",
+          "terminal_outcome_protocol": "exclusive_terminal_v2",
+          "template_scenario": "intersection_random_medium_v1",
+          "collision_action": "remove",
+          "collision_detection_mode": "sumo_events_or_ego_geometry",
+          "background_vtype_overrides": {
+            "jmIgnoreFoeProb": "0"
+          },
+          "ego_vtype_overrides": {
+            "minGap": "1",
+            "jmIgnoreFoeProb": "0"
+          }
+        },
+        "training_traffic_split": "train",
+        "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0",
+        "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "evaluation": {
+          "episodes": 100,
+          "success_rate": 0.16,
+          "collision_rate": 0.53,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.31,
+          "mean_return": -0.37,
+          "std_return": 0.7437069315261221,
+          "mean_decision_steps": 126.21,
+          "mean_raw_steps": 378.02,
+          "mean_success_completion_time_seconds": 34.28125,
+          "std_success_completion_time_seconds": 15.661346475878121,
+          "successful_episodes": 16
+        },
+        "training_curve": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\training_curve.png",
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "raw_budget": 100000,
+        "training_seed": 0,
+        "checkpoint_frequency_raw_steps": 10000,
+        "note": "seeded randomized intersection traffic profile."
+      },
+      "progress": null,
+      "completion": null,
+      "evaluation_identity": {
+        "method": "mst_slt",
+        "source_script": "train_intersection_yield_v2",
+        "source_method": "mst_slt",
+        "family": "yv2",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "16ff0b2073ea68c51ca823156b4a7e2d694a2c29d89d6c6bde65ca79a46be03a",
+        "episodes": 100,
+        "workers": 1,
+        "episodes_per_worker": [
+          100
+        ],
+        "smoke": false,
+        "behavior_diagnostics": true
+      },
+      "external_evaluation_summary": {
+        "episodes": 100,
+        "success_rate": 0.16,
+        "collision_rate": 0.53,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.31,
+        "mean_return": -0.37,
+        "std_return": 0.7437069315261221,
+        "mean_decision_steps": 126.21,
+        "mean_raw_steps": 378.02,
+        "mean_success_completion_time_seconds": 34.28125,
+        "std_success_completion_time_seconds": 15.661346475878121,
+        "successful_episodes": 16
+      },
+      "external_eval_episode_count": 100,
+      "logical_seed_min": 10000,
+      "logical_seed_max": 10099,
+      "logical_seed_unique_count": 100,
+      "seed_sequence_is_10000_to_10099": true,
+      "terminal_flags_raw_counts": {
+        "success": 16,
+        "collision": 53,
+        "timeout": 31,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 16,
+        "collision": 53,
+        "timeout": 31,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {
+        "1": 100
+      },
+      "return": {
+        "mean": -0.37,
+        "population_variance": 0.5531,
+        "population_sd": 0.7437069315261221
+      },
+      "episode_steps": {
+        "raw_mean_all": 378.02,
+        "raw_median_all": 363,
+        "decision_mean_all": 126.21,
+        "decision_mean_success_only": 114.5625,
+        "raw_mean_success_only": 342.8125,
+        "success_completion_time_mean_seconds": 34.28125,
+        "success_completion_time_median_seconds": 34.9
+      },
+      "behavior": {
+        "episodes_with_diagnostics": 100,
+        "speed": {
+          "sample_count": 37785,
+          "mean_actual_speed_mps_raw_tick_weighted": 2.5644070841339337,
+          "stopped_ticks": 22021,
+          "stopped_fraction_of_speed_samples": 0.5827974063781924
+        },
+        "risk": {
+          "evaluable_ticks": 37785,
+          "low_ttc_ticks": 2042,
+          "low_ttc_fraction_of_evaluable_ticks": 0.054042609501124786,
+          "risk_and_observation_covered_ticks": 37785,
+          "covered_critical_unobserved_ticks": 864,
+          "critical_unobserved_fraction_of_covered_ticks": 0.022866216752679636
+        },
+        "actions": [
+          {
+            "dimension": 0,
+            "samples": 12621,
+            "mean": -0.1650510534706702,
+            "near_unit_bound_fraction": 0.1789874019491324
+          },
+          {
+            "dimension": 1,
+            "samples": 12621,
+            "mean": 0.05183014757007363,
+            "near_unit_bound_fraction": 0.08390777275968624
+          }
+        ],
+        "collision_terminal_location_counts_from_last_snapshot": {
+          ":J1_21 | :J1_21_0": 52,
+          "-E0 | -E0_1": 1
+        },
+        "terminal_collision_episodes_with_raw_sumo_collision_flag": 1,
+        "terminal_collision_episodes_with_geometric_collision_flag": 52,
+        "limitation": "Raw SUMO collision flag and geometric collision flag are endpoint diagnostics; they are not interchangeable with the mutually exclusive terminal collision outcome."
+      },
+      "diagnostic_episode_count": 100,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 100,
+      "traffic_schedule_hashes_by_logical_seed": {
+        "10000": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e",
+        "10001": "b5f4dccca2ae810949c0dacf7e205df49cffb8c6fff91da4e2295b412fe70e8e",
+        "10002": "a2d7328389b9898383387429c97c619e815d8958cc0f5366b6b2e4bd59592530",
+        "10003": "ddd7ae402defc3ea36b1da5d2b950d4ceb012f196e422a55d1778a7c97832f02",
+        "10004": "4c3a9751ee714eec65251529542b2611de77dddb49518431088c1024c21ac552",
+        "10005": "4ffb0112147e533e1be355cad848bfeed1bca62a1dc92ca3398385f194762b0d",
+        "10006": "25a7ec6f5f6c3443fa6425db01fed0ee708ae6fd796830c44e989aaa70f2e530",
+        "10007": "ad77947b3a6cba0425bd44327ec672f1859ce35b4223e555d1fac981d6752efd",
+        "10008": "3acd2f6579c061852be72a301089f31eb89fb2360f43578ad91a51f09d1261e4",
+        "10009": "42937d859e4720b4d6a28f9a6c775d2d7dbd7a37adf60a201cec4b6b2fddd6c9",
+        "10010": "babec3818c0f97841c41c1a42d66907581fb9c44102f1d16f99a90a462a0449b",
+        "10011": "4af831887c8784876d0492384abdd0a90ca27eb0b9ae118f57a4c9caba0efa18",
+        "10012": "d525c1f1cc829716d09f73f12b8e7f67e57306c8933480fc6bf78933473a1017",
+        "10013": "1137ed37550e91ffbbebfc3a4640f0558d505f7fe4291dc000b060049c675c63",
+        "10014": "a7bde6273065fd4a8412061c36f4900ac6cdcdb1c37a7dacf3bb618834b5f839",
+        "10015": "80b3d1be88a7b77b4234504bae315697e7d5517a1ab69718ce91db93b5f4dc3c",
+        "10016": "b3d2c237891a894b004625d3450973bec21c34e6cef1ea75c7ddbe1e3aae0b55",
+        "10017": "034d3c2337d80501a7fd128df42ff1fc61fa831c1de7d6cefea3506145c0ab72",
+        "10018": "905c8aea2fc30792444dd3b5a2d65c5cb5dd5de8035b319f050a52c7fc7446e6",
+        "10019": "67276cdf8e644a27459ac8b6daa27df6cd6ff78364c8f74de6e1d3ba52fcc500",
+        "10020": "a2bf2f3dd50255b2a8b9dc3ed8f6e61e4d83c89a99efb8837a6d4fa864adce5a",
+        "10021": "c88145386832d0fa9feb47b56352c00bc602e9c29c100e8853d0a44141faff45",
+        "10022": "dd0174441d4e3265b9dc2e9ee02033087ac2f54e48d47922561078060bfd04ef",
+        "10023": "30ae35be2d32e9099d1b0bfb4aed383b3bb857ef15d83f4b25caf9a0d57cd37b",
+        "10024": "500e7050c985e4a7236717fdad55d68f9415913184699dad9d0704d39c80a012",
+        "10025": "903e0f2e13f0af7791b6136c3cec56d893c8b8404fd8e6b01a96f968372a99a5",
+        "10026": "6fa8c588b4572265a9c187b9982fbd4459c123565e30eb7b7719a6a9ebd35e0b",
+        "10027": "af9b6be1b33485dacd509df9ec4559b6cad235a678d6628c175b99926c7f0255",
+        "10028": "a2b632ddb86227f6ce76b13b0f4fdb9884729e144bc24cb3b74f5e073b5f3d36",
+        "10029": "1985f32fcdedc75048f1a2a7895adccc96c13e206c168c6bfbdfea96bbff5c04",
+        "10030": "9ac96e45d3478eb1474ebe2392d4e4194d867595fdde5eef98d1ed1d90c0a5b7",
+        "10031": "5fd9dbd5eff442fcf656bedf5bd05d7763cc380b025e93467e3c1bbd6d52f258",
+        "10032": "a5c0289d1c50cf385333c9188b92f08d0054ab710145c6e69e217e8a4399e449",
+        "10033": "bd4d8432e1e15ad204bf7fe7ef96ed7d335cb38c3dd1c7be0ef010c95b7c0155",
+        "10034": "f64d7df07351ba6539c92f70471466344a2e3c2b4bb9abc7b7ae1e11515fe9c1",
+        "10035": "8adf43bab593822c576452e1df1be7167bd4bfc34058d8e211524469172c05ec",
+        "10036": "3764d999c3338ddceb288827a788182753d8995d9abb29d12e9ee734573d0c7b",
+        "10037": "6a5c8e1229b0576be99e4d47debef487d1a424ed39560a259f5910451d803e72",
+        "10038": "888911919e71046e6679b2233b40eead268adfed80f3144b252b9e8de9e07da5",
+        "10039": "8dfa075df78c36165707b7e295d749d3d37f08b217dbf4d5a67d16191d1b4230",
+        "10040": "bf0cff77852d013b7419ea1e68768811c0ccfd2e154d791cdb31291cb1de38b2",
+        "10041": "cb45fa20c7d8ea14cfd85a96e439a89634dc3053ec584712a82e44c401e492a9",
+        "10042": "8526055420e4e5c97a4ef13d627640120dd7ed15cb08bed8f589b7156b3fcca2",
+        "10043": "e0f8315eca8ba226d90af1a1ee655fc70d6d269dacee50c926e8f9a789584627",
+        "10044": "80ee499af2257343371744606f4a66e5d9e432e8c7280333d2263ad1322be995",
+        "10045": "20ce62523fc22352edb871240e5be55145f141e8300fea3665cea61c4278cba6",
+        "10046": "79c6a476f527c7d1033a3bd322615e4667f18d22758ef4d8fe7a9e88fbd43fda",
+        "10047": "1d563de106d38bcda6dba824744fa187e10fd226c26f902dde61d27c9b3dfec7",
+        "10048": "e34f0e36c75df9b653ca063d8a7abcd53cf61ce2202c7afec3fa8dcb42e431f7",
+        "10049": "1ce42b8121b242f0d2b6a629398cf0b5fbadfabbf724f2fdb0139d6e1b337f3b",
+        "10050": "d98e20f9125d2ae68d07b19318a28da07937a9716751fcad0da9e436713e172d",
+        "10051": "cbda898a9525b396e861dc9252b0797758338775690f1223089f2c6a2f93dee7",
+        "10052": "32e61acc8ae1125f6b7c4dd51aae3b63efecb4f43764527556291451e103ca57",
+        "10053": "a9c80f2b1535bb1e6f8ed7d8e294d8dfab2c91136924d7a1b72df7a839fc5908",
+        "10054": "dda66eb9de9e3524b663125041dab6fe82d376ae80ef51dc9870b1ffe22510e8",
+        "10055": "e9050a3a1461b5c92ae4fa360400bd4c3399d1195b28e185752c8bbd6d14d75e",
+        "10056": "719cc2466c12d08d60c5218ad16184f2a8ecaee5ea2462d1af5e1aeb4f2e1130",
+        "10057": "2cc299834c5c88547133b2c3b5a418d627916a6108aa9b038830b4305d6e5697",
+        "10058": "8f38322fdba7cc9859392f0d2198e7996f47ae52405487f51a43c343f830c867",
+        "10059": "c9974ab7acab773a182a41411c6ceac7b8c0ead1971e01108f49d5f49fec5a84",
+        "10060": "853e8739bf65b388fcbbf7f11670e45a9cf721caddd3504b18f42211f2172e05",
+        "10061": "d96f49d3dbc9fad40ed13a3d99c11b7f631269552cf9b79a4939fec45b45e7ed",
+        "10062": "5cc583daf52acbef95f773ed11050102c9c9aed8041f3819aa549e38cb17ddb6",
+        "10063": "2afcd42dedbb25bf29bc028ecdab0f328e8b40af6683c1983b5af1b4a57f3535",
+        "10064": "cef6807fc6019bd7a91dbaa7baeb6f48dfaa44ec66d7a359f797ad22c1c12b18",
+        "10065": "e834ba52e234b5a404e241948fbbac1db8563de40388f02de42ba6b21052aad3",
+        "10066": "21dd1c07e509ea40e7c34e1cdf2a7be468d7c92cac79eceee7b9407913e4be2d",
+        "10067": "3bce9cc0c925b344869658ff0c99c8eb57cfc4e6f0d08d1895516ee13d98ceba",
+        "10068": "916f7b6cc87add31efc15fab57a6b48173cb177ff061b598f895dd8364507cea",
+        "10069": "80b5fda9b25bcd3b1b604e52bfd4a02dd2ef7b40317addaf806b51903ee11101",
+        "10070": "4785fd4254e4af4fb846e0a0a54a7632974f5bcaed74b04b0eae3d1c168d4faa",
+        "10071": "78e1bb09665faf614d850a834ad3dd2bfd2ea280e93b85ee7b349c13c689760f",
+        "10072": "8bfbe95c9d7f1cf339b28274b4d94a4958302cee2ca387c30da1d4429739ca90",
+        "10073": "47f0754e00a1836d0d9f9c688f73a784a80dfc643357aa70570a3c06b62cd9fd",
+        "10074": "1dc026da62df9aca0988c90e7b31f44812250b39343da96a9b289e278381e9d9",
+        "10075": "184841b2f196d8c62f4fc8d7b1e11684bec5abeb6dfedc88bcab655295fcdcdd",
+        "10076": "678de30814a192c85b10a3f8dbb1e9f4c384575097dccee39bee9b4290003a45",
+        "10077": "625cda65f92442b13e9d08c70aa78e01424f3e33ad412cf4896856501a497ec9",
+        "10078": "1a036493e023fda2b064f12d7c36966b7d5a39707163b5561be0cb574c25bcd5",
+        "10079": "1ffcf63ced86f4954063406b87311609d3cedeb4ca710fe89b4675dbeb703be0",
+        "10080": "3aa008db53ff154dfb97abfc135f5b0283ffe2bfa2b6d67822dcfdd2e806654f",
+        "10081": "a5339377252fbfd92221665656ebdbe70c60e7dc584cc489321132355d76ae69",
+        "10082": "c5a9cf20ceb33266093ce612c41cb5c7955cdd33c008ab5553481b08c63a22e7",
+        "10083": "cf4591ccdc36f97aec7b53da221867723a465769af72ea3135d1a3a254c39875",
+        "10084": "0a8713ebaf85d829f17fd3edb6e1a880fd14547dcf0eb70a0ace1756a0468007",
+        "10085": "131a96b421745fb627d64b3780bab84d03404c08ee9a4a6765df0b5ac8a9831f",
+        "10086": "c0c8941a59e0dfa81f797861ed430e549987f95ccb2f9ee2fd6a27aecc20743e",
+        "10087": "b4261e416d8906dd89c0bbf880558fb2c09106323803871961d190c01139c96b",
+        "10088": "83a7271778f3ad89705d7c1f38910d80ff5db193fdd0167778138405635d27af",
+        "10089": "6e1607441d0594ded2de02eebd7223399d2cd43d8669abba908c8af5f69222c2",
+        "10090": "f6d461acc4f1de9c15f1927a86a9233d85d829493511cd42b130720cc9b9c740",
+        "10091": "c960c55dec0204c533660f3ab7297a7a168bdded28d3a32d185c0b24c1e60497",
+        "10092": "5558a98e8ba77c8efd32eb88bef2713a2095b138a28f1b272c2e8ae9fda73036",
+        "10093": "3f3e531460a8fe389d6273572592b2a568898a039a132ef556038199e37f624c",
+        "10094": "cf38ff33f8f70243c119906103850ed97c34de935eee4d6acc699d7f06cc2e96",
+        "10095": "2192b14eac5439208e80b88cee039bb684b05fb2433a65713505605498083878",
+        "10096": "21e940a1246a992e4dd6d55ffb6e8a330350265acbee8858b7910c5ee3bd35f7",
+        "10097": "caa3e49e5e6e53485b8d0e2057c857a1c83a31d3381622c87f03324b3ad351f9",
+        "10098": "b2e364446032c89fa6faa1040af861a0e8f986339e99ed9b19cad6fe8709fd32",
+        "10099": "c6f862a170e4dbb6e723daa3be6f7eb1d319465f8de32038c617c4de29e8973b"
+      },
+      "checkpoint": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "sha256_file": "16ff0b2073ea68c51ca823156b4a7e2d694a2c29d89d6c6bde65ca79a46be03a",
+        "sha256_evaluation_identity": "16ff0b2073ea68c51ca823156b4a7e2d694a2c29d89d6c6bde65ca79a46be03a",
+        "identity_matches_final_model": true,
+        "identity_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip"
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": null,
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "eval_diagnostics_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval_worker_00\\episodes.jsonl",
+        "internal_mst_final_evaluation": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\final_evaluation.json"
+      },
+      "source_sha256": {
+        "arguments": "ab2a6b20ea3852c5c337741f24715c37fdbb60984a6aed38c24ea053b0538584",
+        "experiment_manifest": "0f21d9723d298dfa237b78bf3fbd7237377c062717b6cdc9f832a601f0d23a95",
+        "training_complete": null,
+        "evaluation_results": "98517c8efe677589e45653583f6f6bb6ca60bb864e46deab2852a3da5df27e6e",
+        "eval_diagnostics_episodes": "f72b52a4fd5a24c5ddb4d95c69f7e950892c0d6e8f924329c6da85bd7ee31247"
+      },
+      "internal_mst_eval_summary": null
+    },
+    "sac_mlp_d1_st": {
+      "suite_status": "complete",
+      "suite_exit_code": 0,
+      "train_raw_steps": 100000,
+      "train_updates": 95001,
+      "train_wall_seconds": 12725.122089385986,
+      "completion_present": true,
+      "training_status": "trained",
+      "training_complete": true,
+      "arguments": {
+        "method": "sac_mlp_d1_st",
+        "parent": "sac_mlp",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": false,
+        "use_topology": false,
+        "use_slots": false,
+        "use_incremental_slots": false,
+        "use_route_reachability": false,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "algorithm_class": "SceneRepresentationSAC",
+        "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=False, topology=False, slots=False, incremental_slots=False, Graph-SLT=False, SBS=False."
+      },
+      "experiment_manifest": {
+        "method": "sac_mlp_d1_st",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+        "traffic_config": {
+          "schema_version": 1,
+          "protocol": "intersection_bernoulli_step_schedule_v1",
+          "scenario": "intersection_random_darrl_medium_v1",
+          "density_level": "medium",
+          "source_scenario": "intersection_sorted",
+          "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+          "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+          "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+          "total_vehicles_per_hour": 3240,
+          "vehicles_per_hour_by_route": {
+            "neg_E3_to_neg_E0": 1080,
+            "E0_to_E3": 1080,
+            "E2_to_E1": 1080
+          },
+          "flows": [
+            {
+              "id": "neg_E3_to_neg_E0",
+              "edges": [
+                "-E3",
+                "-E0"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E0_to_E3",
+              "edges": [
+                "E0",
+                "E3"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E2_to_E1",
+              "edges": [
+                "E2",
+                "E1"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            }
+          ],
+          "flow_begin_seconds": 0.0,
+          "flow_end_seconds": 130.0,
+          "ego_depart_seconds": 50.0,
+          "ego_route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "ego_depart_lane": "2",
+          "ego_depart_speed": "0",
+          "step_length_seconds": 0.1,
+          "max_episode_raw_steps": 600,
+          "default_action_repeat": 3,
+          "endless_traffic": false,
+          "background_exit_behavior": "leave after the configured route ends; no recycling",
+          "depart_scale": 1.0,
+          "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+          "traffic_seed_domains": {
+            "train": {
+              "offset": 0,
+              "width": 1000000000,
+              "last_seed": 999999999
+            },
+            "validation": {
+              "offset": 1000000000,
+              "width": 500000000,
+              "last_seed": 1499999999
+            },
+            "test": {
+              "offset": 1500000000,
+              "width": 500000000,
+              "last_seed": 1999999999
+            }
+          },
+          "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+          "default_evaluation_split": "validation",
+          "default_evaluation_logical_seeds": {
+            "start": 10000,
+            "episodes": 100
+          },
+          "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+          "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+          "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+          "dynamic_episode_traffic": true,
+          "scenario_family": "darrl_lane1_v1",
+          "configuration_revision": "darrl_r2_20260930",
+          "previous_configuration_revision": "darrl_r1_20260930",
+          "terminal_outcome_protocol": "exclusive_terminal_v2",
+          "template_scenario": "intersection_random_medium_v1",
+          "collision_action": "remove",
+          "collision_detection_mode": "sumo_events_or_ego_geometry",
+          "background_vtype_overrides": {
+            "jmIgnoreFoeProb": "0"
+          },
+          "ego_vtype_overrides": {
+            "minGap": "1",
+            "jmIgnoreFoeProb": "0"
+          }
+        },
+        "training_traffic_split": "train",
+        "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0",
+        "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "evaluation": {
+          "episodes": 100,
+          "success_rate": 0.16,
+          "collision_rate": 0.83,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.01,
+          "mean_return": -0.67
+        },
+        "training_curve": null,
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "raw_budget": 100000,
+        "training_seed": 0,
+        "checkpoint_frequency_raw_steps": 10000,
+        "note": "seeded randomized intersection traffic profile."
+      },
+      "progress": {
+        "raw_steps": 99739,
+        "updates": 94739,
+        "updated_at": 1790804432.1028893
+      },
+      "completion": {
+        "smoke": false,
+        "checkpoint_sha256": "5080d3cba98ee8cf57b9e1dbd0c628ecd7951c86b246fbeaf007c5e0d212cb47",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 12725.122089385986
+      },
+      "evaluation_identity": {
+        "method": "sac_mlp_d1_st",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "5080d3cba98ee8cf57b9e1dbd0c628ecd7951c86b246fbeaf007c5e0d212cb47",
+        "episodes": 100,
+        "workers": 1,
+        "smoke": false,
+        "behavior_diagnostics": true
+      },
+      "external_evaluation_summary": {
+        "episodes": 100,
+        "success_rate": 0.16,
+        "collision_rate": 0.83,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.01,
+        "mean_return": -0.67
+      },
+      "external_eval_episode_count": 100,
+      "logical_seed_min": 10000,
+      "logical_seed_max": 10099,
+      "logical_seed_unique_count": 100,
+      "seed_sequence_is_10000_to_10099": true,
+      "terminal_flags_raw_counts": {
+        "success": 16,
+        "collision": 83,
+        "timeout": 1,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 16,
+        "collision": 83,
+        "timeout": 1,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {
+        "1": 100
+      },
+      "return": {
+        "mean": -0.67,
+        "population_variance": 0.5411,
+        "population_sd": 0.7355949972641196
+      },
+      "episode_steps": {
+        "raw_mean_all": 155.86,
+        "raw_median_all": 136,
+        "decision_mean_all": 52.29,
+        "decision_mean_success_only": 65.5625,
+        "raw_mean_success_only": 195.5,
+        "success_completion_time_mean_seconds": 19.55,
+        "success_completion_time_median_seconds": 18.7
+      },
+      "behavior": {
+        "episodes_with_diagnostics": 100,
+        "speed": {
+          "sample_count": 15565,
+          "mean_actual_speed_mps_raw_tick_weighted": 6.303645092383267,
+          "stopped_ticks": 2248,
+          "stopped_fraction_of_speed_samples": 0.1444265981368455
+        },
+        "risk": {
+          "evaluable_ticks": 15565,
+          "low_ttc_ticks": 1978,
+          "low_ttc_fraction_of_evaluable_ticks": 0.12707998715065852,
+          "risk_and_observation_covered_ticks": 15565,
+          "covered_critical_unobserved_ticks": 644,
+          "critical_unobserved_fraction_of_covered_ticks": 0.041374879537423706
+        },
+        "actions": [
+          {
+            "dimension": 0,
+            "samples": 5229,
+            "mean": 0.41909703139844784,
+            "near_unit_bound_fraction": 0.20214190093708165
+          },
+          {
+            "dimension": 1,
+            "samples": 5229,
+            "mean": 0.3538453841236769,
+            "near_unit_bound_fraction": 0.1638936699177663
+          }
+        ],
+        "collision_terminal_location_counts_from_last_snapshot": {
+          ":J1_21 | :J1_21_0": 75,
+          "-E0 | -E0_1": 5,
+          ":J1_14 | :J1_14_0": 3
+        },
+        "terminal_collision_episodes_with_raw_sumo_collision_flag": 5,
+        "terminal_collision_episodes_with_geometric_collision_flag": 78,
+        "limitation": "Raw SUMO collision flag and geometric collision flag are endpoint diagnostics; they are not interchangeable with the mutually exclusive terminal collision outcome."
+      },
+      "diagnostic_episode_count": 100,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 100,
+      "traffic_schedule_hashes_by_logical_seed": {
+        "10000": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e",
+        "10001": "b5f4dccca2ae810949c0dacf7e205df49cffb8c6fff91da4e2295b412fe70e8e",
+        "10002": "a2d7328389b9898383387429c97c619e815d8958cc0f5366b6b2e4bd59592530",
+        "10003": "ddd7ae402defc3ea36b1da5d2b950d4ceb012f196e422a55d1778a7c97832f02",
+        "10004": "4c3a9751ee714eec65251529542b2611de77dddb49518431088c1024c21ac552",
+        "10005": "4ffb0112147e533e1be355cad848bfeed1bca62a1dc92ca3398385f194762b0d",
+        "10006": "25a7ec6f5f6c3443fa6425db01fed0ee708ae6fd796830c44e989aaa70f2e530",
+        "10007": "ad77947b3a6cba0425bd44327ec672f1859ce35b4223e555d1fac981d6752efd",
+        "10008": "3acd2f6579c061852be72a301089f31eb89fb2360f43578ad91a51f09d1261e4",
+        "10009": "42937d859e4720b4d6a28f9a6c775d2d7dbd7a37adf60a201cec4b6b2fddd6c9",
+        "10010": "babec3818c0f97841c41c1a42d66907581fb9c44102f1d16f99a90a462a0449b",
+        "10011": "4af831887c8784876d0492384abdd0a90ca27eb0b9ae118f57a4c9caba0efa18",
+        "10012": "d525c1f1cc829716d09f73f12b8e7f67e57306c8933480fc6bf78933473a1017",
+        "10013": "1137ed37550e91ffbbebfc3a4640f0558d505f7fe4291dc000b060049c675c63",
+        "10014": "a7bde6273065fd4a8412061c36f4900ac6cdcdb1c37a7dacf3bb618834b5f839",
+        "10015": "80b3d1be88a7b77b4234504bae315697e7d5517a1ab69718ce91db93b5f4dc3c",
+        "10016": "b3d2c237891a894b004625d3450973bec21c34e6cef1ea75c7ddbe1e3aae0b55",
+        "10017": "034d3c2337d80501a7fd128df42ff1fc61fa831c1de7d6cefea3506145c0ab72",
+        "10018": "905c8aea2fc30792444dd3b5a2d65c5cb5dd5de8035b319f050a52c7fc7446e6",
+        "10019": "67276cdf8e644a27459ac8b6daa27df6cd6ff78364c8f74de6e1d3ba52fcc500",
+        "10020": "a2bf2f3dd50255b2a8b9dc3ed8f6e61e4d83c89a99efb8837a6d4fa864adce5a",
+        "10021": "c88145386832d0fa9feb47b56352c00bc602e9c29c100e8853d0a44141faff45",
+        "10022": "dd0174441d4e3265b9dc2e9ee02033087ac2f54e48d47922561078060bfd04ef",
+        "10023": "30ae35be2d32e9099d1b0bfb4aed383b3bb857ef15d83f4b25caf9a0d57cd37b",
+        "10024": "500e7050c985e4a7236717fdad55d68f9415913184699dad9d0704d39c80a012",
+        "10025": "903e0f2e13f0af7791b6136c3cec56d893c8b8404fd8e6b01a96f968372a99a5",
+        "10026": "6fa8c588b4572265a9c187b9982fbd4459c123565e30eb7b7719a6a9ebd35e0b",
+        "10027": "af9b6be1b33485dacd509df9ec4559b6cad235a678d6628c175b99926c7f0255",
+        "10028": "a2b632ddb86227f6ce76b13b0f4fdb9884729e144bc24cb3b74f5e073b5f3d36",
+        "10029": "1985f32fcdedc75048f1a2a7895adccc96c13e206c168c6bfbdfea96bbff5c04",
+        "10030": "9ac96e45d3478eb1474ebe2392d4e4194d867595fdde5eef98d1ed1d90c0a5b7",
+        "10031": "5fd9dbd5eff442fcf656bedf5bd05d7763cc380b025e93467e3c1bbd6d52f258",
+        "10032": "a5c0289d1c50cf385333c9188b92f08d0054ab710145c6e69e217e8a4399e449",
+        "10033": "bd4d8432e1e15ad204bf7fe7ef96ed7d335cb38c3dd1c7be0ef010c95b7c0155",
+        "10034": "f64d7df07351ba6539c92f70471466344a2e3c2b4bb9abc7b7ae1e11515fe9c1",
+        "10035": "8adf43bab593822c576452e1df1be7167bd4bfc34058d8e211524469172c05ec",
+        "10036": "3764d999c3338ddceb288827a788182753d8995d9abb29d12e9ee734573d0c7b",
+        "10037": "6a5c8e1229b0576be99e4d47debef487d1a424ed39560a259f5910451d803e72",
+        "10038": "888911919e71046e6679b2233b40eead268adfed80f3144b252b9e8de9e07da5",
+        "10039": "8dfa075df78c36165707b7e295d749d3d37f08b217dbf4d5a67d16191d1b4230",
+        "10040": "bf0cff77852d013b7419ea1e68768811c0ccfd2e154d791cdb31291cb1de38b2",
+        "10041": "cb45fa20c7d8ea14cfd85a96e439a89634dc3053ec584712a82e44c401e492a9",
+        "10042": "8526055420e4e5c97a4ef13d627640120dd7ed15cb08bed8f589b7156b3fcca2",
+        "10043": "e0f8315eca8ba226d90af1a1ee655fc70d6d269dacee50c926e8f9a789584627",
+        "10044": "80ee499af2257343371744606f4a66e5d9e432e8c7280333d2263ad1322be995",
+        "10045": "20ce62523fc22352edb871240e5be55145f141e8300fea3665cea61c4278cba6",
+        "10046": "79c6a476f527c7d1033a3bd322615e4667f18d22758ef4d8fe7a9e88fbd43fda",
+        "10047": "1d563de106d38bcda6dba824744fa187e10fd226c26f902dde61d27c9b3dfec7",
+        "10048": "e34f0e36c75df9b653ca063d8a7abcd53cf61ce2202c7afec3fa8dcb42e431f7",
+        "10049": "1ce42b8121b242f0d2b6a629398cf0b5fbadfabbf724f2fdb0139d6e1b337f3b",
+        "10050": "d98e20f9125d2ae68d07b19318a28da07937a9716751fcad0da9e436713e172d",
+        "10051": "cbda898a9525b396e861dc9252b0797758338775690f1223089f2c6a2f93dee7",
+        "10052": "32e61acc8ae1125f6b7c4dd51aae3b63efecb4f43764527556291451e103ca57",
+        "10053": "a9c80f2b1535bb1e6f8ed7d8e294d8dfab2c91136924d7a1b72df7a839fc5908",
+        "10054": "dda66eb9de9e3524b663125041dab6fe82d376ae80ef51dc9870b1ffe22510e8",
+        "10055": "e9050a3a1461b5c92ae4fa360400bd4c3399d1195b28e185752c8bbd6d14d75e",
+        "10056": "719cc2466c12d08d60c5218ad16184f2a8ecaee5ea2462d1af5e1aeb4f2e1130",
+        "10057": "2cc299834c5c88547133b2c3b5a418d627916a6108aa9b038830b4305d6e5697",
+        "10058": "8f38322fdba7cc9859392f0d2198e7996f47ae52405487f51a43c343f830c867",
+        "10059": "c9974ab7acab773a182a41411c6ceac7b8c0ead1971e01108f49d5f49fec5a84",
+        "10060": "853e8739bf65b388fcbbf7f11670e45a9cf721caddd3504b18f42211f2172e05",
+        "10061": "d96f49d3dbc9fad40ed13a3d99c11b7f631269552cf9b79a4939fec45b45e7ed",
+        "10062": "5cc583daf52acbef95f773ed11050102c9c9aed8041f3819aa549e38cb17ddb6",
+        "10063": "2afcd42dedbb25bf29bc028ecdab0f328e8b40af6683c1983b5af1b4a57f3535",
+        "10064": "cef6807fc6019bd7a91dbaa7baeb6f48dfaa44ec66d7a359f797ad22c1c12b18",
+        "10065": "e834ba52e234b5a404e241948fbbac1db8563de40388f02de42ba6b21052aad3",
+        "10066": "21dd1c07e509ea40e7c34e1cdf2a7be468d7c92cac79eceee7b9407913e4be2d",
+        "10067": "3bce9cc0c925b344869658ff0c99c8eb57cfc4e6f0d08d1895516ee13d98ceba",
+        "10068": "916f7b6cc87add31efc15fab57a6b48173cb177ff061b598f895dd8364507cea",
+        "10069": "80b5fda9b25bcd3b1b604e52bfd4a02dd2ef7b40317addaf806b51903ee11101",
+        "10070": "4785fd4254e4af4fb846e0a0a54a7632974f5bcaed74b04b0eae3d1c168d4faa",
+        "10071": "78e1bb09665faf614d850a834ad3dd2bfd2ea280e93b85ee7b349c13c689760f",
+        "10072": "8bfbe95c9d7f1cf339b28274b4d94a4958302cee2ca387c30da1d4429739ca90",
+        "10073": "47f0754e00a1836d0d9f9c688f73a784a80dfc643357aa70570a3c06b62cd9fd",
+        "10074": "1dc026da62df9aca0988c90e7b31f44812250b39343da96a9b289e278381e9d9",
+        "10075": "184841b2f196d8c62f4fc8d7b1e11684bec5abeb6dfedc88bcab655295fcdcdd",
+        "10076": "678de30814a192c85b10a3f8dbb1e9f4c384575097dccee39bee9b4290003a45",
+        "10077": "625cda65f92442b13e9d08c70aa78e01424f3e33ad412cf4896856501a497ec9",
+        "10078": "1a036493e023fda2b064f12d7c36966b7d5a39707163b5561be0cb574c25bcd5",
+        "10079": "1ffcf63ced86f4954063406b87311609d3cedeb4ca710fe89b4675dbeb703be0",
+        "10080": "3aa008db53ff154dfb97abfc135f5b0283ffe2bfa2b6d67822dcfdd2e806654f",
+        "10081": "a5339377252fbfd92221665656ebdbe70c60e7dc584cc489321132355d76ae69",
+        "10082": "c5a9cf20ceb33266093ce612c41cb5c7955cdd33c008ab5553481b08c63a22e7",
+        "10083": "cf4591ccdc36f97aec7b53da221867723a465769af72ea3135d1a3a254c39875",
+        "10084": "0a8713ebaf85d829f17fd3edb6e1a880fd14547dcf0eb70a0ace1756a0468007",
+        "10085": "131a96b421745fb627d64b3780bab84d03404c08ee9a4a6765df0b5ac8a9831f",
+        "10086": "c0c8941a59e0dfa81f797861ed430e549987f95ccb2f9ee2fd6a27aecc20743e",
+        "10087": "b4261e416d8906dd89c0bbf880558fb2c09106323803871961d190c01139c96b",
+        "10088": "83a7271778f3ad89705d7c1f38910d80ff5db193fdd0167778138405635d27af",
+        "10089": "6e1607441d0594ded2de02eebd7223399d2cd43d8669abba908c8af5f69222c2",
+        "10090": "f6d461acc4f1de9c15f1927a86a9233d85d829493511cd42b130720cc9b9c740",
+        "10091": "c960c55dec0204c533660f3ab7297a7a168bdded28d3a32d185c0b24c1e60497",
+        "10092": "5558a98e8ba77c8efd32eb88bef2713a2095b138a28f1b272c2e8ae9fda73036",
+        "10093": "3f3e531460a8fe389d6273572592b2a568898a039a132ef556038199e37f624c",
+        "10094": "cf38ff33f8f70243c119906103850ed97c34de935eee4d6acc699d7f06cc2e96",
+        "10095": "2192b14eac5439208e80b88cee039bb684b05fb2433a65713505605498083878",
+        "10096": "21e940a1246a992e4dd6d55ffb6e8a330350265acbee8858b7910c5ee3bd35f7",
+        "10097": "caa3e49e5e6e53485b8d0e2057c857a1c83a31d3381622c87f03324b3ad351f9",
+        "10098": "b2e364446032c89fa6faa1040af861a0e8f986339e99ed9b19cad6fe8709fd32",
+        "10099": "c6f862a170e4dbb6e723daa3be6f7eb1d319465f8de32038c617c4de29e8973b"
+      },
+      "checkpoint": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "sha256_file": "5080d3cba98ee8cf57b9e1dbd0c628ecd7951c86b246fbeaf007c5e0d212cb47",
+        "sha256_evaluation_identity": "5080d3cba98ee8cf57b9e1dbd0c628ecd7951c86b246fbeaf007c5e0d212cb47",
+        "identity_matches_final_model": true,
+        "identity_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip"
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\training_complete.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "eval_diagnostics_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval\\episodes.jsonl",
+        "internal_mst_final_evaluation": null
+      },
+      "source_sha256": {
+        "arguments": "014a3569d4f9ead0276157a1312a9cae9008ad02f84210b5dac7a3ca8820bb07",
+        "experiment_manifest": "bd9fed3e538fbf0870c45394c2811cf969f574f2c7ad635bfaa5fbb0817bc7de",
+        "training_complete": "abdc47b4d662966584230fb183038fc49fcb77971972d3f8731b5379fdb291e8",
+        "evaluation_results": "b306d95a03c86b13e389216e6a43f2493467adcadc336131e6301d30bc7a6c4b",
+        "eval_diagnostics_episodes": "2d6c51a69695f80300a3cd81ca370a964e622ddf35b74a5439494b3f609e866b"
+      },
+      "internal_mst_eval_summary": null
+    },
+    "sac_mlp_d1_st_rt": {
+      "suite_status": "complete",
+      "suite_exit_code": 0,
+      "train_raw_steps": 100000,
+      "train_updates": 95001,
+      "train_wall_seconds": 13676.321788787842,
+      "completion_present": true,
+      "training_status": "trained",
+      "training_complete": true,
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt",
+        "parent": "sac_mlp",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": true,
+        "use_topology": false,
+        "use_slots": false,
+        "use_incremental_slots": false,
+        "use_route_reachability": false,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "algorithm_class": "SceneRepresentationSAC",
+        "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=True, topology=False, slots=False, incremental_slots=False, Graph-SLT=False, SBS=False."
+      },
+      "experiment_manifest": {
+        "method": "sac_mlp_d1_st_rt",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+        "traffic_config": {
+          "schema_version": 1,
+          "protocol": "intersection_bernoulli_step_schedule_v1",
+          "scenario": "intersection_random_darrl_medium_v1",
+          "density_level": "medium",
+          "source_scenario": "intersection_sorted",
+          "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+          "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+          "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+          "total_vehicles_per_hour": 3240,
+          "vehicles_per_hour_by_route": {
+            "neg_E3_to_neg_E0": 1080,
+            "E0_to_E3": 1080,
+            "E2_to_E1": 1080
+          },
+          "flows": [
+            {
+              "id": "neg_E3_to_neg_E0",
+              "edges": [
+                "-E3",
+                "-E0"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E0_to_E3",
+              "edges": [
+                "E0",
+                "E3"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E2_to_E1",
+              "edges": [
+                "E2",
+                "E1"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            }
+          ],
+          "flow_begin_seconds": 0.0,
+          "flow_end_seconds": 130.0,
+          "ego_depart_seconds": 50.0,
+          "ego_route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "ego_depart_lane": "2",
+          "ego_depart_speed": "0",
+          "step_length_seconds": 0.1,
+          "max_episode_raw_steps": 600,
+          "default_action_repeat": 3,
+          "endless_traffic": false,
+          "background_exit_behavior": "leave after the configured route ends; no recycling",
+          "depart_scale": 1.0,
+          "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+          "traffic_seed_domains": {
+            "train": {
+              "offset": 0,
+              "width": 1000000000,
+              "last_seed": 999999999
+            },
+            "validation": {
+              "offset": 1000000000,
+              "width": 500000000,
+              "last_seed": 1499999999
+            },
+            "test": {
+              "offset": 1500000000,
+              "width": 500000000,
+              "last_seed": 1999999999
+            }
+          },
+          "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+          "default_evaluation_split": "validation",
+          "default_evaluation_logical_seeds": {
+            "start": 10000,
+            "episodes": 100
+          },
+          "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+          "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+          "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+          "dynamic_episode_traffic": true,
+          "scenario_family": "darrl_lane1_v1",
+          "configuration_revision": "darrl_r2_20260930",
+          "previous_configuration_revision": "darrl_r1_20260930",
+          "terminal_outcome_protocol": "exclusive_terminal_v2",
+          "template_scenario": "intersection_random_medium_v1",
+          "collision_action": "remove",
+          "collision_detection_mode": "sumo_events_or_ego_geometry",
+          "background_vtype_overrides": {
+            "jmIgnoreFoeProb": "0"
+          },
+          "ego_vtype_overrides": {
+            "minGap": "1",
+            "jmIgnoreFoeProb": "0"
+          }
+        },
+        "training_traffic_split": "train",
+        "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0",
+        "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "evaluation": {
+          "episodes": 100,
+          "success_rate": 0.14,
+          "collision_rate": 0.66,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.2,
+          "mean_return": -0.52
+        },
+        "training_curve": null,
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "raw_budget": 100000,
+        "training_seed": 0,
+        "checkpoint_frequency_raw_steps": 10000,
+        "note": "seeded randomized intersection traffic profile."
+      },
+      "progress": {
+        "raw_steps": 99775,
+        "updates": 94775,
+        "updated_at": 1790818185.7311692
+      },
+      "completion": {
+        "smoke": false,
+        "checkpoint_sha256": "9f27300384e7ba7810c66bf8fc5e8e465310a3274a995196791cdffa691adb50",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 13676.321788787842
+      },
+      "evaluation_identity": {
+        "method": "sac_mlp_d1_st_rt",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "9f27300384e7ba7810c66bf8fc5e8e465310a3274a995196791cdffa691adb50",
+        "episodes": 100,
+        "workers": 1,
+        "smoke": false,
+        "behavior_diagnostics": true
+      },
+      "external_evaluation_summary": {
+        "episodes": 100,
+        "success_rate": 0.14,
+        "collision_rate": 0.66,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.2,
+        "mean_return": -0.52
+      },
+      "external_eval_episode_count": 100,
+      "logical_seed_min": 10000,
+      "logical_seed_max": 10099,
+      "logical_seed_unique_count": 100,
+      "seed_sequence_is_10000_to_10099": true,
+      "terminal_flags_raw_counts": {
+        "success": 14,
+        "collision": 66,
+        "timeout": 20,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 14,
+        "collision": 66,
+        "timeout": 20,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {
+        "1": 100
+      },
+      "return": {
+        "mean": -0.52,
+        "population_variance": 0.5296,
+        "population_sd": 0.72773621594641
+      },
+      "episode_steps": {
+        "raw_mean_all": 269.25,
+        "raw_median_all": 179,
+        "decision_mean_all": 90.01,
+        "decision_mean_success_only": 81.28571428571429,
+        "raw_mean_success_only": 242.92857142857142,
+        "success_completion_time_mean_seconds": 24.292857142857144,
+        "success_completion_time_median_seconds": 24.1
+      },
+      "behavior": {
+        "episodes_with_diagnostics": 100,
+        "speed": {
+          "sample_count": 26908,
+          "mean_actual_speed_mps_raw_tick_weighted": 3.4317969175935152,
+          "stopped_ticks": 9660,
+          "stopped_fraction_of_speed_samples": 0.3590010405827263
+        },
+        "risk": {
+          "evaluable_ticks": 26908,
+          "low_ttc_ticks": 1813,
+          "low_ttc_fraction_of_evaluable_ticks": 0.0673777315296566,
+          "risk_and_observation_covered_ticks": 26908,
+          "covered_critical_unobserved_ticks": 688,
+          "critical_unobserved_fraction_of_covered_ticks": 0.02556860413259997
+        },
+        "actions": [
+          {
+            "dimension": 0,
+            "samples": 9001,
+            "mean": 0.060359215268875784,
+            "near_unit_bound_fraction": 0.06665926008221308
+          },
+          {
+            "dimension": 1,
+            "samples": 9001,
+            "mean": -0.19217771605615708,
+            "near_unit_bound_fraction": 0.08365737140317743
+          }
+        ],
+        "collision_terminal_location_counts_from_last_snapshot": {
+          ":J1_21 | :J1_21_0": 63,
+          "-E0 | -E0_1": 1,
+          ":J1_14 | :J1_14_0": 2
+        },
+        "terminal_collision_episodes_with_raw_sumo_collision_flag": 3,
+        "terminal_collision_episodes_with_geometric_collision_flag": 63,
+        "limitation": "Raw SUMO collision flag and geometric collision flag are endpoint diagnostics; they are not interchangeable with the mutually exclusive terminal collision outcome."
+      },
+      "diagnostic_episode_count": 100,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 100,
+      "traffic_schedule_hashes_by_logical_seed": {
+        "10000": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e",
+        "10001": "b5f4dccca2ae810949c0dacf7e205df49cffb8c6fff91da4e2295b412fe70e8e",
+        "10002": "a2d7328389b9898383387429c97c619e815d8958cc0f5366b6b2e4bd59592530",
+        "10003": "ddd7ae402defc3ea36b1da5d2b950d4ceb012f196e422a55d1778a7c97832f02",
+        "10004": "4c3a9751ee714eec65251529542b2611de77dddb49518431088c1024c21ac552",
+        "10005": "4ffb0112147e533e1be355cad848bfeed1bca62a1dc92ca3398385f194762b0d",
+        "10006": "25a7ec6f5f6c3443fa6425db01fed0ee708ae6fd796830c44e989aaa70f2e530",
+        "10007": "ad77947b3a6cba0425bd44327ec672f1859ce35b4223e555d1fac981d6752efd",
+        "10008": "3acd2f6579c061852be72a301089f31eb89fb2360f43578ad91a51f09d1261e4",
+        "10009": "42937d859e4720b4d6a28f9a6c775d2d7dbd7a37adf60a201cec4b6b2fddd6c9",
+        "10010": "babec3818c0f97841c41c1a42d66907581fb9c44102f1d16f99a90a462a0449b",
+        "10011": "4af831887c8784876d0492384abdd0a90ca27eb0b9ae118f57a4c9caba0efa18",
+        "10012": "d525c1f1cc829716d09f73f12b8e7f67e57306c8933480fc6bf78933473a1017",
+        "10013": "1137ed37550e91ffbbebfc3a4640f0558d505f7fe4291dc000b060049c675c63",
+        "10014": "a7bde6273065fd4a8412061c36f4900ac6cdcdb1c37a7dacf3bb618834b5f839",
+        "10015": "80b3d1be88a7b77b4234504bae315697e7d5517a1ab69718ce91db93b5f4dc3c",
+        "10016": "b3d2c237891a894b004625d3450973bec21c34e6cef1ea75c7ddbe1e3aae0b55",
+        "10017": "034d3c2337d80501a7fd128df42ff1fc61fa831c1de7d6cefea3506145c0ab72",
+        "10018": "905c8aea2fc30792444dd3b5a2d65c5cb5dd5de8035b319f050a52c7fc7446e6",
+        "10019": "67276cdf8e644a27459ac8b6daa27df6cd6ff78364c8f74de6e1d3ba52fcc500",
+        "10020": "a2bf2f3dd50255b2a8b9dc3ed8f6e61e4d83c89a99efb8837a6d4fa864adce5a",
+        "10021": "c88145386832d0fa9feb47b56352c00bc602e9c29c100e8853d0a44141faff45",
+        "10022": "dd0174441d4e3265b9dc2e9ee02033087ac2f54e48d47922561078060bfd04ef",
+        "10023": "30ae35be2d32e9099d1b0bfb4aed383b3bb857ef15d83f4b25caf9a0d57cd37b",
+        "10024": "500e7050c985e4a7236717fdad55d68f9415913184699dad9d0704d39c80a012",
+        "10025": "903e0f2e13f0af7791b6136c3cec56d893c8b8404fd8e6b01a96f968372a99a5",
+        "10026": "6fa8c588b4572265a9c187b9982fbd4459c123565e30eb7b7719a6a9ebd35e0b",
+        "10027": "af9b6be1b33485dacd509df9ec4559b6cad235a678d6628c175b99926c7f0255",
+        "10028": "a2b632ddb86227f6ce76b13b0f4fdb9884729e144bc24cb3b74f5e073b5f3d36",
+        "10029": "1985f32fcdedc75048f1a2a7895adccc96c13e206c168c6bfbdfea96bbff5c04",
+        "10030": "9ac96e45d3478eb1474ebe2392d4e4194d867595fdde5eef98d1ed1d90c0a5b7",
+        "10031": "5fd9dbd5eff442fcf656bedf5bd05d7763cc380b025e93467e3c1bbd6d52f258",
+        "10032": "a5c0289d1c50cf385333c9188b92f08d0054ab710145c6e69e217e8a4399e449",
+        "10033": "bd4d8432e1e15ad204bf7fe7ef96ed7d335cb38c3dd1c7be0ef010c95b7c0155",
+        "10034": "f64d7df07351ba6539c92f70471466344a2e3c2b4bb9abc7b7ae1e11515fe9c1",
+        "10035": "8adf43bab593822c576452e1df1be7167bd4bfc34058d8e211524469172c05ec",
+        "10036": "3764d999c3338ddceb288827a788182753d8995d9abb29d12e9ee734573d0c7b",
+        "10037": "6a5c8e1229b0576be99e4d47debef487d1a424ed39560a259f5910451d803e72",
+        "10038": "888911919e71046e6679b2233b40eead268adfed80f3144b252b9e8de9e07da5",
+        "10039": "8dfa075df78c36165707b7e295d749d3d37f08b217dbf4d5a67d16191d1b4230",
+        "10040": "bf0cff77852d013b7419ea1e68768811c0ccfd2e154d791cdb31291cb1de38b2",
+        "10041": "cb45fa20c7d8ea14cfd85a96e439a89634dc3053ec584712a82e44c401e492a9",
+        "10042": "8526055420e4e5c97a4ef13d627640120dd7ed15cb08bed8f589b7156b3fcca2",
+        "10043": "e0f8315eca8ba226d90af1a1ee655fc70d6d269dacee50c926e8f9a789584627",
+        "10044": "80ee499af2257343371744606f4a66e5d9e432e8c7280333d2263ad1322be995",
+        "10045": "20ce62523fc22352edb871240e5be55145f141e8300fea3665cea61c4278cba6",
+        "10046": "79c6a476f527c7d1033a3bd322615e4667f18d22758ef4d8fe7a9e88fbd43fda",
+        "10047": "1d563de106d38bcda6dba824744fa187e10fd226c26f902dde61d27c9b3dfec7",
+        "10048": "e34f0e36c75df9b653ca063d8a7abcd53cf61ce2202c7afec3fa8dcb42e431f7",
+        "10049": "1ce42b8121b242f0d2b6a629398cf0b5fbadfabbf724f2fdb0139d6e1b337f3b",
+        "10050": "d98e20f9125d2ae68d07b19318a28da07937a9716751fcad0da9e436713e172d",
+        "10051": "cbda898a9525b396e861dc9252b0797758338775690f1223089f2c6a2f93dee7",
+        "10052": "32e61acc8ae1125f6b7c4dd51aae3b63efecb4f43764527556291451e103ca57",
+        "10053": "a9c80f2b1535bb1e6f8ed7d8e294d8dfab2c91136924d7a1b72df7a839fc5908",
+        "10054": "dda66eb9de9e3524b663125041dab6fe82d376ae80ef51dc9870b1ffe22510e8",
+        "10055": "e9050a3a1461b5c92ae4fa360400bd4c3399d1195b28e185752c8bbd6d14d75e",
+        "10056": "719cc2466c12d08d60c5218ad16184f2a8ecaee5ea2462d1af5e1aeb4f2e1130",
+        "10057": "2cc299834c5c88547133b2c3b5a418d627916a6108aa9b038830b4305d6e5697",
+        "10058": "8f38322fdba7cc9859392f0d2198e7996f47ae52405487f51a43c343f830c867",
+        "10059": "c9974ab7acab773a182a41411c6ceac7b8c0ead1971e01108f49d5f49fec5a84",
+        "10060": "853e8739bf65b388fcbbf7f11670e45a9cf721caddd3504b18f42211f2172e05",
+        "10061": "d96f49d3dbc9fad40ed13a3d99c11b7f631269552cf9b79a4939fec45b45e7ed",
+        "10062": "5cc583daf52acbef95f773ed11050102c9c9aed8041f3819aa549e38cb17ddb6",
+        "10063": "2afcd42dedbb25bf29bc028ecdab0f328e8b40af6683c1983b5af1b4a57f3535",
+        "10064": "cef6807fc6019bd7a91dbaa7baeb6f48dfaa44ec66d7a359f797ad22c1c12b18",
+        "10065": "e834ba52e234b5a404e241948fbbac1db8563de40388f02de42ba6b21052aad3",
+        "10066": "21dd1c07e509ea40e7c34e1cdf2a7be468d7c92cac79eceee7b9407913e4be2d",
+        "10067": "3bce9cc0c925b344869658ff0c99c8eb57cfc4e6f0d08d1895516ee13d98ceba",
+        "10068": "916f7b6cc87add31efc15fab57a6b48173cb177ff061b598f895dd8364507cea",
+        "10069": "80b5fda9b25bcd3b1b604e52bfd4a02dd2ef7b40317addaf806b51903ee11101",
+        "10070": "4785fd4254e4af4fb846e0a0a54a7632974f5bcaed74b04b0eae3d1c168d4faa",
+        "10071": "78e1bb09665faf614d850a834ad3dd2bfd2ea280e93b85ee7b349c13c689760f",
+        "10072": "8bfbe95c9d7f1cf339b28274b4d94a4958302cee2ca387c30da1d4429739ca90",
+        "10073": "47f0754e00a1836d0d9f9c688f73a784a80dfc643357aa70570a3c06b62cd9fd",
+        "10074": "1dc026da62df9aca0988c90e7b31f44812250b39343da96a9b289e278381e9d9",
+        "10075": "184841b2f196d8c62f4fc8d7b1e11684bec5abeb6dfedc88bcab655295fcdcdd",
+        "10076": "678de30814a192c85b10a3f8dbb1e9f4c384575097dccee39bee9b4290003a45",
+        "10077": "625cda65f92442b13e9d08c70aa78e01424f3e33ad412cf4896856501a497ec9",
+        "10078": "1a036493e023fda2b064f12d7c36966b7d5a39707163b5561be0cb574c25bcd5",
+        "10079": "1ffcf63ced86f4954063406b87311609d3cedeb4ca710fe89b4675dbeb703be0",
+        "10080": "3aa008db53ff154dfb97abfc135f5b0283ffe2bfa2b6d67822dcfdd2e806654f",
+        "10081": "a5339377252fbfd92221665656ebdbe70c60e7dc584cc489321132355d76ae69",
+        "10082": "c5a9cf20ceb33266093ce612c41cb5c7955cdd33c008ab5553481b08c63a22e7",
+        "10083": "cf4591ccdc36f97aec7b53da221867723a465769af72ea3135d1a3a254c39875",
+        "10084": "0a8713ebaf85d829f17fd3edb6e1a880fd14547dcf0eb70a0ace1756a0468007",
+        "10085": "131a96b421745fb627d64b3780bab84d03404c08ee9a4a6765df0b5ac8a9831f",
+        "10086": "c0c8941a59e0dfa81f797861ed430e549987f95ccb2f9ee2fd6a27aecc20743e",
+        "10087": "b4261e416d8906dd89c0bbf880558fb2c09106323803871961d190c01139c96b",
+        "10088": "83a7271778f3ad89705d7c1f38910d80ff5db193fdd0167778138405635d27af",
+        "10089": "6e1607441d0594ded2de02eebd7223399d2cd43d8669abba908c8af5f69222c2",
+        "10090": "f6d461acc4f1de9c15f1927a86a9233d85d829493511cd42b130720cc9b9c740",
+        "10091": "c960c55dec0204c533660f3ab7297a7a168bdded28d3a32d185c0b24c1e60497",
+        "10092": "5558a98e8ba77c8efd32eb88bef2713a2095b138a28f1b272c2e8ae9fda73036",
+        "10093": "3f3e531460a8fe389d6273572592b2a568898a039a132ef556038199e37f624c",
+        "10094": "cf38ff33f8f70243c119906103850ed97c34de935eee4d6acc699d7f06cc2e96",
+        "10095": "2192b14eac5439208e80b88cee039bb684b05fb2433a65713505605498083878",
+        "10096": "21e940a1246a992e4dd6d55ffb6e8a330350265acbee8858b7910c5ee3bd35f7",
+        "10097": "caa3e49e5e6e53485b8d0e2057c857a1c83a31d3381622c87f03324b3ad351f9",
+        "10098": "b2e364446032c89fa6faa1040af861a0e8f986339e99ed9b19cad6fe8709fd32",
+        "10099": "c6f862a170e4dbb6e723daa3be6f7eb1d319465f8de32038c617c4de29e8973b"
+      },
+      "checkpoint": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "sha256_file": "9f27300384e7ba7810c66bf8fc5e8e465310a3274a995196791cdffa691adb50",
+        "sha256_evaluation_identity": "9f27300384e7ba7810c66bf8fc5e8e465310a3274a995196791cdffa691adb50",
+        "identity_matches_final_model": true,
+        "identity_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip"
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\training_complete.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "eval_diagnostics_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval\\episodes.jsonl",
+        "internal_mst_final_evaluation": null
+      },
+      "source_sha256": {
+        "arguments": "bffd79849ea022266eb18879aa8da37224ccc39321951b826715b35b85d7d0d1",
+        "experiment_manifest": "063a681cc48fc502a1e3699f646251e9746c092b1f8b9b930f5f67fdcc6ba3de",
+        "training_complete": "4bb57fe327022caf1b209c2db11b26a8d03dde5a0e337dcc2b637aec9ac79e8f",
+        "evaluation_results": "7ba13614b02f3d0a7094f87830846e3fe4dc121a52db6119642d2c2e544cf0db",
+        "eval_diagnostics_episodes": "1084242e4c3a1c98a30348e19bf516b75df6f057682b10bfacafca11d07390fa"
+      },
+      "internal_mst_eval_summary": null
+    },
+    "sac_mlp_d1_st_rt_topo": {
+      "suite_status": "complete",
+      "suite_exit_code": 0,
+      "train_raw_steps": 100000,
+      "train_updates": 95001,
+      "train_wall_seconds": 21461.253187417984,
+      "completion_present": true,
+      "training_status": "trained",
+      "training_complete": true,
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt_topo",
+        "parent": "sac_mlp",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": true,
+        "use_topology": true,
+        "use_slots": false,
+        "use_incremental_slots": false,
+        "use_route_reachability": false,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "algorithm_class": "SceneRepresentationSAC",
+        "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=True, topology=True, slots=False, incremental_slots=False, Graph-SLT=False, SBS=False."
+      },
+      "experiment_manifest": {
+        "method": "sac_mlp_d1_st_rt_topo",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt_topo",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+        "traffic_config": {
+          "schema_version": 1,
+          "protocol": "intersection_bernoulli_step_schedule_v1",
+          "scenario": "intersection_random_darrl_medium_v1",
+          "density_level": "medium",
+          "source_scenario": "intersection_sorted",
+          "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+          "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+          "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+          "total_vehicles_per_hour": 3240,
+          "vehicles_per_hour_by_route": {
+            "neg_E3_to_neg_E0": 1080,
+            "E0_to_E3": 1080,
+            "E2_to_E1": 1080
+          },
+          "flows": [
+            {
+              "id": "neg_E3_to_neg_E0",
+              "edges": [
+                "-E3",
+                "-E0"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E0_to_E3",
+              "edges": [
+                "E0",
+                "E3"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E2_to_E1",
+              "edges": [
+                "E2",
+                "E1"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            }
+          ],
+          "flow_begin_seconds": 0.0,
+          "flow_end_seconds": 130.0,
+          "ego_depart_seconds": 50.0,
+          "ego_route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "ego_depart_lane": "2",
+          "ego_depart_speed": "0",
+          "step_length_seconds": 0.1,
+          "max_episode_raw_steps": 600,
+          "default_action_repeat": 3,
+          "endless_traffic": false,
+          "background_exit_behavior": "leave after the configured route ends; no recycling",
+          "depart_scale": 1.0,
+          "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+          "traffic_seed_domains": {
+            "train": {
+              "offset": 0,
+              "width": 1000000000,
+              "last_seed": 999999999
+            },
+            "validation": {
+              "offset": 1000000000,
+              "width": 500000000,
+              "last_seed": 1499999999
+            },
+            "test": {
+              "offset": 1500000000,
+              "width": 500000000,
+              "last_seed": 1999999999
+            }
+          },
+          "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+          "default_evaluation_split": "validation",
+          "default_evaluation_logical_seeds": {
+            "start": 10000,
+            "episodes": 100
+          },
+          "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+          "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+          "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+          "dynamic_episode_traffic": true,
+          "scenario_family": "darrl_lane1_v1",
+          "configuration_revision": "darrl_r2_20260930",
+          "previous_configuration_revision": "darrl_r1_20260930",
+          "terminal_outcome_protocol": "exclusive_terminal_v2",
+          "template_scenario": "intersection_random_medium_v1",
+          "collision_action": "remove",
+          "collision_detection_mode": "sumo_events_or_ego_geometry",
+          "background_vtype_overrides": {
+            "jmIgnoreFoeProb": "0"
+          },
+          "ego_vtype_overrides": {
+            "minGap": "1",
+            "jmIgnoreFoeProb": "0"
+          }
+        },
+        "training_traffic_split": "train",
+        "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0",
+        "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "evaluation": {
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_rate": 0.69,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.38
+        },
+        "training_curve": null,
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "raw_budget": 100000,
+        "training_seed": 0,
+        "checkpoint_frequency_raw_steps": 10000,
+        "note": "seeded randomized intersection traffic profile."
+      },
+      "progress": {
+        "raw_steps": 99710,
+        "updates": 94710,
+        "updated_at": 1790826355.669926
+      },
+      "completion": {
+        "smoke": false,
+        "checkpoint_sha256": "ce0d658d7e20abdabec03dbc004219c3b116032005b7d6f172f5558bfe134b01",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 21461.253187417984
+      },
+      "evaluation_identity": {
+        "method": "sac_mlp_d1_st_rt_topo",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt_topo",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "ce0d658d7e20abdabec03dbc004219c3b116032005b7d6f172f5558bfe134b01",
+        "episodes": 100,
+        "workers": 1,
+        "smoke": false,
+        "behavior_diagnostics": true
+      },
+      "external_evaluation_summary": {
+        "episodes": 100,
+        "success_rate": 0.31,
+        "collision_rate": 0.69,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.0,
+        "mean_return": -0.38
+      },
+      "external_eval_episode_count": 100,
+      "logical_seed_min": 10000,
+      "logical_seed_max": 10099,
+      "logical_seed_unique_count": 100,
+      "seed_sequence_is_10000_to_10099": true,
+      "terminal_flags_raw_counts": {
+        "success": 31,
+        "collision": 69,
+        "timeout": 0,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 31,
+        "collision": 69,
+        "timeout": 0,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {
+        "1": 100
+      },
+      "return": {
+        "mean": -0.38,
+        "population_variance": 0.8556,
+        "population_sd": 0.9249864863877743
+      },
+      "episode_steps": {
+        "raw_mean_all": 266.26,
+        "raw_median_all": 267,
+        "decision_mean_all": 89.11,
+        "decision_mean_success_only": 99.09677419354838,
+        "raw_mean_success_only": 296.3225806451613,
+        "success_completion_time_mean_seconds": 29.63225806451613,
+        "success_completion_time_median_seconds": 28.8
+      },
+      "behavior": {
+        "episodes_with_diagnostics": 100,
+        "speed": {
+          "sample_count": 26594,
+          "mean_actual_speed_mps_raw_tick_weighted": 4.092841493116576,
+          "stopped_ticks": 362,
+          "stopped_fraction_of_speed_samples": 0.013612092953297737
+        },
+        "risk": {
+          "evaluable_ticks": 26594,
+          "low_ttc_ticks": 2151,
+          "low_ttc_fraction_of_evaluable_ticks": 0.08088290591862826,
+          "risk_and_observation_covered_ticks": 26594,
+          "covered_critical_unobserved_ticks": 830,
+          "critical_unobserved_fraction_of_covered_ticks": 0.03121004737910807
+        },
+        "actions": [
+          {
+            "dimension": 0,
+            "samples": 8911,
+            "mean": -0.17640210048824084,
+            "near_unit_bound_fraction": 0.23487824037706206
+          },
+          {
+            "dimension": 1,
+            "samples": 8911,
+            "mean": 0.3794420933284659,
+            "near_unit_bound_fraction": 0.14027606329255976
+          }
+        ],
+        "collision_terminal_location_counts_from_last_snapshot": {
+          ":J1_21 | :J1_21_0": 67,
+          ":J1_14 | :J1_14_0": 1,
+          "-E0 | -E0_1": 1
+        },
+        "terminal_collision_episodes_with_raw_sumo_collision_flag": 1,
+        "terminal_collision_episodes_with_geometric_collision_flag": 68,
+        "limitation": "Raw SUMO collision flag and geometric collision flag are endpoint diagnostics; they are not interchangeable with the mutually exclusive terminal collision outcome."
+      },
+      "diagnostic_episode_count": 100,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 100,
+      "traffic_schedule_hashes_by_logical_seed": {
+        "10000": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e",
+        "10001": "b5f4dccca2ae810949c0dacf7e205df49cffb8c6fff91da4e2295b412fe70e8e",
+        "10002": "a2d7328389b9898383387429c97c619e815d8958cc0f5366b6b2e4bd59592530",
+        "10003": "ddd7ae402defc3ea36b1da5d2b950d4ceb012f196e422a55d1778a7c97832f02",
+        "10004": "4c3a9751ee714eec65251529542b2611de77dddb49518431088c1024c21ac552",
+        "10005": "4ffb0112147e533e1be355cad848bfeed1bca62a1dc92ca3398385f194762b0d",
+        "10006": "25a7ec6f5f6c3443fa6425db01fed0ee708ae6fd796830c44e989aaa70f2e530",
+        "10007": "ad77947b3a6cba0425bd44327ec672f1859ce35b4223e555d1fac981d6752efd",
+        "10008": "3acd2f6579c061852be72a301089f31eb89fb2360f43578ad91a51f09d1261e4",
+        "10009": "42937d859e4720b4d6a28f9a6c775d2d7dbd7a37adf60a201cec4b6b2fddd6c9",
+        "10010": "babec3818c0f97841c41c1a42d66907581fb9c44102f1d16f99a90a462a0449b",
+        "10011": "4af831887c8784876d0492384abdd0a90ca27eb0b9ae118f57a4c9caba0efa18",
+        "10012": "d525c1f1cc829716d09f73f12b8e7f67e57306c8933480fc6bf78933473a1017",
+        "10013": "1137ed37550e91ffbbebfc3a4640f0558d505f7fe4291dc000b060049c675c63",
+        "10014": "a7bde6273065fd4a8412061c36f4900ac6cdcdb1c37a7dacf3bb618834b5f839",
+        "10015": "80b3d1be88a7b77b4234504bae315697e7d5517a1ab69718ce91db93b5f4dc3c",
+        "10016": "b3d2c237891a894b004625d3450973bec21c34e6cef1ea75c7ddbe1e3aae0b55",
+        "10017": "034d3c2337d80501a7fd128df42ff1fc61fa831c1de7d6cefea3506145c0ab72",
+        "10018": "905c8aea2fc30792444dd3b5a2d65c5cb5dd5de8035b319f050a52c7fc7446e6",
+        "10019": "67276cdf8e644a27459ac8b6daa27df6cd6ff78364c8f74de6e1d3ba52fcc500",
+        "10020": "a2bf2f3dd50255b2a8b9dc3ed8f6e61e4d83c89a99efb8837a6d4fa864adce5a",
+        "10021": "c88145386832d0fa9feb47b56352c00bc602e9c29c100e8853d0a44141faff45",
+        "10022": "dd0174441d4e3265b9dc2e9ee02033087ac2f54e48d47922561078060bfd04ef",
+        "10023": "30ae35be2d32e9099d1b0bfb4aed383b3bb857ef15d83f4b25caf9a0d57cd37b",
+        "10024": "500e7050c985e4a7236717fdad55d68f9415913184699dad9d0704d39c80a012",
+        "10025": "903e0f2e13f0af7791b6136c3cec56d893c8b8404fd8e6b01a96f968372a99a5",
+        "10026": "6fa8c588b4572265a9c187b9982fbd4459c123565e30eb7b7719a6a9ebd35e0b",
+        "10027": "af9b6be1b33485dacd509df9ec4559b6cad235a678d6628c175b99926c7f0255",
+        "10028": "a2b632ddb86227f6ce76b13b0f4fdb9884729e144bc24cb3b74f5e073b5f3d36",
+        "10029": "1985f32fcdedc75048f1a2a7895adccc96c13e206c168c6bfbdfea96bbff5c04",
+        "10030": "9ac96e45d3478eb1474ebe2392d4e4194d867595fdde5eef98d1ed1d90c0a5b7",
+        "10031": "5fd9dbd5eff442fcf656bedf5bd05d7763cc380b025e93467e3c1bbd6d52f258",
+        "10032": "a5c0289d1c50cf385333c9188b92f08d0054ab710145c6e69e217e8a4399e449",
+        "10033": "bd4d8432e1e15ad204bf7fe7ef96ed7d335cb38c3dd1c7be0ef010c95b7c0155",
+        "10034": "f64d7df07351ba6539c92f70471466344a2e3c2b4bb9abc7b7ae1e11515fe9c1",
+        "10035": "8adf43bab593822c576452e1df1be7167bd4bfc34058d8e211524469172c05ec",
+        "10036": "3764d999c3338ddceb288827a788182753d8995d9abb29d12e9ee734573d0c7b",
+        "10037": "6a5c8e1229b0576be99e4d47debef487d1a424ed39560a259f5910451d803e72",
+        "10038": "888911919e71046e6679b2233b40eead268adfed80f3144b252b9e8de9e07da5",
+        "10039": "8dfa075df78c36165707b7e295d749d3d37f08b217dbf4d5a67d16191d1b4230",
+        "10040": "bf0cff77852d013b7419ea1e68768811c0ccfd2e154d791cdb31291cb1de38b2",
+        "10041": "cb45fa20c7d8ea14cfd85a96e439a89634dc3053ec584712a82e44c401e492a9",
+        "10042": "8526055420e4e5c97a4ef13d627640120dd7ed15cb08bed8f589b7156b3fcca2",
+        "10043": "e0f8315eca8ba226d90af1a1ee655fc70d6d269dacee50c926e8f9a789584627",
+        "10044": "80ee499af2257343371744606f4a66e5d9e432e8c7280333d2263ad1322be995",
+        "10045": "20ce62523fc22352edb871240e5be55145f141e8300fea3665cea61c4278cba6",
+        "10046": "79c6a476f527c7d1033a3bd322615e4667f18d22758ef4d8fe7a9e88fbd43fda",
+        "10047": "1d563de106d38bcda6dba824744fa187e10fd226c26f902dde61d27c9b3dfec7",
+        "10048": "e34f0e36c75df9b653ca063d8a7abcd53cf61ce2202c7afec3fa8dcb42e431f7",
+        "10049": "1ce42b8121b242f0d2b6a629398cf0b5fbadfabbf724f2fdb0139d6e1b337f3b",
+        "10050": "d98e20f9125d2ae68d07b19318a28da07937a9716751fcad0da9e436713e172d",
+        "10051": "cbda898a9525b396e861dc9252b0797758338775690f1223089f2c6a2f93dee7",
+        "10052": "32e61acc8ae1125f6b7c4dd51aae3b63efecb4f43764527556291451e103ca57",
+        "10053": "a9c80f2b1535bb1e6f8ed7d8e294d8dfab2c91136924d7a1b72df7a839fc5908",
+        "10054": "dda66eb9de9e3524b663125041dab6fe82d376ae80ef51dc9870b1ffe22510e8",
+        "10055": "e9050a3a1461b5c92ae4fa360400bd4c3399d1195b28e185752c8bbd6d14d75e",
+        "10056": "719cc2466c12d08d60c5218ad16184f2a8ecaee5ea2462d1af5e1aeb4f2e1130",
+        "10057": "2cc299834c5c88547133b2c3b5a418d627916a6108aa9b038830b4305d6e5697",
+        "10058": "8f38322fdba7cc9859392f0d2198e7996f47ae52405487f51a43c343f830c867",
+        "10059": "c9974ab7acab773a182a41411c6ceac7b8c0ead1971e01108f49d5f49fec5a84",
+        "10060": "853e8739bf65b388fcbbf7f11670e45a9cf721caddd3504b18f42211f2172e05",
+        "10061": "d96f49d3dbc9fad40ed13a3d99c11b7f631269552cf9b79a4939fec45b45e7ed",
+        "10062": "5cc583daf52acbef95f773ed11050102c9c9aed8041f3819aa549e38cb17ddb6",
+        "10063": "2afcd42dedbb25bf29bc028ecdab0f328e8b40af6683c1983b5af1b4a57f3535",
+        "10064": "cef6807fc6019bd7a91dbaa7baeb6f48dfaa44ec66d7a359f797ad22c1c12b18",
+        "10065": "e834ba52e234b5a404e241948fbbac1db8563de40388f02de42ba6b21052aad3",
+        "10066": "21dd1c07e509ea40e7c34e1cdf2a7be468d7c92cac79eceee7b9407913e4be2d",
+        "10067": "3bce9cc0c925b344869658ff0c99c8eb57cfc4e6f0d08d1895516ee13d98ceba",
+        "10068": "916f7b6cc87add31efc15fab57a6b48173cb177ff061b598f895dd8364507cea",
+        "10069": "80b5fda9b25bcd3b1b604e52bfd4a02dd2ef7b40317addaf806b51903ee11101",
+        "10070": "4785fd4254e4af4fb846e0a0a54a7632974f5bcaed74b04b0eae3d1c168d4faa",
+        "10071": "78e1bb09665faf614d850a834ad3dd2bfd2ea280e93b85ee7b349c13c689760f",
+        "10072": "8bfbe95c9d7f1cf339b28274b4d94a4958302cee2ca387c30da1d4429739ca90",
+        "10073": "47f0754e00a1836d0d9f9c688f73a784a80dfc643357aa70570a3c06b62cd9fd",
+        "10074": "1dc026da62df9aca0988c90e7b31f44812250b39343da96a9b289e278381e9d9",
+        "10075": "184841b2f196d8c62f4fc8d7b1e11684bec5abeb6dfedc88bcab655295fcdcdd",
+        "10076": "678de30814a192c85b10a3f8dbb1e9f4c384575097dccee39bee9b4290003a45",
+        "10077": "625cda65f92442b13e9d08c70aa78e01424f3e33ad412cf4896856501a497ec9",
+        "10078": "1a036493e023fda2b064f12d7c36966b7d5a39707163b5561be0cb574c25bcd5",
+        "10079": "1ffcf63ced86f4954063406b87311609d3cedeb4ca710fe89b4675dbeb703be0",
+        "10080": "3aa008db53ff154dfb97abfc135f5b0283ffe2bfa2b6d67822dcfdd2e806654f",
+        "10081": "a5339377252fbfd92221665656ebdbe70c60e7dc584cc489321132355d76ae69",
+        "10082": "c5a9cf20ceb33266093ce612c41cb5c7955cdd33c008ab5553481b08c63a22e7",
+        "10083": "cf4591ccdc36f97aec7b53da221867723a465769af72ea3135d1a3a254c39875",
+        "10084": "0a8713ebaf85d829f17fd3edb6e1a880fd14547dcf0eb70a0ace1756a0468007",
+        "10085": "131a96b421745fb627d64b3780bab84d03404c08ee9a4a6765df0b5ac8a9831f",
+        "10086": "c0c8941a59e0dfa81f797861ed430e549987f95ccb2f9ee2fd6a27aecc20743e",
+        "10087": "b4261e416d8906dd89c0bbf880558fb2c09106323803871961d190c01139c96b",
+        "10088": "83a7271778f3ad89705d7c1f38910d80ff5db193fdd0167778138405635d27af",
+        "10089": "6e1607441d0594ded2de02eebd7223399d2cd43d8669abba908c8af5f69222c2",
+        "10090": "f6d461acc4f1de9c15f1927a86a9233d85d829493511cd42b130720cc9b9c740",
+        "10091": "c960c55dec0204c533660f3ab7297a7a168bdded28d3a32d185c0b24c1e60497",
+        "10092": "5558a98e8ba77c8efd32eb88bef2713a2095b138a28f1b272c2e8ae9fda73036",
+        "10093": "3f3e531460a8fe389d6273572592b2a568898a039a132ef556038199e37f624c",
+        "10094": "cf38ff33f8f70243c119906103850ed97c34de935eee4d6acc699d7f06cc2e96",
+        "10095": "2192b14eac5439208e80b88cee039bb684b05fb2433a65713505605498083878",
+        "10096": "21e940a1246a992e4dd6d55ffb6e8a330350265acbee8858b7910c5ee3bd35f7",
+        "10097": "caa3e49e5e6e53485b8d0e2057c857a1c83a31d3381622c87f03324b3ad351f9",
+        "10098": "b2e364446032c89fa6faa1040af861a0e8f986339e99ed9b19cad6fe8709fd32",
+        "10099": "c6f862a170e4dbb6e723daa3be6f7eb1d319465f8de32038c617c4de29e8973b"
+      },
+      "checkpoint": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "sha256_file": "ce0d658d7e20abdabec03dbc004219c3b116032005b7d6f172f5558bfe134b01",
+        "sha256_evaluation_identity": "ce0d658d7e20abdabec03dbc004219c3b116032005b7d6f172f5558bfe134b01",
+        "identity_matches_final_model": true,
+        "identity_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip"
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\training_complete.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "eval_diagnostics_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval\\episodes.jsonl",
+        "internal_mst_final_evaluation": null
+      },
+      "source_sha256": {
+        "arguments": "76fcf3cbe2c69cd69aff810fe70f074e0951baca1db4cbcb4d5fb284462524b0",
+        "experiment_manifest": "e59f801c1fcd4620a0d1a4a201b96bdd63e370737180da164254eb4b4b304232",
+        "training_complete": "3accb200946b2df8c0c0db45b1aa30aff7dc0a500c540f11d2d02f5785322955",
+        "evaluation_results": "9311ed6acf7d02f1c3fed3e07e4e90c6ed59a486ebe538a3310b43b90d8c1a2c",
+        "eval_diagnostics_episodes": "7ee473e04e03d32cdfa03c3db7b9da79395022caf08633e5a5333edd8c15d4ea"
+      },
+      "internal_mst_eval_summary": null
+    },
+    "sac_mlp_d1_st_rt_topo_routeaware_v1": {
+      "suite_status": "complete",
+      "suite_exit_code": 0,
+      "train_raw_steps": 100000,
+      "train_updates": 95001,
+      "train_wall_seconds": 22724.44479727745,
+      "completion_present": true,
+      "training_status": "trained",
+      "training_complete": true,
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+        "parent": "sac_mlp",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": true,
+        "use_topology": true,
+        "use_slots": false,
+        "use_incremental_slots": false,
+        "use_route_reachability": true,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "algorithm_class": "SceneRepresentationSAC",
+        "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=True, topology=True, slots=False, incremental_slots=False, Graph-SLT=False, SBS=False."
+      },
+      "experiment_manifest": {
+        "method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+        "traffic_config": {
+          "schema_version": 1,
+          "protocol": "intersection_bernoulli_step_schedule_v1",
+          "scenario": "intersection_random_darrl_medium_v1",
+          "density_level": "medium",
+          "source_scenario": "intersection_sorted",
+          "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+          "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+          "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+          "total_vehicles_per_hour": 3240,
+          "vehicles_per_hour_by_route": {
+            "neg_E3_to_neg_E0": 1080,
+            "E0_to_E3": 1080,
+            "E2_to_E1": 1080
+          },
+          "flows": [
+            {
+              "id": "neg_E3_to_neg_E0",
+              "edges": [
+                "-E3",
+                "-E0"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E0_to_E3",
+              "edges": [
+                "E0",
+                "E3"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E2_to_E1",
+              "edges": [
+                "E2",
+                "E1"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            }
+          ],
+          "flow_begin_seconds": 0.0,
+          "flow_end_seconds": 130.0,
+          "ego_depart_seconds": 50.0,
+          "ego_route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "ego_depart_lane": "2",
+          "ego_depart_speed": "0",
+          "step_length_seconds": 0.1,
+          "max_episode_raw_steps": 600,
+          "default_action_repeat": 3,
+          "endless_traffic": false,
+          "background_exit_behavior": "leave after the configured route ends; no recycling",
+          "depart_scale": 1.0,
+          "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+          "traffic_seed_domains": {
+            "train": {
+              "offset": 0,
+              "width": 1000000000,
+              "last_seed": 999999999
+            },
+            "validation": {
+              "offset": 1000000000,
+              "width": 500000000,
+              "last_seed": 1499999999
+            },
+            "test": {
+              "offset": 1500000000,
+              "width": 500000000,
+              "last_seed": 1999999999
+            }
+          },
+          "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+          "default_evaluation_split": "validation",
+          "default_evaluation_logical_seeds": {
+            "start": 10000,
+            "episodes": 100
+          },
+          "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+          "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+          "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+          "dynamic_episode_traffic": true,
+          "scenario_family": "darrl_lane1_v1",
+          "configuration_revision": "darrl_r2_20260930",
+          "previous_configuration_revision": "darrl_r1_20260930",
+          "terminal_outcome_protocol": "exclusive_terminal_v2",
+          "template_scenario": "intersection_random_medium_v1",
+          "collision_action": "remove",
+          "collision_detection_mode": "sumo_events_or_ego_geometry",
+          "background_vtype_overrides": {
+            "jmIgnoreFoeProb": "0"
+          },
+          "ego_vtype_overrides": {
+            "minGap": "1",
+            "jmIgnoreFoeProb": "0"
+          }
+        },
+        "training_traffic_split": "train",
+        "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0",
+        "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "evaluation": {
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_rate": 0.45,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.24,
+          "mean_return": -0.14
+        },
+        "training_curve": null,
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "raw_budget": 100000,
+        "training_seed": 0,
+        "checkpoint_frequency_raw_steps": 10000,
+        "note": "seeded randomized intersection traffic profile."
+      },
+      "progress": {
+        "raw_steps": 99976,
+        "updates": 94976,
+        "updated_at": 1790841732.1273074
+      },
+      "completion": {
+        "smoke": false,
+        "checkpoint_sha256": "c0ca3ac892409a480cc6b8166fd5650675b1700855e9fefa2a7a504de2ae5801",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 22724.44479727745
+      },
+      "evaluation_identity": {
+        "method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "c0ca3ac892409a480cc6b8166fd5650675b1700855e9fefa2a7a504de2ae5801",
+        "episodes": 100,
+        "workers": 1,
+        "smoke": false,
+        "behavior_diagnostics": true
+      },
+      "external_evaluation_summary": {
+        "episodes": 100,
+        "success_rate": 0.31,
+        "collision_rate": 0.45,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.24,
+        "mean_return": -0.14
+      },
+      "external_eval_episode_count": 100,
+      "logical_seed_min": 10000,
+      "logical_seed_max": 10099,
+      "logical_seed_unique_count": 100,
+      "seed_sequence_is_10000_to_10099": true,
+      "terminal_flags_raw_counts": {
+        "success": 31,
+        "collision": 45,
+        "timeout": 24,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 31,
+        "collision": 45,
+        "timeout": 24,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {
+        "1": 100
+      },
+      "return": {
+        "mean": -0.14,
+        "population_variance": 0.7404,
+        "population_sd": 0.8604649905719581
+      },
+      "episode_steps": {
+        "raw_mean_all": 364.81,
+        "raw_median_all": 322,
+        "decision_mean_all": 121.89,
+        "decision_mean_success_only": 98.6774193548387,
+        "raw_mean_success_only": 294.8709677419355,
+        "success_completion_time_mean_seconds": 29.48709677419355,
+        "success_completion_time_median_seconds": 29.3
+      },
+      "behavior": {
+        "episodes_with_diagnostics": 100,
+        "speed": {
+          "sample_count": 36448,
+          "mean_actual_speed_mps_raw_tick_weighted": 2.9621149237168853,
+          "stopped_ticks": 18714,
+          "stopped_fraction_of_speed_samples": 0.5134438103599649
+        },
+        "risk": {
+          "evaluable_ticks": 36448,
+          "low_ttc_ticks": 1708,
+          "low_ttc_fraction_of_evaluable_ticks": 0.0468612818261633,
+          "risk_and_observation_covered_ticks": 36448,
+          "covered_critical_unobserved_ticks": 624,
+          "critical_unobserved_fraction_of_covered_ticks": 0.017120280948200176
+        },
+        "actions": [
+          {
+            "dimension": 0,
+            "samples": 12189,
+            "mean": 0.21919021988161497,
+            "near_unit_bound_fraction": 0.15833948642218393
+          },
+          {
+            "dimension": 1,
+            "samples": 12189,
+            "mean": 0.015377929290077022,
+            "near_unit_bound_fraction": 0.14939699729264092
+          }
+        ],
+        "collision_terminal_location_counts_from_last_snapshot": {
+          ":J1_21 | :J1_21_0": 44,
+          "-E0 | -E0_1": 1
+        },
+        "terminal_collision_episodes_with_raw_sumo_collision_flag": 2,
+        "terminal_collision_episodes_with_geometric_collision_flag": 43,
+        "limitation": "Raw SUMO collision flag and geometric collision flag are endpoint diagnostics; they are not interchangeable with the mutually exclusive terminal collision outcome."
+      },
+      "diagnostic_episode_count": 100,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 100,
+      "traffic_schedule_hashes_by_logical_seed": {
+        "10000": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e",
+        "10001": "b5f4dccca2ae810949c0dacf7e205df49cffb8c6fff91da4e2295b412fe70e8e",
+        "10002": "a2d7328389b9898383387429c97c619e815d8958cc0f5366b6b2e4bd59592530",
+        "10003": "ddd7ae402defc3ea36b1da5d2b950d4ceb012f196e422a55d1778a7c97832f02",
+        "10004": "4c3a9751ee714eec65251529542b2611de77dddb49518431088c1024c21ac552",
+        "10005": "4ffb0112147e533e1be355cad848bfeed1bca62a1dc92ca3398385f194762b0d",
+        "10006": "25a7ec6f5f6c3443fa6425db01fed0ee708ae6fd796830c44e989aaa70f2e530",
+        "10007": "ad77947b3a6cba0425bd44327ec672f1859ce35b4223e555d1fac981d6752efd",
+        "10008": "3acd2f6579c061852be72a301089f31eb89fb2360f43578ad91a51f09d1261e4",
+        "10009": "42937d859e4720b4d6a28f9a6c775d2d7dbd7a37adf60a201cec4b6b2fddd6c9",
+        "10010": "babec3818c0f97841c41c1a42d66907581fb9c44102f1d16f99a90a462a0449b",
+        "10011": "4af831887c8784876d0492384abdd0a90ca27eb0b9ae118f57a4c9caba0efa18",
+        "10012": "d525c1f1cc829716d09f73f12b8e7f67e57306c8933480fc6bf78933473a1017",
+        "10013": "1137ed37550e91ffbbebfc3a4640f0558d505f7fe4291dc000b060049c675c63",
+        "10014": "a7bde6273065fd4a8412061c36f4900ac6cdcdb1c37a7dacf3bb618834b5f839",
+        "10015": "80b3d1be88a7b77b4234504bae315697e7d5517a1ab69718ce91db93b5f4dc3c",
+        "10016": "b3d2c237891a894b004625d3450973bec21c34e6cef1ea75c7ddbe1e3aae0b55",
+        "10017": "034d3c2337d80501a7fd128df42ff1fc61fa831c1de7d6cefea3506145c0ab72",
+        "10018": "905c8aea2fc30792444dd3b5a2d65c5cb5dd5de8035b319f050a52c7fc7446e6",
+        "10019": "67276cdf8e644a27459ac8b6daa27df6cd6ff78364c8f74de6e1d3ba52fcc500",
+        "10020": "a2bf2f3dd50255b2a8b9dc3ed8f6e61e4d83c89a99efb8837a6d4fa864adce5a",
+        "10021": "c88145386832d0fa9feb47b56352c00bc602e9c29c100e8853d0a44141faff45",
+        "10022": "dd0174441d4e3265b9dc2e9ee02033087ac2f54e48d47922561078060bfd04ef",
+        "10023": "30ae35be2d32e9099d1b0bfb4aed383b3bb857ef15d83f4b25caf9a0d57cd37b",
+        "10024": "500e7050c985e4a7236717fdad55d68f9415913184699dad9d0704d39c80a012",
+        "10025": "903e0f2e13f0af7791b6136c3cec56d893c8b8404fd8e6b01a96f968372a99a5",
+        "10026": "6fa8c588b4572265a9c187b9982fbd4459c123565e30eb7b7719a6a9ebd35e0b",
+        "10027": "af9b6be1b33485dacd509df9ec4559b6cad235a678d6628c175b99926c7f0255",
+        "10028": "a2b632ddb86227f6ce76b13b0f4fdb9884729e144bc24cb3b74f5e073b5f3d36",
+        "10029": "1985f32fcdedc75048f1a2a7895adccc96c13e206c168c6bfbdfea96bbff5c04",
+        "10030": "9ac96e45d3478eb1474ebe2392d4e4194d867595fdde5eef98d1ed1d90c0a5b7",
+        "10031": "5fd9dbd5eff442fcf656bedf5bd05d7763cc380b025e93467e3c1bbd6d52f258",
+        "10032": "a5c0289d1c50cf385333c9188b92f08d0054ab710145c6e69e217e8a4399e449",
+        "10033": "bd4d8432e1e15ad204bf7fe7ef96ed7d335cb38c3dd1c7be0ef010c95b7c0155",
+        "10034": "f64d7df07351ba6539c92f70471466344a2e3c2b4bb9abc7b7ae1e11515fe9c1",
+        "10035": "8adf43bab593822c576452e1df1be7167bd4bfc34058d8e211524469172c05ec",
+        "10036": "3764d999c3338ddceb288827a788182753d8995d9abb29d12e9ee734573d0c7b",
+        "10037": "6a5c8e1229b0576be99e4d47debef487d1a424ed39560a259f5910451d803e72",
+        "10038": "888911919e71046e6679b2233b40eead268adfed80f3144b252b9e8de9e07da5",
+        "10039": "8dfa075df78c36165707b7e295d749d3d37f08b217dbf4d5a67d16191d1b4230",
+        "10040": "bf0cff77852d013b7419ea1e68768811c0ccfd2e154d791cdb31291cb1de38b2",
+        "10041": "cb45fa20c7d8ea14cfd85a96e439a89634dc3053ec584712a82e44c401e492a9",
+        "10042": "8526055420e4e5c97a4ef13d627640120dd7ed15cb08bed8f589b7156b3fcca2",
+        "10043": "e0f8315eca8ba226d90af1a1ee655fc70d6d269dacee50c926e8f9a789584627",
+        "10044": "80ee499af2257343371744606f4a66e5d9e432e8c7280333d2263ad1322be995",
+        "10045": "20ce62523fc22352edb871240e5be55145f141e8300fea3665cea61c4278cba6",
+        "10046": "79c6a476f527c7d1033a3bd322615e4667f18d22758ef4d8fe7a9e88fbd43fda",
+        "10047": "1d563de106d38bcda6dba824744fa187e10fd226c26f902dde61d27c9b3dfec7",
+        "10048": "e34f0e36c75df9b653ca063d8a7abcd53cf61ce2202c7afec3fa8dcb42e431f7",
+        "10049": "1ce42b8121b242f0d2b6a629398cf0b5fbadfabbf724f2fdb0139d6e1b337f3b",
+        "10050": "d98e20f9125d2ae68d07b19318a28da07937a9716751fcad0da9e436713e172d",
+        "10051": "cbda898a9525b396e861dc9252b0797758338775690f1223089f2c6a2f93dee7",
+        "10052": "32e61acc8ae1125f6b7c4dd51aae3b63efecb4f43764527556291451e103ca57",
+        "10053": "a9c80f2b1535bb1e6f8ed7d8e294d8dfab2c91136924d7a1b72df7a839fc5908",
+        "10054": "dda66eb9de9e3524b663125041dab6fe82d376ae80ef51dc9870b1ffe22510e8",
+        "10055": "e9050a3a1461b5c92ae4fa360400bd4c3399d1195b28e185752c8bbd6d14d75e",
+        "10056": "719cc2466c12d08d60c5218ad16184f2a8ecaee5ea2462d1af5e1aeb4f2e1130",
+        "10057": "2cc299834c5c88547133b2c3b5a418d627916a6108aa9b038830b4305d6e5697",
+        "10058": "8f38322fdba7cc9859392f0d2198e7996f47ae52405487f51a43c343f830c867",
+        "10059": "c9974ab7acab773a182a41411c6ceac7b8c0ead1971e01108f49d5f49fec5a84",
+        "10060": "853e8739bf65b388fcbbf7f11670e45a9cf721caddd3504b18f42211f2172e05",
+        "10061": "d96f49d3dbc9fad40ed13a3d99c11b7f631269552cf9b79a4939fec45b45e7ed",
+        "10062": "5cc583daf52acbef95f773ed11050102c9c9aed8041f3819aa549e38cb17ddb6",
+        "10063": "2afcd42dedbb25bf29bc028ecdab0f328e8b40af6683c1983b5af1b4a57f3535",
+        "10064": "cef6807fc6019bd7a91dbaa7baeb6f48dfaa44ec66d7a359f797ad22c1c12b18",
+        "10065": "e834ba52e234b5a404e241948fbbac1db8563de40388f02de42ba6b21052aad3",
+        "10066": "21dd1c07e509ea40e7c34e1cdf2a7be468d7c92cac79eceee7b9407913e4be2d",
+        "10067": "3bce9cc0c925b344869658ff0c99c8eb57cfc4e6f0d08d1895516ee13d98ceba",
+        "10068": "916f7b6cc87add31efc15fab57a6b48173cb177ff061b598f895dd8364507cea",
+        "10069": "80b5fda9b25bcd3b1b604e52bfd4a02dd2ef7b40317addaf806b51903ee11101",
+        "10070": "4785fd4254e4af4fb846e0a0a54a7632974f5bcaed74b04b0eae3d1c168d4faa",
+        "10071": "78e1bb09665faf614d850a834ad3dd2bfd2ea280e93b85ee7b349c13c689760f",
+        "10072": "8bfbe95c9d7f1cf339b28274b4d94a4958302cee2ca387c30da1d4429739ca90",
+        "10073": "47f0754e00a1836d0d9f9c688f73a784a80dfc643357aa70570a3c06b62cd9fd",
+        "10074": "1dc026da62df9aca0988c90e7b31f44812250b39343da96a9b289e278381e9d9",
+        "10075": "184841b2f196d8c62f4fc8d7b1e11684bec5abeb6dfedc88bcab655295fcdcdd",
+        "10076": "678de30814a192c85b10a3f8dbb1e9f4c384575097dccee39bee9b4290003a45",
+        "10077": "625cda65f92442b13e9d08c70aa78e01424f3e33ad412cf4896856501a497ec9",
+        "10078": "1a036493e023fda2b064f12d7c36966b7d5a39707163b5561be0cb574c25bcd5",
+        "10079": "1ffcf63ced86f4954063406b87311609d3cedeb4ca710fe89b4675dbeb703be0",
+        "10080": "3aa008db53ff154dfb97abfc135f5b0283ffe2bfa2b6d67822dcfdd2e806654f",
+        "10081": "a5339377252fbfd92221665656ebdbe70c60e7dc584cc489321132355d76ae69",
+        "10082": "c5a9cf20ceb33266093ce612c41cb5c7955cdd33c008ab5553481b08c63a22e7",
+        "10083": "cf4591ccdc36f97aec7b53da221867723a465769af72ea3135d1a3a254c39875",
+        "10084": "0a8713ebaf85d829f17fd3edb6e1a880fd14547dcf0eb70a0ace1756a0468007",
+        "10085": "131a96b421745fb627d64b3780bab84d03404c08ee9a4a6765df0b5ac8a9831f",
+        "10086": "c0c8941a59e0dfa81f797861ed430e549987f95ccb2f9ee2fd6a27aecc20743e",
+        "10087": "b4261e416d8906dd89c0bbf880558fb2c09106323803871961d190c01139c96b",
+        "10088": "83a7271778f3ad89705d7c1f38910d80ff5db193fdd0167778138405635d27af",
+        "10089": "6e1607441d0594ded2de02eebd7223399d2cd43d8669abba908c8af5f69222c2",
+        "10090": "f6d461acc4f1de9c15f1927a86a9233d85d829493511cd42b130720cc9b9c740",
+        "10091": "c960c55dec0204c533660f3ab7297a7a168bdded28d3a32d185c0b24c1e60497",
+        "10092": "5558a98e8ba77c8efd32eb88bef2713a2095b138a28f1b272c2e8ae9fda73036",
+        "10093": "3f3e531460a8fe389d6273572592b2a568898a039a132ef556038199e37f624c",
+        "10094": "cf38ff33f8f70243c119906103850ed97c34de935eee4d6acc699d7f06cc2e96",
+        "10095": "2192b14eac5439208e80b88cee039bb684b05fb2433a65713505605498083878",
+        "10096": "21e940a1246a992e4dd6d55ffb6e8a330350265acbee8858b7910c5ee3bd35f7",
+        "10097": "caa3e49e5e6e53485b8d0e2057c857a1c83a31d3381622c87f03324b3ad351f9",
+        "10098": "b2e364446032c89fa6faa1040af861a0e8f986339e99ed9b19cad6fe8709fd32",
+        "10099": "c6f862a170e4dbb6e723daa3be6f7eb1d319465f8de32038c617c4de29e8973b"
+      },
+      "checkpoint": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "sha256_file": "c0ca3ac892409a480cc6b8166fd5650675b1700855e9fefa2a7a504de2ae5801",
+        "sha256_evaluation_identity": "c0ca3ac892409a480cc6b8166fd5650675b1700855e9fefa2a7a504de2ae5801",
+        "identity_matches_final_model": true,
+        "identity_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip"
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\training_complete.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "eval_diagnostics_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_routeaware_v1__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval\\episodes.jsonl",
+        "internal_mst_final_evaluation": null
+      },
+      "source_sha256": {
+        "arguments": "180c3de261e5cdfe8b87f5d3071239363b94f161af9de0d23334bcd3ec0efcdb",
+        "experiment_manifest": "d509c871ea94ea025dfd451f3e45b65c213ba8870118a7008894a1156174d607",
+        "training_complete": "47e8cefacb6c296acb2dccbccd3af99cb544f93dc1c1b02923b9f35eb16222c5",
+        "evaluation_results": "de01099f73d74e2717d368c4573ec280120e5bce8c75e2b1c157d3ba5b63f416",
+        "eval_diagnostics_episodes": "71099da82fadbb5d4bb97aa28c18db421a6122301b2711a59abb7020fe1b1cc1"
+      },
+      "internal_mst_eval_summary": null
+    },
+    "sac_mlp_d1_st_rt_3slot": {
+      "suite_status": "complete",
+      "suite_exit_code": 0,
+      "train_raw_steps": 100000,
+      "train_updates": 95001,
+      "train_wall_seconds": 14491.568165779114,
+      "completion_present": true,
+      "training_status": "trained",
+      "training_complete": true,
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt_3slot",
+        "parent": "sac_mlp",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": true,
+        "use_topology": false,
+        "use_slots": true,
+        "use_incremental_slots": true,
+        "use_route_reachability": false,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "algorithm_class": "SceneRepresentationSAC",
+        "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=True, topology=False, slots=True, incremental_slots=True, Graph-SLT=False, SBS=False."
+      },
+      "experiment_manifest": {
+        "method": "sac_mlp_d1_st_rt_3slot",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt_3slot",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "traffic_protocol": "intersection_bernoulli_step_schedule_v1",
+        "traffic_config": {
+          "schema_version": 1,
+          "protocol": "intersection_bernoulli_step_schedule_v1",
+          "scenario": "intersection_random_darrl_medium_v1",
+          "density_level": "medium",
+          "source_scenario": "intersection_sorted",
+          "arrival_process": "independent Bernoulli requests per inlet lane per 0.1-second simulation step",
+          "sumo_probability_semantics": "not a native probability flow; an episode-seeded Bernoulli request is sampled independently for each inlet at each 0.1-second tick",
+          "demand_definition": "user-requested p=0.03 per 0.1-second step; 3240 veh/h requested, realized insertion is capacity-limited",
+          "total_vehicles_per_hour": 3240,
+          "vehicles_per_hour_by_route": {
+            "neg_E3_to_neg_E0": 1080,
+            "E0_to_E3": 1080,
+            "E2_to_E1": 1080
+          },
+          "flows": [
+            {
+              "id": "neg_E3_to_neg_E0",
+              "edges": [
+                "-E3",
+                "-E0"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E0_to_E3",
+              "edges": [
+                "E0",
+                "E3"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            },
+            {
+              "id": "E2_to_E1",
+              "edges": [
+                "E2",
+                "E1"
+              ],
+              "vehicles_per_hour": 1080,
+              "rate_per_second": 0.3,
+              "sumo_probability": null,
+              "probability_per_step": 0.03,
+              "mean_headway_seconds": 3.3333333333333335,
+              "depart_lane": "1",
+              "depart_pos": "0",
+              "depart_speed": "max",
+              "arrival_lane": "1"
+            }
+          ],
+          "flow_begin_seconds": 0.0,
+          "flow_end_seconds": 130.0,
+          "ego_depart_seconds": 50.0,
+          "ego_route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "ego_depart_lane": "2",
+          "ego_depart_speed": "0",
+          "step_length_seconds": 0.1,
+          "max_episode_raw_steps": 600,
+          "default_action_repeat": 3,
+          "endless_traffic": false,
+          "background_exit_behavior": "leave after the configured route ends; no recycling",
+          "depart_scale": 1.0,
+          "driver_distribution": "all source templates; route-conditional empirical vehicle-type weights",
+          "traffic_seed_domains": {
+            "train": {
+              "offset": 0,
+              "width": 1000000000,
+              "last_seed": 999999999
+            },
+            "validation": {
+              "offset": 1000000000,
+              "width": 500000000,
+              "last_seed": 1499999999
+            },
+            "test": {
+              "offset": 1500000000,
+              "width": 500000000,
+              "last_seed": 1999999999
+            }
+          },
+          "traffic_seed_mapping": "offset[split] + logical_episode_seed % width[split]",
+          "default_evaluation_split": "validation",
+          "default_evaluation_logical_seeds": {
+            "start": 10000,
+            "episodes": 100
+          },
+          "holdout_unit": "SUMO simulation RNG seed, including random arrival realization",
+          "calibration_status": "user-specified demand tiers; learned-policy difficulty not yet calibrated",
+          "arrival_sampler": "sha256-seeded Python Random.random per route; sample once per tick; ordered explicit vehicle departures",
+          "dynamic_episode_traffic": true,
+          "scenario_family": "darrl_lane1_v1",
+          "configuration_revision": "darrl_r2_20260930",
+          "previous_configuration_revision": "darrl_r1_20260930",
+          "terminal_outcome_protocol": "exclusive_terminal_v2",
+          "template_scenario": "intersection_random_medium_v1",
+          "collision_action": "remove",
+          "collision_detection_mode": "sumo_events_or_ego_geometry",
+          "background_vtype_overrides": {
+            "jmIgnoreFoeProb": "0"
+          },
+          "ego_vtype_overrides": {
+            "minGap": "1",
+            "jmIgnoreFoeProb": "0"
+          }
+        },
+        "training_traffic_split": "train",
+        "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0",
+        "final_model": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "evaluation": {
+          "episodes": 100,
+          "success_rate": 0.3,
+          "collision_rate": 0.7,
+          "off_route_rate": 0.0,
+          "timeout_rate": 0.0,
+          "mean_return": -0.4
+        },
+        "training_curve": null,
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "raw_budget": 100000,
+        "training_seed": 0,
+        "checkpoint_frequency_raw_steps": 10000,
+        "note": "seeded randomized intersection traffic profile."
+      },
+      "progress": {
+        "raw_steps": 99902,
+        "updates": 94902,
+        "updated_at": 1790841805.4525166
+      },
+      "completion": {
+        "smoke": false,
+        "checkpoint_sha256": "99570d79baf7dee912e72dea993401ff1d27590d8ba272cd810f6416b1fdbd47",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 14491.568165779114
+      },
+      "evaluation_identity": {
+        "method": "sac_mlp_d1_st_rt_3slot",
+        "source_script": "train_intersection_yield_v2_d1",
+        "source_method": "sac_mlp_d1_st_rt_3slot",
+        "family": "d1",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "depart_scale": 1.0,
+        "eval_traffic_split": "validation",
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "checkpoint_sha256": "99570d79baf7dee912e72dea993401ff1d27590d8ba272cd810f6416b1fdbd47",
+        "episodes": 100,
+        "workers": 1,
+        "smoke": false,
+        "behavior_diagnostics": true
+      },
+      "external_evaluation_summary": {
+        "episodes": 100,
+        "success_rate": 0.3,
+        "collision_rate": 0.7,
+        "off_route_rate": 0.0,
+        "timeout_rate": 0.0,
+        "mean_return": -0.4
+      },
+      "external_eval_episode_count": 100,
+      "logical_seed_min": 10000,
+      "logical_seed_max": 10099,
+      "logical_seed_unique_count": 100,
+      "seed_sequence_is_10000_to_10099": true,
+      "terminal_flags_raw_counts": {
+        "success": 30,
+        "collision": 70,
+        "timeout": 0,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 30,
+        "collision": 70,
+        "timeout": 0,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {
+        "1": 100
+      },
+      "return": {
+        "mean": -0.4,
+        "population_variance": 0.84,
+        "population_sd": 0.916515138991168
+      },
+      "episode_steps": {
+        "raw_mean_all": 168.3,
+        "raw_median_all": 160,
+        "decision_mean_all": 56.44,
+        "decision_mean_success_only": 70.36666666666666,
+        "raw_mean_success_only": 210.16666666666666,
+        "success_completion_time_mean_seconds": 21.01666666666667,
+        "success_completion_time_median_seconds": 19.1
+      },
+      "behavior": {
+        "episodes_with_diagnostics": 100,
+        "speed": {
+          "sample_count": 16799,
+          "mean_actual_speed_mps_raw_tick_weighted": 6.375038480675029,
+          "stopped_ticks": 604,
+          "stopped_fraction_of_speed_samples": 0.035954521102446575
+        },
+        "risk": {
+          "evaluable_ticks": 16799,
+          "low_ttc_ticks": 2395,
+          "low_ttc_fraction_of_evaluable_ticks": 0.14256801000059527,
+          "risk_and_observation_covered_ticks": 16799,
+          "covered_critical_unobserved_ticks": 1271,
+          "critical_unobserved_fraction_of_covered_ticks": 0.07565926543246622
+        },
+        "actions": [
+          {
+            "dimension": 0,
+            "samples": 5644,
+            "mean": 0.2754364047149324,
+            "near_unit_bound_fraction": 0.40715804394046773
+          },
+          {
+            "dimension": 1,
+            "samples": 5644,
+            "mean": 0.6838077842492233,
+            "near_unit_bound_fraction": 0.1739900779588944
+          }
+        ],
+        "collision_terminal_location_counts_from_last_snapshot": {
+          ":J1_21 | :J1_21_0": 67,
+          "-E0 | -E0_1": 1,
+          ":J1_14 | :J1_14_0": 2
+        },
+        "terminal_collision_episodes_with_raw_sumo_collision_flag": 1,
+        "terminal_collision_episodes_with_geometric_collision_flag": 69,
+        "limitation": "Raw SUMO collision flag and geometric collision flag are endpoint diagnostics; they are not interchangeable with the mutually exclusive terminal collision outcome."
+      },
+      "diagnostic_episode_count": 100,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 100,
+      "traffic_schedule_hashes_by_logical_seed": {
+        "10000": "b0d674fb06aa6a9b05ee1fd58fbf36e4bc319470dd7fb7714599c398b1ce8e3e",
+        "10001": "b5f4dccca2ae810949c0dacf7e205df49cffb8c6fff91da4e2295b412fe70e8e",
+        "10002": "a2d7328389b9898383387429c97c619e815d8958cc0f5366b6b2e4bd59592530",
+        "10003": "ddd7ae402defc3ea36b1da5d2b950d4ceb012f196e422a55d1778a7c97832f02",
+        "10004": "4c3a9751ee714eec65251529542b2611de77dddb49518431088c1024c21ac552",
+        "10005": "4ffb0112147e533e1be355cad848bfeed1bca62a1dc92ca3398385f194762b0d",
+        "10006": "25a7ec6f5f6c3443fa6425db01fed0ee708ae6fd796830c44e989aaa70f2e530",
+        "10007": "ad77947b3a6cba0425bd44327ec672f1859ce35b4223e555d1fac981d6752efd",
+        "10008": "3acd2f6579c061852be72a301089f31eb89fb2360f43578ad91a51f09d1261e4",
+        "10009": "42937d859e4720b4d6a28f9a6c775d2d7dbd7a37adf60a201cec4b6b2fddd6c9",
+        "10010": "babec3818c0f97841c41c1a42d66907581fb9c44102f1d16f99a90a462a0449b",
+        "10011": "4af831887c8784876d0492384abdd0a90ca27eb0b9ae118f57a4c9caba0efa18",
+        "10012": "d525c1f1cc829716d09f73f12b8e7f67e57306c8933480fc6bf78933473a1017",
+        "10013": "1137ed37550e91ffbbebfc3a4640f0558d505f7fe4291dc000b060049c675c63",
+        "10014": "a7bde6273065fd4a8412061c36f4900ac6cdcdb1c37a7dacf3bb618834b5f839",
+        "10015": "80b3d1be88a7b77b4234504bae315697e7d5517a1ab69718ce91db93b5f4dc3c",
+        "10016": "b3d2c237891a894b004625d3450973bec21c34e6cef1ea75c7ddbe1e3aae0b55",
+        "10017": "034d3c2337d80501a7fd128df42ff1fc61fa831c1de7d6cefea3506145c0ab72",
+        "10018": "905c8aea2fc30792444dd3b5a2d65c5cb5dd5de8035b319f050a52c7fc7446e6",
+        "10019": "67276cdf8e644a27459ac8b6daa27df6cd6ff78364c8f74de6e1d3ba52fcc500",
+        "10020": "a2bf2f3dd50255b2a8b9dc3ed8f6e61e4d83c89a99efb8837a6d4fa864adce5a",
+        "10021": "c88145386832d0fa9feb47b56352c00bc602e9c29c100e8853d0a44141faff45",
+        "10022": "dd0174441d4e3265b9dc2e9ee02033087ac2f54e48d47922561078060bfd04ef",
+        "10023": "30ae35be2d32e9099d1b0bfb4aed383b3bb857ef15d83f4b25caf9a0d57cd37b",
+        "10024": "500e7050c985e4a7236717fdad55d68f9415913184699dad9d0704d39c80a012",
+        "10025": "903e0f2e13f0af7791b6136c3cec56d893c8b8404fd8e6b01a96f968372a99a5",
+        "10026": "6fa8c588b4572265a9c187b9982fbd4459c123565e30eb7b7719a6a9ebd35e0b",
+        "10027": "af9b6be1b33485dacd509df9ec4559b6cad235a678d6628c175b99926c7f0255",
+        "10028": "a2b632ddb86227f6ce76b13b0f4fdb9884729e144bc24cb3b74f5e073b5f3d36",
+        "10029": "1985f32fcdedc75048f1a2a7895adccc96c13e206c168c6bfbdfea96bbff5c04",
+        "10030": "9ac96e45d3478eb1474ebe2392d4e4194d867595fdde5eef98d1ed1d90c0a5b7",
+        "10031": "5fd9dbd5eff442fcf656bedf5bd05d7763cc380b025e93467e3c1bbd6d52f258",
+        "10032": "a5c0289d1c50cf385333c9188b92f08d0054ab710145c6e69e217e8a4399e449",
+        "10033": "bd4d8432e1e15ad204bf7fe7ef96ed7d335cb38c3dd1c7be0ef010c95b7c0155",
+        "10034": "f64d7df07351ba6539c92f70471466344a2e3c2b4bb9abc7b7ae1e11515fe9c1",
+        "10035": "8adf43bab593822c576452e1df1be7167bd4bfc34058d8e211524469172c05ec",
+        "10036": "3764d999c3338ddceb288827a788182753d8995d9abb29d12e9ee734573d0c7b",
+        "10037": "6a5c8e1229b0576be99e4d47debef487d1a424ed39560a259f5910451d803e72",
+        "10038": "888911919e71046e6679b2233b40eead268adfed80f3144b252b9e8de9e07da5",
+        "10039": "8dfa075df78c36165707b7e295d749d3d37f08b217dbf4d5a67d16191d1b4230",
+        "10040": "bf0cff77852d013b7419ea1e68768811c0ccfd2e154d791cdb31291cb1de38b2",
+        "10041": "cb45fa20c7d8ea14cfd85a96e439a89634dc3053ec584712a82e44c401e492a9",
+        "10042": "8526055420e4e5c97a4ef13d627640120dd7ed15cb08bed8f589b7156b3fcca2",
+        "10043": "e0f8315eca8ba226d90af1a1ee655fc70d6d269dacee50c926e8f9a789584627",
+        "10044": "80ee499af2257343371744606f4a66e5d9e432e8c7280333d2263ad1322be995",
+        "10045": "20ce62523fc22352edb871240e5be55145f141e8300fea3665cea61c4278cba6",
+        "10046": "79c6a476f527c7d1033a3bd322615e4667f18d22758ef4d8fe7a9e88fbd43fda",
+        "10047": "1d563de106d38bcda6dba824744fa187e10fd226c26f902dde61d27c9b3dfec7",
+        "10048": "e34f0e36c75df9b653ca063d8a7abcd53cf61ce2202c7afec3fa8dcb42e431f7",
+        "10049": "1ce42b8121b242f0d2b6a629398cf0b5fbadfabbf724f2fdb0139d6e1b337f3b",
+        "10050": "d98e20f9125d2ae68d07b19318a28da07937a9716751fcad0da9e436713e172d",
+        "10051": "cbda898a9525b396e861dc9252b0797758338775690f1223089f2c6a2f93dee7",
+        "10052": "32e61acc8ae1125f6b7c4dd51aae3b63efecb4f43764527556291451e103ca57",
+        "10053": "a9c80f2b1535bb1e6f8ed7d8e294d8dfab2c91136924d7a1b72df7a839fc5908",
+        "10054": "dda66eb9de9e3524b663125041dab6fe82d376ae80ef51dc9870b1ffe22510e8",
+        "10055": "e9050a3a1461b5c92ae4fa360400bd4c3399d1195b28e185752c8bbd6d14d75e",
+        "10056": "719cc2466c12d08d60c5218ad16184f2a8ecaee5ea2462d1af5e1aeb4f2e1130",
+        "10057": "2cc299834c5c88547133b2c3b5a418d627916a6108aa9b038830b4305d6e5697",
+        "10058": "8f38322fdba7cc9859392f0d2198e7996f47ae52405487f51a43c343f830c867",
+        "10059": "c9974ab7acab773a182a41411c6ceac7b8c0ead1971e01108f49d5f49fec5a84",
+        "10060": "853e8739bf65b388fcbbf7f11670e45a9cf721caddd3504b18f42211f2172e05",
+        "10061": "d96f49d3dbc9fad40ed13a3d99c11b7f631269552cf9b79a4939fec45b45e7ed",
+        "10062": "5cc583daf52acbef95f773ed11050102c9c9aed8041f3819aa549e38cb17ddb6",
+        "10063": "2afcd42dedbb25bf29bc028ecdab0f328e8b40af6683c1983b5af1b4a57f3535",
+        "10064": "cef6807fc6019bd7a91dbaa7baeb6f48dfaa44ec66d7a359f797ad22c1c12b18",
+        "10065": "e834ba52e234b5a404e241948fbbac1db8563de40388f02de42ba6b21052aad3",
+        "10066": "21dd1c07e509ea40e7c34e1cdf2a7be468d7c92cac79eceee7b9407913e4be2d",
+        "10067": "3bce9cc0c925b344869658ff0c99c8eb57cfc4e6f0d08d1895516ee13d98ceba",
+        "10068": "916f7b6cc87add31efc15fab57a6b48173cb177ff061b598f895dd8364507cea",
+        "10069": "80b5fda9b25bcd3b1b604e52bfd4a02dd2ef7b40317addaf806b51903ee11101",
+        "10070": "4785fd4254e4af4fb846e0a0a54a7632974f5bcaed74b04b0eae3d1c168d4faa",
+        "10071": "78e1bb09665faf614d850a834ad3dd2bfd2ea280e93b85ee7b349c13c689760f",
+        "10072": "8bfbe95c9d7f1cf339b28274b4d94a4958302cee2ca387c30da1d4429739ca90",
+        "10073": "47f0754e00a1836d0d9f9c688f73a784a80dfc643357aa70570a3c06b62cd9fd",
+        "10074": "1dc026da62df9aca0988c90e7b31f44812250b39343da96a9b289e278381e9d9",
+        "10075": "184841b2f196d8c62f4fc8d7b1e11684bec5abeb6dfedc88bcab655295fcdcdd",
+        "10076": "678de30814a192c85b10a3f8dbb1e9f4c384575097dccee39bee9b4290003a45",
+        "10077": "625cda65f92442b13e9d08c70aa78e01424f3e33ad412cf4896856501a497ec9",
+        "10078": "1a036493e023fda2b064f12d7c36966b7d5a39707163b5561be0cb574c25bcd5",
+        "10079": "1ffcf63ced86f4954063406b87311609d3cedeb4ca710fe89b4675dbeb703be0",
+        "10080": "3aa008db53ff154dfb97abfc135f5b0283ffe2bfa2b6d67822dcfdd2e806654f",
+        "10081": "a5339377252fbfd92221665656ebdbe70c60e7dc584cc489321132355d76ae69",
+        "10082": "c5a9cf20ceb33266093ce612c41cb5c7955cdd33c008ab5553481b08c63a22e7",
+        "10083": "cf4591ccdc36f97aec7b53da221867723a465769af72ea3135d1a3a254c39875",
+        "10084": "0a8713ebaf85d829f17fd3edb6e1a880fd14547dcf0eb70a0ace1756a0468007",
+        "10085": "131a96b421745fb627d64b3780bab84d03404c08ee9a4a6765df0b5ac8a9831f",
+        "10086": "c0c8941a59e0dfa81f797861ed430e549987f95ccb2f9ee2fd6a27aecc20743e",
+        "10087": "b4261e416d8906dd89c0bbf880558fb2c09106323803871961d190c01139c96b",
+        "10088": "83a7271778f3ad89705d7c1f38910d80ff5db193fdd0167778138405635d27af",
+        "10089": "6e1607441d0594ded2de02eebd7223399d2cd43d8669abba908c8af5f69222c2",
+        "10090": "f6d461acc4f1de9c15f1927a86a9233d85d829493511cd42b130720cc9b9c740",
+        "10091": "c960c55dec0204c533660f3ab7297a7a168bdded28d3a32d185c0b24c1e60497",
+        "10092": "5558a98e8ba77c8efd32eb88bef2713a2095b138a28f1b272c2e8ae9fda73036",
+        "10093": "3f3e531460a8fe389d6273572592b2a568898a039a132ef556038199e37f624c",
+        "10094": "cf38ff33f8f70243c119906103850ed97c34de935eee4d6acc699d7f06cc2e96",
+        "10095": "2192b14eac5439208e80b88cee039bb684b05fb2433a65713505605498083878",
+        "10096": "21e940a1246a992e4dd6d55ffb6e8a330350265acbee8858b7910c5ee3bd35f7",
+        "10097": "caa3e49e5e6e53485b8d0e2057c857a1c83a31d3381622c87f03324b3ad351f9",
+        "10098": "b2e364446032c89fa6faa1040af861a0e8f986339e99ed9b19cad6fe8709fd32",
+        "10099": "c6f862a170e4dbb6e723daa3be6f7eb1d319465f8de32038c617c4de29e8973b"
+      },
+      "checkpoint": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip",
+        "sha256_file": "99570d79baf7dee912e72dea993401ff1d27590d8ba272cd810f6416b1fdbd47",
+        "sha256_evaluation_identity": "99570d79baf7dee912e72dea993401ff1d27590d8ba272cd810f6416b1fdbd47",
+        "identity_matches_final_model": true,
+        "identity_checkpoint_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\final_model.zip"
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\training_complete.json",
+        "evaluation_results": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\evaluation_results.json",
+        "eval_diagnostics_episodes": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_3slot__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval\\episodes.jsonl",
+        "internal_mst_final_evaluation": null
+      },
+      "source_sha256": {
+        "arguments": "ba9fa3f005b38ea7a8056324bb9a019befb7aa2493f592b60f3ca9f6e3b08205",
+        "experiment_manifest": "478ce36e490b46a7390232a5c12615f286493ff3b8d8ea4ffa5fc7bbc8e14a00",
+        "training_complete": "ad3fd2e0d202550aa466461c5541d79e9a539d9147e93378b5311f4ed3e299d4",
+        "evaluation_results": "c344339a8dc16359f7eb301ac201d308a7e9c150a79a444a3c2f87961bc94e94",
+        "eval_diagnostics_episodes": "6cc4122303c8384838b5514f1d7c1a22e91104ae66c4004c5d1ba925d15d8bc6"
+      },
+      "internal_mst_eval_summary": null
+    },
+    "sac_mlp_d1_st_rt_topo_3slot": {
+      "suite_status": "running",
+      "suite_exit_code": null,
+      "train_raw_steps": null,
+      "train_updates": null,
+      "train_wall_seconds": null,
+      "completion_present": false,
+      "training_status": "training",
+      "training_complete": false,
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt_topo_3slot",
+        "parent": "sac_mlp",
+        "scenario": "intersection_random_darrl_medium_v1",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": true,
+        "use_topology": true,
+        "use_slots": true,
+        "use_incremental_slots": true,
+        "use_route_reachability": false,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "algorithm_class": "SceneRepresentationSAC",
+        "note": "D1 IncrementalTopoEncoder config; SAC/action head and optimizer settings inherit parent sac_mlp. Separate switches: route=True, topology=True, slots=True, incremental_slots=True, Graph-SLT=False, SBS=False."
+      },
+      "experiment_manifest": null,
+      "progress": {
+        "raw_steps": 66880,
+        "updates": 61880,
+        "updated_at": 1790854091.3077195
+      },
+      "completion": null,
+      "evaluation_identity": {},
+      "external_evaluation_summary": {},
+      "external_eval_episode_count": 0,
+      "logical_seed_min": null,
+      "logical_seed_max": null,
+      "logical_seed_unique_count": 0,
+      "seed_sequence_is_10000_to_10099": false,
+      "terminal_flags_raw_counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "off_route": 0
+      },
+      "exclusive_outcome_counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "off_route": 0
+      },
+      "outcome_flags_sum_per_episode_histogram": {},
+      "return": {
+        "mean": null,
+        "population_variance": null,
+        "population_sd": null
+      },
+      "episode_steps": {
+        "raw_mean_all": null,
+        "raw_median_all": null,
+        "decision_mean_all": null,
+        "decision_mean_success_only": null,
+        "raw_mean_success_only": null,
+        "success_completion_time_mean_seconds": null,
+        "success_completion_time_median_seconds": null
+      },
+      "behavior": null,
+      "diagnostic_episode_count": 0,
+      "diagnostic_seed_set_matches_eval": true,
+      "traffic_schedule_hash_count": 0,
+      "traffic_schedule_hashes_by_logical_seed": {},
+      "checkpoint": {
+        "path": null,
+        "sha256_file": null,
+        "sha256_evaluation_identity": null,
+        "identity_matches_final_model": false,
+        "identity_checkpoint_path": null
+      },
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_3slot__intersection_random_darrl_medium_v1_depart1p0\\arguments.json",
+        "experiment_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\sac_mlp_d1_st_rt_topo_3slot__intersection_random_darrl_medium_v1_depart1p0\\experiment_manifest.json",
+        "training_complete": null,
+        "evaluation_results": null,
+        "eval_diagnostics_episodes": null,
+        "internal_mst_final_evaluation": null
+      },
+      "source_sha256": {
+        "arguments": "e10b187cf7efe5c16c3c9e372af2fcbbbc9c74762ad635d789b8a238d77efcc8",
+        "experiment_manifest": null,
+        "training_complete": null,
+        "evaluation_results": null,
+        "eval_diagnostics_episodes": null
+      },
+      "internal_mst_eval_summary": null
+    }
+  },
+  "paired_comparisons": {
+    "sac_mlp_d1_st__to__sac_mlp_d1_st_rt": {
+      "reference": "sac_mlp_d1_st",
+      "candidate": "sac_mlp_d1_st_rt",
+      "pair_key": "logical_validation_seed",
+      "common_pairs": 100,
+      "all_common_pairs_have_unique_four_way_outcomes": true,
+      "traffic_schedule_hash_checks": 100,
+      "traffic_schedule_hash_matches": 100,
+      "traffic_schedule_hash_match_rate": 1.0,
+      "matrix_reference_rows_candidate_columns": {
+        "success": {
+          "success": 6,
+          "collision": 8,
+          "timeout": 2,
+          "off_route": 0
+        },
+        "collision": {
+          "success": 8,
+          "collision": 58,
+          "timeout": 17,
+          "off_route": 0
+        },
+        "timeout": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 1,
+          "off_route": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0
+        }
+      },
+      "success_wins_candidate_vs_reference": 8,
+      "success_losses_candidate_vs_reference": 10,
+      "same_outcome_ties": 65
+    },
+    "sac_mlp_d1_st_rt__to__sac_mlp_d1_st_rt_topo": {
+      "reference": "sac_mlp_d1_st_rt",
+      "candidate": "sac_mlp_d1_st_rt_topo",
+      "pair_key": "logical_validation_seed",
+      "common_pairs": 100,
+      "all_common_pairs_have_unique_four_way_outcomes": true,
+      "traffic_schedule_hash_checks": 100,
+      "traffic_schedule_hash_matches": 100,
+      "traffic_schedule_hash_match_rate": 1.0,
+      "matrix_reference_rows_candidate_columns": {
+        "success": {
+          "success": 6,
+          "collision": 8,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "collision": {
+          "success": 20,
+          "collision": 46,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "timeout": {
+          "success": 5,
+          "collision": 15,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0
+        }
+      },
+      "success_wins_candidate_vs_reference": 25,
+      "success_losses_candidate_vs_reference": 8,
+      "same_outcome_ties": 52
+    },
+    "sac_mlp_d1_st_rt_topo__to__sac_mlp_d1_st_rt_topo_routeaware_v1": {
+      "reference": "sac_mlp_d1_st_rt_topo",
+      "candidate": "sac_mlp_d1_st_rt_topo_routeaware_v1",
+      "pair_key": "logical_validation_seed",
+      "common_pairs": 100,
+      "all_common_pairs_have_unique_four_way_outcomes": true,
+      "traffic_schedule_hash_checks": 100,
+      "traffic_schedule_hash_matches": 100,
+      "traffic_schedule_hash_match_rate": 1.0,
+      "matrix_reference_rows_candidate_columns": {
+        "success": {
+          "success": 12,
+          "collision": 16,
+          "timeout": 3,
+          "off_route": 0
+        },
+        "collision": {
+          "success": 19,
+          "collision": 29,
+          "timeout": 21,
+          "off_route": 0
+        },
+        "timeout": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0
+        }
+      },
+      "success_wins_candidate_vs_reference": 19,
+      "success_losses_candidate_vs_reference": 19,
+      "same_outcome_ties": 41
+    },
+    "sac_mlp_d1_st_rt__to__sac_mlp_d1_st_rt_3slot": {
+      "reference": "sac_mlp_d1_st_rt",
+      "candidate": "sac_mlp_d1_st_rt_3slot",
+      "pair_key": "logical_validation_seed",
+      "common_pairs": 100,
+      "all_common_pairs_have_unique_four_way_outcomes": true,
+      "traffic_schedule_hash_checks": 100,
+      "traffic_schedule_hash_matches": 100,
+      "traffic_schedule_hash_match_rate": 1.0,
+      "matrix_reference_rows_candidate_columns": {
+        "success": {
+          "success": 5,
+          "collision": 9,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "collision": {
+          "success": 16,
+          "collision": 50,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "timeout": {
+          "success": 9,
+          "collision": 11,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "off_route": {
+          "success": 0,
+          "collision": 0,
+          "timeout": 0,
+          "off_route": 0
+        }
+      },
+      "success_wins_candidate_vs_reference": 25,
+      "success_losses_candidate_vs_reference": 9,
+      "same_outcome_ties": 55
+    },
+    "sac_mlp_d1_st_rt_topo__to__sac_mlp_d1_st_rt_topo_3slot": {
+      "reference": "sac_mlp_d1_st_rt_topo",
+      "candidate": "sac_mlp_d1_st_rt_topo_3slot",
+      "status": "not both evaluated",
+      "matrix": null
+    },
+    "sac_mlp_d1_st_rt_3slot__to__sac_mlp_d1_st_rt_topo_3slot": {
+      "reference": "sac_mlp_d1_st_rt_3slot",
+      "candidate": "sac_mlp_d1_st_rt_topo_3slot",
+      "status": "not both evaluated",
+      "matrix": null
+    }
+  },
+  "strt_four_cell_terminal_flag_counts": {
+    "00_STRT": {
+      "success": 14,
+      "collision": 66,
+      "timeout": 20,
+      "off_route": 0
+    },
+    "10_Topo": {
+      "success": 31,
+      "collision": 69,
+      "timeout": 0,
+      "off_route": 0
+    },
+    "01_STRT_3slot": {
+      "success": 30,
+      "collision": 70,
+      "timeout": 0,
+      "off_route": 0
+    },
+    "11_Topo_3slot": null
+  },
+  "interpretation_limits": [
+    "Evaluation records are fixed final checkpoints from one training seed (seed 0); evaluation-episode pairing does not estimate training-seed variability.",
+    "A pair is considered traffic matched only when per-logical-seed seeded schedule SHA-256 values match; episode_records alone label traffic_variant generically.",
+    "Terminal outcome categories are computed from the stored mutually exclusive success/collision/timeout/off_route flags; any zero/multiple flag rows are reported separately.",
+    "Raw SUMO collision and geometric-collision endpoint flags are summarized separately from terminal collision labels.",
+    "The final Topo+3slot method may still be running; missing final evaluation is emitted as null/absent, never inferred from partial progress.",
+    "Return variance uses the population divisor N for the finite 100-episode evaluation sample."
+  ]
+}

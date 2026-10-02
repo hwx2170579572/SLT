@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "probe": "DictNStepReplayBuffer offline synthetic transitions; CPU only; no environment, model, training, evaluation, or GPU",
+  "gamma": 0.99,
+  "n_steps": 4,
+  "source_action_repeat": 3,
+  "synthetic_rewards": [
+    1.0,
+    2.0,
+    3.0,
+    4.0
+  ],
+  "source": {
+    "replay_buffer": "algos/sb3_torch/replay_buffer.py",
+    "sac_target": "algos/sb3_torch/sac.py",
+    "buffer_return_formula": "returns = sum_k gamma**k * reward_k * mask_k, k=0..3",
+    "bootstrap_discount_formula": "discounts returned for the target are filled with gamma, not gamma**4",
+    "timeout_mask_formula": "final_dones = next_dones * (1 - next_timeouts)",
+    "released_implementation_comment": "Preserve the released SAC implementation exactly: cpprb aggregates the N-step reward and advances next_obs, but algos/sac.py still uses one factor of self.discount for bootstrap rather than gamma**N."
+  },
+  "expected_reference": {
+    "aggregated_4step_reward_gamma_powers_0_to_3": 9.801496,
+    "standard_4step_bootstrap_discount_gamma_power_4": 0.96059601,
+    "implementation_bootstrap_discount": 0.99
+  },
+  "results": {
+    "nonterminal_4step": {
+      "rewards": 9.801496505737305,
+      "next_observation_state": 4.0,
+      "discount": 0.9900000095367432,
+      "done_mask": 0.0,
+      "stored_timeout_flag_on_fourth_transition": 0.0,
+      "expected_next_observation_state": 4.0
+    },
+    "timeout_on_fourth": {
+      "rewards": 9.801496505737305,
+      "next_observation_state": 4.0,
+      "discount": 0.9900000095367432,
+      "done_mask": 0.0,
+      "stored_timeout_flag_on_fourth_transition": 1.0,
+      "expected_next_observation_state": 4.0
+    },
+    "true_terminal_on_fourth": {
+      "rewards": 9.801496505737305,
+      "next_observation_state": 4.0,
+      "discount": 0.9900000095367432,
+      "done_mask": 1.0,
+      "stored_timeout_flag_on_fourth_transition": 0.0,
+      "expected_next_observation_state": 4.0
+    }
+  },
+  "checks": {
+    "aggregated_reward_matches_gamma_powers_0_to_3": true,
+    "next_observation_is_fourth_transition_next_observation": true,
+    "returned_discount_is_gamma_not_gamma_to_four": true,
+    "nonterminal_bootstraps": true,
+    "timeout_boundary_bootstraps": true,
+    "true_terminal_does_not_bootstrap": true
+  },
+  "all_checks_passed": true,
+  "timeout_remaining_time_in_observation": "not assessed in this probe; no direct observation-builder evidence was collected during the prior static audit"
+}

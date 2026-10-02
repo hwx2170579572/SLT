@@ -1,0 +1,238 @@
+{
+  "catalog": "intersection_scenario_catalog",
+  "as_of": "2026-10-01",
+  "workspace_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1",
+  "scope_cutoff": {
+    "included_scene": "intersection_sorted",
+    "date": "2026-09-28",
+    "asset_marker_created_local": "2026-09-28 12:35:22",
+    "marker": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/original_scenarios_v1/intersection_sorted/.depart_sorted",
+    "boundary": "The original intersection traffic was grouped by direction and SUMO ignored later flows because departures were out of order; intersection_sorted copies it with traffic sorted by (depart, departLane), so all three flows run. The marker explicitly says all three flows are active.",
+    "excluded_predecessor": {
+      "scene": "intersection",
+      "evidence": "Archived train_intersection_yield_v2_d1.py lines 1-12 documents the ignored-flow problem; traffic_00 inspection has only E2 -> E1 active route entries.",
+      "instruction": "Exclude initial intersection/yield_v2 and other one-flow results from the three-flow catalog."
+    },
+    "first_observed_sorted_final_eval": {
+      "local_time": "2026-09-28 18:06:41",
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt__intersection_sorted_depart4p0/evaluation_results.json"
+    }
+  },
+  "interpretation": {
+    "result_order": ["success", "collision", "timeout"],
+    "depart_scale": {
+      "4.0": "For sorted explicit-vehicle XML, multiply every vehicle depart timestamp by 4.0; this widens departure gaps and lowers arrival density. It does not multiply the number of vehicles, a flow rate, or vehicle_scale.",
+      "1.0": "Pass-through/no timestamp scaling. In random profiles demand comes from configured q or per-tick p; depart_scale=1.0 does not mean the same traffic as sorted scale 1.0.",
+      "directory_suffix": "depart4p0/depart1p0 names this timestamp scale."
+    },
+    "probability_units": {
+      "native_random_v1": "SUMO <flow probability=q/3600> is per second; with dt=0.1 s its effective per-tick probability is q/36000.",
+      "explicit_step_profiles": "p05/p03/p02 and DARRL p values are per 0.1-second tick, pre-sampled into explicit vehicles; they are not native SUMO per-second probabilities.",
+      "name_warning": "standard medium_p05 means p=0.5; standard medium_p03/p02 mean 0.3/0.2. DARRL probabilities are decimal .03/.05/.07 (r1) and .015/.03/.05 (r2)."
+    },
+    "comparison_boundary": "All formal policy runs located use training seed 0. Cross-family score differences are descriptive, not a single-variable traffic comparison."
+  },
+  "scene_families": [
+    {
+      "family": "sorted_fixed_three_route_templates",
+      "scene": "intersection_sorted",
+      "creation": "Correct sorted asset marker dated 2026-09-28.",
+      "background": {
+        "template_files": 30,
+        "total_vehicles_across_pool": 17700,
+        "route_vehicle_counts_across_pool": {
+          "-E3 -> -E0": 6000,
+          "E0 -> E3": 4500,
+          "E2 -> E1": 7200
+        },
+        "depart_arrival_lane": "0 -> 0",
+        "vtypes": 120,
+        "schedule": "Fixed route-template XML; historical environment reinserted completed background vehicles (endless behavior appears in reset diagnostics)."
+      },
+      "ego": {
+        "route": "-E1 -> -E0",
+        "depart_seconds": 50,
+        "depart_lane": 2,
+        "depart_speed_mps": 0,
+        "minGap_m": 2.0
+      },
+      "collision_comparability": "Old effective runtime collision/terminal resolver was not frozen with the old runs; do not assume it is equivalent to DARRL r2 remove + exclusive terminal handling.",
+      "results": [
+        {
+          "stage": "50k historical snapshot",
+          "evaluation_episodes": 100,
+          "sct_percent": {
+            "mst_slt": [51, 49, 0],
+            "sac_mlp": [37, 63, 0],
+            "sac_mlp_d1_st": [48, 52, 0],
+            "sac_mlp_d1_st_rt": [31, 67, 2],
+            "sac_mlp_d1_st_attn": [43, 56, 1],
+            "sac_mlp_d1_st_rt_late": [46, 54, 0],
+            "sac_mlp_d1_st_rt_gate": [40, 60, 0],
+            "sac_mlp_d1_st_rt_ego": [44, 56, 0],
+            "sac_mlp_d1_st_rt_edge": [39, 61, 0]
+          },
+          "evidence": "fast-developer/analysis/experiment_history.md section 2 and section 4"
+        },
+        {
+          "stage": "50k checkpoint + 50k continuation (global 100k; not fresh)",
+          "training_protocol": "Loaded 50k model, added 50k raw steps; replay buffer not restored and warmup changed to 500 raw steps.",
+          "evaluation_episodes": 100,
+          "sct_percent": {
+            "mst_slt": [25, 75, 0],
+            "sac_mlp": [35, 65, 0],
+            "sac_mlp_d1_st": [33, 67, 0],
+            "sac_mlp_d1_st_rt_late": [29, 71, 0],
+            "sac_mlp_d1_st_rt_gate": [24, 76, 0],
+            "sac_mlp_d1_st_rt_ego": [36, 62, 2],
+            "sac_mlp_d1_st_rt_edge": [25, 68, 7]
+          },
+          "evidence": "fast-developer/analysis/experiment_history.md section 3"
+        },
+        {
+          "stage": "fresh 100k from scratch",
+          "training_protocol": "seed 0, 100000 raw steps, 95001 updates, 5000 raw warmup; final checkpoint, evaluation n=100.",
+          "sct_percent": {
+            "sac_mlp": [22, 38, 40],
+            "sac_mlp_d1_st": [50, 50, 0],
+            "sac_mlp_d1_st_rt": [63, 37, 0],
+            "mst_slt": [53, 47, 0],
+            "sac_mlp_d1_st_rt_topo": [39, 39, 22],
+            "sac_mlp_d1_st_rt_topo_3slot": [41, 56, 3]
+          },
+          "run_roots": [
+            "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/d0929_100k_diag",
+            "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/mst_slt__intersection_sorted_depart4p0",
+            "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st__intersection_sorted_depart4p0",
+            "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/t0930_topo3_retry01"
+          ],
+          "evidence": "fast-developer/analysis/experiment_history.md sections 7 and 20; fast-developer/analysis/topo3_retry01_results_audit.json"
+        }
+      ],
+      "full_method_note": "A completed MST+SLT result exists as the complete-method/strong-baseline comparison. No completed final evaluation for named sac_mlp_d1_full was found; do not substitute MST+SLT or Topo+3slot for it."
+    },
+    {
+      "family": "random_native_flow_v1",
+      "shared": {
+        "routes": ["-E3 -> -E0", "E0 -> E3", "E2 -> E1"],
+        "background_lane": "0 -> 0",
+        "map_ego_types": "Uses sorted map/ego and 120 source vTypes with route-conditional empirical type distributions; no DARRL lane/vType overrides.",
+        "time": "dt=0.1 s; requests during [0,130) s; ego route -E1 -> -E0 at 50 s from lane2, speed0; 600 raw-step control cap; action repeat3.",
+        "reinsertion": false,
+        "depart_scale": 1.0,
+        "generation": "Native SUMO flow probability per second; seed domains split train/validation/test."
+      },
+      "profiles": [
+        {"name": "intersection_random_low_v1", "route_rates_veh_per_hour": [200, 150, 240], "total_veh_per_hour": 590, "effective_tick_p": [0.00555556, 0.00416667, 0.00666667], "formal_100k_policy_result": null},
+        {"name": "intersection_random_medium_v1", "route_rates_veh_per_hour": [400, 300, 480], "total_veh_per_hour": 1180, "effective_tick_p": [0.01111111, 0.00833333, 0.01333333], "formal_100k_policy_result": {"method": "sac_mlp", "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p05_a0930", "seed": 0, "raw_steps": 100000, "evaluation_n": 100, "sct_percent": [75, 25, 0]}},
+        {"name": "intersection_random_high_v1", "route_rates_veh_per_hour": [600, 450, 720], "total_veh_per_hour": 1770, "effective_tick_p": [0.01666667, 0.0125, 0.02], "formal_100k_policy_result": null}
+      ],
+      "evidence": "fast-developer/analysis/random_intersection_v1_protocol.md sections 1 and 7; each scenario's scenario_manifest.json"
+    },
+    {
+      "family": "random_explicit_step_probability_v1",
+      "shared": {
+        "template": "intersection_random_medium_v1",
+        "routes": ["-E3 -> -E0", "E0 -> E3", "E2 -> E1"],
+        "background_lane": "0 -> 0",
+        "map_ego_120_types": "Same frozen map, ego, route and driver distributions as native medium; no DARRL minGap/jmIgnoreFoeProb overrides.",
+        "generation": "For each actual SUMO seed and route, a SHA256-derived Python RNG samples every 0.1 s tick over [0,130) before SUMO starts; requests become explicit vehicles. Same-seed planned arrivals are nested across p levels, but insertion/type draws and resulting traffic are not guaranteed paired.",
+        "reinsertion": false,
+        "depart_scale": 1.0,
+        "training_protocol": "SAC+MLP fresh seed0, 100000 raw steps / 95001 updates, final validation n=100 per profile."
+      },
+      "profiles": [
+        {"name": "intersection_random_medium_p05_v1", "p_per_route_per_tick": 0.5, "total_requested_veh_per_hour": 54000, "sct_percent": [12, 88, 0], "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p05_b0930"},
+        {"name": "intersection_random_medium_p03_v1", "p_per_route_per_tick": 0.3, "total_requested_veh_per_hour": 32400, "sct_percent": [17, 83, 0], "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p03p02_0930"},
+        {"name": "intersection_random_medium_p02_v1", "p_per_route_per_tick": 0.2, "total_requested_veh_per_hour": 21600, "sct_percent": [5, 25, 70], "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p03p02_0930"}
+      ],
+      "evidence": "fast-developer/analysis/random_intersection_v1_protocol.md sections 8-9; fast-developer/analysis/experiment_history.md sections 14-16"
+    },
+    {
+      "family": "random_darrl_lane1_v1_same_names_revisioned",
+      "shared": {
+        "routes": ["-E3 -> -E0", "E0 -> E3", "E2 -> E1"],
+        "background_lane": "1 -> 1",
+        "background_vtype_override": {"jmIgnoreFoeProb": "0"},
+        "ego_overrides": {"minGap_m": 1.0, "jmIgnoreFoeProb": "0"},
+        "ego_route_and_depart": "-E1 -> -E0; 50 s; lane2; speed0",
+        "generation": "Explicit vehicles pre-sampled independently for each route and 0.1 s tick, not native SUMO probability flows.",
+        "flow_window_seconds": [0, 130],
+        "max_control_raw_steps": 600,
+        "action_repeat": 3,
+        "reinsertion": false,
+        "collision_action": "remove",
+        "collision_detection": "SUMO ego collision event or ego geometry overlap; not DARRL legacy distance/disappearance heuristic."
+      },
+      "revisions": [
+        {
+          "revision": "darrl_r1_20260930",
+          "probability_per_tick_by_scene": {"low": 0.03, "medium": 0.05, "high": 0.07},
+          "total_requested_veh_per_hour_by_level": [3240, 5400, 7560],
+          "trained": ["low", "medium"],
+          "high_status": "Environment validation only; no formal policy run.",
+          "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930",
+          "raw_eval_labels": {"low": {"S": 30, "C": 73, "T": 0, "dual_SC": 3}, "medium": {"S": 13, "C": 92, "T": 0, "dual_SC": 5}},
+          "collision_priority_offline_counts": {"low": [27, 73, 0], "medium": [8, 92, 0]},
+          "validity": "Not a valid mutually-exclusive-outcome benchmark: training dual-labeled episodes was rewarded as success; post-hoc recount cannot fix learned policy."
+        },
+        {
+          "revision": "darrl_r2_20260930",
+          "probability_per_tick_by_scene": {"low": 0.015, "medium": 0.03, "high": 0.05},
+          "total_requested_veh_per_hour_by_level": [1620, 3240, 5400],
+          "terminal_outcome_protocol": "exclusive_terminal_v2; collision > off_route > success > timeout",
+          "formal_sac_mlp": {
+            "trained": ["low", "medium"],
+            "high_status": "No formal policy run.",
+            "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_dr2_0930",
+            "training": "Fresh seed0; 100000 raw steps / 95001 updates; final validation n=100",
+            "sct_percent": {"low": [62, 34, 4], "medium": [31, 62, 7]}
+          },
+          "same_scene_ablation_suite": {
+            "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/dm7_1001_retry02",
+            "scene": "intersection_random_darrl_medium_v1, p=.03",
+            "final_100_sct_percent": {
+              "mst_slt": [16, 53, 31],
+              "sac_mlp_d1_st": [16, 83, 1],
+              "sac_mlp_d1_st_rt": [14, 66, 20],
+              "sac_mlp_d1_st_rt_topo": [31, 69, 0],
+              "sac_mlp_d1_st_rt_topo_routeaware_v1": [31, 45, 24],
+              "sac_mlp_d1_st_rt_3slot": [30, 70, 0]
+            },
+            "incomplete": {"sac_mlp_d1_st_rt_topo_3slot": {"last_progress_raw_steps": 79138, "final_eval_found": false, "training_complete_found": false}}
+          }
+        }
+      ],
+      "same_name_warning": "The scene names were reused for r2; check saved configuration_revision/traffic_config and archived r1 assets, not the current name alone."
+    }
+  ],
+  "no_formal_result_or_invalid_result": [
+    "Excluded one-flow scene intersection and its early yield_v2 results.",
+    "Native random low/high: no formal 100k policy result located.",
+    "DARRL high under r1/r2: no formal policy result located.",
+    "DARRL r1 low/medium have completed runs but invalid exclusive-outcome counts due dual success/collision terminal labels and success reward on those episodes.",
+    "DARRL r2 medium Topo+3slot in dm7_1001_retry02 has no final evaluation as of inspection; progress was 79138/100000 raw steps.",
+    "Named sac_mlp_d1_full: no completed final evaluation located; MST+SLT is a separate complete-method baseline and has formal results.",
+    "No multi-training-seed result is represented; formal training seed is 0."
+  ],
+  "sources": [
+    {"path": "fast-developer/train_intersection_yield_v2_d1.py", "lines": "1-13, 987-1040, 1789-1795", "fact": "One-flow predecessor explanation, sorted-copy construction and marker, depart-scale CLI/default."},
+    {"path": "fast-developer/train_intersection_yield_v2.py", "lines": "120-149, 261-282", "fact": "Depart timestamp multiplication and scale=1 pass-through; vehicle_scale is distinct."},
+    {"path": "envs/sumo/original_scenarios_v1/intersection/traffic/traffic_00.rou.xml", "lines": "1", "fact": "Legacy sample has only E2 -> E1 route entries."},
+    {"path": "envs/sumo/original_scenarios_v1/intersection_sorted/traffic/traffic_00.rou.xml", "lines": "1", "fact": "Sorted sample contains all three route directions; all 30-file pool independently counted."},
+    {"path": "envs/sumo/original_scenarios_v1/intersection_sorted/ego.rou.xml", "lines": "3-5", "fact": "Ego route, departure time, lane, speed and minGap."},
+    {"path": "envs/sumo/random_intersection.py", "lines": "22-46, 59-134, 259-314", "fact": "Profile tables, probability semantics, DARRL overrides and schedule-seed construction."},
+    {"path": "fast-developer/analysis/experiment_history.md", "sections": "2-3, 7, 14-20, 21 and dm7 retry02 status", "fact": "Formal run protocol, scores, continuation distinction, R1 invalidity and current incomplete method."},
+    {"path": "fast-developer/analysis/random_intersection_v1_protocol.md", "sections": "1, 7-9", "fact": "Native-flow rates and standard explicit per-tick variants, seed splits and calibration boundaries."},
+    {"path": "fast-developer/analysis/darrl_r2_configuration_and_outcome_fix_20260930.md", "sections": "Current config and problem evidence", "fact": "DARRL r1/r2 probabilities, lane/type/terminal differences and invalid r1 outcomes."},
+    {"path": "fast-developer/analysis/scenario_revisions/darrl_r1_20260930/archive_manifest.json", "fact": "Archived original r1 scene assets and hashes."},
+    {"path": "fast-developer/analysis/darrl_r1_outcome_audit_20260930.json", "fact": "R1 double-label counts and training reward evidence."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/d0929_100k_diag", "fact": "Fresh sorted SAC+MLP/ST-RT run artifacts."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p05_a0930", "fact": "Native medium SAC+MLP run."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p05_b0930", "fact": "Standard p=.5 medium variant SAC+MLP run; failed earlier attempt excluded."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_p03p02_0930", "fact": "Standard p=.3 and p=.2 fresh SAC+MLP runs."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930", "fact": "DARRL r1 low/medium run artifacts."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_dr2_0930", "fact": "DARRL r2 low/medium SAC+MLP run artifacts."},
+    {"path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/dm7_1001_retry02", "fact": "Current DARRL r2 medium seven-method suite; one method has no final evaluation yet."}
+  ]
+}

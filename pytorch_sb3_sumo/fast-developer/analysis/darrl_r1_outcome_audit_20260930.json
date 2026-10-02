@@ -1,0 +1,297 @@
+{
+  "schema": "darrl-outcome-audit/v1",
+  "created_at_utc": "2026-09-30T14:17:32Z",
+  "scope": "Read-only audit of the completed pre-revision DARRL low/medium SAC+MLP runs. Original result, model, manifest, and log files were not modified.",
+  "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930",
+  "launcher": {
+    "status": "complete",
+    "exit_codes": {
+      "darrl_low": 0,
+      "darrl_medium": 0
+    },
+    "training_seed": 0,
+    "fresh_from_scratch": true,
+    "resume": false,
+    "smoke": false,
+    "raw_training_budget": 100000,
+    "learning_starts_raw_steps": 5000,
+    "checkpoint_frequency_raw_steps": 10000,
+    "final_evaluation_episodes": 100,
+    "final_evaluation_split": "validation",
+    "source_hashes": {
+      "launcher": "e3697206388a813aae79d648c2a2390dda714ceb99ca936ddef930ab9df04ddf",
+      "d1_trainer": "da62554efc9412038202b8d6b38a80973860569d18084206a1468083ce997fcf",
+      "base_trainer": "4d2fb354d8dcc963a74544f0381e5d7a79f7a74c9895c5c8c782ed65e1b3f0f2",
+      "random_intersection": "8eacb2bcf9ba46b3ac45c7b47a80c2a18e98ec0591aa007a7b9683c870e94ff7",
+      "paper_env": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+      "high_density_adapter": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c"
+    },
+    "manifest_path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930/launcher_manifest.json"
+  },
+  "outcome_semantics": {
+    "observed_issue": "success and collision are event flags, not mutually exclusive outcome labels. On a SUMO step where the ego is both arrived and colliding, both flags are true.",
+    "source_evidence": [
+      {
+        "file": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+        "lines": "1187-1194",
+        "detail": "success is computed from ego arrival and collision independently from SUMO/geometric collision; no mutual-exclusion rule is applied."
+      },
+      {
+        "file": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+        "lines": "534, 546",
+        "detail": "Raw reward is success minus collision; the transition terminates when either flag is true. A dual-flag step therefore has raw reward zero."
+      },
+      {
+        "file": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/algos/sb3_torch/evaluation.py",
+        "lines": "216, 229, 261-262",
+        "detail": "The evaluator stores success and collision separately and calculates both rates over the same episode denominator."
+      },
+      {
+        "file": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/train_intersection_yield_v2_d1.py",
+        "lines": "803-806",
+        "detail": "The D1 final-evaluation summary independently divides success and collision counts by n."
+      },
+      {
+        "file": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/reward_shaping_v2.py",
+        "lines": "86-98",
+        "detail": "Reward shaping assumes success/collision are mutually exclusive and uses success-first if/elif. For dual-flag training episodes, the observed event branch is reward_success=+10 and reward_collision=0."
+      }
+    ],
+    "reporting_rule_used_for_exclusive_counts": "Collision takes precedence for offline mutually exclusive outcome counts; original success and collision event flags remain preserved in the source records. This recoding is descriptive only and does not repair the trained policy or its training targets."
+  },
+  "profiles": {
+    "low": {
+      "scenario": "intersection_random_darrl_low_v1",
+      "requested_probability_per_0_1s_tick_by_inlet": [0.03, 0.03, 0.03],
+      "requested_total_vehicles_per_hour": 3240,
+      "requested_vehicles_per_hour_by_route": {
+        "neg_E3_to_neg_E0": 1080,
+        "E0_to_E3": 1080,
+        "E2_to_E1": 1080
+      },
+      "collision_action": "remove",
+      "ego_vtype_minGap_m": "1",
+      "manifest": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930/sac_mlp__intersection_random_darrl_low_v1_depart1p0/experiment_manifest.json"
+    },
+    "medium": {
+      "scenario": "intersection_random_darrl_medium_v1",
+      "requested_probability_per_0_1s_tick_by_inlet": [0.05, 0.05, 0.05],
+      "requested_total_vehicles_per_hour": 5400,
+      "requested_vehicles_per_hour_by_route": {
+        "neg_E3_to_neg_E0": 1800,
+        "E0_to_E3": 1800,
+        "E2_to_E1": 1800
+      },
+      "collision_action": "remove",
+      "ego_vtype_minGap_m": "1",
+      "manifest": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930/sac_mlp__intersection_random_darrl_medium_v1_depart1p0/experiment_manifest.json"
+    },
+    "high": {
+      "scenario": "intersection_random_darrl_high_v1",
+      "previous_profile_probability_per_0_1s_tick": 0.07,
+      "trained_in_this_run": false
+    },
+    "revision_note": "These historical run manifests preserve the pre-revision same-name profile probabilities .03/.05/.07. The low and medium results below must not be attributed to a later configuration that reuses these scenario names with different probabilities."
+  },
+  "runs": {
+    "low": {
+      "run_dir": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930/sac_mlp__intersection_random_darrl_low_v1_depart1p0",
+      "training": {
+        "training_complete": true,
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "wall_seconds": 5704.2490067481995,
+        "final_checkpoint": "final_model.zip",
+        "final_checkpoint_sha256": "f188477fa3eb148481f24683d44e0037ea33c959af544cb051e5fc216a9aa17b",
+        "episode_jsonl_rows": 436,
+        "terminal_episode_counts": {
+          "success_flag_true_including_overlap": 113,
+          "collision_flag_true_including_overlap": 324,
+          "success_and_collision_both_true": 29,
+          "timeout": 27,
+          "off_route": 0,
+          "incomplete_nonterminal_tail": 1
+        },
+        "collision_precedence_exclusive_counts": {
+          "success_only": 84,
+          "collision_including_overlap": 324,
+          "timeout": 27,
+          "incomplete_nonterminal_tail": 1
+        },
+        "shaper_observation_on_dual_flag_episodes": {
+          "count": 29,
+          "terminal_raw_undiscounted_reward": 0,
+          "terminal_reward_success": 10,
+          "terminal_reward_collision": 0,
+          "return_policy_min": 10.630314359068871,
+          "return_policy_max": 11.59194439291954
+        },
+        "dual_flag_episode_episode_seed_pairs": [
+          [17, 566581934], [71, 128189815], [73, 666239354], [91, 840995399],
+          [114, 846923786], [138, 104360713], [156, 750782387], [189, 854652970],
+          [191, 107100303], [195, 319468283], [200, 824272794], [203, 30766217],
+          [229, 34341977], [230, 196017830], [253, 518994643], [260, 671748609],
+          [266, 641032421], [270, 976358674], [271, 619379841], [286, 55205953],
+          [290, 759114057], [296, 274239748], [311, 588086460], [345, 136568735],
+          [346, 581761357], [350, 584160036], [361, 606851424], [416, 188070709],
+          [427, 135067053]
+        ]
+      },
+      "final_evaluation": {
+        "file": "evaluation_results.json",
+        "episodes": 100,
+        "split": "validation",
+        "seed_range": [10000, 10099],
+        "checkpoint": "final_model.zip",
+        "checkpoint_sha256_matches_training_complete": true,
+        "success_count": 30,
+        "collision_count": 73,
+        "success_collision_overlap_count": 3,
+        "timeout_count": 0,
+        "off_route_count": 0,
+        "summary_rates": {
+          "success_rate": 0.3,
+          "collision_rate": 0.73,
+          "timeout_rate": 0.0,
+          "off_route_rate": 0.0,
+          "sum_success_collision_rates": 1.03
+        },
+        "collision_precedence_exclusive_counts": {
+          "success_only": 27,
+          "collision_including_overlap": 73,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "mean_return": -0.43,
+        "mean_decision_steps": 89.53,
+        "mean_raw_steps": 267.71,
+        "mean_success_completion_time_seconds": 30.72000000000001,
+        "dual_flag_episode_seed_pairs": [[38, 10038], [79, 10079], [97, 10097]],
+        "dual_flag_episode_returns": [0.0, 0.0, 0.0]
+      },
+      "source_files": {
+        "evaluation_results.json": {
+          "sha256": "B6C6122198D503B97BA5AD5C457702D98C3A395F951F412586FFA1560346112F",
+          "bytes": 37603
+        },
+        "eval_worker_00.json": {
+          "sha256": "9835E4E2588EBCD6ECF7C0378FB674E84D8D0795E98D84B9159547F9241E9221",
+          "bytes": 36723
+        },
+        "diagnostics/train/episodes.jsonl": {
+          "sha256": "317FF8BC62BEAB38C3955F8D173DD5E03FD1746C59BD8EA5F55A8061370ACAEC",
+          "bytes": 19077309
+        },
+        "training_complete.json": {
+          "sha256": "186EE382854A47351E89C5889F5AFC3FB1D9B656CBC5E4E4349F2EA425780001",
+          "bytes": 258
+        },
+        "experiment_manifest.json": {
+          "sha256": "238D929F2D775A1F137ED9E9FD4E163A3830873563D84AA1EEC6E7A84FF9D06D",
+          "bytes": 5541
+        }
+      }
+    },
+    "medium": {
+      "run_dir": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/smlp_darrl_0930/sac_mlp__intersection_random_darrl_medium_v1_depart1p0",
+      "training": {
+        "training_complete": true,
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "wall_seconds": 6571.069226026535,
+        "final_checkpoint": "final_model.zip",
+        "final_checkpoint_sha256": "e6516d29bb529e7b52ef0bc08d2640d30f4d320f0d16940c9745c7c39ee8cc49",
+        "episode_jsonl_rows": 333,
+        "terminal_episode_counts": {
+          "success_flag_true_including_overlap": 13,
+          "collision_flag_true_including_overlap": 298,
+          "success_and_collision_both_true": 10,
+          "timeout": 31,
+          "off_route": 0,
+          "incomplete_nonterminal_tail": 1
+        },
+        "collision_precedence_exclusive_counts": {
+          "success_only": 3,
+          "collision_including_overlap": 298,
+          "timeout": 31,
+          "incomplete_nonterminal_tail": 1
+        },
+        "shaper_observation_on_dual_flag_episodes": {
+          "count": 10,
+          "terminal_raw_undiscounted_reward": 0,
+          "terminal_reward_success": 10,
+          "terminal_reward_collision": 0,
+          "return_policy_min": 10.342237981557846,
+          "return_policy_max": 11.852306519446932
+        },
+        "dual_flag_episode_episode_seed_pairs": [
+          [231, 627687382], [234, 929953604], [247, 74602520], [259, 267479193],
+          [261, 619185585], [269, 203612941], [281, 793289931], [293, 954121989],
+          [298, 696194208], [328, 55562759]
+        ]
+      },
+      "final_evaluation": {
+        "file": "evaluation_results.json",
+        "episodes": 100,
+        "split": "validation",
+        "seed_range": [10000, 10099],
+        "checkpoint": "final_model.zip",
+        "checkpoint_sha256_matches_training_complete": true,
+        "success_count": 13,
+        "collision_count": 92,
+        "success_collision_overlap_count": 5,
+        "timeout_count": 0,
+        "off_route_count": 0,
+        "summary_rates": {
+          "success_rate": 0.13,
+          "collision_rate": 0.92,
+          "timeout_rate": 0.0,
+          "off_route_rate": 0.0,
+          "sum_success_collision_rates": 1.05
+        },
+        "collision_precedence_exclusive_counts": {
+          "success_only": 8,
+          "collision_including_overlap": 92,
+          "timeout": 0,
+          "off_route": 0
+        },
+        "mean_return": -0.79,
+        "mean_decision_steps": 125.67,
+        "mean_raw_steps": 375.97,
+        "mean_success_completion_time_seconds": 43.45384615384616,
+        "dual_flag_episode_seed_pairs": [[27, 10027], [28, 10028], [45, 10045], [66, 10066], [69, 10069]],
+        "dual_flag_episode_returns": [0.0, 0.0, 0.0, 0.0, 0.0]
+      },
+      "source_files": {
+        "evaluation_results.json": {
+          "sha256": "C7F5E64827F9984FFE2B9F07219B7C74053A034D67055C43F6D9D55671EE8718",
+          "bytes": 37774
+        },
+        "eval_worker_00.json": {
+          "sha256": "50F7BCE831C00D6DDB13FEFDC2D1621F6A5DFE222725BA7FDD3A8770BD6D6696",
+          "bytes": 36889
+        },
+        "diagnostics/train/episodes.jsonl": {
+          "sha256": "7BF01869BEFA620C10CE4BBCDC5F57CAD784D93DEED811DF32957484F06C75C7",
+          "bytes": 21230798
+        },
+        "training_complete.json": {
+          "sha256": "3AFBE519A3FC2362AF83012CF7AB63308EC4BFA2467894423F6B66D2CD04521D",
+          "bytes": 257
+        },
+        "experiment_manifest.json": {
+          "sha256": "1B93AFEB40D529958FB845B19006F04992835F5956EC7EB7AFDFC98F1FFEA87F",
+          "bytes": 5519
+        }
+      }
+    }
+  },
+  "limitations": [
+    "The evaluation denominators are both 100; rates above one are caused by overlapping success/collision flags, not a denominator mismatch.",
+    "The offline collision-priority reclassification is a reporting convention, not a corrected evaluation or a corrected trained checkpoint.",
+    "The old training stream contains double-flag terminal episodes. The reward wrapper is success-first, so those transitions received the success branch despite a collision flag; this can affect learned parameters and cannot be undone by recoding counts.",
+    "Each condition used one training seed. The new p values are not isolated from other scenario changes, and these two results do not establish multi-seed performance."
+  ]
+}

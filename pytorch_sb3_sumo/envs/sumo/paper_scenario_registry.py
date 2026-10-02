@@ -6,6 +6,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from .random_intersection import RANDOM_INTERSECTION_SCENARIOS
+
 
 ROOT = Path(__file__).resolve().parent / "original_scenarios_v1"
 
@@ -125,6 +127,12 @@ PAPER_SCENARIOS: dict[str, PaperScenarioSpec] = {
         coordinate_offset=(95.0, 64.83),
     ),
 }
+
+
+PAPER_SCENARIOS.update({
+    name: PaperScenarioSpec(name, 600, ego_depart_time=50.0, topology_max_edges=512)
+    for name in RANDOM_INTERSECTION_SCENARIOS
+})
 
 
 def get_paper_scenario_spec(name: str) -> PaperScenarioSpec:

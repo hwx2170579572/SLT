@@ -31,6 +31,7 @@ from algos.sb3_torch import (
     SourceEvaluationCallback,
     evaluate_model_detailed,
 )
+from algos.sb3_torch.callbacks import RewardBranchProgressCallback
 from algos.sb3_torch.evaluation import source_evaluation_augmentation
 from configs.sb3_configs import make_model, source_action_repeat
 from envs.sumo.scenario_registry import available_scenarios
@@ -547,6 +548,13 @@ def main(
                 "collision",
                 "off_route",
                 "max_time",
+                # reward shaping v2 各分支（与 reward_shaping_v2.REWARD_BRANCH_KEYS 一致）
+                "reward_success",
+                "reward_collision",
+                "reward_off_route",
+                "reward_timeout",
+                "reward_step_cost",
+                "reward_progress",
             ),
         )
         model = make_model(
@@ -596,6 +604,9 @@ def main(
             BestTrainingSuccessCallback(
                 run_dir / "best_training_success_model"
             )
+        )
+        callbacks.append(
+            RewardBranchProgressCallback(run_dir / "reward_branches.json")
         )
         eval_env = None
         if evaluation_decisions > 0:

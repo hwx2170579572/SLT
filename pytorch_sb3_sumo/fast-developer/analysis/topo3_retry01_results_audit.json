@@ -1,0 +1,203 @@
+{
+  "audit_date": "2026-10-01",
+  "run_root": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/t0930_topo3_retry01",
+  "scope": "Read-only offline audit of completed Topo and Topo+3slot runs. No SUMO, training, evaluation, model loading, or raw gzip stream parsing was performed.",
+  "protocol": {
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "train_seed": 0,
+    "raw_budget_each": 100000,
+    "updates_each": 95001,
+    "checkpoint_used_for_final_eval": "final_model.zip",
+    "checkpoint_frequency_raw_steps": 10000,
+    "learning_starts_raw_steps": 5000,
+    "evaluation_episodes_each": 100,
+    "evaluation_seeds": [10000, 10099],
+    "traffic_pairing": "The same 100 evaluation seeds and traffic_variant values were paired exactly across the two methods; the effective pool has 30 templates, each used 3 or 4 times. This is not a held-out traffic pool.",
+    "training_seed_count": 1,
+    "smoke": false,
+    "device": "CUDA",
+    "common_sac_settings": {
+      "batch_size": 32,
+      "learning_rate": 0.0001,
+      "buffer_size": 20000,
+      "gamma": 0.99,
+      "action_repeat": 3,
+      "environment_contract": "base"
+    },
+    "method_difference": {
+      "topo": {"use_route": true, "use_topology": true, "use_slots": false, "use_incremental_slots": false, "use_graph_slt": false, "use_sbs": false, "representation_coef": 0.0, "slot_balance_coef": 0.0},
+      "topo_3slot": {"use_route": true, "use_topology": true, "use_slots": true, "use_incremental_slots": true, "use_graph_slt": false, "use_sbs": false, "representation_coef": 0.0, "slot_balance_coef": 0.0},
+      "readout_capacity_note": "The 3slot variant replaces the 384→128→128 MLP readout with separate 128→32/64/32 linear slot projections concatenated to 128. The active readout parameter counts are 65,792 (Topo joint MLP head) and 16,512 (3slot projections), so this comparison is not capacity-matched."
+    }
+  },
+  "completion_and_checkpoint": {
+    "launcher_status": "complete",
+    "worker_exit_codes": [0, 0],
+    "topo": {
+      "method": "sac_mlp_d1_st_rt_topo",
+      "raw_steps": 100000,
+      "updates": 95001,
+      "checkpoint_sha256": "dd3fb3849c850fc2d4ea726278b8b9aa6aeffd81254c8a6b5fc448f0b866a000",
+      "wall_seconds": 28190.0433
+    },
+    "topo_3slot": {
+      "method": "sac_mlp_d1_st_rt_topo_3slot",
+      "raw_steps": 100000,
+      "updates": 95001,
+      "checkpoint_sha256": "b56c58b78386b05bdc527c33a85e12aa1ead3c5c711af21056508443a9d87e1e",
+      "wall_seconds": 28148.7811
+    },
+    "checkpoint_identity_check": "Each final_model.zip hash matches the checkpoint hash recorded in its evaluation_results.json identity block."
+  },
+  "final_evaluation": {
+    "outcome_order": ["success", "collision", "timeout", "offroute"],
+    "topo": {"episodes": 100, "counts": [39, 39, 22, 0], "mean_return": 0.0, "success_rate": 0.39, "collision_rate": 0.39, "timeout_rate": 0.22, "success_and_collision_dual_flags": 0},
+    "topo_3slot": {"episodes": 100, "counts": [41, 56, 3, 0], "mean_return": -0.15, "success_rate": 0.41, "collision_rate": 0.56, "timeout_rate": 0.03, "success_and_collision_dual_flags": 0},
+    "paired_transition_matrix": {
+      "direction": "rows=Topo outcome; columns=Topo+3slot outcome",
+      "outcome_order": ["success", "collision", "timeout", "offroute"],
+      "rows": {
+        "success": [20, 17, 2, 0],
+        "collision": [15, 24, 0, 0],
+        "timeout": [6, 15, 1, 0],
+        "offroute": [0, 0, 0, 0]
+      },
+      "pairs": 100
+    },
+    "evaluation_checkpoint_selection": "Both final evaluations use final_model.zip, not the best-training-success checkpoint."
+  },
+  "training_summary": {
+    "monitor_completed_episode_windows": {
+      "topo": {
+        "last20": {"episodes": 20, "counts_success_collision_timeout_offroute": [7, 10, 3, 0], "success_rate": 0.35, "mean_raw_steps": 255.45},
+        "last50": {"episodes": 50, "counts_success_collision_timeout_offroute": [19, 25, 6, 0], "success_rate": 0.38, "mean_raw_steps": 250.68},
+        "last100": {"episodes": 100, "counts_success_collision_timeout_offroute": [43, 51, 6, 0], "success_rate": 0.43, "mean_raw_steps": 217.75}
+      },
+      "topo_3slot": {
+        "last20": {"episodes": 20, "counts_success_collision_timeout_offroute": [7, 13, 0, 0], "success_rate": 0.35, "mean_raw_steps": 209.5},
+        "last50": {"episodes": 50, "counts_success_collision_timeout_offroute": [17, 33, 0, 0], "success_rate": 0.34, "mean_raw_steps": 200.66},
+        "last100": {"episodes": 100, "counts_success_collision_timeout_offroute": [32, 68, 0, 0], "success_rate": 0.32, "mean_raw_steps": 199.88}
+      }
+    },
+    "best_training_window_not_final_evaluation": {
+      "topo": {"success_rate_last20": 0.65, "at_raw_steps": 83198, "completed_episode_count": 456},
+      "topo_3slot": {"success_rate_last20": 0.7, "at_raw_steps": 78456, "completed_episode_count": 385}
+    },
+    "diagnostic_episode_counts": {
+      "topo": {"success": 164, "collision": 351, "timeout": 12, "incomplete": 1, "dual_success_collision_terminal_flags": 0, "diagnostic_error_count": 0},
+      "topo_3slot": {"success": 143, "collision": 344, "timeout": 6, "incomplete": 1, "dual_success_collision_terminal_flags": 0, "diagnostic_error_count": 0}
+    },
+    "tail_note": "Training episode windows are stochastic on-policy samples and are not directly interchangeable with deterministic final evaluation. One incomplete final episode is recorded separately in each training diagnostic summary; it is not counted as a timeout."
+  },
+  "final_eval_behavior_by_outcome": {
+    "definitions": "Stopped means ego speed <0.1 m/s over recorded raw ticks. Low TTC means constant-velocity fixed-heading CV-OBB forecast TTC <3 s among risk-evaluable ticks. Near-bound action means |normalized action|≥0.95. Continuous speed and TTC fractions use their valid raw-tick denominators.",
+    "topo": {
+      "overall": {"raw_steps_per_episode_mean": 253.7, "speed_weighted_mean_mps": 4.515, "stopped_tick_fraction": 0.467, "risk_evaluable_ticks": 25330, "low_ttc_ticks": 1991, "low_ttc_fraction": 0.079, "minimum_observed_ttc_s": 0.0, "action_dim0_mean": 0.3852, "action_dim0_near_bound_fraction": 0.21, "action_dim1_mean": 0.0992, "action_dim1_near_bound_fraction": 0.237},
+      "success": {"episodes": 39, "raw_steps_mean": 194.2, "speed_weighted_mean_mps": 8.644, "stopped_tick_fraction": 0.049, "low_ttc_fraction": 0.104, "action_dim0_mean": 0.796, "action_dim0_near_bound_fraction": 0.5598, "action_dim1_mean": 0.62, "action_dim1_near_bound_fraction": 0.5921},
+      "collision": {"episodes": 39, "raw_steps_mean": 117.8, "speed_weighted_mean_mps": 7.357, "stopped_tick_fraction": 0.085, "low_ttc_fraction": 0.23, "action_dim0_mean": 0.59, "action_dim0_near_bound_fraction": 0.2018, "action_dim1_mean": 0.286, "action_dim1_near_bound_fraction": 0.2749},
+      "timeout": {"episodes": 22, "raw_steps_mean": 600, "speed_weighted_mean_mps": 1.167, "stopped_tick_fraction": 0.839, "low_ttc_fraction": 0.011, "action_dim0_mean": 0.0763, "action_dim0_near_bound_fraction": 0.0111, "action_dim1_mean": -0.2664, "action_dim1_near_bound_fraction": 0.0189},
+      "collision_fallback_locations": {"episodes": 39, "sumo_collision_events_reported": 0, "lane_counts": {":J1_21_0": 34, ":J1_14_0": 5}, "lane_position_range_m": [1.511, 15.407], "interpretation_limit": "These are fallback ego-state snapshots, not exact post-collision positions or identified collision partners."}
+    },
+    "topo_3slot": {
+      "overall": {"raw_steps_per_episode_mean": 258.4, "speed_weighted_mean_mps": 4.626, "stopped_tick_fraction": 0.2, "risk_evaluable_ticks": 25804, "low_ttc_ticks": 2918, "low_ttc_fraction": 0.113, "minimum_observed_ttc_s": 0.0, "action_dim0_mean": 0.2496, "action_dim0_near_bound_fraction": 0.3618, "action_dim1_mean": 0.2833, "action_dim1_near_bound_fraction": 0.38},
+      "success": {"episodes": 41, "raw_steps_mean": 280.8, "speed_weighted_mean_mps": 5.971, "stopped_tick_fraction": 0.143, "low_ttc_fraction": 0.088, "action_dim0_mean": 0.447, "action_dim0_near_bound_fraction": 0.3852, "action_dim1_mean": 0.389, "action_dim1_near_bound_fraction": 0.4597},
+      "collision": {"episodes": 56, "raw_steps_mean": 223.8, "speed_weighted_mean_mps": 3.803, "stopped_tick_fraction": 0.192, "low_ttc_fraction": 0.15, "action_dim0_mean": 0.059, "action_dim0_near_bound_fraction": 0.3479, "action_dim1_mean": 0.2292, "action_dim1_near_bound_fraction": 0.3329},
+      "timeout": {"episodes": 3, "raw_steps_mean": 600, "speed_weighted_mean_mps": 1.78, "stopped_tick_fraction": 0.625, "low_ttc_fraction": 0.019, "action_dim0_mean": 0.3166, "action_dim0_near_bound_fraction": 0.3083, "action_dim1_mean": -0.0131, "action_dim1_near_bound_fraction": 0.1983},
+      "collision_fallback_locations": {"episodes": 56, "sumo_collision_events_reported": 0, "lane_counts": {":J1_21_0": 50, ":J1_14_0": 6}, "lane_position_range_m": [0.036, 15.041], "interpretation_limit": "These are fallback ego-state snapshots, not exact post-collision positions or identified collision partners."}
+    }
+  },
+  "same_scene_context": {
+    "fresh_100k_stage_table": [
+      {"method": "sac_mlp", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/d0929_100k_diag/sac_mlp__intersection_sorted_depart4p0", "raw_steps": 100000, "updates": 95001, "eval_n": 100, "success_collision_timeout_offroute": [22, 38, 40, 0], "mean_return": -0.16, "mean_raw_steps": 367.95, "mean_decision_steps": 122.83},
+      {"method": "mst_slt", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/mst_slt__intersection_sorted_depart4p0", "raw_steps": 100000, "updates": 95001, "eval_n": 100, "success_collision_timeout_offroute": [53, 47, 0, 0], "mean_return": 0.06, "mean_raw_steps": 241.48, "mean_decision_steps": 80.83, "protocol_note": "arguments.json labels the legacy traffic protocol frozen_80_20; it is not the D1 same-complete-pool base environment contract. Treat it as a final-method reference, not an otherwise identical D1 ablation."},
+      {"method": "sac_mlp_d1_st", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st__intersection_sorted_depart4p0", "raw_steps": 100000, "updates": 95001, "eval_n": 100, "success_collision_timeout_offroute": [50, 50, 0, 0], "mean_return": 0.0, "mean_raw_steps": 242.87, "mean_decision_steps": 81.23},
+      {"method": "sac_mlp_d1_st_rt", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/d0929_100k_diag/sac_mlp_d1_st_rt__intersection_sorted_depart4p0", "raw_steps": 100000, "updates": 95001, "eval_n": 100, "success_collision_timeout_offroute": [63, 37, 0, 0], "mean_return": 0.26, "mean_raw_steps": 268.99, "mean_decision_steps": 90.03},
+      {"method": "sac_mlp_d1_st_rt_topo", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/t0930_topo3_retry01/sac_mlp_d1_st_rt_topo__intersection_sorted_depart4p0", "raw_steps": 100000, "updates": 95001, "eval_n": 100, "success_collision_timeout_offroute": [39, 39, 22, 0], "mean_return": 0.0, "mean_raw_steps": 253.69, "mean_decision_steps": 84.81},
+      {"method": "sac_mlp_d1_st_rt_topo_3slot", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/runs/t0930_topo3_retry01/sac_mlp_d1_st_rt_topo_3slot__intersection_sorted_depart4p0", "raw_steps": 100000, "updates": 95001, "eval_n": 100, "success_collision_timeout_offroute": [41, 56, 3, 0], "mean_return": -0.15, "mean_raw_steps": 258.45, "mean_decision_steps": 86.49}
+    ],
+    "paired_transition_matrices": {
+      "outcome_order": ["success", "collision", "timeout", "offroute"],
+      "ST_to_STRT": {"direction": "rows=ST, columns=ST-RT", "matched_pairs": 100, "traffic_variant_mismatches": 0, "rows": {"success": [35, 15, 0, 0], "collision": [28, 22, 0, 0], "timeout": [0, 0, 0, 0], "offroute": [0, 0, 0, 0]}},
+      "STRT_to_Topo": {"direction": "rows=ST-RT, columns=Topo", "matched_pairs": 100, "traffic_variant_mismatches": 0, "rows": {"success": [23, 23, 17, 0], "collision": [16, 16, 5, 0], "timeout": [0, 0, 0, 0], "offroute": [0, 0, 0, 0]}},
+      "Topo_to_3slot": {"direction": "rows=Topo, columns=Topo+3slot", "matched_pairs": 100, "traffic_variant_mismatches": 0, "rows": {"success": [20, 17, 2, 0], "collision": [15, 24, 0, 0], "timeout": [6, 15, 1, 0], "offroute": [0, 0, 0, 0]}}
+    },
+    "topo_timeout_transition_evidence": {
+      "topo_timeout_total": 22,
+      "transition_from_strt": {"success_to_timeout": 17, "collision_to_timeout": 5},
+      "all_22_terminal_lane_state": {"road": "-E1", "lane": "-E1_0", "lane_position_m": 70.0, "route_index": 0, "actual_speed_mps": 0.0},
+      "terminal_target_speed_mps": {"n": 22, "mean": 5.02, "min": 4.25, "max": 6.491},
+      "terminal_lane_command_counts": {"-1": 16, "0": 6},
+      "terminal_lane_change_applied": {"false": 22, "true": 0},
+      "by_transition": {
+        "strt_success_to_topo_timeout": {"n": 17, "mean_actual_speed_mps": 1.1678, "stopped_fraction": 0.8387, "low_ttc_fraction": 0.0106, "critical_unobserved_fraction": 0.002},
+        "strt_collision_to_topo_timeout": {"n": 5, "mean_actual_speed_mps": 1.1664, "stopped_fraction": 0.8393, "low_ttc_fraction": 0.0137, "critical_unobserved_fraction": 0.0017}
+      },
+      "interpretation": "All 22 timeouts show a positive requested speed with near-zero terminal speed at the same lane endpoint. This supports a stuck-at-route-end phenotype, not a demonstrated intentional braking decision. The route-lane connection interpretation is referenced in the companion report; the episode summary itself does not contain a full per-decision lane history."
+    },
+    "historical_st_family_appendix": [
+      {"method": "sac_mlp_d1_st_rt", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt__intersection_sorted_depart4p0", "training": "fresh 50000 raw steps / 45001 updates", "eval_n": 100, "success_collision_timeout": [31, 67, 2], "mean_return": -0.36, "episode_records_with_seed": 0},
+      {"method": "sac_mlp_d1_st_attn", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_attn__intersection_sorted_depart4p0", "training": "fresh 50000 raw steps / 45001 updates", "eval_n": 100, "success_collision_timeout": [43, 56, 1], "mean_return": -0.13, "episode_records_with_seed": 0},
+      {"method": "sac_mlp_d1_st_rt_edge", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0", "training": "fresh 50000 raw steps / 45001 updates", "eval_n": 100, "success_collision_timeout": [39, 61, 0], "mean_return": -0.22, "episode_records_with_seed": 100},
+      {"method": "sac_mlp_d1_st_rt_ego", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0", "training": "fresh 50000 raw steps / 45001 updates", "eval_n": 100, "success_collision_timeout": [44, 56, 0], "mean_return": -0.12, "episode_records_with_seed": 100},
+      {"method": "sac_mlp_d1_st_rt_gate", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0", "training": "fresh 50000 raw steps / 45001 updates", "eval_n": 100, "success_collision_timeout": [40, 60, 0], "mean_return": -0.2, "episode_records_with_seed": 0},
+      {"method": "sac_mlp_d1_st_rt_late", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0", "training": "fresh 50000 raw steps / 45001 updates", "eval_n": 100, "success_collision_timeout": [46, 54, 0], "mean_return": -0.08, "episode_records_with_seed": 0},
+      {"method": "sac_mlp_d1_st_rt_edge/c100000", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0/c100000", "training": "resume from 50000 model, then 50000 extra; global raw 100000 / 94502 updates", "eval_n": 100, "success_collision_timeout": [25, 68, 7], "mean_return": -0.43, "episode_records_with_seed": 100},
+      {"method": "sac_mlp_d1_st_rt_ego/c100000", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0/c100000", "training": "resume from 50000 model, then 50000 extra; global raw 100000 / 94502 updates", "eval_n": 100, "success_collision_timeout": [36, 62, 2], "mean_return": -0.26, "episode_records_with_seed": 100},
+      {"method": "sac_mlp_d1_st_rt_gate/c100000", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0/c100000", "training": "resume from 50000 model, then 50000 extra; global raw 100000 / 94502 updates", "eval_n": 100, "success_collision_timeout": [24, 76, 0], "mean_return": -0.52, "episode_records_with_seed": 100},
+      {"method": "sac_mlp_d1_st_rt_late/c100000", "path": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1/Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0/c100000", "training": "resume from 50000 model, then 50000 extra; global raw 100000 / 94502 updates", "eval_n": 100, "success_collision_timeout": [29, 71, 0], "mean_return": -0.42, "episode_records_with_seed": 100}
+    ],
+    "source_and_protocol_comparability": {
+      "STRT_vs_Topo_training_protocol": "Their diagnostic train manifests agree on scenario/depart_scale, seed, action_repeat, raw budget, warmup, checkpoint frequency, batch/lr/buffer/gamma, base env contract, CUDA, smoke=false, and the full reward_shaping object. The 30 effective traffic route XML hashes match 30/30; both declare the same complete effective pool for train and evaluation, with no holdout.",
+      "overlay_metadata": "Representative traffic_00 overlay manifests agree on source/overlay SHA-256, vehicle_scale=1, pedestrian_scale=1, zero added explicit vehicles/flows, original_assets_modified=false, and map_or_ego_route_changed=false. The old run manifest does not record an independent map.net.xml content hash.",
+      "code_hash_limitation": "t0930_topo3_retry01 contains source_snapshot.json with current run code hashes. d0929_100k_diag has no source_snapshot.json; its method-level diagnostic manifests record source_script/config/assets but not source-code hashes. Exact byte-for-byte historical encoder/environment equivalence, and the claim that added diagnostic instrumentation was behavior-neutral, therefore cannot be proved from archived code hashes."
+    }
+  },
+  "source_and_integrity": {
+    "run_level_files": {
+      "launcher_status.json": "1F6AF0CEEF98E4AC406319DAD26C3E0F13A5121FAFCFA2EDFF715ADAC35A4114",
+      "source_snapshot.json": "4479C3A72002BFCC964ADEF78411A7A48784AB2BB69D2F8A132665D035A62464",
+      "comparison_topo_to_3slot.json": "2A07B51A157F2AD0026E3C2CAC6E99D5A7870FA39747E6E567921BBB59B10375",
+      "comparison_strt_to_topo.json": "2C549DF9954628441E5CF7A0E516F0B86D3E582FCAB3A797FC3DC9E5FE89F23B",
+      "experiment_manifest.json": "0AEA08863242E5FF7A772822F21BF324B3D85DA5993C60946559AF679905D31F"
+    },
+    "method_files": {
+      "topo": {
+        "arguments.json": "1A170D5E551F17E998BCBFAD6CF390ED82A26912F7A91CE92DE450381DEB6BFE",
+        "experiment_manifest.json": "5664587BF94E3069683443E5763689BC3DF65167833EF6B01E5F4B38265887C1",
+        "training_complete.json": "F11104A3089FC0B04C5B93508A4546CC09C9F352D0B9FBA5097A436DD800135B",
+        "best_training_success.json": "C47170A1877DF4CBCB17036B64DFA3CF9EA7475D91E6040C921063F6493FAD1D",
+        "evaluation_results.json": "A6485C41E66EDAFCE7EE032B17336BFDE73DC52AB58133B35115E0933CE98B2D",
+        "train_monitor.csv": "0D514948F980147E8BA9DD82A4B1C3759362D2FA3EB2A7A3087BDF8586C12F87",
+        "diagnostics/train/episodes.jsonl": "288514C2246293DDFDAE55F8876A0756B1DFB697CA0E465508707E18499153CC",
+        "diagnostics/train/summary.json": "4FCB31D28D04619BFF19371DE726A91DACB46C2AC991DF4BB74207DBF8D48D45",
+        "diagnostics/eval/episodes.jsonl": "277077A1C82A19794CC22D078DE44DC1257C5F1BF29DCA525DF6DD24F981F833",
+        "diagnostics/eval/summary.json": "C21050ED8CE6A7E121D0361C55F2931674364DF2FEE28C4045712467FD04A830",
+        "diagnostics/eval/manifest.json": "DC97F86C5E1994DA90BD429F660B6B7E8046ADCD9EC8052D3002854F8A20F8D9"
+      },
+      "topo_3slot": {
+        "arguments.json": "7E48ED280015722B14F3ED3ADA8C9C4192ABCE03C06ABD2FB8B1F379DFD5DDB3",
+        "experiment_manifest.json": "5D9EFC204B65D182DD1B44FEEBA8590248D23048F8EDEF44D69D9C2965DF8072",
+        "training_complete.json": "C721000414E81BA511E99C616C3F12FDF31627BF4ADA8DDF3458B72ADB5D50B4",
+        "best_training_success.json": "C4DFF58E21AD99EE66E6CD298B2D8198688903D28AF907831C4067476234F953",
+        "evaluation_results.json": "9E9BD9888B62A169437DF9C00E24BDF920BF194C1595675C378665968F0B2F5D",
+        "train_monitor.csv": "065D3DD1D5A7498476BF5FC832BC667AD4016A1D9335D7DA04AF23DC9DFB2843",
+        "diagnostics/train/episodes.jsonl": "9FDD5C9E5350A2B79346721EC0CD47A066CC0965A5112A3D813A06F2FC085CBB",
+        "diagnostics/train/summary.json": "E90BCFAA9186995EA24F7A63D7333EF9B1F491A2E842E040D0A12A442F6B273E",
+        "diagnostics/eval/episodes.jsonl": "FA47F4F3116C25D1CC8F865F4493ACF90EC2637D759DA435C945C0585A74E1BD",
+        "diagnostics/eval/summary.json": "3E60885BAC7522E21021DFCB6762A9FACA64186195A95D60AB28060D093C61D6",
+        "diagnostics/eval/manifest.json": "7A8EF09674942608EBA7386683098C4C9212D73B7328C0E42E1C0D9E132BC0AF"
+      }
+    },
+    "source_code_snapshot_note": "The run source snapshot records sumo_env.py SHA-256 df4350776efea5bbdcdcd58ffba89a3bf124e63b0be53562a6d08514a5feceb7; current sumo_env.py hash differs. The run predates the r2 exclusive-terminal protocol. Logged terminal outcome flags have no success-and-collision overlap, but this run does not record raw_sumo_arrived/raw_sumo_collision fields, so raw SUMO co-occurrence cannot be independently audited from these artifacts.",
+    "replay_buffer_and_observations": "A recursive filename audit of the run root found no replay_buffer, replay buffer pickle, saved dataset, trajectory dataset, or standalone observation file (no matching .pkl/.pickle/.npz). The saved diagnostics are behavior/action/traffic telemetry, not the SAC replay buffer and not a complete serialized policy observation/replay dataset. No model was loaded and no buffer was reconstructed."
+  },
+  "limitations": [
+    "One training seed per method; evaluation episodes share a finite 30-template traffic pool and are not independent traffic scenarios.",
+    "The final evaluation is paired by seed and traffic_variant but remains one fixed checkpoint comparison; it does not estimate training-seed variance.",
+    "The Topo joint MLP readout has about four times the active readout parameter count of the 3slot projection readout; the observed difference cannot be attributed solely to slot structure.",
+    "The run predates r2 raw terminal-event fields. No logged terminal flags overlap success and collision, but raw SUMO event co-occurrence is unavailable.",
+    "Collision location summaries are fallback snapshots rather than exact impact locations; no SUMO collision event/partner was present in these summaries.",
+    "No replay buffer or complete policy-observation dataset was found, so input-matched CPU probes cannot be run from saved artifacts alone."
+  ]
+}

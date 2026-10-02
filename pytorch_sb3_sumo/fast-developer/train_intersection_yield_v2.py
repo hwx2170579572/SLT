@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import subprocess
 import sys
@@ -108,6 +109,7 @@ DENSITY = {
 # monkey-patch `_partitioned_traffic_paths` 注入环境（训练与评估同密度）。设为 None
 # 或 1.0 表示用原始密度 traffic。
 DEPART_SCALE = 2.0
+EVAL_TRAFFIC_SPLIT = "validation"
 
 SOURCE_TRAFFIC = (
     PROJECT_ROOT / "envs" / "sumo" / "original_scenarios_v1" / "intersection" / "traffic"
@@ -177,8 +179,45 @@ def _environment_namespace() -> argparse.Namespace:
         ego_control_profile="direct",
         episode_limit_profile="source",
         gui=False,
+        # This is the existing high-density contract partition. Random-flow
+        # train/validation/test namespaces are set separately below.
         evaluation_split="validation",
     )
+
+
+def _configure_cli_scene(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
+    """Apply the optional scene/profile flags without changing legacy defaults."""
+    from envs.sumo.random_intersection import (
+        ASSET_ROOT,
+        RANDOM_INTERSECTION_SCENARIOS,
+        ensure_random_intersection_assets,
+        is_random_intersection_scenario,
+    )
+
+    global SCENARIO, SOURCE_TRAFFIC, DEPART_SCALE, EVAL_TRAFFIC_SPLIT
+    scenario = str(args.scenario or SCENARIO)
+    random_profile = is_random_intersection_scenario(scenario)
+    if args.depart_scale is None:
+        scale = 1.0 if random_profile else DEPART_SCALE
+    else:
+        scale = float(args.depart_scale)
+    if random_profile:
+        if scale != 1.0:
+            parser.error("random intersection flows require --depart-scale 1.0")
+        ensure_random_intersection_assets(scenario)
+        SOURCE_TRAFFIC = ASSET_ROOT / scenario / "traffic"
+    elif scenario == "intersection":
+        if args.eval_traffic_split != "validation":
+            parser.error("--eval-traffic-split applies only to random intersection profiles")
+        SOURCE_TRAFFIC = (
+            PROJECT_ROOT / "envs" / "sumo" / "original_scenarios_v1"
+            / "intersection" / "traffic"
+        )
+    else:
+        parser.error(f"unsupported base trainer scenario: {scenario}")
+    SCENARIO = scenario
+    DEPART_SCALE = scale
+    EVAL_TRAFFIC_SPLIT = str(args.eval_traffic_split)
 
 
 def make_env_factory(adapter: str, overlay_root: Path):
@@ -193,6 +232,7 @@ def make_env_factory(adapter: str, overlay_root: Path):
       与 sac_mlp 的 base 契约同 traffic 变体）。
     """
     from reward_shaping_v2 import GeneralizedRewardShapingWrapper
+    from envs.sumo.random_intersection import is_random_intersection_scenario
     from tools.train_independent_v2_5m6s100e_v1 import _make_environment_factory
     from yield_conflict_env import YieldConflictIndependentV2EnvV4V1
     from yield_obs_env import YieldObsIndependentV2EnvV1, YieldObsIndependentV2EnvV4V1
@@ -228,7 +268,15 @@ def make_env_factory(adapter: str, overlay_root: Path):
 
     def make_environment(args, *, evaluation=False):
         env = base_factory(args, evaluation=evaluation)
-        if traffic_paths is not None:
+        if is_random_intersection_scenario(SCENARIO):
+            traffic_split = EVAL_TRAFFIC_SPLIT if evaluation else "train"
+            setter = getattr(env, "set_traffic_split", None)
+            if not callable(setter):
+                raise TypeError(
+                    "Random intersection environment must expose set_traffic_split()"
+                )
+            setter(traffic_split)
+        elif traffic_paths is not None:
             # 必须在包 wrapper 前 patch 底层 env 的实例方法（gym.Wrapper 1.2.3 无
             # __getattr__）。_sumo_command 经 _selected_traffic_path 读它，配合
             # vehicle_scale=1.0（空 overlay）即以 depart×scale 低密度跑。
@@ -264,7 +312,7 @@ def _env_adapter(method: str) -> str:
 # --------------------------------------------------------------------------- #
 # 通用文件工具
 # --------------------------------------------------------------------------- #
-def _write_json_atomic(path: Path, payload) -> None:
+def _write_json_atomic(path: Path, payload) -> bool:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(f".{os.getpid()}.tmp")
@@ -272,7 +320,53 @@ def _write_json_atomic(path: Path, payload) -> None:
         json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
         encoding="utf-8",
     )
-    os.replace(tmp, path)
+    retry_delays = (0.05, 0.10, 0.20)
+    for attempt in range(len(retry_delays) + 1):
+        try:
+            os.replace(tmp, path)
+            return True
+        except PermissionError as exc:
+            if attempt < len(retry_delays):
+                time.sleep(retry_delays[attempt])
+                continue
+            if path.name == "progress.json":
+                logging.getLogger(__name__).warning(
+                    "Could not publish progress telemetry after %d attempts; "
+                    "keeping the existing file and complete temporary snapshot at %s: %s",
+                    len(retry_delays) + 1,
+                    tmp,
+                    exc,
+                )
+                return False
+            raise
+
+
+def _guard_random_evaluation_output(
+    run_dir: Path, *, scenario: str, traffic_split: str
+) -> None:
+    """Prevent a randomized-split eval from replacing evidence from another split."""
+    from envs.sumo.random_intersection import is_random_intersection_scenario
+
+    if not is_random_intersection_scenario(scenario):
+        return
+    result_path = Path(run_dir) / "evaluation_results.json"
+    if not result_path.is_file():
+        return
+    try:
+        existing = json.loads(result_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            f"Refusing to overwrite unreadable randomized evaluation results: {result_path}"
+        ) from exc
+    identity = existing.get("identity") or {}
+    prior_scenario = identity.get("scenario")
+    prior_split = identity.get("eval_traffic_split")
+    if prior_scenario != scenario or prior_split != traffic_split:
+        raise FileExistsError(
+            "Randomized evaluation output already contains different or unlabelled "
+            f"scenario/split evidence ({prior_scenario!r}/{prior_split!r}); "
+            f"write {scenario!r}/{traffic_split!r} to a separate --output-dir."
+        )
 
 
 def _sha256(path: Path) -> str:
@@ -285,22 +379,127 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _behavior_diagnostics_metadata(method: str, phase: str, run_dir: Path, **extra) -> dict:
+    """Return provenance for the exact traffic pool exposed to this environment."""
+    from envs.sumo.random_intersection import (
+        get_random_intersection_config,
+        is_random_intersection_scenario,
+    )
+
+    if DEPART_SCALE is None or DEPART_SCALE == 1.0:
+        traffic_paths = tuple(sorted(SOURCE_TRAFFIC.glob("traffic_*.rou.xml")))
+    else:
+        traffic_paths = _traffic_paths_for_scale(DEPART_SCALE)
+    files = [
+        {"path": str(Path(path).resolve()), "sha256": _sha256(path)}
+        for path in traffic_paths
+    ]
+    paths = [item["path"] for item in files]
+    metadata = {
+        "source_script": Path(__file__).name,
+        "method": method,
+        "phase": phase,
+        "run_dir": str(Path(run_dir).resolve()),
+        "scenario": SCENARIO,
+        "depart_scale": DEPART_SCALE,
+        "source_traffic_dir": str(SOURCE_TRAFFIC.resolve()),
+        "effective_traffic_files": files,
+        "train_traffic_files": paths,
+        "eval_traffic_files": paths,
+        "traffic_partition": "same_complete_effective_pool_for_train_and_eval; no holdout",
+        "traffic_variants_shared_between_train_and_eval": True,
+        "training_seed": SEED,
+        "action_repeat": ACTION_REPEAT,
+        "reward_shaping": REWARD,
+    }
+    if is_random_intersection_scenario(SCENARIO):
+        traffic_config = get_random_intersection_config(SCENARIO)
+        traffic_split = "train" if phase == "train" else EVAL_TRAFFIC_SPLIT
+        metadata.update(
+            {
+                "traffic_protocol": traffic_config["protocol"],
+                "traffic_config": traffic_config,
+                "traffic_split": traffic_split,
+                "traffic_seed_domain": traffic_config["traffic_seed_domains"][
+                    traffic_split
+                ],
+                "traffic_partition": "disjoint_simulation_seed_domains; shared_static_flow_specification",
+                "traffic_variants_shared_between_train_and_eval": False,
+                "traffic_specification_shared_between_train_and_eval": True,
+                "train_traffic_files": paths,
+                "eval_traffic_files": paths,
+            }
+        )
+    metadata.update(extra)
+    return metadata
+
+
+def _wrap_behavior_diagnostics_env(env, run_dir: Path, phase: str, method: str, **metadata):
+    from behavior_diagnostics import get_behavior_recorder, wrap_behavior_diagnostics
+
+    wrapped = wrap_behavior_diagnostics(
+        env,
+        output_dir=run_dir,
+        phase=phase,
+        method=method,
+        metadata=_behavior_diagnostics_metadata(method, phase, run_dir, **metadata),
+    )
+    return wrapped, get_behavior_recorder(wrapped)
+
+
+def _make_behavior_optimization_callback(recorder, raw_interval: int = 1000):
+    """Sample the latest scalar learner metrics without duplicating policy records."""
+    from stable_baselines3.common.callbacks import BaseCallback
+
+    class BehaviorOptimizationCallback(BaseCallback):
+        def __init__(self):
+            super().__init__(verbose=0)
+            self.last_raw_steps = 0
+
+        def _record(self):
+            raw_steps = int(getattr(self.model, "_raw_steps_seen", 0))
+            decision_steps = int(getattr(self.model, "num_timesteps", 0))
+            updates = int(getattr(self.model, "_n_updates", 0))
+            metrics = dict(getattr(getattr(self.model, "logger", None), "name_to_value", {}))
+            recorder.record_optimization(raw_steps, decision_steps, updates, metrics)
+            self.last_raw_steps = raw_steps
+
+        def _on_step(self):
+            raw_steps = int(getattr(self.model, "_raw_steps_seen", 0))
+            if raw_steps - self.last_raw_steps >= raw_interval:
+                self._record()
+            return True
+
+        def _on_training_end(self):
+            if int(getattr(self.model, "_raw_steps_seen", 0)) > self.last_raw_steps:
+                self._record()
+
+    return BehaviorOptimizationCallback()
+
+
 # --------------------------------------------------------------------------- #
 # 训练：hold35k（TASAC, v4_8）
 # --------------------------------------------------------------------------- #
-def run_training_hold35k(run_dir: Path, smoke: bool) -> Path:
+def run_training_hold35k(run_dir: Path, smoke: bool, max_steps: int | None = None) -> Path:
     import torch
     from stable_baselines3.common.callbacks import BaseCallback, CallbackList
     from stable_baselines3.common.monitor import Monitor
 
-    from algos.sb3_torch.callbacks import RawStepControlCallback
+    from algos.sb3_torch.callbacks import (
+        BestTrainingSuccessCallback,
+        RawStepControlCallback,
+        RewardBranchProgressCallback,
+    )
+    from reward_shaping_v2 import REWARD_BRANCH_KEYS
     from tools.phase2_model_factory_v1 import make_phase2_model, verify_optimizer_settings
     from tools.v48_stability_v4.common import CANDIDATES
     from tools.v48_stability_v4.model import StabilitySAC, learning_rate as _lr_at
 
     torch.set_num_threads(1)
 
-    raw_budget = 300 if smoke else RAW_TRAINING_STEPS
+    if max_steps is None:
+        max_steps = RAW_TRAINING_STEPS
+    raw_budget = 300 if smoke else max_steps
     frequency = 100 if smoke else CHECKPOINT_FREQUENCY
     learning_starts = 60 if smoke else LEARNING_STARTS
     overlay_root = run_dir / "overlays"
@@ -328,7 +527,8 @@ def run_training_hold35k(run_dir: Path, smoke: bool) -> Path:
                 "collision",
                 "off_route",
                 "max_time",
-            ),
+            )
+            + REWARD_BRANCH_KEYS,
         )
 
         original_config = dict(CANDIDATES[HOLD35K_CANDIDATE])
@@ -402,6 +602,8 @@ def run_training_hold35k(run_dir: Path, smoke: bool) -> Path:
                         checkpoint_path=run_dir / "checkpoints",
                         checkpoint_prefix="ckpt",
                     ),
+                    BestTrainingSuccessCallback(run_dir / "best_training_success_model"),
+                    RewardBranchProgressCallback(run_dir / "reward_branches.json"),
                     Progress(),
                 ]
             ),
@@ -463,20 +665,78 @@ def run_training_hold35k(run_dir: Path, smoke: bool) -> Path:
 # --------------------------------------------------------------------------- #
 # 训练：mst_slt（MST+SLT, base）
 # --------------------------------------------------------------------------- #
-def run_training_mst_slt(run_dir: Path, smoke: bool) -> Path:
+def run_training_mst_slt(
+    run_dir: Path,
+    smoke: bool,
+    max_steps: int | None = None,
+    behavior_diagnostics: bool = False,
+) -> Path:
     import torch
 
     torch.set_num_threads(1)
 
     from tools import train_sb3
 
-    max_steps = 300 if smoke else RAW_TRAINING_STEPS
+    if max_steps is None:
+        max_steps = RAW_TRAINING_STEPS
+    max_steps = 300 if smoke else max_steps
     learning_starts = 60 if smoke else LEARNING_STARTS
     frequency = 100 if smoke else CHECKPOINT_FREQUENCY
     eval_episodes = 1 if smoke else 100
 
     run_dir.parent.mkdir(parents=True, exist_ok=True)
-    env_factory = make_env_factory("base", run_dir / "overlays" / "seed_0")
+    base_env_factory = make_env_factory("base", run_dir / "overlays" / "seed_0")
+    factory_calls = 0
+    factory_roles: list[str] = []
+    diagnostic_recorder = None
+
+    def env_factory(args, *, evaluation=False):
+        nonlocal factory_calls, diagnostic_recorder
+        factory_calls += 1
+        if behavior_diagnostics:
+            expected_calls = (
+                (1, False, "validation"),
+                (2, False, "training"),
+                (3, True, "final_evaluation"),
+            )
+            if factory_calls > len(expected_calls):
+                raise RuntimeError(
+                    "MST+SLT behavior diagnostics expected validation, training, "
+                    "then final evaluation environments; train_sb3 factory call "
+                    f"{factory_calls} was unexpected"
+                )
+            expected_index, expected_evaluation, role = expected_calls[factory_calls - 1]
+            if bool(evaluation) != expected_evaluation:
+                raise RuntimeError(
+                    "MST+SLT behavior diagnostics detected changed environment "
+                    f"factory order at call {factory_calls}: expected {role} "
+                    f"(evaluation={expected_evaluation}), got "
+                    f"evaluation={bool(evaluation)}"
+                )
+            if expected_index != factory_calls:
+                raise AssertionError("internal MST environment factory role mismatch")
+            factory_roles.append(role)
+        env = base_env_factory(args, evaluation=evaluation)
+        if behavior_diagnostics and factory_roles[-1:] == ["training"]:
+            env, diagnostic_recorder = _wrap_behavior_diagnostics_env(
+                env,
+                run_dir,
+                "train",
+                "mst_slt",
+                raw_step_budget=max_steps,
+                warmup_raw_steps=learning_starts,
+                checkpoint_frequency_raw_steps=frequency,
+                batch_size=BATCH_SIZE,
+                learning_rate=LEARNING_RATE["mst_slt"],
+                buffer_size=BUFFER_SIZE,
+                discount=DISCOUNT,
+                env_contract="base",
+                device="cuda",
+                smoke=smoke,
+                learner_diagnostics_path=str((run_dir / "training_diagnostics.json").resolve()),
+                learner_diagnostics_source="train_sb3 model.training_diagnostics aggregate",
+            )
+        return env
 
     argv = [
         "--algo", "scene_rep",
@@ -511,12 +771,24 @@ def run_training_mst_slt(run_dir: Path, smoke: bool) -> Path:
         require_paper_evaluation_contract=False,
         tensorboard_log_root=RESULT_ROOT / "tb",
     )
+    if behavior_diagnostics:
+        if factory_calls != 3 or factory_roles != [
+            "validation",
+            "training",
+            "final_evaluation",
+        ]:
+            raise RuntimeError(
+                "MST+SLT behavior diagnostics expected validation, training, "
+                "and final evaluation environments in order; observed "
+                f"calls={factory_calls}, roles={factory_roles}"
+            )
     final = run_dir / "final_model.zip"
     if not final.is_file():
         raise FileNotFoundError(f"train_sb3 did not produce {final}")
     _write_json_atomic(
         run_dir / "status.json",
-        dict(status="trained", smoke=smoke, method="mst_slt"),
+        dict(status="trained", smoke=smoke, method="mst_slt",
+             behavior_diagnostics=behavior_diagnostics),
     )
     return final
 
@@ -627,16 +899,29 @@ def _build_mlp_model(method: str, env, *, learning_starts: int):
     raise ValueError(f"not an MLP method: {method}")
 
 
-def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
+def run_training_mlp(
+    method: str,
+    run_dir: Path,
+    smoke: bool,
+    max_steps: int | None = None,
+    behavior_diagnostics: bool = False,
+) -> Path:
     import torch
     from stable_baselines3.common.callbacks import BaseCallback, CallbackList
     from stable_baselines3.common.monitor import Monitor
 
-    from algos.sb3_torch.callbacks import RawStepControlCallback
+    from algos.sb3_torch.callbacks import (
+        BestTrainingSuccessCallback,
+        RawStepControlCallback,
+        RewardBranchProgressCallback,
+    )
+    from reward_shaping_v2 import REWARD_BRANCH_KEYS
 
     torch.set_num_threads(1)
 
-    raw_budget = 300 if smoke else RAW_TRAINING_STEPS
+    if max_steps is None:
+        max_steps = RAW_TRAINING_STEPS
+    raw_budget = 300 if smoke else max_steps
     frequency = 100 if smoke else CHECKPOINT_FREQUENCY
     learning_starts = 60 if smoke else LEARNING_STARTS
     overlay_root = run_dir / "overlays"
@@ -652,6 +937,7 @@ def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
     started = time.time()
     env = None
     model = None
+    diagnostic_recorder = None
 
     _write_json_atomic(
         run_dir / "status.json",
@@ -659,10 +945,28 @@ def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
     )
 
     try:
+        env_base = make_env_factory(env_adapter, overlay_root / f"ns_{namespace}")(
+            _environment_namespace(), evaluation=False
+        )
+        if behavior_diagnostics:
+            env_base, diagnostic_recorder = _wrap_behavior_diagnostics_env(
+                env_base,
+                run_dir,
+                "train",
+                method,
+                raw_step_budget=raw_budget,
+                warmup_raw_steps=learning_starts,
+                checkpoint_frequency_raw_steps=frequency,
+                batch_size=BATCH_SIZE,
+                learning_rate=LEARNING_RATE[method],
+                buffer_size=BUFFER_SIZE,
+                discount=DISCOUNT,
+                env_contract=env_adapter,
+                device="cuda",
+                smoke=smoke,
+            )
         env = Monitor(
-            make_env_factory(env_adapter, overlay_root / f"ns_{namespace}")(
-                _environment_namespace(), evaluation=False
-            ),
+            env_base,
             filename=str(run_dir / "train_monitor.csv"),
             info_keywords=(
                 "raw_simulation_steps",
@@ -670,7 +974,8 @@ def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
                 "collision",
                 "off_route",
                 "max_time",
-            ),
+            )
+            + REWARD_BRANCH_KEYS,
         )
         model = _build_mlp_model(method, env, learning_starts=learning_starts)
 
@@ -691,6 +996,8 @@ def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
                 device="cuda",
                 density=DENSITY,
                 smoke=smoke,
+                behavior_diagnostics=behavior_diagnostics,
+                run_root=str(Path(run_dir).parent.resolve()),
                 env_contract=env_adapter,
                 env_class=(
                     "YieldConflictIndependentV2EnvV4V1 (改法 1+2+3)"
@@ -716,19 +1023,23 @@ def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
                     )
                 return True
 
+        training_callbacks = [
+            RawStepControlCallback(
+                raw_step_budget=raw_budget,
+                checkpoint_frequency=frequency,
+                checkpoint_path=run_dir / "checkpoints",
+                checkpoint_prefix="ckpt",
+            ),
+            BestTrainingSuccessCallback(run_dir / "best_training_success_model"),
+            RewardBranchProgressCallback(run_dir / "reward_branches.json"),
+            Progress(),
+        ]
+        if diagnostic_recorder is not None:
+            training_callbacks.append(_make_behavior_optimization_callback(diagnostic_recorder))
+
         model.learn(
             total_timesteps=raw_budget,
-            callback=CallbackList(
-                [
-                    RawStepControlCallback(
-                        raw_step_budget=raw_budget,
-                        checkpoint_frequency=frequency,
-                        checkpoint_path=run_dir / "checkpoints",
-                        checkpoint_prefix="ckpt",
-                    ),
-                    Progress(),
-                ]
-            ),
+            callback=CallbackList(training_callbacks),
         )
         if model._raw_steps_seen != raw_budget:
             raise AssertionError(
@@ -745,6 +1056,7 @@ def run_training_mlp(method: str, run_dir: Path, smoke: bool) -> Path:
                 raw_steps=raw_budget,
                 updates=model._n_updates,
                 replay_size=model.replay_buffer.size(),
+                behavior_diagnostics=behavior_diagnostics,
                 wall_seconds=time.time() - started,
             ),
         )
@@ -1038,6 +1350,18 @@ def run_eval_worker(args: argparse.Namespace) -> None:
     end = args.end_episode
     n = end - start
     model_path = str(args.model_path)
+    behavior_diagnostics = bool(getattr(args, "behavior_diagnostics", False))
+    eval_phase = f"eval_worker_{int(args.worker_id):02d}"
+    eval_metadata = dict(
+        evaluation_seed_start=SEED_START[method] + start,
+        evaluation_episode_start=start,
+        evaluation_episode_end=end,
+        evaluation_episodes=n,
+        deterministic=True,
+        checkpoint=str(Path(model_path).resolve()),
+        device="cpu",
+        smoke=bool(getattr(args, "smoke", False)),
+    )
 
     if method in ("hold35k", "hsac_mlp", "hsac_mlp_base"):
         from tools.v48_stability_v4.model import StabilitySAC, use_actor_only
@@ -1046,6 +1370,11 @@ def run_eval_worker(args: argparse.Namespace) -> None:
         env = make_env_factory(eval_adapter, overlay_root)(
             _environment_namespace(), evaluation=True
         )
+        if behavior_diagnostics:
+            env, _ = _wrap_behavior_diagnostics_env(
+                env, output_dir, eval_phase, method,
+                env_contract=eval_adapter, **eval_metadata
+            )
         if method == "hold35k":
             loaded = StabilitySAC.load(model_path, env=env, device="cpu", buffer_size=32)
         else:  # hsac_mlp / hsac_mlp_base
@@ -1086,6 +1415,11 @@ def run_eval_worker(args: argparse.Namespace) -> None:
         env = make_env_factory(env_adapter, overlay_root)(
             _environment_namespace(), evaluation=True
         )
+        if behavior_diagnostics:
+            env, _ = _wrap_behavior_diagnostics_env(
+                env, output_dir, eval_phase, method,
+                env_contract=env_adapter, **eval_metadata
+            )
         model = SceneRepresentationSAC.load(
             model_path, env=env, device="cpu", buffer_size=32
         )
@@ -1137,9 +1471,54 @@ def run_eval_worker(args: argparse.Namespace) -> None:
 
 def summarize_records(records: list[dict]) -> dict:
     import numpy as np
+    from algos.sb3_torch.evaluation import (
+        EVALUATION_RETURN_PROTOCOL_VERSION,
+        RAW_RETURN_PROTOCOL_VERSION,
+        REWARD_COMPONENT_KEYS,
+    )
 
     n = len(records)
     returns = [r["episode_return"] for r in records]
+    raw_returns = [
+        float(r["raw_episode_return"])
+        for r in records
+        if r.get("raw_episode_return") is not None
+    ]
+    reward_component_means = {}
+    for key in REWARD_COMPONENT_KEYS:
+        values = [float(r[key]) for r in records if r.get(key) is not None]
+        reward_component_means[key] = float(np.mean(values)) if values else None
+    complete_component_records = [
+        r for r in records
+        if all(r.get(key) is not None for key in REWARD_COMPONENT_KEYS)
+    ]
+    reconciliation_errors = [
+        abs(
+            float(r["episode_return"])
+            - sum(float(r[key]) for key in REWARD_COMPONENT_KEYS)
+        )
+        for r in complete_component_records
+    ]
+    return_protocols = {
+        r.get("evaluation_return_protocol_version")
+        for r in records
+        if r.get("evaluation_return_protocol_version") is not None
+    }
+    component_protocols = {
+        r.get("reward_component_protocol_version")
+        for r in records
+        if r.get("reward_component_protocol_version") is not None
+    }
+    raw_sources = {
+        r.get("raw_return_source")
+        for r in records
+        if r.get("raw_return_source") is not None
+    }
+    raw_source_protocol = (
+        "mixed_info_and_environment_reward_fallback"
+        if len(raw_sources) > 1
+        else next(iter(raw_sources), "not_available")
+    )
     raw_lengths = [r["raw_steps"] for r in records]
     decision_lengths = [r["decision_steps"] for r in records]
     completion_times = [
@@ -1156,6 +1535,35 @@ def summarize_records(records: list[dict]) -> dict:
         timeout_rate=sum(int(r["timeout"]) for r in records) / n if n else 0.0,
         mean_return=float(np.mean(returns)) if n else None,
         std_return=float(np.std(returns)) if n else None,
+        raw_mean_return=float(np.mean(raw_returns)) if raw_returns else None,
+        raw_std_return=float(np.std(raw_returns)) if raw_returns else None,
+        reward_component_means=reward_component_means,
+        reward_component_coverage=len(complete_component_records),
+        reward_component_reconciliation_max_abs_error=(
+            max(reconciliation_errors) if reconciliation_errors else None
+        ),
+        evaluation_return_protocol_version=(
+            next(iter(return_protocols))
+            if len(return_protocols) == 1
+            else (
+                "mixed"
+                if return_protocols
+                else EVALUATION_RETURN_PROTOCOL_VERSION if n == 0 else None
+            )
+        ),
+        raw_return_protocol_version=(
+            f"{RAW_RETURN_PROTOCOL_VERSION};source={raw_source_protocol}"
+        ),
+        reward_component_protocol_version=(
+            next(iter(component_protocols))
+            if len(component_protocols) == 1
+            and len(complete_component_records) == n
+            else (
+                "mixed"
+                if component_protocols and len(component_protocols) > 1
+                else None
+            )
+        ),
         mean_decision_steps=float(np.mean(decision_lengths)) if n else None,
         mean_raw_steps=float(np.mean(raw_lengths)) if n else None,
         mean_success_completion_time_seconds=(
@@ -1169,9 +1577,15 @@ def summarize_records(records: list[dict]) -> dict:
 
 
 def run_evaluation(
-    method: str, run_dir: Path, final_model: Path, smoke: bool
+    method: str,
+    run_dir: Path,
+    final_model: Path,
+    smoke: bool,
+    behavior_diagnostics: bool = False,
 ) -> dict:
-    workers = 2 if smoke else EVAL_WORKERS
+    # A single diagnostic writer owns each method's evaluation stream. This also
+    # keeps the paired final evaluations bounded after two concurrent trainers.
+    workers = 1 if behavior_diagnostics else (2 if smoke else EVAL_WORKERS)
     episodes = 8 if smoke else EVAL_EPISODES_TOTAL
     device = "cpu"
 
@@ -1199,6 +1613,12 @@ def run_evaluation(
             "eval-worker",
             "--method",
             method,
+            "--scenario",
+            SCENARIO,
+            "--depart-scale",
+            str(DEPART_SCALE),
+            "--eval-traffic-split",
+            EVAL_TRAFFIC_SPLIT,
             "--worker-id",
             str(worker_id),
             "--start-episode",
@@ -1210,6 +1630,8 @@ def run_evaluation(
             "--output-dir",
             str(run_dir),
         ]
+        if behavior_diagnostics:
+            command.append("--behavior-diagnostics")
         with log.open("w", encoding="utf-8") as handle:
             process = subprocess.Popen(
                 command,
@@ -1273,6 +1695,8 @@ def run_evaluation(
         identity=dict(
             method=method,
             scenario=SCENARIO,
+            depart_scale=DEPART_SCALE,
+            eval_traffic_split=EVAL_TRAFFIC_SPLIT,
             checkpoint=str(final_model),
             checkpoint_sha256=_sha256(final_model),
             episodes=episodes,
@@ -1282,11 +1706,16 @@ def run_evaluation(
             seed_start=SEED_START[method],
             deployment="actor_deterministic",
             smoke=smoke,
+            behavior_diagnostics=behavior_diagnostics,
             reward_shaping=REWARD,
+            evaluation_return_protocol_version="environment_step_reward_v2",
             note=(
-                "episode_return 为原始 reward（evaluate_model_detailed 读 "
-                "info['undiscounted_reward']，是 success/collision 的 ±1 原始值，"
-                "不受 reward_shaping wrapper 影响）；success_rate 为关键指标"
+                "episode_return/mean_return sum the reward returned by env.step "
+                "(yield-v2 shaped reward when its wrapper is active; protocol "
+                "environment_step_reward_v2). raw_episode_return/raw_mean_return "
+                "sum info['undiscounted_reward'] when exposed; each episode records "
+                "raw_return_source when it must fall back to env.step reward. "
+                "Terminal outcome rates remain event flags."
             ),
         ),
         summary=summary,
@@ -1397,22 +1826,34 @@ def plot_training_curves(
 # --------------------------------------------------------------------------- #
 # 主流程
 # --------------------------------------------------------------------------- #
-def run_train_method(method: str, smoke: bool) -> Path:
+def run_train_method(
+    method: str, smoke: bool, behavior_diagnostics: bool = False
+) -> Path:
     run_dir = RESULT_ROOT / f"{method}__{SCENARIO}{RUN_SUFFIX}"
 
     if method == "hold35k":
         final = run_training_hold35k(run_dir, smoke=smoke)
     elif method == "mst_slt":
-        final = run_training_mst_slt(run_dir, smoke=smoke)
+        final = run_training_mst_slt(
+            run_dir, smoke=smoke, behavior_diagnostics=behavior_diagnostics
+        )
     else:  # hsac_mlp / sac_mlp / sac_mlp_v48 / hsac_mlp_base
-        final = run_training_mlp(method, run_dir, smoke=smoke)
+        final = run_training_mlp(
+            method, run_dir, smoke=smoke,
+            behavior_diagnostics=behavior_diagnostics,
+        )
 
-    result = run_evaluation(method, run_dir, final, smoke=smoke)
+    result = run_evaluation(
+        method, run_dir, final, smoke=smoke,
+        behavior_diagnostics=behavior_diagnostics,
+    )
     curve = plot_training_curves(method, run_dir)
 
     manifest = dict(
         method=method,
         scenario=SCENARIO,
+        depart_scale=DEPART_SCALE,
+        eval_traffic_split=EVAL_TRAFFIC_SPLIT,
         run_dir=str(run_dir),
         final_model=str(final),
         evaluation=result["summary"],
@@ -1448,7 +1889,7 @@ def run_train_method(method: str, smoke: bool) -> Path:
     return run_dir
 
 
-def run_full(smoke: bool) -> Path:
+def run_full(smoke: bool, behavior_diagnostics: bool = False) -> Path:
     if not smoke and not _cuda_available():
         raise RuntimeError("CUDA unavailable; training has no CPU fallback")
 
@@ -1478,9 +1919,16 @@ def run_full(smoke: bool) -> Path:
                 shutil.rmtree(RESULT_ROOT / f"{m}__{SCENARIO}{RUN_SUFFIX}", ignore_errors=True)
         procs: dict[str, subprocess.Popen] = {}
         for method in todo:
-            cmd = [sys.executable, script, "train-method", "--method", method]
+            cmd = [
+                sys.executable, script, "train-method", "--method", method,
+                "--scenario", SCENARIO,
+                "--depart-scale", str(DEPART_SCALE),
+                "--eval-traffic-split", EVAL_TRAFFIC_SPLIT,
+            ]
             if smoke:
                 cmd.append("--smoke")
+            if behavior_diagnostics:
+                cmd.append("--behavior-diagnostics")
             log = RESULT_ROOT / f"{method}{RUN_SUFFIX}__train_launcher.log"
             with log.open("w", encoding="utf-8") as handle:
                 procs[method] = subprocess.Popen(
@@ -1510,6 +1958,8 @@ def run_full(smoke: bool) -> Path:
         RESULT_ROOT / "experiment_manifest.json",
         dict(
             scenario=SCENARIO,
+            depart_scale=DEPART_SCALE,
+            eval_traffic_split=EVAL_TRAFFIC_SPLIT,
             methods=per_method,
             exit_codes=codes,
             failed=list(failed),
@@ -1517,6 +1967,7 @@ def run_full(smoke: bool) -> Path:
             checkpoint_frequency=CHECKPOINT_FREQUENCY,
             train_workers=TRAIN_WORKERS,
             reward_shaping=REWARD,
+            behavior_diagnostics=behavior_diagnostics,
             smoke=smoke,
         ),
     )
@@ -1545,7 +1996,32 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--eval-only", action="store_true")
+    parser.add_argument(
+        "--behavior-diagnostics",
+        action="store_true",
+        help="Record bounded route/lane behavior telemetry during normal train/eval",
+    )
     parser.add_argument("--method", choices=METHODS)
+    from envs.sumo.random_intersection import RANDOM_INTERSECTION_SCENARIOS
+
+    parser.add_argument(
+        "--scenario",
+        choices=("intersection", *RANDOM_INTERSECTION_SCENARIOS),
+        default=None,
+        help="SUMO scenario/profile (default preserves the existing intersection run)",
+    )
+    parser.add_argument(
+        "--depart-scale",
+        type=float,
+        default=None,
+        help="Legacy explicit-vehicle departure scaling; random profiles require 1.0",
+    )
+    parser.add_argument(
+        "--eval-traffic-split",
+        choices=("validation", "test"),
+        default="validation",
+        help="Random-flow evaluation seed domain; test is a held-out domain",
+    )
     parser.add_argument("--model-path", type=Path)
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--worker-id", type=int)
@@ -1553,6 +2029,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--end-episode", type=int)
     parser.add_argument("--extra-steps", type=int)
     args = parser.parse_args(argv)
+    _configure_cli_scene(parser, args)
 
     if args.command == "eval-worker":
         if (
@@ -1572,7 +2049,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "train-method":
         if args.method is None:
             parser.error("train-method requires --method")
-        run_train_method(args.method, smoke=args.smoke)
+        run_train_method(
+            args.method,
+            smoke=args.smoke,
+            behavior_diagnostics=args.behavior_diagnostics,
+        )
         return 0
 
     if args.command == "continue-train":
@@ -1589,14 +2070,21 @@ def main(argv: list[str] | None = None) -> int:
         if args.method is None or args.model_path is None or args.output_dir is None:
             parser.error("--eval-only requires --method, --model-path and --output-dir")
         run_dir = Path(args.output_dir)
+        _guard_random_evaluation_output(
+            run_dir, scenario=SCENARIO, traffic_split=EVAL_TRAFFIC_SPLIT
+        )
         result = run_evaluation(
-            args.method, run_dir, Path(args.model_path), smoke=args.smoke
+            args.method,
+            run_dir,
+            Path(args.model_path),
+            smoke=args.smoke,
+            behavior_diagnostics=args.behavior_diagnostics,
         )
         plot_training_curves(args.method, run_dir)
         print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
         return 0
 
-    run_full(smoke=args.smoke)
+    run_full(smoke=args.smoke, behavior_diagnostics=args.behavior_diagnostics)
     return 0
 
 

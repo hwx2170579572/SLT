@@ -1,0 +1,77 @@
+{
+  "schema_version": "sorted_goalonly_causal_start_receipt_v1",
+  "verified_at_utc": "2026-10-02T08:47:22Z",
+  "snapshot_only": true,
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_causal_1002",
+  "launcher_status_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_causal_1002\\launcher_status.json",
+  "manifest_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_causal_1002\\experiment_manifest.json",
+  "supervisor": {
+    "pid": 12488,
+    "status": "running",
+    "started_local": "2026-10-02T16:44:40+08:00"
+  },
+  "protocol": {
+    "method": "sac_mlp_d1_st_rt_topo_goalonly_v1",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "evaluation_split": "validation",
+    "seed_start": 10000,
+    "episodes_per_arm": 100,
+    "eval_device": "cpu; matches the source D1 final evaluator",
+    "training_or_replay_updates": 0,
+    "reference_checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_1002\\sac_mlp_d1_st_rt_topo_goalonly_v1__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "17465d202736d4640d46459f78bc4b55cef939ab6e3aa39b9cad63a981f1c5f5",
+    "eval_checkpoint_sha_matches_reference": true,
+    "reference_sorted_traffic_template_count": 30,
+    "reference_template_paths_and_sha256": "embedded in experiment_manifest.json"
+  },
+  "arms": {
+    "frozen_control": {
+      "worker_pid": 35996,
+      "status": "running",
+      "episodes_finished_snapshot": 11,
+      "raw_records_snapshot": 3518,
+      "decision_records_snapshot": 1178,
+      "behavior_diagnostic_error_count_snapshot": 0,
+      "shadow_file_present_and_nonempty": true,
+      "stderr_python_traceback_observed": false
+    },
+    "topology_goal_off": {
+      "worker_pid": 17772,
+      "status": "running",
+      "episodes_finished_snapshot": 25,
+      "raw_records_snapshot": 3502,
+      "decision_records_snapshot": 1176,
+      "behavior_diagnostic_error_count_snapshot": 0,
+      "policy_shadow_probes": false,
+      "stderr_python_traceback_observed": false
+    },
+    "route_lane_veto": {
+      "status": "queued_by_max_parallel_2",
+      "worker_pid": null
+    }
+  },
+  "environment_snapshot": {
+    "first_control_episode_seed": 10000,
+    "first_goaloff_episode_seed": 10000,
+    "first_episode_template_both": "traffic_10.rou.xml",
+    "first_episode_source_traffic_roll_both": 20,
+    "episode_max_raw_steps": 600,
+    "source_endless_traffic": true,
+    "ego_lane_change_mode": 0,
+    "observed_ego_unknown_sumo_stderr_warning": "Vehicle 'ego' is not known (intermittent in termination/cleanup context; prior bounded smoke had no missing episode records or behavior diagnostic errors).",
+    "warning_is_not_counted_as_diagnostic_error": true
+  },
+  "source_provenance": {
+    "source_file_hash_entries_in_manifest": 10,
+    "source_content_copy_archive_present_in_run_root": true,
+    "source_paths_and_sha256_are_in_manifest": true,
+    "note": "This is a running-start snapshot; it does not claim the full evaluation is complete.",
+    "archive_timing_note": "Captured post-launch; not a launch-time source archive.",
+    "postlaunch_archive_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_causal_1002\\source_archive_postlaunch\\source_archive_manifest.json",
+    "postlaunch_archive_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3_causal_1002\\source_archive_postlaunch",
+    "postlaunch_capture_utc": "2026-10-02T08:57:19Z",
+    "launch_locked_copy_hash_match_count": "40/40"
+  },
+  "smoke_validation_receipt": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\sorted_goalonly_causal_smoke_receipt_20261002.json"
+}

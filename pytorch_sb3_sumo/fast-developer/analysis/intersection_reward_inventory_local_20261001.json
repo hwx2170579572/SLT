@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "inventory_date": "2026-10-01",
+  "scope": {
+    "workspace": "D:/Program Files (x86)/paper/Scene-Rep-Transformer-main1",
+    "source_root": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer",
+    "local_runs": 20,
+    "included": [
+      "fresh 50k depart_scale=4.0 (9 runs)",
+      "fresh 100k depart_scale=4.0 (2 runs)",
+      "50k-base + 50k-continuation (7 runs)",
+      "fresh 50k SAC depart_scale=2.5 and 3.0 (2 runs)"
+    ],
+    "excluded": "Workspace runs/ experiments were not inspected in this local-only audit.",
+    "no_training_or_evaluation": true
+  },
+  "source_assurance": {
+    "frozen_run_source_found": false,
+    "source_snapshot_or_commit_hash": "No matching source snapshot/commit hash was found in the 20 local result directories. experiment_manifest.json identifies source script for some fresh runs but does not identify an immutable source revision. The only nearby archived reward source is under analysis/scenario_revisions/darrl_r1_20260930/source and is a different DARRL r1 experiment, not evidence for these sorted runs.",
+    "consequence": "Historical arguments and monitor outputs are direct run evidence. Formula branch order and implementation details below are confirmed in the currently present source, but cannot be certified as byte-identical code for every old run."
+  },
+  "reward_versions": [
+    {
+      "version_id": "yield_v2_six_term_recorded",
+      "status": "explicit metadata in 11 fresh SAC/D1 runs; strong monitor corroboration across all 20 runs",
+      "values": {
+        "success_reward": 10.0,
+        "collision_reward": -10.0,
+        "off_route_reward": -10.0,
+        "timeout_reward": -5.0,
+        "progress_scale_per_meter": 0.02,
+        "step_cost_per_policy_decision": -0.01
+      },
+      "formula_supported_by_current_source": "r_decision = selected_terminal_reward - 0.01 + 0.02 * (ego_route_distance_now_m - ego_route_distance_previous_m). The progress delta is not clipped in the current wrapper. Progress is omitted for a decision if either distance read is unavailable. There is no lane-change reward term in the six recorded keys or current wrapper.",
+      "terminal_precedence_current_source": {
+        "current_environment_resolver": ["collision", "off_route", "success", "timeout"],
+        "wrapper_if_flags_remain_simultaneous": ["is_success", "collision", "off_route", "max_time"]
+      },
+      "terminal_precedence_limit": "The current SumoSceneEnv resolver makes terminal flags exclusive with collision first, then off-route, success, timeout; the current reward wrapper itself checks exposed flags success-first. Neither is frozen to these older sorted runs. Saved train monitors have zero success+collision, success+max_time, collision+max_time, or off-route episode overlaps in every run, so the saved completed episodes do not reveal a precedence difference.",
+      "time_units": "The coefficients apply once per environment policy-decision step. All 13 fresh-run argument files record action_repeat=3 and discount=0.99; MST values are nested under requested_raw_steps. Continuation argument files omit action_repeat and discount. The 0.02 progress term is per meter of SUMO vehicle.getDistance delta, not per raw tick or second.",
+      "timeout_protocol": "The sorted scenario protocol/current environment uses a 600 raw SUMO tick cap at 0.1 second per tick (60 seconds). Current SumoEnv exposes a SUMO max-time episode as truncation; the wrapper still adds timeout_reward when info.max_time selects that branch. Exact historical timeout and replay-bootstrap behavior is not frozen by these result files.",
+      "evaluation_return_is_separate": "Research records define final evaluation mean_return from raw undiscounted outcome info: +1 success, -1 collision, 0 timeout/off-route. It is not the training shaped return or Monitor r."
+    },
+    {
+      "version_id": "MST_reward_config_not_in_arguments",
+      "status": "two fresh MST argument files omit reward_shaping; current shared yield_v2 runner and fresh 100k monitor branches support the same six-term scheme, but old source is not frozen",
+      "runs": [
+        "mst_slt__intersection_sorted_depart4p0 (fresh 100k)",
+        "mst_slt__intersection_sorted_depart4p0__bak_50k (fresh 50k)"
+      ]
+    },
+    {
+      "version_id": "continuation_reward_not_recorded",
+      "status": "all seven continuation argument/continuation records omit reward weights, action_repeat, and discount. No monitor evidence indicates an obvious reward-scale change; exact equality of continued-stage implementation is not independently proven.",
+      "runs": [
+        "mst_slt__intersection_sorted_depart4p0__bak_50k/c100000",
+        "sac_mlp_depart4p0__intersection_sorted/c100000",
+        "sac_mlp_d1_st__intersection_sorted_depart4p0__bak_50k/c100000",
+        "sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0/c100000",
+        "sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0/c100000",
+        "sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0/c100000",
+        "sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0/c100000"
+      ]
+    }
+  ],
+  "current_source_locations": {
+    "wrapper_formula_and_precedence": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/reward_shaping_v2.py",
+      "lines": "50-68, 83-119, 121-134",
+      "notes": "Defaults are the six listed values; terminal if/elif; adds -step_cost and un-clipped distance delta; updates per-episode branch totals."
+    },
+    "shared_base_config_and_factory": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/train_intersection_yield_v2.py",
+      "lines": "58, 71-72, 158-164, 220-291, 493-531, 546-578",
+      "notes": "Current base runner uses action_repeat=3, discount=.99, one REWARD object and wraps all base methods, including MST/SAC, with the generalized wrapper. Monitor is outside the shaped environment and in the current source records reward branches."
+    },
+    "D1_delegation_and_metadata": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/train_intersection_yield_v2_d1.py",
+      "lines": "464-520, 576-585, 652",
+      "notes": "Current D1 runner delegates environment creation and reward configuration to the base runner, and records base.REWARD in arguments."
+    },
+    "current_raw_outcome_evaluation_note": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/fast-developer/train_intersection_yield_v2.py",
+      "lines": "1636-1640",
+      "notes": "Current evaluation explicitly accumulates info.undiscounted_reward as raw success/collision outcome."
+    },
+    "current_sorted_timeout_cap": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/paper_scenario_registry.py",
+      "lines": "96-104",
+      "notes": "Current intersection_sorted scenario spec has 600 raw steps; the current SUMO env describes its cap as raw 0.1-second simulator steps at envs/sumo/sumo_env.py:379."
+    }
+  },
+  "monitor_evidence": {
+    "meaning": "train_monitor.csv r is the accumulated reward returned to the training Monitor. In current runner code the Monitor wraps the reward-shaped env. Historical headers/branches vary, so old r values are corroboration rather than a frozen-source proof.",
+    "branch_sum_checks": [
+      {
+        "run": "mst_slt__intersection_sorted_depart4p0",
+        "episodes": 364,
+        "columns": ["reward_success", "reward_collision", "reward_off_route", "reward_timeout", "reward_step_cost", "reward_progress"],
+        "maximum_abs_r_minus_branch_sum": 0.0000005,
+        "mean_episode_branch_totals": {
+          "reward_success": 4.368132,
+          "reward_collision": -5.329670,
+          "reward_off_route": 0.0,
+          "reward_timeout": -0.151099,
+          "reward_step_cost": -0.916319,
+          "reward_progress": 2.412338,
+          "r": 0.383382
+        }
+      },
+      {
+        "run": "sac_mlp_d1_st__intersection_sorted_depart4p0",
+        "episodes": 546,
+        "columns": ["reward_success", "reward_collision", "reward_off_route", "reward_timeout", "reward_step_cost", "reward_progress"],
+        "maximum_abs_r_minus_branch_sum": 0.0000005,
+        "mean_episode_branch_totals": {
+          "reward_success": 3.571429,
+          "reward_collision": -6.227106,
+          "reward_off_route": 0.0,
+          "reward_timeout": -0.100733,
+          "reward_step_cost": -0.611703,
+          "reward_progress": 2.250458,
+          "r": -1.117656
+        }
+      }
+    ],
+    "current_environment_terminal_resolver": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+      "lines": "1462-1475",
+      "order": ["collision", "off_route", "success", "timeout"],
+      "note": "This is the current resolver behavior. These 20 local histories predate or lack a matching immutable source snapshot, so this order is not asserted as the historical training order."
+    },
+    "current_timeout_truncation": {
+      "path": "Scene-Rep-Transformer-main/pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+      "lines": "626-630",
+      "note": "Current SUMO max_time is truncated unless success/collision/off-route terminated the episode; wrapper reward still reads info.max_time. Historical replay treatment is not certified by the local run metadata."
+    },
+    "per_run_outcome_conditioned_monitor_r": "Each per_run entry gives [mean r on success, mean r on collision, mean r on max_time] in that run's train_monitor.csv. Values near +12, -9, and -5.6 are consistent with terminal ±10/-5 plus step and progress terms; cohort composition and episode length affect these averages.",
+    "flag_overlaps": "Across all 20 training Monitor files, zero completed episodes have success+collision, success+max_time, collision+max_time, or off_route. This does not reveal what the old reward wrapper would have done for an unobserved dual-flag transition."
+  },
+  "per_run": [
+    {"run": "mst_slt__intersection_sorted_depart4p0__bak_50k", "method": "MST+SLT", "phase": "fresh_50k", "argument_reward_config": "not_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 171, "monitor_r_by_success_collision_timeout": [12.2515, -9.1209, -5.5892], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_depart4p0__intersection_sorted", "method": "SAC+MLP", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 244, "monitor_r_by_success_collision_timeout": [12.5831, -8.8076, -5.5999], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st__intersection_sorted_depart4p0__bak_50k", "method": "D1-ST", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 237, "monitor_r_by_success_collision_timeout": [12.5662, -8.934, -5.6], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt__intersection_sorted_depart4p0", "method": "D1-ST-RT", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 201, "monitor_r_by_success_collision_timeout": [12.299, -8.9298, -5.6], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_attn__intersection_sorted_depart4p0", "method": "D1-ST-Attn", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 248, "monitor_r_by_success_collision_timeout": [12.5379, -8.8529, -5.5973], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0", "method": "RT-Late", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 256, "monitor_r_by_success_collision_timeout": [12.5738, -8.8923, -5.1241], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0", "method": "RT-Gate", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 249, "monitor_r_by_success_collision_timeout": [12.5416, -8.8765, -5.6], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0", "method": "RT-Ego", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 219, "monitor_r_by_success_collision_timeout": [12.5116, -8.9828, -5.6], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0", "method": "RT-Edge", "phase": "fresh_50k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 221, "monitor_r_by_success_collision_timeout": [12.475, -8.9361, -5.5453], "monitor_has_reward_branches": false},
+    {"run": "mst_slt__intersection_sorted_depart4p0", "method": "MST+SLT", "phase": "fresh_100k", "argument_reward_config": "not_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 364, "monitor_r_by_success_collision_timeout": [12.3057, -9.0493, -5.5902], "monitor_has_reward_branches": true},
+    {"run": "sac_mlp_d1_st__intersection_sorted_depart4p0", "method": "D1-ST", "phase": "fresh_100k", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 546, "monitor_r_by_success_collision_timeout": [12.6029, -8.8418, -5.6], "monitor_has_reward_branches": true},
+    {"run": "mst_slt__intersection_sorted_depart4p0__bak_50k/c100000", "method": "MST+SLT", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records action_repeat=3 and discount=.99; continuation file does not restate them.", "monitor_episodes": 182, "monitor_r_by_success_collision_timeout": [12.1468, -9.067, -4.9527], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_depart4p0__intersection_sorted/c100000", "method": "SAC+MLP", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records yield_v2 six terms, action_repeat=3, discount=.99; continuation file does not restate them.", "monitor_episodes": 237, "monitor_r_by_success_collision_timeout": [12.5571, -8.8497, -5.7645], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st__intersection_sorted_depart4p0__bak_50k/c100000", "method": "D1-ST", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records yield_v2 six terms, action_repeat=3, discount=.99; continuation file does not restate them.", "monitor_episodes": 220, "monitor_r_by_success_collision_timeout": [12.3663, -8.9659, -5.6479], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_late__intersection_sorted_depart4p0/c100000", "method": "RT-Late", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records yield_v2 six terms, action_repeat=3, discount=.99; continuation file does not restate them.", "monitor_episodes": 204, "monitor_r_by_success_collision_timeout": [12.3744, -8.9843, -5.5924], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_gate__intersection_sorted_depart4p0/c100000", "method": "RT-Gate", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records yield_v2 six terms, action_repeat=3, discount=.99; continuation file does not restate them.", "monitor_episodes": 187, "monitor_r_by_success_collision_timeout": [12.3379, -9.0258, -5.5936], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_ego__intersection_sorted_depart4p0/c100000", "method": "RT-Ego", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records yield_v2 six terms, action_repeat=3, discount=.99; continuation file does not restate them.", "monitor_episodes": 159, "monitor_r_by_success_collision_timeout": [12.1732, -9.2518, -5.4039], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_d1_st_rt_edge__intersection_sorted_depart4p0/c100000", "method": "RT-Edge", "phase": "continuation_50k_plus_50k", "argument_reward_config": "not_recorded_in_continuation", "action_repeat": null, "discount": null, "metadata_note": "Base run records yield_v2 six terms, action_repeat=3, discount=.99; continuation file does not restate them.", "monitor_episodes": 198, "monitor_r_by_success_collision_timeout": [12.3863, -9.0469, -5.5897], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_depart2p5__intersection_sorted", "method": "SAC+MLP", "phase": "fresh_50k_depart_scale_2.5", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 229, "monitor_r_by_success_collision_timeout": [12.5096, -8.9327, -5.6], "monitor_has_reward_branches": false},
+    {"run": "sac_mlp_depart3p0__intersection_sorted", "method": "SAC+MLP", "phase": "fresh_50k_depart_scale_3.0", "argument_reward_config": "yield_v2_six_term_recorded", "action_repeat": 3, "discount": 0.99, "monitor_episodes": 151, "monitor_r_by_success_collision_timeout": [11.7309, -9.3071, -5.6], "monitor_has_reward_branches": false}
+  ]
+}

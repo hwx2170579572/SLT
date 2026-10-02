@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "audit_created_utc": "2026-10-02T16:21:30Z",
+  "scope": "Read-only final identity, protocol, reward, and paired-outcome audit for the two completed sortct_1002 runs; no training or evaluation was launched.",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002",
+  "protocol": {
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "training_seed": 0,
+    "fresh_training": true,
+    "raw_training_budget": 100000,
+    "completed_updates": 95001,
+    "checkpoint_kind": "final_model.zip",
+    "checkpoint_frequency_raw_steps": 10000,
+    "eval_split": "validation",
+    "eval_episodes": 100,
+    "eval_seed_range": [10000, 10099],
+    "traffic_variant_count": 30,
+    "pairing_key": ["episode seed", "traffic_variant"],
+    "eval_reward_protocol": "environment_step_reward_v2",
+    "raw_return_protocol": "info_undiscounted_reward_or_step_reward_fallback_v1",
+    "eval_device": "CPU (D1 saved-checkpoint evaluator)",
+    "training_device": "CUDA",
+    "limits": [
+      "Each policy has one training seed; the 100 evaluation episodes are paired fixed-checkpoint traffic cases, not 100 independent training seeds or 100 unique traffic layouts.",
+      "All 100 seeds and traffic_variant labels match the historical STR-RT evaluation; those labels identify 30 reused sorted traffic templates.",
+      "Current training arguments match the documented historical STR-RT hyperparameters, but the old run lacks a complete source archive/runtime provenance, so byte-identical historical training code and asset hashes are not established.",
+      "Current mean_return is the shaped environment_step_reward_v2 sum. The historical STR-RT evaluation uses an older result schema with mean_return only; its 0.26 value is not directly comparable to the current shaped means."
+    ]
+  },
+  "methods": [
+    {
+      "method": "sac_mlp_d1_st_rt_routeact_v1",
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0",
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\arguments.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\training_complete.json",
+        "evaluation": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\evaluation_results.json",
+        "final_checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\final_model.zip",
+        "runtime_provenance": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\runtime_provenance.json",
+        "train_diagnostics_summary": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics_summary": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json",
+        "source_archive_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\source_archive\\manifest.json"
+      },
+      "checkpoint_sha256": "8a36cd283d13e08b0c83cd16d988147c1e1213f7e13a610731c1a8532176bebe",
+      "checkpoint_training_complete_eval_sha_match": true,
+      "training": {
+        "seed": 0,
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "smoke": false,
+        "wall_seconds": 14712.85,
+        "device": "cuda",
+        "diagnostic_error_count_train": 0,
+        "diagnostic_error_count_eval": 0
+      },
+      "configuration": {
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "gamma": 0.99,
+        "action_repeat": 3,
+        "vehicle_scale": 1.0,
+        "pedestrian_scale": 1.0,
+        "env_contract": "base",
+        "route_action_veto": true,
+        "reward_coefficients": {
+          "success": 10.0,
+          "collision": -10.0,
+          "off_route": -10.0,
+          "timeout": -5.0,
+          "progress_per_meter": 0.02,
+          "step_cost_per_decision": -0.01
+        }
+      },
+      "evaluation": {
+        "episodes": 100,
+        "unique_seeds": 100,
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "traffic_variant_count": 30,
+        "outcomes": {"success": 47, "collision": 53, "timeout": 0, "off_route": 0},
+        "rates": {"success": 0.47, "collision": 0.53, "timeout": 0.0, "off_route": 0.0},
+        "mean_episode_return_shaped": 0.7276308362573388,
+        "std_episode_return_shaped_population": 10.777894816445116,
+        "mean_raw_episode_return": -0.06,
+        "std_raw_episode_return_population": 0.9981983770774223,
+        "mean_raw_steps_all_episodes": 325.11,
+        "mean_decision_steps_all_episodes": 108.67,
+        "mean_simulation_seconds_all_episodes": 32.511,
+        "mean_success_raw_steps": 344.702127659574,
+        "mean_success_simulation_seconds": 34.4702127659574,
+        "reward_component_means": {
+          "reward_success": 4.7,
+          "reward_collision": -5.3,
+          "reward_off_route": 0.0,
+          "reward_timeout": 0.0,
+          "reward_step_cost": -1.0867000000000007,
+          "reward_progress": 2.4143308362573386
+        },
+        "reward_component_coverage": 100,
+        "reward_component_reconciliation_max_abs_error": 3.552713678800501e-15,
+        "return_protocol": "environment_step_reward_v2",
+        "raw_return_protocol": "info_undiscounted_reward_or_step_reward_fallback_v1"
+      },
+      "runtime_source_hashes": {
+        "train_intersection_yield_v2_d1.py": "2ddea0324e67be29ee431a1e8fa2f913f7707cc05d9b720646edf52e4963ab07",
+        "train_intersection_yield_v2.py": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e",
+        "incremental_topo_encoder.py": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9",
+        "route_action_consistency.py": "86dbb4c5b17779acf63b62984e812d042bba4a13734e1742c00c356102b47258",
+        "behavior_diagnostics.py": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b"
+      }
+    },
+    {
+      "method": "sac_mlp_d1_st_rt_conflicttime_v1",
+      "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0",
+      "source_files": {
+        "arguments": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\arguments.json",
+        "training_complete": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\training_complete.json",
+        "evaluation": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\evaluation_results.json",
+        "final_checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\final_model.zip",
+        "runtime_provenance": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\runtime_provenance.json",
+        "train_diagnostics_summary": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "eval_diagnostics_summary": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_conflicttime_v1__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json",
+        "source_archive_manifest": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\source_archive\\manifest.json"
+      },
+      "checkpoint_sha256": "58ce993f4cbf1068c46a0bc52d463d2a7b028a8afb7d1b128cf6c2c7e84da9a5",
+      "checkpoint_training_complete_eval_sha_match": true,
+      "training": {
+        "seed": 0,
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "smoke": false,
+        "wall_seconds": 15302.0,
+        "device": "cuda",
+        "diagnostic_error_count_train": 0,
+        "diagnostic_error_count_eval": 0
+      },
+      "configuration": {
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "gamma": 0.99,
+        "action_repeat": 3,
+        "vehicle_scale": 1.0,
+        "pedestrian_scale": 1.0,
+        "env_contract": "base",
+        "route_conflict_timing": true,
+        "reward_coefficients": {
+          "success": 10.0,
+          "collision": -10.0,
+          "off_route": -10.0,
+          "timeout": -5.0,
+          "progress_per_meter": 0.02,
+          "step_cost_per_decision": -0.01
+        }
+      },
+      "evaluation": {
+        "episodes": 100,
+        "unique_seeds": 100,
+        "seed_min": 10000,
+        "seed_max": 10099,
+        "traffic_variant_count": 30,
+        "outcomes": {"success": 40, "collision": 57, "timeout": 3, "off_route": 0},
+        "rates": {"success": 0.4, "collision": 0.57, "timeout": 0.03, "off_route": 0.0},
+        "mean_episode_return_shaped": -0.6353530520886184,
+        "std_episode_return_shaped_population": 10.509595934944725,
+        "mean_raw_episode_return": -0.17,
+        "std_raw_episode_return_population": 0.970103087305674,
+        "mean_raw_steps_all_episodes": 322.89,
+        "mean_decision_steps_all_episodes": 107.96,
+        "mean_simulation_seconds_all_episodes": 32.289,
+        "mean_success_raw_steps": 331.775,
+        "mean_success_simulation_seconds": 33.1775,
+        "reward_component_means": {
+          "reward_success": 4.0,
+          "reward_collision": -5.7,
+          "reward_off_route": 0.0,
+          "reward_timeout": -0.15,
+          "reward_step_cost": -1.0796000000000008,
+          "reward_progress": 2.2942469479113816
+        },
+        "reward_component_coverage": 100,
+        "reward_component_reconciliation_max_abs_error": 3.552713678800501e-15,
+        "return_protocol": "environment_step_reward_v2",
+        "raw_return_protocol": "info_undiscounted_reward_or_step_reward_fallback_v1"
+      },
+      "runtime_source_hashes": {
+        "train_intersection_yield_v2_d1.py": "2ddea0324e67be29ee431a1e8fa2f913f7707cc05d9b720646edf52e4963ab07",
+        "train_intersection_yield_v2.py": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e",
+        "incremental_topo_encoder.py": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9",
+        "behavior_diagnostics.py": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b",
+        "route_conflict_timing_action.py": "9d1069b2c624a7c10ef62589734823c9dec14ebcc0596cfdf4fd6182f7e2d725",
+        "route_conflict_timing.py": "e87d431a67ca23e651a89d6576aedaf8f3089f658a48a04a4cd06173f30c1913",
+        "route_lane_reachability.py": "45f2f18f150cd8bf4c8a7b86817f9fbafbb101734536b2cfb042998d37bdec93"
+      }
+    }
+  ],
+  "historical_control": {
+    "method": "sac_mlp_d1_st_rt",
+    "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0",
+    "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+    "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+    "training": {"seed": 0, "raw_steps": 100000, "updates": 95001, "fresh": true},
+    "evaluation": {
+      "episodes": 100,
+      "seed_min": 10000,
+      "seed_max": 10099,
+      "traffic_variant_count": 30,
+      "outcomes": {"success": 63, "collision": 37, "timeout": 0, "off_route": 0},
+      "legacy_mean_return": 0.26,
+      "legacy_return_protocol": "not explicitly versioned in the archived result; do not compare directly to environment_step_reward_v2"
+    },
+    "source_archive_limit": "Historical run has no complete source_archive/runtime_provenance to establish byte-identical training implementation or exact historical traffic asset hashes."
+  },
+  "paired_outcomes_old_str_rt_row_to_new_method_column": {
+    "key_verified": ["seed", "traffic_variant"],
+    "routeact": {
+      "paired_episodes": 100,
+      "traffic_variant_mismatches": 0,
+      "matrix": {
+        "old_success": {"new_success": 32, "new_collision": 31, "new_timeout": 0, "new_off_route": 0},
+        "old_collision": {"new_success": 15, "new_collision": 22, "new_timeout": 0, "new_off_route": 0},
+        "old_timeout": {"new_success": 0, "new_collision": 0, "new_timeout": 0, "new_off_route": 0},
+        "old_off_route": {"new_success": 0, "new_collision": 0, "new_timeout": 0, "new_off_route": 0}
+      }
+    },
+    "conflicttime": {
+      "paired_episodes": 100,
+      "traffic_variant_mismatches": 0,
+      "matrix": {
+        "old_success": {"new_success": 28, "new_collision": 33, "new_timeout": 2, "new_off_route": 0},
+        "old_collision": {"new_success": 12, "new_collision": 24, "new_timeout": 1, "new_off_route": 0},
+        "old_timeout": {"new_success": 0, "new_collision": 0, "new_timeout": 0, "new_off_route": 0},
+        "old_off_route": {"new_success": 0, "new_collision": 0, "new_timeout": 0, "new_off_route": 0}
+      }
+    },
+    "interpretation_limit": "Paired fixed-checkpoint evaluation on matched seeds/templates; single training seed per method. Do not interpret 100 episode pairs as multi-seed robustness or independent traffic-layout sampling."
+  },
+  "duration_semantics": {
+    "source": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\evaluation.py:305-394",
+    "definition": "completion_time_seconds is raw_steps * sumo_step_seconds (0.1 s), and is null for unsuccessful episodes; it is SUMO simulation time for successful episodes, not wall-clock evaluator runtime.",
+    "routeact_mean_raw_steps_all": 325.11,
+    "routeact_mean_sim_seconds_all": 32.511,
+    "routeact_mean_success_sim_seconds": 34.4702127659574,
+    "conflicttime_mean_raw_steps_all": 322.89,
+    "conflicttime_mean_sim_seconds_all": 32.289,
+    "conflicttime_mean_success_sim_seconds": 33.1775,
+    "derived_all_episode_success_time_with_failures_zeroed": {
+      "routeact_seconds": 16.201,
+      "conflicttime_seconds": 13.271,
+      "derivation": "mean_success_simulation_seconds * success_count / 100; unsuccessful episodes have null completion_time_seconds in source records, so zero-filling them produces these values. These are not wall-clock times and are not the conditional successful-episode means."
+    }
+  }
+}

@@ -226,3 +226,65 @@ class BestTrainingSuccessCallback(BaseCallback):
         self.output_path.with_name("best_training_success.json").write_text(
             json.dumps(metadata, indent=2), encoding="utf-8"
         )
+
+
+class RewardBranchProgressCallback(BaseCallback):
+    """Aggregate reward-shaping branches per episode and log a rolling mean.
+
+    Requires the reward wrapper to write episode-cumulative branches into
+    ``info`` (``reward_success`` / ``reward_collision`` / ``reward_off_route`` /
+    ``reward_timeout`` / ``reward_step_cost`` / ``reward_progress``).  Prints a
+    rolling mean every ``print_every`` completed episodes and writes the same
+    snapshot to a JSON file, so the reward decomposition is visible during
+    training and recoverable afterwards.
+    """
+
+    REWARD_KEYS = (
+        "reward_success",
+        "reward_collision",
+        "reward_off_route",
+        "reward_timeout",
+        "reward_step_cost",
+        "reward_progress",
+    )
+
+    def __init__(
+        self,
+        output_path: str | Path,
+        print_every: int = 10,
+        verbose: int = 0,
+    ) -> None:
+        super().__init__(verbose=verbose)
+        self.output_path = Path(output_path)
+        self.print_every = int(print_every)
+        self._totals = {key: 0.0 for key in self.REWARD_KEYS}
+        self._episodes = 0
+
+    def _on_step(self) -> bool:
+        infos = self.locals.get("infos", [])
+        dones = self.locals.get("dones", [])
+        for done, info in zip(dones, infos):
+            if not bool(done):
+                continue
+            self._episodes += 1
+            for key in self.REWARD_KEYS:
+                self._totals[key] += float(info.get(key, 0.0))
+            if self._episodes % self.print_every == 0:
+                self._snapshot()
+        return True
+
+    def _snapshot(self) -> None:
+        means = {key: self._totals[key] / self._episodes for key in self.REWARD_KEYS}
+        self.output_path.parent.mkdir(parents=True, exist_ok=True)
+        self.output_path.write_text(
+            json.dumps(
+                {"episodes": self._episodes, "mean_branches": means},
+                indent=2,
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+        rendered = " ".join(
+            f"{key}={value:+.3f}" for key, value in means.items()
+        )
+        print(f"[reward-branches] episodes={self._episodes} {rendered}", flush=True)

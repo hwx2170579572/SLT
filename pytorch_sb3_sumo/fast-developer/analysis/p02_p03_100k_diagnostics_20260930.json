@@ -1,0 +1,624 @@
+{
+  "artifact": "offline_audit_summary",
+  "created_utc_date": "2026-09-30",
+  "workspace": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930",
+  "methods": {
+    "p02": {
+      "scenario": "intersection_random_medium_p02_v1",
+      "scenario_probability_per_lane_per_0p1s_step": 0.2,
+      "training": {
+        "method": "sac_mlp",
+        "status": "trained",
+        "fresh": true,
+        "resume": false,
+        "smoke": false,
+        "seed": 0,
+        "device": "cuda",
+        "raw_budget": 100000,
+        "completed_raw_steps": 100000,
+        "updates": 95001,
+        "wall_seconds": 7102.2,
+        "action_repeat": 3,
+        "learning_starts_raw": 5000,
+        "checkpoint_frequency_raw": 10000,
+        "batch_size": 32,
+        "buffer_size": 20000,
+        "learning_rate": 0.0001,
+        "gamma": 0.99,
+        "entropy_coefficient": "auto_0.2"
+      },
+      "evaluation": {
+        "checkpoint": "final_model.zip",
+        "episodes": 100,
+        "deterministic": true,
+        "split": "validation",
+        "logical_seeds": {
+          "min": 10000,
+          "max": 10099,
+          "unique_count": 100
+        },
+        "actual_sumo_seeds": {
+          "min": 1000010000,
+          "max": 1000010099,
+          "unique_count": 100
+        },
+        "outcomes": {
+          "success": 5,
+          "collision": 25,
+          "timeout": 70,
+          "offroute": 0
+        },
+        "terminal_return_mean": -0.2,
+        "mean_decisions": 178.18,
+        "mean_raw_steps": 534.28,
+        "mean_success_seconds": 44.28,
+        "final_model_sha256": "031bb4bd5330f38a9cd4c764269779fab76c201fb6fa16a2f6ce4cc6cc9c5a83"
+      },
+      "diagnostic_error_count": 0
+    },
+    "p03": {
+      "scenario": "intersection_random_medium_p03_v1",
+      "scenario_probability_per_lane_per_0p1s_step": 0.3,
+      "training": {
+        "method": "sac_mlp",
+        "status": "trained",
+        "fresh": true,
+        "resume": false,
+        "smoke": false,
+        "seed": 0,
+        "device": "cuda",
+        "raw_budget": 100000,
+        "completed_raw_steps": 100000,
+        "updates": 95001,
+        "wall_seconds": 7314.5,
+        "action_repeat": 3,
+        "learning_starts_raw": 5000,
+        "checkpoint_frequency_raw": 10000,
+        "batch_size": 32,
+        "buffer_size": 20000,
+        "learning_rate": 0.0001,
+        "gamma": 0.99,
+        "entropy_coefficient": "auto_0.2"
+      },
+      "evaluation": {
+        "checkpoint": "final_model.zip",
+        "episodes": 100,
+        "deterministic": true,
+        "split": "validation",
+        "logical_seeds": {
+          "min": 10000,
+          "max": 10099,
+          "unique_count": 100
+        },
+        "actual_sumo_seeds": {
+          "min": 1000010000,
+          "max": 1000010099,
+          "unique_count": 100
+        },
+        "outcomes": {
+          "success": 17,
+          "collision": 83,
+          "timeout": 0,
+          "offroute": 0
+        },
+        "terminal_return_mean": -0.66,
+        "mean_decisions": 38.07,
+        "mean_raw_steps": 113.12,
+        "mean_success_seconds": 18.7118,
+        "final_model_sha256": "8057eb34e5abcad679a230a4d38e326867fecde646268023563aa2420e65a114"
+      },
+      "diagnostic_error_count": 0
+    }
+  },
+  "paired_evaluation": {
+    "seed_match": "exact logical and actual SUMO seed matches, 100 pairs",
+    "matrix_direction": "rows=p02 outcome [success,collision,timeout], columns=p03 outcome [success,collision,timeout]",
+    "outcomes_order": [
+      "success",
+      "collision",
+      "timeout"
+    ],
+    "transition_matrix": [
+      [
+        1,
+        4,
+        0
+      ],
+      [
+        3,
+        22,
+        0
+      ],
+      [
+        13,
+        57,
+        0
+      ]
+    ],
+    "p02_marginal": [
+      5,
+      25,
+      70
+    ],
+    "p03_marginal": [
+      17,
+      83,
+      0
+    ],
+    "success_discordance": {
+      "p03_only_success": 16,
+      "p02_only_success": 4,
+      "common_success": 1,
+      "exact_two_sided_mcnemar_p": 0.01181793212890625
+    },
+    "interpretation": "Conditional comparison of these two fixed seed-0 policies on matched evaluation seeds. The p-value is not evidence across training seeds."
+  },
+  "train_diagnostics": {
+    "aggregation_note": "Episodes assigned to 20k raw-step bins by cumulative episode-end raw step; the final ongoing episode is listed separately as incomplete and is not counted as timeout. Bin episode counts are not exact per-transition slices.",
+    "completed_episode_totals": {
+      "p02": {
+        "episodes": 487,
+        "success": 74,
+        "collision": 398,
+        "timeout": 15
+      },
+      "p03": {
+        "episodes": 605,
+        "success": 99,
+        "collision": 495,
+        "timeout": 11
+      }
+    },
+    "bins_20k": {
+      "p02": [
+        {
+          "raw_bin": "0-20k",
+          "episodes": 73,
+          "success": 4,
+          "collision": 65,
+          "timeout": 4,
+          "mean_speed_mps": 3.169,
+          "stopped_fraction": 0.352,
+          "low_ttc_lt3s_fraction": 0.098
+        },
+        {
+          "raw_bin": "20-40k",
+          "episodes": 60,
+          "success": 3,
+          "collision": 48,
+          "timeout": 9,
+          "mean_speed_mps": 2.617,
+          "stopped_fraction": 0.432,
+          "low_ttc_lt3s_fraction": 0.072
+        },
+        {
+          "raw_bin": "40-60k",
+          "episodes": 108,
+          "success": 13,
+          "collision": 93,
+          "timeout": 2,
+          "mean_speed_mps": 5.082,
+          "stopped_fraction": 0.011,
+          "low_ttc_lt3s_fraction": 0.146
+        },
+        {
+          "raw_bin": "60-80k",
+          "episodes": 123,
+          "success": 31,
+          "collision": 92,
+          "timeout": 0,
+          "mean_speed_mps": 6.479,
+          "stopped_fraction": 0.006,
+          "low_ttc_lt3s_fraction": 0.16
+        },
+        {
+          "raw_bin": "80-100k",
+          "episodes": 124,
+          "success": 23,
+          "collision": 100,
+          "timeout": 0,
+          "incomplete_episodes": 1,
+          "mean_speed_mps": 6.08,
+          "stopped_fraction": 0.068,
+          "low_ttc_lt3s_fraction": 0.151
+        }
+      ],
+      "p03": [
+        {
+          "raw_bin": "0-20k",
+          "episodes": 68,
+          "success": 1,
+          "collision": 61,
+          "timeout": 6,
+          "mean_speed_mps": 2.825,
+          "stopped_fraction": 0.353,
+          "low_ttc_lt3s_fraction": 0.097
+        },
+        {
+          "raw_bin": "20-40k",
+          "episodes": 123,
+          "success": 20,
+          "collision": 99,
+          "timeout": 4,
+          "mean_speed_mps": 5.814,
+          "stopped_fraction": 0.225,
+          "low_ttc_lt3s_fraction": 0.157
+        },
+        {
+          "raw_bin": "40-60k",
+          "episodes": 156,
+          "success": 33,
+          "collision": 123,
+          "timeout": 0,
+          "mean_speed_mps": 7.944,
+          "stopped_fraction": 0.007,
+          "low_ttc_lt3s_fraction": 0.208
+        },
+        {
+          "raw_bin": "60-80k",
+          "episodes": 110,
+          "success": 26,
+          "collision": 83,
+          "timeout": 1,
+          "mean_speed_mps": 5.648,
+          "stopped_fraction": 0.062,
+          "low_ttc_lt3s_fraction": 0.144
+        },
+        {
+          "raw_bin": "80-100k",
+          "episodes": 149,
+          "success": 19,
+          "collision": 129,
+          "timeout": 0,
+          "incomplete_episodes": 1,
+          "mean_speed_mps": 7.033,
+          "stopped_fraction": 0.008,
+          "low_ttc_lt3s_fraction": 0.196
+        }
+      ]
+    },
+    "final_window_training_outcomes": {
+      "last20": {
+        "p02": {
+          "success": 6,
+          "collision": 14,
+          "stopped_fraction": 0.045
+        },
+        "p03": {
+          "success": 5,
+          "collision": 15,
+          "stopped_fraction": 0
+        }
+      },
+      "last50": {
+        "p02": {
+          "success": 10,
+          "collision": 40,
+          "stopped_fraction": 0.02
+        },
+        "p03": {
+          "success": 9,
+          "collision": 41,
+          "stopped_fraction": 0
+        }
+      },
+      "last100": {
+        "p02": {
+          "success": 16,
+          "collision": 84,
+          "stopped_fraction": 0.065
+        },
+        "p03": {
+          "success": 14,
+          "collision": 86,
+          "stopped_fraction": 0.004
+        }
+      }
+    },
+    "best_training_windows": {
+      "p02": {
+        "rolling_window_episodes": 20,
+        "success_fraction": 0.5,
+        "cumulative_raw_step": 80468,
+        "completed_episodes": 367
+      },
+      "p03": {
+        "rolling_window_episodes": 20,
+        "success_fraction": 0.6,
+        "cumulative_raw_step": 64682,
+        "completed_episodes": 374
+      },
+      "caveat": "These are training rollouts, not separately evaluated best checkpoints; primary comparisons use final_model.zip."
+    },
+    "final_optimization_snapshot": {
+      "metric_semantics": "Latest available logger values at callback; metrics need not be from the same update.",
+      "p02": {
+        "raw_steps": 100000,
+        "updates": 95001,
+        "entropy_coefficient": 0.008815,
+        "actor_loss": 3.519,
+        "critic_loss": 8.974,
+        "q1_mean": -4.578,
+        "q2_mean": -4.537,
+        "target_q_mean": -4.295,
+        "q1_abs_td_mean": 1.221,
+        "q2_abs_td_mean": 1.176,
+        "rollout_success_last20": 0.3
+      },
+      "p03": {
+        "raw_steps": 100000,
+        "updates": 95001,
+        "entropy_coefficient": 0.009277,
+        "actor_loss": 3.724,
+        "critic_loss": 7.322,
+        "q1_mean": -3.875,
+        "q2_mean": -3.906,
+        "target_q_mean": -3.754,
+        "q1_abs_td_mean": 0.621,
+        "q2_abs_td_mean": 0.587,
+        "rollout_success_last20": 0.25
+      }
+    }
+  },
+  "final_eval_behavior_by_outcome": {
+    "definitions": "Fractions are based on the diagnostic summary's stated valid denominators. Low TTC is CV-OBB TTC <3s. `return_policy` is shaped reward; evaluation terminal_return_mean above is base terminal outcome reward.",
+    "p02": {
+      "success_n5": {
+        "mean_raw_steps": 442.8,
+        "mean_speed_mps": 3.78,
+        "stopped_fraction": 0.445,
+        "low_ttc_fraction": 0.065,
+        "critical_unobserved_fraction": 0.043,
+        "mean_action": [
+          0.255,
+          -0.312
+        ],
+        "mean_shaped_return_policy": 11.827
+      },
+      "collision_n25": {
+        "mean_raw_steps": 368.6,
+        "mean_speed_mps": 2.26,
+        "stopped_fraction": 0.572,
+        "low_ttc_fraction": 0.058,
+        "critical_unobserved_fraction": 0.03,
+        "mean_action": [
+          0.073,
+          -0.648
+        ],
+        "mean_shaped_return_policy": -9.574
+      },
+      "timeout_n70": {
+        "mean_raw_steps": 600,
+        "mean_speed_mps": 1.17,
+        "stopped_fraction": 0.761,
+        "low_ttc_fraction": 0.012,
+        "critical_unobserved_fraction": 0.004,
+        "mean_action": [
+          0.0296,
+          -0.6999
+        ],
+        "mean_target_speed_mps": 5.15,
+        "mean_shaped_return_policy": -5.598
+      }
+    },
+    "p03": {
+      "success_n17": {
+        "mean_raw_steps": 187.1,
+        "mean_speed_mps": 8.97,
+        "stopped_fraction": 0,
+        "low_ttc_fraction": 0.152,
+        "critical_unobserved_fraction": 0.111,
+        "mean_action": [
+          0.796,
+          0.938
+        ],
+        "near_unit_bound_fraction": [
+          0.035,
+          0.502
+        ],
+        "mean_shaped_return_policy": 12.686
+      },
+      "collision_n83": {
+        "mean_raw_steps": 98,
+        "mean_speed_mps": 8.46,
+        "stopped_fraction": 0,
+        "low_ttc_fraction": 0.28,
+        "critical_unobserved_fraction": 0.183,
+        "mean_action": [
+          0.694,
+          0.907
+        ],
+        "near_unit_bound_fraction": [
+          0.019,
+          0.059
+        ],
+        "mean_shaped_return_policy": -8.682
+      }
+    },
+    "action_semantics": "Source mapping: a0 to target m/s=(a0+1)*5; a1 thresholds to lane command -1/0/+1. Final evaluation is deterministic.",
+    "train_eval_mismatch_note": "Training rollouts are sampled-policy behavior and use train traffic split; final evaluation is deterministic on validation split. p02 last20 training a0 mean 0.396 (~6.98m/s target), while timeout final-eval mean target is 5.15m/s. This is a possible sampled-vs-deterministic and/or split mismatch signal, not isolated evidence of its cause."
+  },
+  "p02_timeout_lane_evidence": {
+    "episodes": 70,
+    "route_edges": [
+      "-E1",
+      "-E0"
+    ],
+    "route_index": 0,
+    "terminal_road_counts": {
+      "-E1": 69,
+      ":J1_14": 1
+    },
+    "terminal_lane_counts_on_E1": {
+      "-E1_0": 56,
+      "-E1_1": 13
+    },
+    "terminal_lane_position_m": {
+      "mean": 69.06,
+      "min": 3.85,
+      "max": 70
+    },
+    "route_distance_m_mean": 70.06,
+    "terminal_actual_speed_mps_mean": 0.142,
+    "terminal_target_speed_mps_mean": 5.489,
+    "decisions_last_10_per_timeout": {
+      "count": 700,
+      "lane_command_counts": {
+        "0": 82,
+        "-1": 579,
+        "+1": 39
+      },
+      "nonzero_requests": 618,
+      "applied": 105,
+      "applied_fraction_of_nonzero": 0.17,
+      "mean_target_speed_mps": 5.21
+    },
+    "scenario_net_evidence": {
+      "file": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_medium_p02_v1\\map.net.xml",
+      "finding": "The route requires -E1 -> -E0. The only such connection has fromLane=2, toLane=1, via=:J1_14_0; no outgoing connection from -E1 lane0 or lane1 to the route's next edge.",
+      "interpretation": "69/70 timeouts end on lanes without the route's required next-edge connection. This supports a route-incompatible lane/end-of-road timeout pattern, but is not a controlled causal test."
+    }
+  },
+  "warmup_traffic_snapshots_eval": {
+    "note": "Per evaluation episode, 30/40/50s snapshots; requested_due = inserted + pending. `vehicles_in_network` is distinct from pending insertion requests; halting fraction was zero for all reported snapshot groups.",
+    "p02": {
+      "t30": {
+        "requested_due": 181.14,
+        "inserted": 50.15,
+        "pending": 130.99,
+        "vehicles_in_network": 29.12,
+        "halting_fraction": 0
+      },
+      "t40": {
+        "requested_due": 240.35,
+        "inserted": 65.25,
+        "pending": 175.1,
+        "vehicles_in_network": 29.24,
+        "halting_fraction": 0
+      },
+      "t50": {
+        "requested_due": 300.28,
+        "inserted": 80.36,
+        "pending": 219.92,
+        "vehicles_in_network": 29.39,
+        "halting_fraction": 0
+      }
+    },
+    "p03": {
+      "t30": {
+        "requested_due": 270.14,
+        "inserted": 50.64,
+        "pending": 219.5,
+        "vehicles_in_network": 29.36,
+        "halting_fraction": 0
+      },
+      "t40": {
+        "requested_due": 359.9,
+        "inserted": 65.65,
+        "pending": 294.25,
+        "vehicles_in_network": 29.24,
+        "halting_fraction": 0
+      },
+      "t50": {
+        "requested_due": 449.2,
+        "inserted": 80.71,
+        "pending": 368.49,
+        "vehicles_in_network": 29.25,
+        "halting_fraction": 0
+      }
+    },
+    "interpretation": "p03 has 1.5x requested demand, but actual inserted and in-network counts are similar to p02; the additional requests are mostly pending, not evidence of 1.5x on-road density or stopped on-road queue."
+  },
+  "reward_and_saved_algorithm_fields": {
+    "reward_shaping": {
+      "success": 10,
+      "collision": -10,
+      "off_route": -10,
+      "timeout": -5,
+      "progress_coef": 0.02,
+      "step_cost": 0.01
+    },
+    "reward_wrapper_semantics": "reward_shaping_v2 calls base step but returns its reconstructed shaped reward; it does not add the base reward to the shaped reward. evaluation_results terminal_return_mean reports terminal outcome reward separately from diagnostics return_policy.",
+    "saved_model_fields": {
+      "gamma": 0.99,
+      "n_steps": 4,
+      "learning_rate": 0.0001,
+      "batch_size": 32,
+      "buffer_size": 20000,
+      "ent_coef": "auto_0.2"
+    },
+    "unknown": "The saved ZIP args establish n_steps=4 and gamma=.99 but do not establish whether target discount is applied as gamma or gamma**4; this needs source confirmation."
+  },
+  "limits": [
+    "One training seed per scenario (seed 0); episode-level intervals/tests are conditional on the two trained policies, not training-seed stability.",
+    "Scenarios differ in demand probability and resulting insertion pressure; outcome difference is not a pure causal estimate of a single isolated mechanism.",
+    "The paired McNemar result treats matched episodes as the paired units; repeated episodes draw from the same scenario generator family and do not create additional training seeds.",
+    "No new simulation, replay, intervention, or stochastic-policy evaluation was run for this audit.",
+    "The p02 timeout lane evidence is observational; lane-selection causality and any intervention remain untested."
+  ],
+  "sources": {
+    "p02_run": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p02_v1_depart1p0",
+    "p03_run": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_p03p02_0930\\sac_mlp__intersection_random_medium_p03_v1_depart1p0",
+    "p02_files": [
+      "arguments.json",
+      "status.json",
+      "training_complete.json",
+      "evaluation_results.json",
+      "experiment_manifest.json",
+      "best_training_success.json",
+      "diagnostics/train/summary.json",
+      "diagnostics/train/optimization.jsonl",
+      "diagnostics/eval_worker_00/summary.json",
+      "diagnostics/eval_worker_00/episodes.jsonl",
+      "diagnostics/eval_worker_00/decisions.jsonl.gz"
+    ],
+    "p03_files": [
+      "arguments.json",
+      "status.json",
+      "training_complete.json",
+      "evaluation_results.json",
+      "experiment_manifest.json",
+      "best_training_success.json",
+      "diagnostics/train/summary.json",
+      "diagnostics/train/optimization.jsonl",
+      "diagnostics/eval_worker_00/summary.json",
+      "diagnostics/eval_worker_00/episodes.jsonl",
+      "diagnostics/eval_worker_00/decisions.jsonl.gz"
+    ],
+    "source_code": [
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\reward_shaping_v2.py",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\sumo_env.py",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_random_medium_p02_v1\\map.net.xml"
+    ],
+    "known_line_refs": {
+      "reward_shaping_v2_py": "79-119",
+      "train_intersection_yield_v2_d1_py": "668",
+      "sumo_env_action_map": "1004-1015",
+      "sumo_env_lane_map": "1122-1126"
+    }
+  },
+  "evaluation_reward_comparison": {
+    "metric_note": "mean_return_base_terminal is the raw terminal outcome metric from evaluation_results.json; mean_return_policy_shaped is the episode sum accumulated by the reward wrapper in eval diagnostics. The latter is not the SAC discounted/entropy-augmented optimization objective.",
+    "p02": {
+      "episodes": 100,
+      "mean_return_base_terminal": -0.2,
+      "mean_return_policy_shaped": -5.720742,
+      "mean_return_policy_shaped_by_outcome": {
+        "success": 11.827352,
+        "collision": -9.573909,
+        "timeout": -5.598046
+      }
+    },
+    "p03": {
+      "episodes": 100,
+      "mean_return_base_terminal": -0.66,
+      "mean_return_policy_shaped": -5.049319,
+      "mean_return_policy_shaped_by_outcome": {
+        "success": 12.685595,
+        "collision": -8.681772
+      }
+    }
+  }
+}

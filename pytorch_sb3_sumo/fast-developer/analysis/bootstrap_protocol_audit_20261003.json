@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "audit_id": "bootstrap_protocol_audit_20261003",
+  "probe_scope": "CPU replay buffers with synthetic transitions only; no env/model/optimizer/training/evaluation/SUMO/GPU",
+  "runtime": {
+    "python_package": "stable_baselines3",
+    "stable_baselines3_version": "2.7.1",
+    "gamma": 0.99,
+    "n_steps": 4,
+    "action_repeat_raw_ticks_per_decision": 3
+  },
+  "current_protocol": {
+    "decision_transition_reward": "R_k = sum_{i=0}^{k-1} gamma^i * r_i, where k is the actual decision-transition count up to n_steps or first boundary",
+    "bootstrap_target": "Y = R_k + (1 - done_mask) * gamma * (min(Q1_target,Q2_target) - alpha * log_pi(a_next|s_next))",
+    "discount_for_bootstrap": "always gamma, not gamma**k",
+    "true_terminal": "done_mask=1; no bootstrap",
+    "timeout_truncation": "boundary ends reward accumulation; timeout flag is removed from final done mask, so bootstrap continues from that boundary's next_observation",
+    "short_tail": "actual k determines accumulated reward and next_observation, but bootstrap multiplier remains gamma",
+    "one_step_control": "standard DictReplayBuffer sample provides no transition-specific discount value (discounts=None); SAC falls back to gamma",
+    "entropy": "one endpoint soft-value adjustment -alpha*log_pi is applied to target next Q; no intermediate entropy reward is inserted into n-step replay return",
+    "off_policy_correction": "no intermediate importance/trace correction is applied to the replayed n-step sequence",
+    "released_intent_evidence": "local replay_buffer.py comment explicitly says this one-gamma bootstrap preserves the released SAC implementation; this confirms project intent, not independent provenance of the upstream source"
+  },
+  "standard_comparison": {
+    "standard_k_step_bootstrap": "gamma**k for a k-transition return, including shortened tails; terminal mask still removes bootstrap",
+    "full_4_step_gamma_power_4": 0.96059601,
+    "current_full_4_step_bootstrap": 0.99,
+    "one_step_equal": true
+  },
+  "synthetic_probe": {
+    "rewards_for_full_cases": [
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ],
+    "full_nonterminal_4step": {
+      "n_decision_transitions": 4,
+      "boundary": null,
+      "raw_steps_executed_on_final_transition": 3,
+      "rewards": 9.801496505737305,
+      "next_observation_state": 4.0,
+      "bootstrap_discount": 0.9900000095367432,
+      "done_mask": 0.0,
+      "stored_timeout_flag": 0.0,
+      "buffer_sampleable_size": 1
+    },
+    "timeout_on_fourth": {
+      "n_decision_transitions": 4,
+      "boundary": "timeout",
+      "raw_steps_executed_on_final_transition": 1,
+      "rewards": 9.801496505737305,
+      "next_observation_state": 4.0,
+      "bootstrap_discount": 0.9900000095367432,
+      "done_mask": 0.0,
+      "stored_timeout_flag": 1.0,
+      "buffer_sampleable_size": 4
+    },
+    "true_terminal_on_fourth": {
+      "n_decision_transitions": 4,
+      "boundary": "terminal",
+      "raw_steps_executed_on_final_transition": 1,
+      "rewards": 9.801496505737305,
+      "next_observation_state": 4.0,
+      "bootstrap_discount": 0.9900000095367432,
+      "done_mask": 1.0,
+      "stored_timeout_flag": 0.0,
+      "buffer_sampleable_size": 4
+    },
+    "shortened_k_1_to_3_terminal_and_timeout": [
+      {
+        "n_decision_transitions": 1,
+        "boundary": "timeout",
+        "raw_steps_executed_on_final_transition": 1,
+        "rewards": 1.0,
+        "next_observation_state": 1.0,
+        "bootstrap_discount": 0.9900000095367432,
+        "done_mask": 0.0,
+        "stored_timeout_flag": 1.0,
+        "buffer_sampleable_size": 1,
+        "standard_k_step_discount": 0.99,
+        "current_bootstrap_discount": 0.99
+      },
+      {
+        "n_decision_transitions": 1,
+        "boundary": "terminal",
+        "raw_steps_executed_on_final_transition": 1,
+        "rewards": 1.0,
+        "next_observation_state": 1.0,
+        "bootstrap_discount": 0.9900000095367432,
+        "done_mask": 1.0,
+        "stored_timeout_flag": 0.0,
+        "buffer_sampleable_size": 1,
+        "standard_k_step_discount": 0.99,
+        "current_bootstrap_discount": 0.99
+      },
+      {
+        "n_decision_transitions": 2,
+        "boundary": "timeout",
+        "raw_steps_executed_on_final_transition": 1,
+        "rewards": 2.9800000190734863,
+        "next_observation_state": 2.0,
+        "bootstrap_discount": 0.9900000095367432,
+        "done_mask": 0.0,
+        "stored_timeout_flag": 1.0,
+        "buffer_sampleable_size": 2,
+        "standard_k_step_discount": 0.9801,
+        "current_bootstrap_discount": 0.99
+      },
+      {
+        "n_decision_transitions": 2,
+        "boundary": "terminal",
+        "raw_steps_executed_on_final_transition": 1,
+        "rewards": 2.9800000190734863,
+        "next_observation_state": 2.0,
+        "bootstrap_discount": 0.9900000095367432,
+        "done_mask": 1.0,
+        "stored_timeout_flag": 0.0,
+        "buffer_sampleable_size": 2,
+        "standard_k_step_discount": 0.9801,
+        "current_bootstrap_discount": 0.99
+      },
+      {
+        "n_decision_transitions": 3,
+        "boundary": "timeout",
+        "raw_steps_executed_on_final_transition": 1,
+        "rewards": 5.920300006866455,
+        "next_observation_state": 3.0,
+        "bootstrap_discount": 0.9900000095367432,
+        "done_mask": 0.0,
+        "stored_timeout_flag": 1.0,
+        "buffer_sampleable_size": 3,
+        "standard_k_step_discount": 0.970299,
+        "current_bootstrap_discount": 0.99
+      },
+      {
+        "n_decision_transitions": 3,
+        "boundary": "terminal",
+        "raw_steps_executed_on_final_transition": 1,
+        "rewards": 5.920300006866455,
+        "next_observation_state": 3.0,
+        "bootstrap_discount": 0.9900000095367432,
+        "done_mask": 1.0,
+        "stored_timeout_flag": 0.0,
+        "buffer_sampleable_size": 3,
+        "standard_k_step_discount": 0.970299,
+        "current_bootstrap_discount": 0.99
+      }
+    ],
+    "episode_boundary_no_crossing_check": {
+      "post_boundary_reward": 999.0,
+      "full_timeout_return_stayed_at_expected_four_step_sum": true,
+      "full_terminal_return_stayed_at_expected_four_step_sum": true,
+      "short_tail_returns_exclude_post_boundary_episode": true
+    },
+    "one_step_control": {
+      "n_decision_transitions": 1,
+      "reward": 1.0,
+      "done_mask": 0.0,
+      "sample_has_discount_field": true,
+      "sample_discount_is_none": true,
+      "sac_fallback_discount": 0.99
+    },
+    "fixed_sac_target_arithmetic": {
+      "target_critic_values": [
+        5.0,
+        3.0
+      ],
+      "alpha": 0.2,
+      "next_log_probability": -0.5,
+      "soft_next_q": 3.1,
+      "timeout_current_protocol_target": 12.870496535301209,
+      "timeout_standard_gamma_to_four_target": 12.779344136737304,
+      "timeout_target_difference_current_minus_standard": 0.09115239856390467,
+      "terminal_target_no_bootstrap": 9.801496505737305
+    }
+  },
+  "intersection_sorted_depart4p0_task_horizon": {
+    "paper_scenario_config": "intersection_sorted has max_episode_steps=600 raw SUMO ticks",
+    "raw_tick_seconds": 0.1,
+    "nominal_cap_seconds": 60.0,
+    "action_repeat": 3,
+    "nominal_decisions_to_cap": 200,
+    "nominal_4_transition_window_seconds": 1.2000000000000002,
+    "cap_handling": "source_observation_contract='smarts' is not CARLA, so max_time is Gymnasium truncated (not terminated); the n-step buffer closes the reward sequence at that boundary and preserves bootstrap",
+    "training_timeout_shaping": "timeout reward is -5.0 in the shared v2 reward wrapper; this penalty is accumulated in R_k while the cap transition remains bootstrap-eligible",
+    "remaining_time_observation": "No remaining-time token was found in the static scan of envs/sumo, algos/sb3_torch, and the D1 trainer; base observation builder exposes trajectory/map and optional state_lstm/state_lstm_mask. This scan does not classify the intended task semantics.",
+    "interpretation_boundary": "If completing within 60 s is intrinsic to the task, finite-horizon theory treats the deadline as termination and the remaining time belongs in the state for Markov semantics. If the 60 s cap is only external collection truncation, bootstrapping is appropriate. The code's timeout penalty does not by itself decide which task definition was intended.",
+    "remaining_time_token_matches": []
+  },
+  "source_locations": {
+    "replay_buffer.py": {
+      "path": "algos\\sb3_torch\\replay_buffer.py",
+      "lines": {
+        "boundary_tail_flush": 113,
+        "incomplete_partial_action_handling": 142,
+        "sample_and_return_logic": 183,
+        "release_comment": 203,
+        "one_gamma_bootstrap": 206,
+        "discounted_n_step_reward": 209,
+        "timeout_mask": 242
+      }
+    },
+    "sac.py": {
+      "path": "algos\\sb3_torch\\sac.py",
+      "lines": {
+        "discount_fallback": 382,
+        "endpoint_entropy_adjustment": 458,
+        "sac_target": 459
+      }
+    },
+    "train_config": {
+      "base_path": "fast-developer\\train_intersection_yield_v2.py",
+      "base_discount_line": 71,
+      "base_action_repeat_line": 72,
+      "d1_path": "fast-developer\\train_intersection_yield_v2_d1.py",
+      "d1_n_steps_line": 1153
+    },
+    "scenario_and_env": {
+      "registry_path": "envs\\sumo\\paper_scenario_registry.py",
+      "sorted_scenario_line": 100,
+      "sumo_env_path": "envs\\sumo\\sumo_env.py",
+      "max_episode_steps_property_line": 382,
+      "timeout_terminal_split_line": 632,
+      "observation_builder_line": 1966,
+      "raw_tick_length": "0.1 seconds",
+      "raw_tick_length_sumo_command_path": "envs\\sumo\\paper_env.py",
+      "raw_tick_length_sumo_command_line": 232,
+      "sorted_sumocfg_path": "envs\\sumo\\scenarios\\intersection_sorted\\scenario.sumocfg",
+      "sorted_sumocfg_step_length_line": 10,
+      "reward_shaping_path": "fast-developer\\reward_shaping_v2.py",
+      "timeout_reward_line": 58
+    }
+  },
+  "source_sha256": {
+    "algos\\sb3_torch\\replay_buffer.py": "f206c49b20dc9149494abd346d9044ce0b2710909e4c27404542b16733b0961d",
+    "algos\\sb3_torch\\sac.py": "06c33befdd86e62f78366d76f541483880835920ba7e716c5457c99ed13c180d",
+    "fast-developer\\train_intersection_yield_v2.py": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e",
+    "fast-developer\\train_intersection_yield_v2_d1.py": "9fd2cd01ca79aa170c944bb596c1503e35432bd95d67b371118be63cc6ee6972",
+    "envs\\sumo\\paper_scenario_registry.py": "6459701376aa77c338039850c0b23886b4c94a20947b8ef4264da5a86d68ef0c",
+    "envs\\sumo\\sumo_env.py": "4cc4317e3bc7d45b0b5753f7a4e02b67976cb7ee0c4033a381ca2c52ba2ca3f3",
+    "envs\\sumo\\paper_env.py": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb",
+    "envs\\sumo\\scenarios\\intersection_sorted\\scenario.sumocfg": "a9e1e570bf888b79bce057d7a1c36d472688d66980965e95a67cc6e2143485e1",
+    "fast-developer\\reward_shaping_v2.py": "d09caedb887379e2b316f60d7c3648e817ca75ea090f2a0d6abcf45604d3a969"
+  },
+  "source_contract_checks": {
+    "buffer_one_gamma_comment": true,
+    "buffer_discount_fill": true,
+    "timeout_terminal_mask": true,
+    "sac_discount_fallback": true,
+    "sac_endpoint_entropy": true,
+    "sac_target": true
+  },
+  "external_theory_sources": [
+    {
+      "title": "Gymnasium: Handling Time Limits",
+      "url": "https://gymnasium.farama.org/tutorials/gymnasium_basics/handling_time_limits/",
+      "relevant_claim": "intrinsic finite-horizon deadline is termination and remaining time is needed in observation; externally imposed truncation bootstraps"
+    },
+    {
+      "title": "Pardo et al., Time Limits in Reinforcement Learning (ICML 2018)",
+      "url": "https://arxiv.org/abs/1712.00378",
+      "relevant_claim": "distinguishes finite-horizon task deadlines from external time limits and their state/bootstrapping treatment"
+    },
+    {
+      "title": "Stable-Baselines3 SAC source documentation",
+      "url": "https://stable-baselines3.readthedocs.io/en/master/_modules/stable_baselines3/sac/sac.html",
+      "relevant_claim": "n-step replay target convention uses gamma**n_steps for a full n-step horizon; compare versioned local implementation before attributing behavior"
+    }
+  ]
+}

@@ -32,6 +32,7 @@ from .scenario_registry import SumoScenarioSpec, get_scenario_spec
 
 
 _INSTANCE_COUNTER = itertools.count()
+_BEHAVIOR_TELEMETRY_PROTOCOL = "route_lane_behavior_v1"
 
 
 # SMARTS v0.4.17 converts SUMO vehicle classes to these Bullet chassis
@@ -339,6 +340,9 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         self._last_seen_steps: dict[str, int] = {}
         self._driving_lane_cache: dict[str, tuple[int, ...]] = {}
         self._last_observation: dict[str, np.ndarray] | None = None
+        # Passive row identity for method-specific observation wrappers. This
+        # cache does not alter the released observation arrays or env dynamics.
+        self._last_observation_actor_keys: tuple[str, ...] | None = None
         self._raw_steps = 0
         self._lifetime_raw_steps = 0
         self._lifetime_raw_step_budget: int | None = None
@@ -346,10 +350,33 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         self._episode_done = True
         self._last_events = (False, False, False, False)
         self._last_geometric_collision = False
+        self._last_geometric_collision_partner: dict[str, str] | None = None
+        self._last_raw_sumo_arrived = False
+        self._last_raw_sumo_collision = False
         self._pre_simulation_ego_state: np.ndarray | None = None
         self._actors_hidden_this_observation: set[str] = set()
         self._last_effective_target_speed = 0.0
         self._last_curve_speed_limit = math.inf
+        # Optional, read-only behavior capture. Keeping this disabled by default
+        # leaves the normal environment path and its TraCI traffic unchanged.
+        self._behavior_diagnostics: Any | None = None
+        self._behavior_actor_states: dict[str, np.ndarray] = {}
+        self._behavior_observed_neighbor_ids: tuple[str, ...] | None = None
+        self._behavior_observation_raw_step: int | None = None
+        self._behavior_previous_actor_payloads: dict[str, dict[str, Any]] = {}
+        self._behavior_static_actor_metadata: dict[str, dict[str, Any]] = {}
+        self._behavior_dynamic_actor_context: dict[str, dict[str, Any]] = {}
+        self._behavior_last_sim_time: float | None = None
+        self._behavior_step_seconds: float | None = None
+        self._behavior_pending_errors: list[dict[str, Any]] = []
+        self._behavior_collision_events: list[dict[str, Any]] = []
+        self._behavior_collision_ids: list[str] = []
+        self._behavior_error_keys: set[str] = set()
+        self._behavior_route_network: Any | None = None
+        self._behavior_route_network_error: str | None = None
+        self._behavior_lane_apply_diagnostics: dict[str, Any] = {}
+        self._behavior_last_lane_request: dict[str, Any] | None = None
+        self._behavior_active_control: dict[str, Any] | None = None
 
     @property
     def max_episode_steps(self) -> int:
@@ -398,15 +425,34 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         self._last_seen_steps.clear()
         self._driving_lane_cache.clear()
         self._last_observation = None
+        self._last_observation_actor_keys = None
         self._raw_steps = 0
         self._decision_steps = 0
         self._episode_done = False
         self._last_events = (False, False, False, False)
         self._last_geometric_collision = False
+        self._last_geometric_collision_partner = None
+        self._last_raw_sumo_arrived = False
+        self._last_raw_sumo_collision = False
         self._pre_simulation_ego_state = None
         self._actors_hidden_this_observation.clear()
         self._last_effective_target_speed = 0.0
         self._last_curve_speed_limit = math.inf
+        if self._behavior_diagnostics is not None:
+            self._behavior_actor_states.clear()
+            self._behavior_observed_neighbor_ids = None
+            self._behavior_observation_raw_step = None
+            self._behavior_previous_actor_payloads.clear()
+            self._behavior_static_actor_metadata.clear()
+            self._behavior_dynamic_actor_context.clear()
+            self._behavior_last_sim_time = None
+            self._behavior_step_seconds = None
+            self._behavior_pending_errors.clear()
+            self._behavior_collision_events = []
+            self._behavior_collision_ids = []
+            self._behavior_lane_apply_diagnostics = {}
+            self._behavior_last_lane_request = None
+            self._behavior_active_control = None
 
         # Vehicles are inserted on the first simulation step.  A short bounded
         # loop also handles a temporarily occupied departure lane.
@@ -431,6 +477,21 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         observation = self._make_observation()
         self._last_observation = _copy_observation(observation)
         info = self._info_dict(simulation_seed=simulation_seed)
+        if self._behavior_diagnostics is not None:
+            info["requested_reset_seed"] = seed
+            # _configure_policy_controlled_ego applies these exact TraCI modes.
+            info["ego_speed_mode"] = 0
+            info["ego_lane_change_mode"] = 0
+            self._behavior_refresh_dynamic_context()
+            snapshot = self._behavior_snapshot(self._last_events)
+            self._behavior_previous_actor_payloads = self._snapshot_actor_payloads(
+                snapshot
+            )
+            self._behavior_diagnostics.on_reset(
+                snapshot, info=info, seed=simulation_seed
+            )
+            self._behavior_last_lane_request = None
+            self._behavior_active_control = None
         return observation, info
 
     def step(
@@ -441,24 +502,100 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         action_array = np.asarray(action, dtype=np.float32).reshape(-1)
         if action_array.shape != (2,) or not np.all(np.isfinite(action_array)):
             raise ValueError(f"Expected a finite action with shape (2,), got {action!r}")
+        action_preclip = action_array.copy()
         action_array = np.clip(action_array, -1.0, 1.0)
         target_speed, lane_command = self.adapt_action(action_array)
+        if (
+            self._behavior_diagnostics is not None
+            and (
+                self._lifetime_raw_step_budget is None
+                or self._lifetime_raw_steps < self._lifetime_raw_step_budget
+            )
+        ):
+            self._behavior_refresh_dynamic_context()
         lane_change_applied = self._apply_control(target_speed, lane_command)
+        behavior_control: dict[str, Any] = {}
+        route_lane_context: dict[str, Any] = {}
+        route_lane_facts: dict[str, Any] = {}
+        previous_lane_transition = None
+        lane_apply = dict(self._behavior_lane_apply_diagnostics)
+        target_lane_id = lane_apply.get("expected_target_lane_id")
+        target_lane_facts: dict[str, Any] = {}
+        if self._behavior_diagnostics is not None:
+            route_lane_context = self._behavior_current_ego_route_context()
+            route_lane_facts = self._behavior_route_lane_facts(route_lane_context)
+            previous_lane_transition = self._behavior_previous_lane_transition(
+                route_lane_context.get("lane_id")
+            )
+            if target_lane_id is not None:
+                target_lane_facts = self._behavior_route_lane_facts(
+                    dict(route_lane_context, lane_id=target_lane_id)
+                )
+            behavior_control = dict(route_lane_facts)
+            behavior_control.update(
+                {
+                    "behavior_telemetry_protocol": _BEHAVIOR_TELEMETRY_PROTOCOL,
+                    "action_preclip": action_preclip.astype(np.float64).tolist(),
+                    "action_clipped": action_array.astype(np.float64).tolist(),
+                    "action_was_clipped": bool(np.any(action_preclip != action_array)),
+                    "target_speed_mps": float(target_speed),
+                    "lane_command_requested": int(lane_command),
+                    "lane_command_clipped": int(lane_command),
+                    "lane_command_action_preclip": float(action_preclip[1]),
+                    "lane_command_action_clipped": float(action_array[1]),
+                    "lane_change_applied": bool(lane_change_applied),
+                    "lane_control_request_status": lane_apply.get("status", "unknown"),
+                    "lane_control_request_reason": lane_apply.get("reason", "not_recorded"),
+                    "current_road_id": route_lane_context.get("road_id"),
+                    "current_lane_id": route_lane_context.get("lane_id"),
+                    "expected_target_lane_index": lane_apply.get("expected_target_lane_index"),
+                    "expected_target_lane_id": target_lane_id,
+                    "actual_lane_transition_since_previous_decision": previous_lane_transition,
+                }
+            )
+            if target_lane_facts:
+                behavior_control["expected_target_lane_can_reach_next_edge"] = target_lane_facts.get(
+                    "current_lane_can_reach_next_edge"
+                )
+                behavior_control["expected_target_lane_route_status_reason"] = target_lane_facts.get(
+                    "route_lane_status_reason"
+                )
 
         discounted_reward = 0.0
         undiscounted_reward = 0.0
         success = collision = off_route = max_time = False
         raw_steps_executed = 0
+        behavior_decision_started = False
         for repeat_index in range(self.action_repeat):
             if (
                 self._lifetime_raw_step_budget is not None
                 and self._lifetime_raw_steps >= self._lifetime_raw_step_budget
             ):
                 break
+            if self._behavior_diagnostics is not None and not behavior_decision_started:
+                self._behavior_diagnostics.on_decision_start(
+                    action_array.astype(np.float64).tolist(),
+                    control=behavior_control,
+                )
+                behavior_decision_started = True
+                self._behavior_active_control = dict(behavior_control)
+                self._behavior_last_lane_request = {
+                    "decision": int(self._decision_steps + 1),
+                    "current_lane_id": route_lane_context.get("lane_id"),
+                    "lane_command_requested": int(lane_command),
+                    "lane_control_request_status": lane_apply.get("status", "unknown"),
+                    "expected_target_lane_id": target_lane_id,
+                    "lane_change_applied": bool(lane_change_applied),
+                }
             if self.specification.ego_id in self._connection.vehicle.getIDList():
                 self._apply_speed_control(target_speed)
             self._pre_simulation_ego_state = self._state(
                 f"vehicle:{self.specification.ego_id}"
+            )
+            behavior_pre_step_payloads = (
+                dict(self._behavior_previous_actor_payloads)
+                if self._behavior_diagnostics is not None
+                else None
             )
             self._connection.simulationStep()
             self._after_simulation_step()
@@ -466,10 +603,21 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
             self._lifetime_raw_steps += 1
             raw_steps_executed += 1
             self._record_histories()
-            success, collision, off_route, max_time = self._events_after_step()
+            success, collision, off_route, max_time = self._resolve_terminal_events(
+                *self._events_after_step()
+            )
             raw_reward = float(success) - float(collision)
             discounted_reward += (self.reward_discount**repeat_index) * raw_reward
             undiscounted_reward += raw_reward
+            if self._behavior_diagnostics is not None:
+                snapshot = self._behavior_snapshot(
+                    (success, collision, off_route, max_time),
+                    pre_step_payloads=behavior_pre_step_payloads,
+                )
+                self._behavior_previous_actor_payloads = (
+                    self._snapshot_actor_payloads(snapshot)
+                )
+                self._behavior_diagnostics.on_raw_step(snapshot)
             if success or collision or off_route or max_time:
                 break
 
@@ -507,7 +655,679 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
             raw_steps_executed=raw_steps_executed,
             source_terminal_for_bootstrap=terminated,
         )
+        if self._behavior_diagnostics is not None:
+            ego_state = self._behavior_actor_states.get(
+                f"vehicle:{self.specification.ego_id}"
+            )
+            actual_speed = (
+                float(math.hypot(float(ego_state[3]), float(ego_state[4])))
+                if ego_state is not None
+                else None
+            )
+            behavior_info = dict(route_lane_facts)
+            behavior_info.update(
+                {
+                    "behavior_telemetry_protocol": _BEHAVIOR_TELEMETRY_PROTOCOL,
+                    "action_preclip": action_preclip.astype(np.float64).tolist(),
+                    "action_clipped": action_array.astype(np.float64).tolist(),
+                    "action_was_clipped": bool(np.any(action_preclip != action_array)),
+                    "actual_speed_mps": actual_speed,
+                    "lane_command_requested": int(lane_command),
+                    "lane_command_clipped": int(lane_command),
+                    "lane_command_action_preclip": float(action_preclip[1]),
+                    "lane_command_action_clipped": float(action_array[1]),
+                    "lane_control_request_status": lane_apply.get("status", "unknown"),
+                    "lane_control_request_reason": lane_apply.get("reason", "not_recorded"),
+                    "expected_target_lane_index": lane_apply.get("expected_target_lane_index"),
+                    "expected_target_lane_id": target_lane_id,
+                    "actual_lane_transition_since_previous_decision": previous_lane_transition,
+                }
+            )
+            info.update(behavior_info)
+        if self._behavior_diagnostics is not None and behavior_decision_started:
+            self._behavior_diagnostics.on_decision_end(
+                float(discounted_reward),
+                bool(terminated),
+                bool(truncated),
+                info=info,
+            )
         return observation, float(discounted_reward), terminated, truncated, info
+
+    def set_behavior_diagnostics(self, recorder: Any | None) -> None:
+        """Attach an optional read-only recorder before the next reset.
+
+        The recorder owns its output file and should implement ``on_reset``,
+        ``on_decision_start``, ``on_raw_step``, ``on_decision_end``, and
+        ``on_env_close``. The environment never closes the recorder itself.
+        """
+
+        self._behavior_diagnostics = recorder
+        self._behavior_actor_states.clear()
+        self._behavior_observed_neighbor_ids = None
+        self._behavior_observation_raw_step = None
+        self._behavior_previous_actor_payloads.clear()
+        self._behavior_static_actor_metadata.clear()
+        self._behavior_dynamic_actor_context.clear()
+        self._behavior_last_sim_time = None
+        self._behavior_step_seconds = None
+        self._behavior_pending_errors.clear()
+        self._behavior_collision_events = []
+        self._behavior_collision_ids = []
+        self._behavior_lane_apply_diagnostics = {}
+        self._behavior_last_lane_request = None
+        self._behavior_active_control = None
+        self._behavior_route_network = None
+        self._behavior_route_network_error = None
+        if recorder is not None:
+            try:
+                from .route_reachability_v1 import RouteLaneReachability
+
+                self._behavior_route_network = RouteLaneReachability.from_net(
+                    self.specification.network_path
+                )
+            except Exception as exc:
+                self._behavior_route_network_error = type(exc).__name__
+
+    def _behavior_current_ego_route_context(self) -> dict[str, Any]:
+        """Return already-sampled ego lane/route context; never query TraCI here."""
+
+        ego_key = f"vehicle:{self.specification.ego_id}"
+        dynamic = self._behavior_dynamic_actor_context.get(ego_key, {})
+        static = self._behavior_static_actor_metadata.get(ego_key, {})
+        sampled_at = dynamic.get("context_sample_raw_step")
+        return {
+            "lane_id": dynamic.get("lane_id"),
+            "road_id": dynamic.get("road_id"),
+            "lane_position": dynamic.get("lane_position"),
+            "route_index": dynamic.get("route_index"),
+            "route_edges": static.get("route_edges"),
+            "context_sample_raw_step": sampled_at,
+            "context_age_raw_steps": (
+                max(0, int(self._raw_steps) - int(sampled_at))
+                if sampled_at is not None
+                else None
+            ),
+        }
+
+    def _behavior_route_lane_facts(self, ego_context: dict[str, Any]) -> dict[str, Any]:
+        """Classify one sampled lane against the next planned edge using static net data."""
+
+        facts = {
+            "behavior_telemetry_protocol": _BEHAVIOR_TELEMETRY_PROTOCOL,
+            "route_reachability_protocol": "route_continuation_v1",
+            "route_lane_context_known": False,
+            "route_lane_status_known": False,
+            "planned_current_route_edge": None,
+            "planned_next_edge": None,
+            "current_lane_id": ego_context.get("lane_id"),
+            "current_road_id": ego_context.get("road_id"),
+            "current_lane_reachability_label": -1,
+            "current_lane_can_reach_next_edge": None,
+            "route_lane_status_reason": "route_context_unavailable",
+            "route_lane_context_sample_raw_step": ego_context.get("context_sample_raw_step"),
+            "route_lane_context_age_raw_steps": ego_context.get("context_age_raw_steps"),
+        }
+        if self._behavior_route_network is None:
+            facts["route_lane_status_reason"] = (
+                "static_network_unavailable:" + (self._behavior_route_network_error or "unknown")
+            )
+            return facts
+        lane_id = ego_context.get("lane_id")
+        route_edges = ego_context.get("route_edges")
+        route_index = ego_context.get("route_index")
+        if not lane_id:
+            facts["route_lane_status_reason"] = "current_lane_id_missing"
+            return facts
+        try:
+            result = self._behavior_route_network.classify(
+                [str(lane_id)],
+                route_edges,
+                route_index,
+                ego_context.get("road_id"),
+            )
+            label = int(result.labels[0]) if result.labels else -1
+            next_edge = str(result.next_edge) if result.next_edge else None
+            facts.update(
+                route_lane_context_known=bool(result.context_known),
+                route_lane_status_known=bool(result.context_known and label != -1),
+                planned_current_route_edge=result.current_edge or None,
+                planned_next_edge=next_edge,
+                current_lane_reachability_label=label,
+            )
+            if not result.context_known:
+                facts["route_lane_status_reason"] = "route_context_unknown_or_inconsistent"
+            elif label == -1:
+                facts["route_lane_status_reason"] = "current_lane_not_in_static_network"
+            elif next_edge is None:
+                facts["route_lane_status_reason"] = "route_has_no_next_edge"
+            else:
+                facts["current_lane_can_reach_next_edge"] = bool(label == 1)
+                facts["route_lane_status_reason"] = (
+                    "known_route_continuation" if label == 1 else "known_lane_cannot_reach_next_edge"
+                )
+        except Exception as exc:
+            facts["route_lane_status_reason"] = "route_classification_error:" + type(exc).__name__
+        return facts
+
+    def _behavior_previous_lane_transition(self, current_lane_id: Any) -> dict[str, Any] | None:
+        previous = self._behavior_last_lane_request
+        if previous is None:
+            return None
+        old_lane = previous.get("current_lane_id")
+        new_lane = str(current_lane_id) if current_lane_id else None
+        known = bool(old_lane and new_lane)
+        changed = bool(known and str(old_lane) != new_lane)
+        target_lane = previous.get("expected_target_lane_id")
+        target_reached = bool(known and target_lane and new_lane == str(target_lane))
+        return {
+            "observed_after_decision": previous.get("decision"),
+            "from_lane_id": old_lane,
+            "to_lane_id": new_lane,
+            "known": known,
+            "changed": changed if known else None,
+            "previous_lane_command_requested": previous.get("lane_command_requested"),
+            "previous_request_status": previous.get("lane_control_request_status"),
+            "previous_lane_change_applied": previous.get("lane_change_applied"),
+            "previous_expected_target_lane_id": target_lane,
+            "previous_expected_target_reached": target_reached if target_lane else None,
+            "reason": "decision_boundary_lane_samples" if known else "lane_sample_unavailable",
+        }
+
+    def _behavior_set_lane_apply_diagnostics(self, **values: Any) -> None:
+        if self._behavior_diagnostics is not None:
+            self._behavior_lane_apply_diagnostics = {
+                "behavior_telemetry_protocol": _BEHAVIOR_TELEMETRY_PROTOCOL,
+                **values,
+            }
+
+    def _behavior_note_error(
+        self, field: str, exception: Exception, errors: list[dict[str, Any]]
+    ) -> None:
+        """Rate-limit optional telemetry failures without masking env failures."""
+
+        error_type = type(exception).__name__
+        key = f"{field}:{error_type}"
+        if key not in self._behavior_error_keys:
+            self._behavior_error_keys.add(key)
+            errors.append({"field": field, "error": error_type})
+
+    def _behavior_read_optional(
+        self,
+        actor_key: str,
+        field: str,
+        reader: Any,
+        missing: dict[str, str],
+        errors: list[dict[str, Any]],
+    ) -> Any:
+        try:
+            value = reader()
+        except Exception as exc:
+            missing[field] = f"read_error:{type(exc).__name__}"
+            self._behavior_note_error(f"{actor_key}.{field}", exc, errors)
+            return None
+        if value is None:
+            missing[field] = "unavailable"
+            return None
+        if isinstance(value, np.generic):
+            value = value.item()
+        if isinstance(value, (str, bool, int, float)):
+            if isinstance(value, float) and not math.isfinite(value):
+                missing[field] = "non_finite"
+                return None
+            return value
+        if isinstance(value, (tuple, list)):
+            output = []
+            for item in value:
+                if isinstance(item, np.generic):
+                    item = item.item()
+                if isinstance(item, (str, bool, int, float)):
+                    output.append(
+                        item if not isinstance(item, float) or math.isfinite(item) else None
+                    )
+                else:
+                    output.append(str(item))
+            return output
+        return str(value)
+
+    def _behavior_static_metadata_for(
+        self, actor_key: str, errors: list[dict[str, Any]]
+    ) -> dict[str, Any]:
+        metadata = self._behavior_static_actor_metadata.get(actor_key)
+        if metadata is not None:
+            return metadata
+
+        domain, actor_id = actor_key.split(":", 1)
+        missing: dict[str, str] = {}
+        metadata = {
+            "static_sample_raw_step": int(self._raw_steps),
+            "length": None,
+            "width": None,
+            "route_id": None,
+            "route_edges": None,
+            "missing": missing,
+        }
+        if domain == "vehicle":
+            try:
+                length, width = self._vehicle_dimensions(actor_id)
+                metadata["length"] = float(length)
+                metadata["width"] = float(width)
+            except Exception as exc:
+                missing["dimensions"] = f"read_error:{type(exc).__name__}"
+                self._behavior_note_error(f"{actor_key}.dimensions", exc, errors)
+
+            vehicle_api = self._connection.vehicle
+            metadata["route_id"] = self._behavior_read_optional(
+                actor_key,
+                "route_id",
+                lambda: vehicle_api.getRouteID(actor_id),
+                missing,
+                errors,
+            )
+            route_edges = self._behavior_read_optional(
+                actor_key,
+                "route_edges",
+                lambda: vehicle_api.getRoute(actor_id),
+                missing,
+                errors,
+            )
+            metadata["route_edges"] = (
+                [str(edge) for edge in route_edges]
+                if isinstance(route_edges, list)
+                else route_edges
+            )
+        else:
+            # TraCI's person domain does not expose the vehicle chassis shape
+            # or the vehicle route API. Keep those facts explicitly unknown;
+            # the downstream OBB forecast will mark geometry unavailable.
+            missing.update(
+                {
+                    "length": "not_exposed_by_person_domain",
+                    "width": "not_exposed_by_person_domain",
+                    "route_id": "not_exposed_by_person_domain",
+                    "route_edges": "not_exposed_by_person_domain",
+                }
+            )
+        self._behavior_static_actor_metadata[actor_key] = metadata
+        return metadata
+
+    def _behavior_refresh_dynamic_context(self) -> None:
+        """Refresh road/lane/route position at decision rate, not each raw tick."""
+
+        if self._connection is None:
+            return
+        ego_key = f"vehicle:{self.specification.ego_id}"
+        ego_state = self._behavior_actor_states.get(ego_key)
+        observed = set(self._behavior_observed_neighbor_ids or ())
+        try:
+            radius = float(getattr(self._behavior_diagnostics, "radius", 120.0))
+        except (TypeError, ValueError):
+            radius = 120.0
+        if not math.isfinite(radius):
+            radius = 120.0
+
+        errors: list[dict[str, Any]] = []
+        for actor_key, state in self._behavior_actor_states.items():
+            domain = actor_key.split(":", 1)[0]
+            if domain not in ("vehicle", "person"):
+                continue
+            actor_id = actor_key.split(":", 1)[1]
+            if actor_key != ego_key and actor_key not in observed:
+                if ego_state is None or float(np.linalg.norm(state[:2] - ego_state[:2])) > radius:
+                    continue
+            missing: dict[str, str] = {}
+            actor_api = getattr(self._connection, domain)
+            context: dict[str, Any] = {
+                "context_sample_raw_step": int(self._raw_steps),
+                "road_id": self._behavior_read_optional(
+                    actor_key, "road_id", lambda: actor_api.getRoadID(actor_id), missing, errors
+                ),
+                "lane_id": self._behavior_read_optional(
+                    actor_key, "lane_id", lambda: actor_api.getLaneID(actor_id), missing, errors
+                ),
+                "lane_position": self._behavior_read_optional(
+                    actor_key, "lane_position", lambda: actor_api.getLanePosition(actor_id), missing, errors
+                ),
+                "route_index": (
+                    self._behavior_read_optional(
+                        actor_key, "route_index", lambda: actor_api.getRouteIndex(actor_id), missing, errors
+                    )
+                    if domain == "vehicle"
+                    else None
+                ),
+                "distance": (
+                    self._behavior_read_optional(
+                        actor_key, "distance", lambda: actor_api.getDistance(actor_id), missing, errors
+                    )
+                    if domain == "vehicle"
+                    else None
+                ),
+                "missing": missing,
+            }
+            if domain == "person":
+                missing.update(
+                    {
+                        "route_index": "not_exposed_by_person_domain",
+                        "distance": "not_sampled_for_person",
+                    }
+                )
+            self._behavior_dynamic_actor_context[actor_key] = context
+        self._behavior_pending_errors.extend(errors)
+
+    def _behavior_actor_payload(
+        self,
+        actor_key: str,
+        state: np.ndarray,
+        sim_time: float | None,
+        errors: list[dict[str, Any]],
+        *,
+        state_source: str = "current",
+        state_time: float | None = None,
+    ) -> dict[str, Any]:
+        state = np.asarray(state, dtype=np.float64).reshape(5)
+        contract = getattr(
+            self.specification, "source_observation_contract", "cartesian"
+        )
+        # SMARTS/CARLA observation angles use north=0. Convert only for physical
+        # telemetry; the policy observation is deliberately left untouched.
+        heading = float(state[2])
+        if contract in ("smarts", "carla"):
+            heading = float((heading + math.pi / 2.0 + math.pi) % (2.0 * math.pi) - math.pi)
+        speed = float(math.hypot(float(state[3]), float(state[4])))
+        velocity = [speed * math.cos(heading), speed * math.sin(heading)]
+        domain, actor_id = actor_key.split(":", 1)
+
+        if actor_key in self._behavior_static_actor_metadata:
+            static = self._behavior_static_actor_metadata[actor_key]
+        elif self._connection is not None:
+            static = self._behavior_static_metadata_for(actor_key, errors)
+        else:
+            static = {"missing": {"static_metadata": "connection_closed"}}
+        dynamic = self._behavior_dynamic_actor_context.get(actor_key)
+        payload: dict[str, Any] = {
+            "id": actor_id,
+            "key": actor_key,
+            "kind": domain,
+            "position": [float(state[0]), float(state[1])],
+            "velocity": [float(velocity[0]), float(velocity[1])],
+            "heading": heading,
+            "speed": speed,
+            "length": static.get("length"),
+            "width": static.get("width"),
+            "route_id": static.get("route_id"),
+            "route_edges": static.get("route_edges"),
+            "static_sample_raw_step": static.get("static_sample_raw_step"),
+            "state_source": state_source,
+            "state_time": sim_time if state_time is None else state_time,
+            "missing": dict(static.get("missing", {})),
+        }
+        if dynamic is None:
+            payload.update(
+                {
+                    "context_sample_raw_step": None,
+                    "context_age_raw_steps": None,
+                    "road_id": None,
+                    "lane_id": None,
+                    "lane_position": None,
+                    "route_index": None,
+                    "distance": None,
+                }
+            )
+            payload["missing"].update(
+                {
+                    name: "not_sampled_at_decision"
+                    for name in (
+                        "road_id",
+                        "lane_id",
+                        "lane_position",
+                        "route_index",
+                        "distance",
+                    )
+                }
+            )
+        else:
+            context_step = dynamic.get("context_sample_raw_step")
+            payload.update(
+                {
+                    "context_sample_raw_step": context_step,
+                    "context_age_raw_steps": (
+                        max(0, int(self._raw_steps) - int(context_step))
+                        if context_step is not None
+                        else None
+                    ),
+                    "road_id": dynamic.get("road_id"),
+                    "lane_id": dynamic.get("lane_id"),
+                    "lane_position": dynamic.get("lane_position"),
+                    "route_index": dynamic.get("route_index"),
+                    "distance": dynamic.get("distance"),
+                }
+            )
+            payload["missing"].update(dynamic.get("missing", {}))
+        return payload
+
+    def _snapshot_actor_payloads(
+        self, snapshot: dict[str, Any]
+    ) -> dict[str, dict[str, Any]]:
+        output: dict[str, dict[str, Any]] = {}
+        actors = [snapshot.get("ego"), *snapshot.get("vehicles", [])]
+        for actor in actors:
+            if actor and actor.get("state_source") == "current":
+                output[str(actor["key"])] = dict(actor)
+        return output
+
+    def _behavior_snapshot(
+        self,
+        events: tuple[bool, bool, bool, bool],
+        *,
+        pre_step_payloads: dict[str, dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        errors = list(self._behavior_pending_errors)
+        self._behavior_pending_errors.clear()
+        ego_id = str(self.specification.ego_id)
+        ego_key = f"vehicle:{ego_id}"
+
+        try:
+            sim_time = float(self._connection.simulation.getTime())
+            if not math.isfinite(sim_time):
+                sim_time = None
+        except Exception as exc:
+            sim_time = None
+            self._behavior_note_error("simulation.getTime", exc, errors)
+        if self._behavior_step_seconds is None:
+            try:
+                value = float(self._connection.simulation.getDeltaT())
+                self._behavior_step_seconds = value if math.isfinite(value) else None
+            except Exception as exc:
+                self._behavior_step_seconds = None
+                self._behavior_note_error("simulation.getDeltaT", exc, errors)
+
+        current_payloads: dict[str, dict[str, Any]] = {}
+        for actor_key, state in self._behavior_actor_states.items():
+            if actor_key.startswith(("vehicle:", "person:")):
+                current_payloads[actor_key] = self._behavior_actor_payload(
+                    actor_key, state, sim_time, errors
+                )
+
+        ego_state_source = "current"
+        ego_payload = current_payloads.get(ego_key)
+        if ego_payload is None:
+            pre_ego = (pre_step_payloads or {}).get(ego_key)
+            pre_state = self._pre_simulation_ego_state
+            if pre_state is not None:
+                previous_time = (
+                    pre_ego.get("state_time")
+                    if pre_ego is not None
+                    else self._behavior_last_sim_time
+                )
+                if pre_ego is not None:
+                    ego_payload = dict(pre_ego)
+                    state_values = np.asarray(pre_state, dtype=np.float64).reshape(5)
+                    contract = getattr(
+                        self.specification, "source_observation_contract", "cartesian"
+                    )
+                    heading = float(state_values[2])
+                    if contract in ("smarts", "carla"):
+                        heading = float(
+                            (heading + math.pi / 2.0 + math.pi)
+                            % (2.0 * math.pi)
+                            - math.pi
+                        )
+                    speed = float(math.hypot(state_values[3], state_values[4]))
+                    ego_payload.update(
+                        position=[float(state_values[0]), float(state_values[1])],
+                        velocity=[speed * math.cos(heading), speed * math.sin(heading)],
+                        heading=heading,
+                        speed=speed,
+                        state_source="pre_step_removed",
+                        state_time=previous_time,
+                        removed_after_raw_step=True,
+                    )
+                else:
+                    ego_payload = self._behavior_actor_payload(
+                        ego_key,
+                        pre_state,
+                        previous_time,
+                        errors,
+                        state_source="pre_step_removed",
+                        state_time=previous_time,
+                    )
+                    ego_payload["removed_after_raw_step"] = True
+                ego_state_source = "pre_step_removed"
+            else:
+                ego_state_source = "missing"
+                ego_payload = None
+
+        observed_ids = (
+            list(self._behavior_observed_neighbor_ids)
+            if self._behavior_observed_neighbor_ids is not None
+            else None
+        )
+        snapshot = {
+            "behavior_telemetry_protocol": _BEHAVIOR_TELEMETRY_PROTOCOL,
+            "raw_step": int(self._raw_steps),
+            "lifetime_raw_steps": int(self._lifetime_raw_steps),
+            "sim_time": sim_time,
+            "step_seconds": self._behavior_step_seconds,
+            "ego": ego_payload,
+            "ego_state_source": ego_state_source,
+            "ego_state_time": ego_payload.get("state_time") if ego_payload else None,
+            "vehicles": [
+                payload
+                for key, payload in sorted(current_payloads.items())
+                if key != ego_key
+            ],
+            "collision_events": list(self._behavior_collision_events),
+            "collision_ids": list(self._behavior_collision_ids),
+            "events": {
+                "success": bool(events[0]),
+                "collision": bool(events[1]),
+                "off_route": bool(events[2]),
+                "timeout": bool(events[3]),
+                "geometric_collision": bool(self._last_geometric_collision),
+                "raw_sumo_arrived": bool(self._last_raw_sumo_arrived),
+                "raw_sumo_collision": bool(self._last_raw_sumo_collision),
+                "raw_max_time": bool(self._raw_steps >= self.max_episode_steps),
+                "terminal_outcome_protocol": "exclusive_terminal_v2",
+            },
+            "observed_neighbor_ids": observed_ids,
+            "observed_neighbor_raw_step": self._behavior_observation_raw_step,
+            "errors": errors,
+        }
+        partner = self._last_geometric_collision_partner
+        if self._last_geometric_collision:
+            if partner is None:
+                snapshot["geometric_collision_evidence"] = {
+                    "source": "geometric_obb_fallback",
+                    "raw_sumo_collision_also_true": bool(self._last_raw_sumo_collision),
+                    "partner_is_first_hit_only": True,
+                    "partner_capture_status": "boolean_true_without_partner_metadata",
+                    "partner_kind": None,
+                    "partner_id": None,
+                    "partner_key": None,
+                    "input_raw_step": int(self._raw_steps),
+                    "input_sim_time": sim_time,
+                    "ego_state_source": ego_state_source,
+                    "ego_state_time": snapshot["ego_state_time"],
+                    "partner_state_source": None,
+                    "partner_state_time": None,
+                    "partner_state_time_matches_input": None,
+                    "partner_state_time_matches_ego": None,
+                    "partner_in_last_policy_observation": None,
+                    "observed_neighbor_raw_step": self._behavior_observation_raw_step,
+                }
+            else:
+                partner_key = f"{partner['kind']}:{partner['id']}"
+                partner_payload = current_payloads.get(partner_key)
+                partner_time = (
+                    partner_payload.get("state_time")
+                    if partner_payload is not None
+                    else None
+                )
+                partner_state_source = (
+                    partner_payload.get("state_source")
+                    if partner_payload is not None
+                    else None
+                )
+                if partner_payload is None:
+                    capture_status = "partner_missing_from_current_snapshot"
+                elif partner_state_source != "current":
+                    capture_status = "partner_snapshot_not_current"
+                elif partner_time is None or sim_time is None:
+                    capture_status = "partner_or_collision_time_unknown"
+                elif float(partner_time) != float(sim_time):
+                    capture_status = "partner_snapshot_time_mismatch"
+                else:
+                    capture_status = "current_same_time"
+                observed_partner = (
+                    partner_key in observed_ids if observed_ids is not None else None
+                )
+                snapshot["geometric_collision_evidence"] = {
+                    "source": "geometric_obb_fallback",
+                    "raw_sumo_collision_also_true": bool(self._last_raw_sumo_collision),
+                    "partner_is_first_hit_only": True,
+                    "partner_capture_status": capture_status,
+                    "partner_kind": partner["kind"],
+                    "partner_id": partner["id"],
+                    "partner_key": partner_key,
+                    "input_raw_step": int(self._raw_steps),
+                    "input_sim_time": sim_time,
+                    "ego_state_source": ego_state_source,
+                    "ego_state_time": snapshot["ego_state_time"],
+                    "partner_state_source": partner_state_source,
+                    "partner_state_time": partner_time,
+                    "partner_state_time_matches_input": (
+                        bool(float(partner_time) == float(sim_time))
+                        if partner_time is not None and sim_time is not None
+                        else None
+                    ),
+                    "partner_state_time_matches_ego": (
+                        bool(float(partner_time) == float(snapshot["ego_state_time"]))
+                        if partner_time is not None and snapshot["ego_state_time"] is not None
+                        else None
+                    ),
+                    "partner_in_last_policy_observation": observed_partner,
+                    "observed_neighbor_raw_step": self._behavior_observation_raw_step,
+                }
+        else:
+            snapshot["geometric_collision_evidence"] = None
+        snapshot.update(self._behavior_route_lane_facts(ego_payload or {}))
+        actual_speed = (
+            float(ego_payload["speed"])
+            if ego_payload is not None and ego_state_source == "current"
+            else None
+        )
+        snapshot["speed_control"] = {
+            "requested_target_speed_mps": (
+                self._behavior_active_control.get("target_speed_mps")
+                if self._behavior_active_control
+                else None
+            ),
+            "effective_target_speed_mps": float(self._last_effective_target_speed),
+            "actual_speed_mps": actual_speed,
+            "actual_speed_reason": "current_raw_snapshot" if actual_speed is not None else "ego_not_current",
+        }
+        snapshot["lane_control"] = dict(self._behavior_active_control or {})
+        self._behavior_last_sim_time = sim_time
+        return snapshot
 
     @staticmethod
     def adapt_action(action: np.ndarray) -> tuple[float, int]:
@@ -526,8 +1346,29 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
     def _apply_control(self, target_speed: float, lane_command: int) -> bool:
         ego_id = self.specification.ego_id
         if ego_id not in self._connection.vehicle.getIDList():
+            self._behavior_set_lane_apply_diagnostics(
+                status="not_issued",
+                reason="ego_not_active",
+                lane_command_requested=int(lane_command),
+                expected_target_lane_index=None,
+                expected_target_lane_id=None,
+            )
             return False
         if lane_command == 0:
+            context = self._behavior_current_ego_route_context()
+            lane_id = context.get("lane_id")
+            lane_index = None
+            if lane_id:
+                suffix = str(lane_id).rsplit("_", 1)[-1]
+                if suffix.isdigit():
+                    lane_index = int(suffix)
+            self._behavior_set_lane_apply_diagnostics(
+                status="hold",
+                reason="hold_command",
+                lane_command_requested=0,
+                expected_target_lane_index=lane_index,
+                expected_target_lane_id=lane_id,
+            )
             return False
         # SUMO lane indices increase to the left in right-hand traffic.
         # SMARTS' LaneFollowingController uses +1 for left, while carla_env.py
@@ -537,20 +1378,62 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
             road_id = str(self._connection.vehicle.getRoadID(ego_id))
             lane_index = int(self._connection.vehicle.getLaneIndex(ego_id))
             if road_id.startswith(":"):
+                self._behavior_set_lane_apply_diagnostics(
+                    status="not_issued",
+                    reason="internal_lane",
+                    lane_command_requested=int(lane_command),
+                    expected_target_lane_index=None,
+                    expected_target_lane_id=None,
+                )
                 return False
             driving_lanes = self._driving_lanes(road_id)
             if lane_index not in driving_lanes:
+                self._behavior_set_lane_apply_diagnostics(
+                    status="not_issued",
+                    reason="current_lane_not_driving",
+                    lane_command_requested=int(lane_command),
+                    current_lane_index=lane_index,
+                    expected_target_lane_index=None,
+                    expected_target_lane_id=None,
+                )
                 return False
             target_rank = driving_lanes.index(lane_index) + sumo_offset
             if target_rank < 0 or target_rank >= len(driving_lanes):
+                self._behavior_set_lane_apply_diagnostics(
+                    status="not_issued",
+                    reason="target_lane_out_of_range",
+                    lane_command_requested=int(lane_command),
+                    current_lane_index=lane_index,
+                    expected_target_lane_index=None,
+                    expected_target_lane_id=None,
+                )
                 return False
+            expected_lane_index = int(driving_lanes[target_rank])
+            expected_lane_id = f"{road_id}_{expected_lane_index}"
             self._connection.vehicle.changeLaneRelative(
                 ego_id,
                 sumo_offset,
                 self.action_repeat * 0.1,
             )
+            self._behavior_set_lane_apply_diagnostics(
+                status="request_sent",
+                reason="change_lane_relative_called",
+                lane_command_requested=int(lane_command),
+                current_road_id=road_id,
+                current_lane_index=lane_index,
+                sumo_lane_offset=int(sumo_offset),
+                expected_target_lane_index=expected_lane_index,
+                expected_target_lane_id=expected_lane_id,
+            )
             return True
         except self._traci.TraCIException:
+            self._behavior_set_lane_apply_diagnostics(
+                status="not_issued",
+                reason="traci_request_failed",
+                lane_command_requested=int(lane_command),
+                expected_target_lane_index=None,
+                expected_target_lane_id=None,
+            )
             return False
 
     def _control_path_headings(self, lookahead: int = 16) -> np.ndarray:
@@ -657,18 +1540,69 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
             self._connection.vehicle.setWidth(ego_id, width)
             self._connection.vehicle.setHeight(ego_id, 1.4)
 
+    @staticmethod
+    def _resolve_terminal_events(
+        success: bool, collision: bool, off_route: bool, max_time: bool,
+    ) -> tuple[bool, bool, bool, bool]:
+        """Resolve one outcome after all scenario-specific event detection.
+
+        A collision-removed ego can also be reported as arrived by SUMO.
+        Failures take precedence over success; timeout applies only if no
+        other terminal event occurred. Rewards, replay flags and metrics all
+        consume this same result, including events overridden by subclasses.
+        """
+        collision = bool(collision)
+        off_route = bool(off_route) and not collision
+        success = bool(success) and not (collision or off_route)
+        max_time = bool(max_time) and not (collision or off_route or success)
+        return success, collision, off_route, max_time
+
     def _events_after_step(self) -> tuple[bool, bool, bool, bool]:
         ego_id = self.specification.ego_id
         arrived = set(self._connection.simulation.getArrivedIDList())
         colliding = set(self._connection.simulation.getCollidingVehiclesIDList())
         collision_objects = self._connection.simulation.getCollisions()
         teleporting = set(self._connection.simulation.getStartingTeleportIDList())
+        if self._behavior_diagnostics is not None:
+            collision_participants: set[str] = set()
+            collision_events: list[dict[str, Any]] = []
+            for item in collision_objects:
+                collider = str(item.collider)
+                victim = str(item.victim)
+                collision_participants.update((collider, victim))
+                if ego_id not in (collider, victim):
+                    continue
+                event: dict[str, Any] = {
+                    "collider": collider,
+                    "victim": victim,
+                }
+                for output_name, source_names in (
+                    ("time", ("time",)),
+                    ("type", ("type", "collisionType")),
+                    ("lane", ("lane",)),
+                    ("position", ("pos", "position")),
+                ):
+                    for source_name in source_names:
+                        value = getattr(item, source_name, None)
+                        if value is not None:
+                            event[output_name] = value
+                            break
+                collision_events.append(event)
+            self._behavior_collision_ids = sorted(
+                {str(actor_id) for actor_id in colliding} | collision_participants
+            )
+            self._behavior_collision_events = collision_events
         active = ego_id in self._connection.vehicle.getIDList()
-        success = ego_id in arrived
-        self._last_geometric_collision = self._geometric_collision()
-        collision = ego_id in colliding or any(
+        self._last_raw_sumo_arrived = ego_id in arrived
+        self._last_raw_sumo_collision = ego_id in colliding or any(
             ego_id in (item.collider, item.victim) for item in collision_objects
-        ) or self._last_geometric_collision
+        )
+        # Clear first so a legacy/test override that only returns bool cannot
+        # leak a previous tick's partner metadata into this raw-step snapshot.
+        self._last_geometric_collision_partner = None
+        self._last_geometric_collision = self._geometric_collision()
+        collision = self._last_raw_sumo_collision or self._last_geometric_collision
+        success = self._last_raw_sumo_arrived
         off_route = ego_id in teleporting or (not active and not success and not collision)
         max_time = self._raw_steps >= self.max_episode_steps
         return bool(success), bool(collision), bool(off_route), bool(max_time)
@@ -713,6 +1647,10 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         source-dimension OBB test is required in the direct-TraCI migration.
         """
 
+        # Preserve this method's boolean contract and first-hit short circuit.
+        # The passive behavior logger records only the object already found by
+        # this exact test; it performs no additional TraCI reads or scan.
+        self._last_geometric_collision_partner = None
         ego_id = self.specification.ego_id
         if ego_id not in self._connection.vehicle.getIDList():
             return False
@@ -729,6 +1667,10 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
             if other_box is not None and _oriented_boxes_overlap(
                 *ego_box, *other_box, leeway=0.05
             ):
+                self._last_geometric_collision_partner = {
+                    "kind": "vehicle",
+                    "id": str(vehicle_id),
+                }
                 return True
         if self.specification.include_pedestrians:
             for person_id in self._connection.person.getIDList():
@@ -748,6 +1690,10 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
                     0.5,
                     leeway=0.05,
                 ):
+                    self._last_geometric_collision_partner = {
+                        "kind": "person",
+                        "id": str(person_id),
+                    }
                     return True
         return False
 
@@ -833,11 +1779,16 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         # ego; the last valid observation is retained as SB3's next_obs.
         keys = [*ego_keys, *self._active_actor_keys()]
         ego_state = self._state(ego_key) if ego_keys else None
+        behavior_states: dict[str, np.ndarray] | None = (
+            {} if self._behavior_diagnostics is not None else None
+        )
         for actor_key in keys:
             state = self._state(actor_key)
             if state is None:
                 continue
             self._append_history(actor_key, state)
+            if behavior_states is not None:
+                behavior_states[actor_key] = state.copy()
             if self.include_state_lstm and ego_state is not None:
                 self._append_state_lstm_history(
                     actor_key,
@@ -845,6 +1796,8 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
                         state, ego_state, is_ego=actor_key == ego_key
                     ),
                 )
+        if behavior_states is not None:
+            self._behavior_actor_states = behavior_states
         self._history_timestep += 1
 
     def _append_history(self, actor_key: str, state: np.ndarray) -> None:
@@ -1014,10 +1967,15 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
         ego_key = f"vehicle:{self.specification.ego_id}"
         ego_state = self._state(ego_key)
         if ego_state is None:
+            self._last_observation_actor_keys = None
             if self._last_observation is not None:
                 return _copy_observation(self._last_observation)
             raise RuntimeError("Cannot construct an observation without an active ego vehicle")
         actor_keys = [ego_key, *self._nearest_actor_keys(ego_state)]
+        self._last_observation_actor_keys = tuple(actor_keys)
+        if self._behavior_diagnostics is not None:
+            self._behavior_observed_neighbor_ids = tuple(actor_keys[1:])
+            self._behavior_observation_raw_step = self._raw_steps
 
         observation: dict[str, np.ndarray] = {}
         if not self.state_lstm_only:
@@ -1546,6 +2504,10 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
             "off_route": bool(off_route),
             "max_time": bool(max_time),
             "legacy_info": (bool(success), bool(collision), bool(off_route), bool(max_time)),
+            "raw_sumo_arrived": bool(self._last_raw_sumo_arrived),
+            "raw_sumo_collision": bool(self._last_raw_sumo_collision),
+            "raw_max_time": bool(self._raw_steps >= self.max_episode_steps),
+            "terminal_outcome_protocol": "exclusive_terminal_v2",
             "raw_simulation_steps": self._raw_steps,
             "lifetime_raw_simulation_steps": self._lifetime_raw_steps,
             "decision_steps": self._decision_steps,
@@ -1582,12 +2544,20 @@ class SumoSceneEnv(gym.Env[dict[str, np.ndarray], np.ndarray]):
     def close(self) -> None:
         connection = self._connection
         self._connection = None
-        if connection is not None:
-            try:
-                connection.close(False)
-            except Exception:
-                # Closing must be idempotent, including after a SUMO-side error.
-                pass
+        self._last_geometric_collision_partner = None
+        try:
+            if connection is not None and self._behavior_diagnostics is not None:
+                # reset() calls close() between episodes. The recorder hook
+                # flushes episode buffers but leaves its streams open; the
+                # outer behavior wrapper owns final recorder.close().
+                self._behavior_diagnostics.on_env_close()
+        finally:
+            if connection is not None:
+                try:
+                    connection.close(False)
+                except Exception:
+                    # Closing must be idempotent, including after a SUMO-side error.
+                    pass
         self._episode_done = True
 
     def __enter__(self) -> "SumoSceneEnv":

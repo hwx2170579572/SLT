@@ -1,0 +1,84 @@
+{
+  "scope": "Baseline comparison only; normal saved logs; no new training or rollout",
+  "scenario": "intersection_random_darrl_medium_v1",
+  "revision": "darrl_r2_20260930",
+  "p": 0.03,
+  "training_seed": 0,
+  "sources": {
+    "sac_mlp": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\smlp_dr2_0930\\sac_mlp__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval_worker_00",
+    "mst_slt": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\dm7_1001_retry02\\mst_slt__intersection_random_darrl_medium_v1_depart1p0\\diagnostics\\eval_worker_00"
+  },
+  "mst_timeouts": {
+    "n": 31,
+    "terminal_lane_counts": {
+      "-E1_0": 14,
+      "-E1_1": 7,
+      ":J1_14_0": 7,
+      ":J1_21_0": 1,
+      "-E0_2": 2
+    },
+    "terminal_wrong_inlet_lane": 21,
+    "terminal_wrong_inlet_lane_position_m": 70,
+    "terminal_speed_le_0_5": 28,
+    "target_gt_3_and_actual_le_0_5": 14,
+    "caveat": "Route-ineligible means the current lane cannot directly continue the planned next edge, not that lane-change recovery was globally impossible."
+  },
+  "sac_success_to_mst_timeout": {
+    "n": 7,
+    "wrong_inlet_lane_at_termination": 6,
+    "outgoing_road_not_completed": 1,
+    "logical_seeds": [
+      10004,
+      10011,
+      10012,
+      10034,
+      10052,
+      10065,
+      10093
+    ]
+  },
+  "sac_success_to_mst_collision": {
+    "n": 21,
+    "last_precollision_road_counts": {
+      ":J1_21": 20,
+      "-E0": 1
+    },
+    "mst_precollision_actual_speed_range_mps": [
+      4.62,
+      9.74
+    ],
+    "mst_target_speed_range_mps": [
+      5.14,
+      9.74
+    ],
+    "last_lane_command_counts": {
+      "internal_lane_not_issued": 11,
+      "hold": 9,
+      "request_sent": 1
+    },
+    "caveats": [
+      "Precollision/terminal ego locations are not reconstructed exact collision contact points.",
+      "Episode min TTC includes collision time; near-zero minima do not independently prove predictive risk calibration.",
+      "SUMO counterpart object IDs unavailable for these geometry-detected collisions.",
+      "No counterfactual test establishes that speed capping would fix the cases."
+    ]
+  },
+  "speed": {
+    "sac_mlp": {
+      "mean_mps": 2.689,
+      "stopped_ticks": 39,
+      "valid_ticks": 41984
+    },
+    "mst_slt": {
+      "mean_mps": 2.564,
+      "stopped_ticks": 22021,
+      "valid_ticks": 37785
+    },
+    "stopped_threshold_mps": 0.1
+  },
+  "limits": [
+    "Fixed seed-0 checkpoints and 100 validation traffic schedules.",
+    "Old SAC diagnostics lack new route-eligibility fields; missing fields were not filled with zero.",
+    "These observations localize behavioral failure, not its unique neural or optimization cause."
+  ]
+}

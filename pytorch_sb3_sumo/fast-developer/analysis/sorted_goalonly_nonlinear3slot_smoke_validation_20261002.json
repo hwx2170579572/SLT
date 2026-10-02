@@ -1,0 +1,191 @@
+{
+  "schema_version": "sorted_goalonly_nonlinear3slot_smoke_validation_v1",
+  "read_at_local": "2026-10-02T09:19:49+08:00",
+  "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortg3sm_1002",
+  "launcher_status": "complete",
+  "launcher_exit_codes": {
+    "sac_mlp_d1_st_rt_topo_goalonly_v1": 0,
+    "sac_mlp_d1_st_rt_3slot_nonlinear_v1": 0
+  },
+  "smoke_only": true,
+  "not_a_performance_result": true,
+  "shared_protocol": {
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "sorted_template_count": 30,
+    "traffic_protocol": "same_complete_effective_pool_for_train_and_eval; no holdout",
+    "training_seed": 0,
+    "configured_device": "cuda",
+    "raw_step_budget": 300,
+    "learning_starts_raw_steps": 60,
+    "action_repeat": 3,
+    "checkpoint_frequency_raw_steps": 100,
+    "evaluation_episodes": 1,
+    "evaluation_split": "validation",
+    "evaluation_seed": 10000,
+    "behavior_diagnostics": true,
+    "policy_shadow_probes": true,
+    "policy_shadow_train_interval_raw_steps": 100,
+    "policy_shadow_train_unique_sample_cap": 20,
+    "policy_shadow_eval_unique_sample_cap_per_episode": 3,
+    "shadow_extra_environment_steps": 0,
+    "source_archive_file_count": 807,
+    "source_archive_manifest": "runs/sortg3sm_1002/source_archive/manifest.json"
+  },
+  "methods": {
+    "sac_mlp_d1_st_rt_3slot_nonlinear_v1": {
+      "run_dir": "runs/sortg3sm_1002/sac_mlp_d1_st_rt_3slot_nonlinear_v1__intersection_sorted_depart4p0",
+      "method_flags_verified": {
+        "use_route": true,
+        "use_topology": false,
+        "use_slots": true,
+        "use_incremental_slots": true,
+        "use_parameter_matched_nonlinear_slots": true,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "active_readout_parameter_count": 65792
+      },
+      "training": {
+        "completed": true,
+        "raw_steps": 300,
+        "updates": 241,
+        "progress_json_last_saved_updates": 240,
+        "progress_lags_completion_by_one_update": true
+      },
+      "checkpoint": {
+        "path": "final_model.zip",
+        "actual_sha256": "ad3be502c23408b3816c03cbf5c247d80c24a270870edcd2f35a01ce2c329315",
+        "training_complete_sha256_matches": true,
+        "evaluation_identity_sha256_matches": true
+      },
+      "evaluation": {
+        "episodes": 1,
+        "seed": 10000,
+        "outcome": "collision",
+        "decision_steps": 54,
+        "raw_steps": 160,
+        "shaped_mean_return": -8.79054221332073,
+        "raw_mean_return": -1.0,
+        "reward_components": {
+          "reward_success": 0.0,
+          "reward_collision": -10.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": 0.0,
+          "reward_step_cost": -0.5400000000000003,
+          "reward_progress": 1.7494577866792678
+        },
+        "component_reconciliation_max_abs_error": 3.552713678800501e-15,
+        "return_protocol": "environment_step_reward_v2"
+      },
+      "policy_shadow": {
+        "train": {
+          "unique_samples": 3,
+          "rows": 36,
+          "rows_per_sample": 12,
+          "applicable_valid_rows": 24,
+          "inactive_branch_rows": 12,
+          "active_invalid_rows": 0,
+          "error_rows": 0
+        },
+        "eval": {
+          "unique_samples": 2,
+          "rows": 24,
+          "rows_per_sample": 12,
+          "applicable_valid_rows": 16,
+          "inactive_branch_rows": 8,
+          "active_invalid_rows": 0,
+          "error_rows": 0,
+          "cap_per_episode": 3,
+          "evaluation_complete": true
+        }
+      },
+      "diagnostics_error_count_train": 0,
+      "diagnostics_error_count_eval": 0
+    },
+    "sac_mlp_d1_st_rt_topo_goalonly_v1": {
+      "run_dir": "runs/sortg3sm_1002/sac_mlp_d1_st_rt_topo_goalonly_v1__intersection_sorted_depart4p0",
+      "method_flags_verified": {
+        "use_route": true,
+        "use_topology": true,
+        "use_topology_actor_intent": false,
+        "use_topology_relations": false,
+        "use_topology_goal": true,
+        "use_route_reachability": true,
+        "use_slots": false,
+        "use_graph_slt": false,
+        "use_sbs": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "active_readout_parameter_count": 65792
+      },
+      "training": {
+        "completed": true,
+        "raw_steps": 300,
+        "updates": 241,
+        "progress_json_last_saved_updates": 238,
+        "progress_json_updated_before_final_training_complete": true
+      },
+      "checkpoint": {
+        "path": "final_model.zip",
+        "actual_sha256": "4761b1f1f9fd2120a1c5d28adfcc41d92d96a35984e47b0d5ab9c05609445ca9",
+        "training_complete_sha256_matches": true,
+        "evaluation_identity_sha256_matches": true
+      },
+      "evaluation": {
+        "episodes": 1,
+        "seed": 10000,
+        "outcome": "collision",
+        "decision_steps": 63,
+        "raw_steps": 187,
+        "shaped_mean_return": -9.132064117789268,
+        "raw_mean_return": -1.0,
+        "reward_components": {
+          "reward_success": 0.0,
+          "reward_collision": -10.0,
+          "reward_off_route": 0.0,
+          "reward_timeout": 0.0,
+          "reward_step_cost": -0.6300000000000003,
+          "reward_progress": 1.497935882210732
+        },
+        "component_reconciliation_max_abs_error": 1.7763568394002505e-15,
+        "return_protocol": "environment_step_reward_v2"
+      },
+      "policy_shadow": {
+        "train": {
+          "unique_samples": 3,
+          "rows": 36,
+          "rows_per_sample": 12,
+          "applicable_valid_rows": 21,
+          "inactive_branch_rows": 15,
+          "active_invalid_rows": 0,
+          "error_rows": 0
+        },
+        "eval": {
+          "unique_samples": 2,
+          "rows": 24,
+          "rows_per_sample": 12,
+          "applicable_valid_rows": 14,
+          "inactive_branch_rows": 10,
+          "active_invalid_rows": 0,
+          "error_rows": 0,
+          "cap_per_episode": 3,
+          "evaluation_complete": true
+        }
+      },
+      "diagnostics_error_count_train": 0,
+      "diagnostics_error_count_eval": 0
+    }
+  },
+  "evaluation_component_sources": {
+    "3slot": "runs/sortg3sm_1002/sac_mlp_d1_st_rt_3slot_nonlinear_v1__intersection_sorted_depart4p0/evaluation_results.json",
+    "goalonly": "runs/sortg3sm_1002/sac_mlp_d1_st_rt_topo_goalonly_v1__intersection_sorted_depart4p0/evaluation_results.json"
+  },
+  "limitations": [
+    "One smoke episode per method is implementation validation only, not a performance comparison.",
+    "Both smoke episodes happened to end in collision; this is not an estimate of method performance.",
+    "The Win32_Process command-line query for checking formal-run processes returned Access Denied. The proposed formal root runs/sortg3_1002 was absent at read time; process absence is not independently established by that query."
+  ],
+  "formal_run_root_absent_at_read_time": true
+}

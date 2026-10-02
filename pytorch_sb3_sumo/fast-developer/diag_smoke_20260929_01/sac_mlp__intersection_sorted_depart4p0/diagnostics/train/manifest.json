@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "method": "sac_mlp",
+  "phase": "train",
+  "neighbor_radius_m": 120.0,
+  "max_logged_neighbors": 32,
+  "forecast_horizon_s": 10.0,
+  "definitions": {
+    "position": "actor center, world coordinates, metres",
+    "heading": "radians counterclockwise from world +x",
+    "velocity": "world vx, vy, metres/second",
+    "cv_obb_ttc_s": "constant-velocity, fixed-heading rectangular collision forecast; null means unavailable or no predicted overlap within horizon; inspect cv_obb_geometry_available",
+    "radial_center_ttc_s": "center distance divided by positive radial closing speed; not intersection collision TTC",
+    "cpa_center_distance_m": "closest center distance over [0, forecast_horizon_s] assuming constant velocity",
+    "collision_events": "SUMO-reported events; forecasts are not actual collisions",
+    "removed_ego": "pre-step fallback, when present, is not a measured post-step collision position",
+    "reward_base": "reward returned by the raw environment before outer shaping",
+    "reward_policy": "reward returned to the learner/evaluator by the instrumented outer environment"
+  },
+  "source_script": "train_intersection_yield_v2.py",
+  "run_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\sac_mlp__intersection_sorted_depart4p0",
+  "scenario": "intersection_sorted",
+  "depart_scale": 4.0,
+  "source_traffic_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\traffic",
+  "effective_traffic_files": [
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_00.rou.xml",
+      "sha256": "42bcb8f455e3f8fb78766d5e88827088d7aeed2f73db5c37ce916d074a97c3e1"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_01.rou.xml",
+      "sha256": "d73c328bed330f2619e696d8c017e45a385e42b740adca4565dc516e91d01df7"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_02.rou.xml",
+      "sha256": "12d1b47636c8d57d29bc443f28d07b240c5dea65fbcb8e460656710d032a8e24"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_03.rou.xml",
+      "sha256": "61e7f3f2a54ecc1ba741ce44fea75d90b1e1ead3ffc6bfeca453299b41106cc2"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_04.rou.xml",
+      "sha256": "62c378f12f0cd89edaf66aaad1144c3d9548f1fccb93e90b909cca1d293926f9"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_05.rou.xml",
+      "sha256": "a6335ea8bddc6e83ad76210f66778d9d309f99ba009724a7cb49f22c1b100b9e"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_06.rou.xml",
+      "sha256": "dacdb9d52709d1df6385d70847febe25df790ce2a3e7b9ff28cd8b24bd1bf341"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_07.rou.xml",
+      "sha256": "f158085057e2fc18b37be323a85b45065026c5f71c20fdcecfe4eeb6c88825e2"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_08.rou.xml",
+      "sha256": "9c0edf2448a8a37db6fd7427e6f596ca41562bf98bfd1468c810e57312a79b6c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_09.rou.xml",
+      "sha256": "1b56768fb8f35d6c9d0f81d29ea8a97620b488b1aa8c0b43946365dbde78a865"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_10.rou.xml",
+      "sha256": "bfcb79e4ce5f46d2f88501e3db397e051333adfecbe5d89fcb189d1a294b0f8a"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_11.rou.xml",
+      "sha256": "fc0265e201a4028688e89cf66c2a4215f997f54fbe99a67ada861608845f59c0"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_12.rou.xml",
+      "sha256": "a51d772fce55de46538d43b84e77a3addb37d83b5a78da0257f52f1532caaaba"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_13.rou.xml",
+      "sha256": "ace22f5bbfb1f0c4f65ba8aad18d3e5c018d13976f037c3e4058c1cd410735ec"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_14.rou.xml",
+      "sha256": "f4da209ce134c30c0145acfaaf3688e4866aeb5b4a38bd9d12b259c92808509e"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_15.rou.xml",
+      "sha256": "c2fae1b19bcfda96a789418c9665f78ac2b48ce489a254568d665254dec3ee9f"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_16.rou.xml",
+      "sha256": "af05ec8aed18dbe0f809d047473ba31a96a69b853772adf974562a638dc2f761"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_17.rou.xml",
+      "sha256": "4a651222880e80c03a9def81b9868797800c68bacfea43b57008ec6617d4c808"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_18.rou.xml",
+      "sha256": "0ecdee620dd167d76a52e70782deee4575af4bab65b6abd7d274852ec1ea0106"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_19.rou.xml",
+      "sha256": "e6b8c101539ddbc1ea2edd0a736b099959dddec887b4c322a927b2d8fe65a412"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_20.rou.xml",
+      "sha256": "c643f52b5d2a43b215c0f5e16911f0570013ab8ad62b8c2a876bfeb76d79fcca"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_21.rou.xml",
+      "sha256": "def9bc0ff203d7d70db9070d572edc23df9324a5f8f522981a110666f7383ef7"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_22.rou.xml",
+      "sha256": "4ee12b762a462110a9f4e0d449a255654df8e46daee6adb7b20088209b17541f"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_23.rou.xml",
+      "sha256": "a2f061aa51f5a919aa07eddedf201abcf7ea7241b048abbeffb494c755966f82"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_24.rou.xml",
+      "sha256": "5a9d782123f73fc3363049231128a56a4b77ee9d3d943058004c42080cf0d542"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_25.rou.xml",
+      "sha256": "2b8e6f4daadbabaf01f41580ee380840366692a902d03e42cbee3eacdb82c30b"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_26.rou.xml",
+      "sha256": "62cacd70b539f18dabb619179b80f3a01a214181f5ac0db131ad5bbd6c38d601"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_27.rou.xml",
+      "sha256": "6f3f9489346f47dc45169c116f871d58b660206e5dd53026b4ff30840f70eeb3"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_28.rou.xml",
+      "sha256": "2515d91d2365cab19a9d8fd107c78585ea7c7657385470dc78521430edcd1001"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_29.rou.xml",
+      "sha256": "6994c368a90c3c263bdbd6b8609cece6f4072f727d5482578a79bc5ded90eaae"
+    }
+  ],
+  "train_traffic_files": [
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_00.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_01.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_02.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_03.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_04.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_05.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_06.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_07.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_08.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_09.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_10.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_11.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_12.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_13.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_14.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_15.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_16.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_17.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_18.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_19.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_20.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_21.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_22.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_23.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_24.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_25.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_26.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_27.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_28.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_29.rou.xml"
+  ],
+  "eval_traffic_files": [
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_00.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_01.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_02.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_03.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_04.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_05.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_06.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_07.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_08.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_09.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_10.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_11.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_12.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_13.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_14.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_15.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_16.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_17.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_18.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_19.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_20.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_21.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_22.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_23.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_24.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_25.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_26.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_27.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_28.rou.xml",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\diag_smoke_20260929_01\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_29.rou.xml"
+  ],
+  "traffic_partition": "same_complete_effective_pool_for_train_and_eval; no holdout",
+  "traffic_variants_shared_between_train_and_eval": true,
+  "training_seed": 0,
+  "action_repeat": 3,
+  "reward_shaping": {
+    "success_reward": 10.0,
+    "collision_reward": -10.0,
+    "off_route_reward": -10.0,
+    "timeout_reward": -5.0,
+    "progress_scale": 0.02,
+    "step_cost": 0.01
+  },
+  "raw_step_budget": 300,
+  "warmup_raw_steps": 60,
+  "checkpoint_frequency_raw_steps": 100,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "buffer_size": 20000,
+  "discount": 0.99,
+  "env_contract": "base",
+  "device": "cuda",
+  "smoke": true,
+  "action_space": {
+    "type": "Box",
+    "low": [
+      -1.0,
+      -1.0
+    ],
+    "high": [
+      1.0,
+      1.0
+    ],
+    "abs_ge_0p95_definition": "Absolute action >= 0.95; interpret as near saturation only for normalized [-1,1] channels."
+  }
+}

@@ -11,6 +11,7 @@ import torch
 from algos.sb3_torch import RawStepControlCallback
 from algos.sb3_torch.evaluation import source_evaluation_augmentation
 from algos.sb3_torch.graph_representation import StructuredGraphRepresentationObjective
+from algos.sb3_torch.incremental_topo_encoder import IncrementalTopoEncoder
 from algos.sb3_torch.sac_v2 import SceneRepresentationSACV2
 from algos.sb3_torch.topo_temporal_features import (
     StructuredLatent,
@@ -90,6 +91,553 @@ def _extractor(variant: str, *, gate: float = 1e-3):
         topology_layerscale_init=gate,
         goal_layerscale_init=gate,
     )
+
+
+def _incremental_extractor(
+    *, use_slots: bool, use_incremental_slots: bool = False
+) -> IncrementalTopoEncoder:
+    return IncrementalTopoEncoder(
+        _space(),
+        topology_graph=_graph(),
+        use_route=True,
+        use_topology=True,
+        use_slots=use_slots,
+        use_incremental_slots=use_incremental_slots,
+        random_augmentation=False,
+    )
+
+
+def _routeaware_extractor() -> IncrementalTopoEncoder:
+    specification = PAPER_SCENARIOS["left_turn"]
+    graph, graph_info = build_topology_graph_v2(
+        specification.network_path,
+        coordinate_offset=specification.coordinate_offset,
+        return_info=True,
+    )
+    spaces = dict(_space().spaces)
+    spaces["route_reachability"] = gym.spaces.Box(
+        -1.0,
+        1.0,
+        shape=(int(graph.node_mask.shape[0]),),
+        dtype=np.float32,
+    )
+    return IncrementalTopoEncoder(
+        gym.spaces.Dict(spaces),
+        topology_graph=graph,
+        topology_lane_ids=tuple(graph_info.lane_ids),
+        use_route=True,
+        use_topology=True,
+        use_slots=False,
+        use_route_reachability=True,
+        random_augmentation=False,
+    )
+
+
+def _capture_input(captured: dict[str, torch.Tensor], name: str):
+    def hook(_module, inputs) -> None:
+        captured[name] = inputs[0].detach().clone()
+
+    return hook
+
+
+def test_incremental_slot_head_keeps_the_topology_non_slot_path_identical() -> None:
+    torch.manual_seed(19)
+    topo = _incremental_extractor(use_slots=False).eval()
+    topo_3slot = _incremental_extractor(
+        use_slots=True, use_incremental_slots=True
+    ).eval()
+    topo_3slot.load_state_dict(topo.state_dict(), strict=True)
+
+    topo_inputs: dict[str, torch.Tensor] = {}
+    slot_inputs: dict[str, torch.Tensor] = {}
+    handles = [
+        topo.mlp_output.register_forward_pre_hook(_capture_input(topo_inputs, "all")),
+        topo_3slot.ego_projection.register_forward_pre_hook(
+            _capture_input(slot_inputs, "ego")
+        ),
+        topo_3slot.social_projection.register_forward_pre_hook(
+            _capture_input(slot_inputs, "social")
+        ),
+        topo_3slot.route_projection.register_forward_pre_hook(
+            _capture_input(slot_inputs, "route")
+        ),
+    ]
+    observations = _batch()
+    try:
+        topo(observations)
+        latent = topo_3slot.forward_tokens(observations)
+    finally:
+        for handle in handles:
+            handle.remove()
+
+    assert isinstance(latent, StructuredLatent)
+    assert latent.z_ego.shape[-1] == 32
+    assert latent.z_social.shape[-1] == 64
+    assert latent.z_route.shape[-1] == 32
+    assert latent.tensor.shape == (3, 128)
+    shared_context = torch.cat(
+        [slot_inputs["ego"], slot_inputs["social"], slot_inputs["route"]], dim=-1
+    )
+    torch.testing.assert_close(topo_inputs["all"], shared_context, rtol=0, atol=0)
+
+
+def test_route_reachability_mask_intersects_expands_and_bypasses_safely() -> None:
+    encoder = _routeaware_extractor()
+    capacity = int(encoder.topology_node_mask.numel())
+    valid_count = int(encoder.topology_node_mask.sum())
+    assert valid_count >= 3
+
+    query = torch.zeros(3, capacity, dtype=torch.bool)
+    query[0, 0] = True
+    query[0, 1] = True
+    query[1, 0] = True
+    query[2, 2] = True
+
+    labels = torch.full((3, capacity), -1.0)
+    labels[:, :valid_count] = 0.0
+    # Sample 0 has a legal node inside its geometric query and one outside it.
+    labels[0, 0] = 1.0
+    labels[0, 2] = 1.0
+    # Sample 1 has legal continuation nodes, but none in its geometric query.
+    labels[1, 1] = 1.0
+
+    selected, state = encoder._route_reachability_goal_mask(query, labels)
+    assert selected[0].nonzero().flatten().tolist() == [0]
+    assert selected[1].nonzero().flatten().tolist() == [1]
+    assert selected[2].nonzero().flatten().tolist() == [2]
+    assert state["expanded"].tolist() == [False, True, False]
+    assert state["bypassed"].tolist() == [False, False, True]
+    assert not selected[:, valid_count:].any()
+
+
+def test_route_reachability_forward_is_finite_and_trains_goal_branch() -> None:
+    encoder = _routeaware_extractor().train()
+    encoder.configure_diagnostics(True, sample_every=1, source="train_replay")
+    valid_count = int(encoder.topology_node_mask.sum())
+    capacity = int(encoder.topology_node_mask.numel())
+    observations = _batch(batch_size=3)
+    labels = torch.full((3, capacity), -1.0)
+    labels[:, :valid_count] = 0.0
+    labels[0, 0] = 1.0
+    # Sample 1 deliberately has no known legal continuation: its topology-goal
+    # residual must be bypassed instead of using an all-masked softmax.
+    labels[2, valid_count - 1] = 1.0
+    observations["route_reachability"] = labels
+
+    captured: dict[str, torch.Tensor] = {}
+
+    def capture_goal_mask(_module, inputs) -> None:
+        captured["mask"] = inputs[2].detach().clone()
+
+    def capture_route_base(_module, _inputs, output) -> None:
+        captured["route_base"] = output[0].detach().clone()
+
+    def capture_mlp_input(_module, inputs) -> None:
+        captured["mlp_input"] = inputs[0].detach().clone()
+
+    handle = encoder.goal_topology_attention.register_forward_pre_hook(
+        capture_goal_mask
+    )
+    route_base_handle = encoder.goal_attention.register_forward_hook(
+        capture_route_base
+    )
+    mlp_input_handle = encoder.mlp_output.register_forward_pre_hook(
+        capture_mlp_input
+    )
+    try:
+        output = encoder(observations)
+    finally:
+        handle.remove()
+        route_base_handle.remove()
+        mlp_input_handle.remove()
+
+    assert output.shape == (3, 128)
+    assert torch.isfinite(output).all()
+    assert captured["mask"].shape == (3, capacity)
+    assert captured["mask"][1].any()
+    assert not captured["mask"][:, valid_count:].any()
+    # The no-legal sample bypasses only the topology-goal residual; its route
+    # component is exactly the existing route-base readout.
+    torch.testing.assert_close(
+        captured["mlp_input"][1, -128:],
+        captured["route_base"][1, 0],
+        rtol=0,
+        atol=0,
+    )
+    diagnostics = encoder.diagnostic_values()
+    assert diagnostics["diagnostic_sample_index"].item() == 1
+    assert diagnostics["route_reachability_goal_bypass_fraction"].item() == pytest.approx(1 / 3)
+    assert diagnostics["route_reachability_goal_active_sample_count"].item() == 2
+    assert diagnostics["route_reachability_goal_legal_attention_valid_count"].item() == 2
+    assert all(torch.isfinite(value).all() for value in diagnostics.values())
+
+    output.square().mean().backward()
+    for prefix in ("goal_topology_attention.", "goal_residual_scale"):
+        gradients = [
+            parameter.grad
+            for name, parameter in encoder.named_parameters()
+            if name == prefix or name.startswith(prefix)
+        ]
+        assert gradients, prefix
+        assert any(gradient is not None for gradient in gradients), prefix
+        assert all(
+            gradient is None or torch.isfinite(gradient).all()
+            for gradient in gradients
+        ), prefix
+
+
+def test_disabled_route_reachability_ignores_extra_observation_key() -> None:
+    encoder = _incremental_extractor(use_slots=False).eval()
+    observations = _batch(batch_size=2)
+    with torch.no_grad():
+        baseline = encoder(observations)
+        extended = encoder(
+            {
+                **observations,
+                "route_reachability": torch.ones(2, 16),
+            }
+        )
+    torch.testing.assert_close(extended, baseline, rtol=0, atol=0)
+
+
+def test_route_three_slot_method_emits_structured_latent_and_gradients() -> None:
+    encoder = IncrementalTopoEncoder(
+        _space(),
+        topology_graph=_graph(),
+        use_route=True,
+        use_topology=False,
+        use_slots=True,
+        use_incremental_slots=True,
+        random_augmentation=False,
+    ).train()
+    output = encoder.forward_tokens(_batch(batch_size=2))
+    assert isinstance(output, StructuredLatent)
+    assert output.z_ego.shape == (2, 32)
+    assert output.z_social.shape == (2, 64)
+    assert output.z_route.shape == (2, 32)
+    output.tensor.square().mean().backward()
+    for prefix in ("ego_projection.", "social_projection.", "route_projection."):
+        gradients = [
+            parameter.grad
+            for name, parameter in encoder.named_parameters()
+            if name.startswith(prefix)
+        ]
+        assert gradients and any(gradient is not None for gradient in gradients)
+        assert all(
+            gradient is None or torch.isfinite(gradient).all()
+            for gradient in gradients
+        )
+
+
+def test_incremental_encoder_full_default_still_delegates_to_parent_v2() -> None:
+    torch.manual_seed(23)
+    parent = _extractor("soft").eval()
+    full_default = _incremental_extractor(use_slots=True).eval()
+    full_default.load_state_dict(parent.state_dict(), strict=False)
+    parent_output = parent(_batch())
+    full_output = full_default(_batch())
+    torch.testing.assert_close(full_output, parent_output, rtol=0, atol=0)
+
+
+def test_incremental_slot_diagnostics_are_sampled_and_batch_one_is_not_variance_evidence() -> None:
+    encoder = _incremental_extractor(
+        use_slots=True, use_incremental_slots=True
+    ).eval()
+    encoder.configure_diagnostics(True, sample_every=2, source="train_replay")
+    observations = _batch()
+
+    rng_state_before = torch.random.get_rng_state().clone()
+    encoder(observations)
+    assert torch.equal(rng_state_before, torch.random.get_rng_state())
+    first = encoder.diagnostic_values()
+    assert first["diagnostic_sample_index"].item() == 1
+    assert first["diagnostic_sample_forward_index"].item() == 1
+    assert first["diagnostic_sample_age_forwards"].item() == 0
+
+    encoder(observations)
+    sampled = encoder.diagnostic_values()
+    assert sampled["diagnostic_sample_index"].item() == 1
+    assert sampled["diagnostic_sample_forward_index"].item() == 1
+    assert sampled["diagnostic_sample_source_code"].item() == 1
+    assert sampled["diagnostic_sample_batch_size"].item() == 3
+    assert sampled["diagnostic_sample_grad_enabled"].item() == 1
+    assert sampled["diagnostic_sample_age_forwards"].item() == 1
+    assert sampled["diagnostic_valid_query_count"].item() > 0
+    assert sampled["relation_pair_valid_count"].item() > 0
+    assert sampled["ego_slot_dim"].item() == 32
+    assert sampled["social_slot_dim"].item() == 64
+    assert sampled["route_slot_dim"].item() == 32
+    assert sampled["slot_sample_energy_correlation_valid"].item() == 0
+    assert "slot_sample_energy_ego_social_corr" not in sampled
+    assert all(torch.isfinite(value).all() for value in sampled.values())
+
+    encoder.configure_diagnostics(True, sample_every=1, source="eval_policy")
+    with torch.no_grad():
+        encoder({key: value[:1] for key, value in observations.items()})
+    single = encoder.diagnostic_values()
+    assert single["diagnostic_sample_index"].item() == 2
+    assert single["diagnostic_sample_source_code"].item() == 2
+    assert single["diagnostic_sample_batch_size"].item() == 1
+    assert single["diagnostic_sample_grad_enabled"].item() == 0
+    assert single["diagnostic_batch_variance_valid"].item() == 0
+    assert single["slot_batch_variance_valid"].item() == 0
+    assert single["slot_sample_energy_correlation_valid"].item() == 0
+    assert all(torch.isfinite(value).all() for value in single.values())
+
+
+def test_topology_actor_postnorm_delta_matches_same_norm_baseline() -> None:
+    encoder = _incremental_extractor(use_slots=False).eval()
+    encoder.configure_diagnostics(True, sample_every=1, source="eval_policy")
+    observations = _batch()
+    norm_calls: list[tuple[torch.Tensor, torch.Tensor]] = []
+
+    def capture_norm(module, inputs, output):
+        norm_calls.append((inputs[0].detach().clone(), output.detach().clone()))
+
+    handle = encoder.topology_norm.register_forward_hook(capture_norm)
+    try:
+        output = encoder(observations)
+    finally:
+        handle.remove()
+
+    assert torch.isfinite(output).all()
+    # One call is the real Topo actor-intent path; the second is the detached
+    # same-LayerNorm baseline used only by this sampled diagnostic.
+    assert len(norm_calls) == 2
+    actual = norm_calls[0][1]
+    baseline = norm_calls[1][1]
+    valid = observations["trajectory"].abs().sum(dim=-1) > 0
+    valid_float = valid.to(actual.dtype)
+    count = valid_float.sum()
+    delta = actual - baseline
+    expected_delta_rms = (
+        (delta.square().mean(dim=-1) * valid_float).sum() / count
+    ).sqrt()
+    expected_baseline_rms = (
+        (baseline.square().mean(dim=-1) * valid_float).sum() / count
+    ).sqrt()
+    diagnostics = encoder.diagnostic_values()
+    assert diagnostics["topology_actor_postnorm_valid_query_count"].item() == count.item()
+    assert diagnostics["topology_actor_postnorm_delta_valid"].item() == 1
+    torch.testing.assert_close(
+        diagnostics["topology_actor_postnorm_delta_rms"], expected_delta_rms
+    )
+    torch.testing.assert_close(
+        diagnostics["topology_actor_postnorm_baseline_rms"], expected_baseline_rms
+    )
+    torch.testing.assert_close(
+        diagnostics["topology_actor_postnorm_delta_relative_rms"],
+        expected_delta_rms / expected_baseline_rms,
+    )
+
+
+def test_relation_attention_uniform_baseline_uses_identical_key_and_pair_support() -> None:
+    encoder = _incremental_extractor(use_slots=False).eval()
+    encoder.configure_diagnostics(True, sample_every=1, source="eval_policy")
+    observations = _batch()
+    captured: dict[str, torch.Tensor] = {}
+    original_query = encoder._query_topology_v2
+
+    def capture_query(*args, **kwargs):
+        result = original_query(*args, **kwargs)
+        captured["attention"] = result[1].detach().clone()
+        captured["key_mask"] = result[2].detach().clone()
+        return result
+
+    encoder._query_topology_v2 = capture_query
+    encoder(observations)
+    diagnostics = encoder.diagnostic_values()
+
+    attention = captured["attention"].permute(0, 2, 1, 3)
+    candidates = captured["key_mask"].permute(0, 2, 1, 3).to(attention.dtype)
+    candidate_counts = candidates.sum(dim=-1)
+    uniform = candidates / candidate_counts.clamp_min(1.0)[..., None]
+    trajectory_valid = observations["trajectory"].abs().sum(dim=-1) > 0
+    node_valid = trajectory_valid.permute(0, 2, 1)
+    pair_valid = node_valid.unsqueeze(-1) & node_valid.unsqueeze(-2)
+    diagonal = torch.eye(encoder.actor_count, dtype=torch.bool)[None, None]
+    pair_valid &= ~diagonal
+    has_candidates = candidate_counts > 0
+    support = (
+        pair_valid
+        & has_candidates.unsqueeze(-1)
+        & has_candidates.unsqueeze(-2)
+    )
+    support_weights = support.to(attention.dtype)
+    support_count = support_weights.sum()
+
+    def masked_pair_mean(values: torch.Tensor) -> torch.Tensor:
+        return (values * support_weights).sum() / support_count
+
+    same_attention = torch.einsum("bhim,bhjm->bhij", attention, attention)
+    same_uniform = torch.einsum("bhim,bhjm->bhij", uniform, uniform)
+    conflict_attention = torch.einsum(
+        "bhim,mn,bhjn->bhij", attention, encoder.topology_conflict_adjacency, attention
+    )
+    conflict_uniform = torch.einsum(
+        "bhim,mn,bhjn->bhij", uniform, encoder.topology_conflict_adjacency, uniform
+    )
+    merge_attention = torch.einsum(
+        "bhim,mn,bhjn->bhij", attention, encoder.topology_merge_adjacency, attention
+    )
+    merge_uniform = torch.einsum(
+        "bhim,mn,bhjn->bhij", uniform, encoder.topology_merge_adjacency, uniform
+    )
+    combined = torch.maximum(
+        encoder.topology_conflict_adjacency, encoder.topology_merge_adjacency
+    )
+    combined_attention = torch.einsum(
+        "bhim,mn,bhjn->bhij", attention, combined, attention
+    )
+    combined_uniform = torch.einsum(
+        "bhim,mn,bhjn->bhij", uniform, combined, uniform
+    )
+    expected = {
+        "same_lane": (same_attention, same_uniform),
+        "conflict": (conflict_attention, conflict_uniform),
+        "merge": (merge_attention, merge_uniform),
+        "conflict_or_merge": (combined_attention, combined_uniform),
+    }
+    assert diagnostics["relation_uniform_support_pair_count"].item() == support_count.item()
+    assert diagnostics["relation_uniform_support_valid"].item() == 1
+    for name, (actual_values, null_values) in expected.items():
+        actual_mean = masked_pair_mean(actual_values)
+        null_mean = masked_pair_mean(null_values)
+        torch.testing.assert_close(
+            diagnostics[f"{name}_attention_matched_support_mean"], actual_mean
+        )
+        torch.testing.assert_close(
+            diagnostics[f"{name}_uniform_support_mean"], null_mean
+        )
+        torch.testing.assert_close(
+            diagnostics[f"{name}_attention_minus_uniform_support"],
+            actual_mean - null_mean,
+        )
+
+    no_support = encoder._uniform_relation_support_diagnostics(
+        same_lane_score=same_attention,
+        conflict_score=conflict_attention,
+        merge_score=merge_attention,
+        conflict_or_merge_score=combined_attention,
+        pair_valid=pair_valid,
+        topology_key_mask=torch.zeros_like(captured["key_mask"]),
+        reference=attention,
+    )
+    assert no_support["relation_uniform_support_pair_count"].item() == 0
+    assert no_support["relation_uniform_support_valid"].item() == 0
+    assert all(torch.isfinite(value).all() for value in no_support.values())
+
+
+def test_incremental_diagnostics_preserve_forward_rng_and_gradient_and_stamp_callsite() -> None:
+    torch.manual_seed(901)
+    baseline = _incremental_extractor(use_slots=False).eval()
+    instrumented = _incremental_extractor(use_slots=False).eval()
+    instrumented.load_state_dict(baseline.state_dict())
+    observations = _batch()
+    rng_before = torch.random.get_rng_state().clone()
+
+    baseline_output = baseline(observations)
+    rng_after_baseline = torch.random.get_rng_state().clone()
+
+    torch.random.set_rng_state(rng_before)
+    instrumented.configure_diagnostics(True, sample_every=256, source="train_replay")
+    previous_context = instrumented.set_diagnostic_context(
+        "critic_td_current", 17, force_sample=True
+    )
+    instrumented_output = instrumented(observations)
+    instrumented.restore_diagnostic_context(previous_context)
+    rng_after_instrumented = torch.random.get_rng_state().clone()
+    torch.testing.assert_close(instrumented_output, baseline_output, rtol=0, atol=0)
+    assert torch.equal(rng_after_baseline, rng_after_instrumented)
+
+    baseline.zero_grad(set_to_none=True)
+    instrumented.zero_grad(set_to_none=True)
+    torch.random.set_rng_state(rng_before)
+    baseline(observations).square().mean().backward()
+    baseline_gradients = {
+        name: None if parameter.grad is None else parameter.grad.detach().clone()
+        for name, parameter in baseline.named_parameters()
+    }
+
+    torch.random.set_rng_state(rng_before)
+    previous_context = instrumented.set_diagnostic_context(
+        "critic_td_current", 18, force_sample=True
+    )
+    instrumented(observations).square().mean().backward()
+    instrumented.restore_diagnostic_context(previous_context)
+    assert torch.equal(rng_after_baseline, torch.random.get_rng_state())
+    for name, parameter in instrumented.named_parameters():
+        expected = baseline_gradients[name]
+        if expected is None:
+            assert parameter.grad is None, name
+        else:
+            assert parameter.grad is not None, name
+            torch.testing.assert_close(parameter.grad, expected, rtol=0, atol=0)
+
+    sampled = instrumented.diagnostic_values()
+    assert sampled["diagnostic_sample_site_code"].item() == 3
+    assert sampled["diagnostic_sample_update_index"].item() == 18
+    assert sampled["diagnostic_sample_batch_size"].item() == 3
+    assert sampled["diagnostic_sample_grad_enabled"].item() == 1
+    assert sampled["diagnostic_sample_age_forwards"].item() == 0
+    for key in (
+        "spatial_message_delta_rms",
+        "history_single_valid_frame_fraction",
+        "temporal_delta_from_last_frame_rms",
+        "social_attention_entropy",
+        "route_valid_path_count_mean",
+        "route_attention_entropy_nonempty",
+        "goal_topology_attention_entropy_active",
+    ):
+        assert key in sampled, key
+        assert torch.isfinite(sampled[key]).all(), key
+
+
+def test_slot_sample_energy_correlation_reports_validity_separately() -> None:
+    correlated, correlated_valid = IncrementalTopoEncoder._safe_correlation(
+        torch.tensor([1.0, 2.0, 4.0]),
+        torch.tensor([2.0, 4.0, 8.0]),
+    )
+    constant, constant_valid = IncrementalTopoEncoder._safe_correlation(
+        torch.tensor([1.0, 1.0, 1.0]),
+        torch.tensor([2.0, 3.0, 4.0]),
+    )
+    assert correlated_valid.item() == 1
+    torch.testing.assert_close(correlated, torch.tensor(1.0))
+    assert constant_valid.item() == 0
+
+
+def test_incremental_three_slot_path_preserves_topology_and_projection_gradients() -> None:
+    encoder = _incremental_extractor(
+        use_slots=True, use_incremental_slots=True
+    ).train()
+    output = encoder.forward_tokens(_batch())
+    assert isinstance(output, StructuredLatent)
+    output.tensor.square().mean().backward()
+
+    for prefix in (
+        "topology_encoder.",
+        "topology_attention.",
+        "goal_topology_attention.",
+        "ego_projection.",
+        "social_projection.",
+        "route_projection.",
+    ):
+        gradients = [
+            parameter.grad
+            for name, parameter in encoder.named_parameters()
+            if name.startswith(prefix)
+        ]
+        assert gradients, prefix
+        assert any(gradient is not None for gradient in gradients), prefix
+        assert all(
+            gradient is None or torch.isfinite(gradient).all()
+            for gradient in gradients
+        ), prefix
+        assert any(
+            gradient is not None and gradient.abs().sum() > 0
+            for gradient in gradients
+        ), prefix
 
 
 @pytest.mark.parametrize("variant", ["merge", "query", "gated", "soft"])

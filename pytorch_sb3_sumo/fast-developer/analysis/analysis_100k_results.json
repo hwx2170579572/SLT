@@ -1,0 +1,1576 @@
+{
+  "schema_version": 1,
+  "analysis_generated_at_local": "2026-09-29T23:03:17+08:00",
+  "analysis_script": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\analyze_100k_results.py",
+  "analysis_runtime": {
+    "python": "3.14.2",
+    "numpy": "2.3.5"
+  },
+  "scope": "Read-only audit of completed artifacts; no model, SUMO, train, or evaluation execution.",
+  "run": {
+    "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+    "launcher_status": "complete",
+    "exit_codes": {
+      "sac_mlp": 0,
+      "sac_mlp_d1_st_rt": 0
+    },
+    "failed_methods": null,
+    "source_script": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+    "scenario": "intersection_sorted",
+    "depart_scale": 4.0,
+    "raw_step_budget": 100000,
+    "training_seed": 0,
+    "smoke": false,
+    "checkpoint_frequency_raw_steps": 10000,
+    "eval_episodes": 100,
+    "traffic_protocol": "same_complete_effective_pool_for_train_and_eval; no holdout",
+    "traffic_file_count": 30,
+    "traffic_files_all_exist": true,
+    "traffic_files": [
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_00.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_01.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_02.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_03.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_04.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_05.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_06.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_07.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_08.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_09.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_10.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_11.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_12.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_13.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_14.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_15.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_16.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_17.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_18.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_19.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_20.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_21.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_22.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_23.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_24.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_25.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_26.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_27.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_28.rou.xml",
+      "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\_p4_lowdensity_s4p0__intersection_sorted\\traffic_29.rou.xml"
+    ],
+    "start_time": "2026-09-29T17:47:03+08:00",
+    "finish_time": "2026-09-29T21:40:56+08:00",
+    "elapsed_seconds": 14032.718936920166
+  },
+  "current_methods": {
+    "SAC+MLP": {
+      "directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0",
+      "arguments": {
+        "method": "sac_mlp",
+        "scenario": "intersection_sorted",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+        "env_contract": "base",
+        "env_class": "YieldObsIndependentV2EnvV1 (改法 1+2)",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        }
+      },
+      "training_complete": {
+        "smoke": false,
+        "checkpoint_sha256": "59b7279b6c42d5f97f5aa4c11e163720288e628a1430fda7db23f30380c2167a",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 6754.183268547058
+      },
+      "evaluation": {
+        "episodes": 100,
+        "outcome_counts": {
+          "success": 22,
+          "collision": 38,
+          "timeout": 40,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_rate": 0.22,
+        "success_wilson_95_episode_iid_only": [
+          0.150012823846054,
+          0.31070353514985793
+        ],
+        "mean_return": -0.16,
+        "mean_raw_steps": 367.95,
+        "mean_decision_steps": 122.83,
+        "mean_success_completion_seconds": 27.063636363636366,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "59b7279b6c42d5f97f5aa4c11e163720288e628a1430fda7db23f30380c2167a",
+        "eval_episodes_metadata": 100,
+        "eval_workers_metadata": 1,
+        "smoke": false
+      },
+      "evaluation_diagnostic_summary": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\eval_worker_00\\summary.json",
+        "episodes_finished": 100,
+        "raw_records": 36795,
+        "decision_records": 12283,
+        "diagnostic_error_count": 0,
+        "outcome_conditioned": {
+          "success": {
+            "episodes": 22,
+            "metrics": {
+              "mean_raw_steps": 270.6363636363636,
+              "mean_decision_steps": 90.5,
+              "mean_simulated_seconds_with_speed_observed": 26.96363636363648,
+              "actual_speed_mps_weighted_by_speed_samples": 6.197776310085988,
+              "speed_samples_denominator": 5932,
+              "stopped_tick_fraction_of_speed_samples": 0.03573836817262306,
+              "cv_obb_ttc_below_3s_fraction_of_risk_evaluable_ticks": 0.08024275118004046,
+              "risk_evaluable_ticks_denominator": 5932,
+              "near_unit_action_scalar_fraction_abs_ge_0p95": 0.31039678553490707,
+              "action_scalar_denominator": 3982,
+              "near_unit_action_scalar_count": 1236,
+              "risk_observation_coverage_fraction": 0.9963050050386295
+            }
+          },
+          "collision": {
+            "episodes": 38,
+            "metrics": {
+              "mean_raw_steps": 180.02631578947367,
+              "mean_decision_steps": 60.31578947368421,
+              "mean_simulated_seconds_with_speed_observed": 18.00263157894736,
+              "actual_speed_mps_weighted_by_speed_samples": 4.766051029933061,
+              "speed_samples_denominator": 6841,
+              "stopped_tick_fraction_of_speed_samples": 0.03098962140038006,
+              "cv_obb_ttc_below_3s_fraction_of_risk_evaluable_ticks": 0.14442332992252593,
+              "risk_evaluable_ticks_denominator": 6841,
+              "near_unit_action_scalar_fraction_abs_ge_0p95": 0.07133507853403141,
+              "action_scalar_denominator": 4584,
+              "near_unit_action_scalar_count": 327,
+              "risk_observation_coverage_fraction": 1.0
+            }
+          },
+          "timeout": {
+            "episodes": 40,
+            "metrics": {
+              "mean_raw_steps": 600.0,
+              "mean_decision_steps": 200.0,
+              "mean_simulated_seconds_with_speed_observed": 60.00000000000058,
+              "actual_speed_mps_weighted_by_speed_samples": 1.1670733847531825,
+              "speed_samples_denominator": 24000,
+              "stopped_tick_fraction_of_speed_samples": 0.741,
+              "cv_obb_ttc_below_3s_fraction_of_risk_evaluable_ticks": 0.016875,
+              "risk_evaluable_ticks_denominator": 24000,
+              "near_unit_action_scalar_fraction_abs_ge_0p95": 0.18075,
+              "action_scalar_denominator": 16000,
+              "near_unit_action_scalar_count": 2892,
+              "risk_observation_coverage_fraction": 1.0
+            }
+          },
+          "off_route": {
+            "episodes": 0,
+            "metrics": null
+          },
+          "other": {
+            "episodes": 0,
+            "metrics": null
+          }
+        }
+      },
+      "training_diagnostics": {
+        "summary_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "optimization_jsonl_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\train\\optimization.jsonl",
+        "optimization_jsonl_exists": true,
+        "outcome_counts_including_incomplete": {
+          "success": 138,
+          "collision": 252,
+          "timeout": 36,
+          "incomplete": 1
+        },
+        "diagnostic_error_count": 0,
+        "selected_optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 100,
+            "sum": 5055574.0,
+            "min": 1002.0,
+            "max": 100000.0,
+            "last": 100000.0
+          },
+          "train/n_updates": {
+            "n": 96,
+            "sum": 4565559.0,
+            "min": 7.0,
+            "max": 95001.0,
+            "last": 95001.0
+          },
+          "train/ent_coef": {
+            "n": 96,
+            "sum": 2.9316009362228215,
+            "min": 0.0057413941249251366,
+            "max": 0.19989045709371567,
+            "last": 0.012650258839130402
+          },
+          "train/actor_loss": {
+            "n": 96,
+            "sum": 244.82124196738005,
+            "min": -0.7998906075954437,
+            "max": 5.874289512634277,
+            "last": -0.7303862571716309
+          },
+          "train/critic_loss": {
+            "n": 96,
+            "sum": 341.0392429456115,
+            "min": 0.2762565240263939,
+            "max": 11.3677519261837,
+            "last": 2.697667121887207
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 92,
+            "sum": -237.47339891642332,
+            "min": -5.547547340393066,
+            "max": 0.5303671956062317,
+            "last": -1.4883424043655396
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 92,
+            "sum": -236.8468858897686,
+            "min": -5.601606845855713,
+            "max": 0.5042833089828491,
+            "last": -1.516891598701477
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 92,
+            "sum": -237.41558256745338,
+            "min": -5.424670219421387,
+            "max": 0.6867101788520813,
+            "last": -1.7398852109909058
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 92,
+            "sum": 79.8530658185482,
+            "min": 0.34743285179138184,
+            "max": 2.0057027339935303,
+            "last": 0.950660765171051
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 92,
+            "sum": 80.02720585465431,
+            "min": 0.35396742820739746,
+            "max": 2.03879714012146,
+            "last": 0.9645751118659973
+          }
+        }
+      },
+      "wall_seconds_training": 6754.183268547058,
+      "launcher_worker": {
+        "status": "complete",
+        "pid": 53048,
+        "exit_code": 0,
+        "started_at": "2026-09-29T17:47:03+08:00",
+        "finished_at": "2026-09-29T20:02:46+08:00",
+        "wall_seconds_including_eval": 8142.680432796478,
+        "log_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\launcher_logs\\sac_mlp__train.log",
+        "command": [
+          "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+          "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+          "train-method",
+          "--method",
+          "sac_mlp",
+          "--depart-scale",
+          "4.0",
+          "--max-steps",
+          "100000",
+          "--run-root",
+          "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+          "--checkpoint-frequency",
+          "10000",
+          "--behavior-diagnostics"
+        ]
+      },
+      "final_model_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\final_model.zip",
+      "final_model_sha256_verified": "59b7279b6c42d5f97f5aa4c11e163720288e628a1430fda7db23f30380c2167a"
+    },
+    "ST-RT": {
+      "directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0",
+      "arguments": {
+        "method": "sac_mlp_d1_st_rt",
+        "parent": "sac_mlp",
+        "scenario": "intersection_sorted",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 10000,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "behavior_diagnostics": true,
+        "run_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": true,
+        "use_topology": false,
+        "use_slots": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "note": "与父基线 sac_mlp 唯一差异：features_extractor 换 IncrementalTopoEncoder（use_route=True, use_topology=False, use_slots=False）。动作头 / 熵 / 调参 / n_step / 环境契约完全一致。"
+      },
+      "training_complete": {
+        "smoke": false,
+        "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+        "raw_steps": 100000,
+        "updates": 95001,
+        "replay_size": 20000,
+        "behavior_diagnostics": true,
+        "wall_seconds": 13196.827271461487
+      },
+      "evaluation": {
+        "episodes": 100,
+        "outcome_counts": {
+          "success": 63,
+          "collision": 37,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_rate": 0.63,
+        "success_wilson_95_episode_iid_only": [
+          0.5322052958094291,
+          0.7181763946567546
+        ],
+        "mean_return": 0.26,
+        "mean_raw_steps": 268.99,
+        "mean_decision_steps": 90.03,
+        "mean_success_completion_seconds": 28.72857142857143,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262",
+        "eval_episodes_metadata": 100,
+        "eval_workers_metadata": 1,
+        "smoke": false
+      },
+      "evaluation_diagnostic_summary": {
+        "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json",
+        "episodes_finished": 100,
+        "raw_records": 26899,
+        "decision_records": 9003,
+        "diagnostic_error_count": 0,
+        "outcome_conditioned": {
+          "success": {
+            "episodes": 63,
+            "metrics": {
+              "mean_raw_steps": 287.2857142857143,
+              "mean_decision_steps": 96.0952380952381,
+              "mean_simulated_seconds_with_speed_observed": 28.628571428571565,
+              "actual_speed_mps_weighted_by_speed_samples": 5.834303215501861,
+              "speed_samples_denominator": 18036,
+              "stopped_tick_fraction_of_speed_samples": 0.07801064537591483,
+              "cv_obb_ttc_below_3s_fraction_of_risk_evaluable_ticks": 0.06997116877356398,
+              "risk_evaluable_ticks_denominator": 18036,
+              "near_unit_action_scalar_fraction_abs_ge_0p95": 0.454410307234886,
+              "action_scalar_denominator": 12108,
+              "near_unit_action_scalar_count": 5502,
+              "risk_observation_coverage_fraction": 0.9965191447041273
+            }
+          },
+          "collision": {
+            "episodes": 37,
+            "metrics": {
+              "mean_raw_steps": 237.83783783783784,
+              "mean_decision_steps": 79.70270270270271,
+              "mean_simulated_seconds_with_speed_observed": 23.78378378378385,
+              "actual_speed_mps_weighted_by_speed_samples": 3.4375619734839264,
+              "speed_samples_denominator": 8800,
+              "stopped_tick_fraction_of_speed_samples": 0.15840909090909092,
+              "cv_obb_ttc_below_3s_fraction_of_risk_evaluable_ticks": 0.14068181818181819,
+              "risk_evaluable_ticks_denominator": 8800,
+              "near_unit_action_scalar_fraction_abs_ge_0p95": 0.2722956934554086,
+              "action_scalar_denominator": 5898,
+              "near_unit_action_scalar_count": 1606,
+              "risk_observation_coverage_fraction": 1.0
+            }
+          },
+          "timeout": {
+            "episodes": 0,
+            "metrics": null
+          },
+          "off_route": {
+            "episodes": 0,
+            "metrics": null
+          },
+          "other": {
+            "episodes": 0,
+            "metrics": null
+          }
+        }
+      },
+      "training_diagnostics": {
+        "summary_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+        "optimization_jsonl_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\train\\optimization.jsonl",
+        "optimization_jsonl_exists": true,
+        "outcome_counts_including_incomplete": {
+          "success": 165,
+          "collision": 294,
+          "timeout": 11,
+          "incomplete": 1
+        },
+        "diagnostic_error_count": 0,
+        "selected_optimization_statistics": {
+          "time/raw_simulation_steps": {
+            "n": 100,
+            "sum": 5054934.0,
+            "min": 1002.0,
+            "max": 100000.0,
+            "last": 100000.0
+          },
+          "train/n_updates": {
+            "n": 96,
+            "sum": 4564919.0,
+            "min": 7.0,
+            "max": 95001.0,
+            "last": 95001.0
+          },
+          "train/ent_coef": {
+            "n": 96,
+            "sum": 3.163052504649386,
+            "min": 0.007497001672163606,
+            "max": 0.19988801330327988,
+            "last": 0.01669512502849102
+          },
+          "train/actor_loss": {
+            "n": 96,
+            "sum": 262.5904675265774,
+            "min": -2.1114888191223145,
+            "max": 6.632206678390503,
+            "last": -2.1114888191223145
+          },
+          "train/critic_loss": {
+            "n": 96,
+            "sum": 468.7908631041646,
+            "min": 0.2243959754705429,
+            "max": 13.917890071868896,
+            "last": 6.289368152618408
+          },
+          "diagnostic/q1_mean_sampled": {
+            "n": 93,
+            "sum": -257.2749220430851,
+            "min": -7.264289855957031,
+            "max": 3.7047128677368164,
+            "last": 1.521013855934143
+          },
+          "diagnostic/q2_mean_sampled": {
+            "n": 93,
+            "sum": -256.8938222154975,
+            "min": -7.259514808654785,
+            "max": 3.706596851348877,
+            "last": 1.510935664176941
+          },
+          "diagnostic/target_q_mean_sampled": {
+            "n": 93,
+            "sum": -259.8675376176834,
+            "min": -7.605774879455566,
+            "max": 3.327906370162964,
+            "last": 1.4289906024932861
+          },
+          "diagnostic/q1_abs_td_mean_sampled": {
+            "n": 93,
+            "sum": 89.21604606509209,
+            "min": 0.31118834018707275,
+            "max": 2.145218849182129,
+            "last": 1.1706717014312744
+          },
+          "diagnostic/q2_abs_td_mean_sampled": {
+            "n": 93,
+            "sum": 89.83956149220467,
+            "min": 0.3019816279411316,
+            "max": 2.1329472064971924,
+            "last": 1.2052316665649414
+          }
+        }
+      },
+      "wall_seconds_training": 13196.827271461487,
+      "launcher_worker": {
+        "status": "complete",
+        "pid": 76980,
+        "exit_code": 0,
+        "started_at": "2026-09-29T17:47:03+08:00",
+        "finished_at": "2026-09-29T21:40:56+08:00",
+        "wall_seconds_including_eval": 14032.703879594803,
+        "log_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\launcher_logs\\sac_mlp_d1_st_rt__train.log",
+        "command": [
+          "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+          "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+          "train-method",
+          "--method",
+          "sac_mlp_d1_st_rt",
+          "--depart-scale",
+          "4.0",
+          "--max-steps",
+          "100000",
+          "--run-root",
+          "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag",
+          "--checkpoint-frequency",
+          "10000",
+          "--behavior-diagnostics"
+        ]
+      },
+      "final_model_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+      "final_model_sha256_verified": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262"
+    }
+  },
+  "historical_fresh_100k_methods": {
+    "D1-ST": {
+      "directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0",
+      "arguments_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\arguments.json",
+      "arguments": {
+        "method": "sac_mlp_d1_st",
+        "parent": "sac_mlp",
+        "scenario": "intersection_sorted",
+        "raw_budget": 100000,
+        "checkpoint_frequency": 200,
+        "learning_starts_raw_steps": 5000,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "buffer_size": 20000,
+        "discount": 0.99,
+        "action_repeat": 3,
+        "seed": 0,
+        "device": "cuda",
+        "density": {
+          "vehicle_scale": 1.0,
+          "pedestrian_scale": 1.0,
+          "clone_depart_jitter_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "smoke": false,
+        "env_contract": "base",
+        "reward_shaping": {
+          "success_reward": 10.0,
+          "collision_reward": -10.0,
+          "off_route_reward": -10.0,
+          "timeout_reward": -5.0,
+          "progress_scale": 0.02,
+          "step_cost": 0.01
+        },
+        "ablation": "d1_representation_incremental",
+        "use_route": false,
+        "use_topology": false,
+        "use_slots": false,
+        "structured_representation": false,
+        "representation_coef": 0.0,
+        "slot_balance_coef": 0.0,
+        "note": "与父基线 sac_mlp 唯一差异：features_extractor 换 IncrementalTopoEncoder（use_route=False, use_topology=False, use_slots=False）。动作头 / 熵 / 调参 / n_step / 环境契约完全一致。"
+      },
+      "training_complete_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\training_complete.json",
+      "evaluation_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\evaluation_results.json",
+      "evaluation": {
+        "episodes": 100,
+        "outcome_counts": {
+          "success": 50,
+          "collision": 50,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_rate": 0.5,
+        "success_wilson_95_episode_iid_only": [
+          0.4038315303659956,
+          0.5961684696340044
+        ],
+        "mean_return": 0.0,
+        "mean_raw_steps": 242.87,
+        "mean_decision_steps": 81.23,
+        "mean_success_completion_seconds": 26.162000000000003,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "247e683657d224a549fbe8393189b13e6ea2db4baa53618233c9a11d6c0d389f",
+        "eval_episodes_metadata": 100,
+        "eval_workers_metadata": 1,
+        "smoke": false
+      }
+    },
+    "MST+SLT": {
+      "directory": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_sorted_depart4p0",
+      "arguments_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_sorted_depart4p0\\arguments.json",
+      "arguments": {
+        "implementation_fidelity": {
+          "implementation_id": "released_scene_rep_pytorch_port_v1",
+          "source_primary": true,
+          "research_extension": false,
+          "reconstruction_required": false,
+          "reconstruction_reason": null
+        },
+        "runtime_paths": {
+          "tensorboard_log": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\tb\\583b1abf97ebb719",
+          "tensorboard_short_root_injected": true
+        },
+        "requested_raw_steps": {
+          "scenario": "intersection_sorted",
+          "algo": "scene_rep",
+          "max_steps": 100000,
+          "seed": 0,
+          "device": "cuda",
+          "batch_size": 32,
+          "learning_rate": 0.0001,
+          "discount": 0.99,
+          "learning_starts": 5000,
+          "buffer_size": 20000,
+          "neighbors": 5,
+          "history_steps": 10,
+          "path_length": 10,
+          "action_repeat": 3,
+          "ego_control_profile": "direct",
+          "traffic_protocol": "frozen_80_20",
+          "episode_limit_profile": "source",
+          "checkpoint_freq": 200,
+          "eval_freq": 0,
+          "eval_episodes": 100,
+          "output_dir": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer",
+          "model_name": "mst_slt__intersection_sorted_depart4p0",
+          "gui": false,
+          "check_only": false
+        },
+        "effective_sb3_decision_steps": {
+          "expected_total_without_partial_repeats": 33334,
+          "learn_loop_upper_bound": 100000,
+          "learning_starts_decisions": 1667,
+          "model_learning_starts_argument": 5000,
+          "checkpoint_freq": 67,
+          "eval_freq": 0,
+          "gradient_steps_per_decision": 3,
+          "source_ppo_horizon": null,
+          "source_ppo_expected_collected_raw_steps": null,
+          "source_ppo_test_checkpoint_raw_step": null
+        }
+      },
+      "training_complete_path": null,
+      "evaluation_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_sorted_depart4p0\\evaluation_results.json",
+      "evaluation": {
+        "episodes": 100,
+        "outcome_counts": {
+          "success": 53,
+          "collision": 47,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_rate": 0.53,
+        "success_wilson_95_episode_iid_only": [
+          0.4328885697009936,
+          0.6248918204065872
+        ],
+        "mean_return": 0.06,
+        "mean_raw_steps": 241.48,
+        "mean_decision_steps": 80.83,
+        "mean_success_completion_seconds": 27.39622641509434,
+        "checkpoint": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_sorted_depart4p0\\final_model.zip",
+        "checkpoint_sha256": "8420b982676d153376c66a824bc96bc27a43a8b1c491ae1fc03a9b9920cfe9c0",
+        "eval_episodes_metadata": 100,
+        "eval_workers_metadata": 6,
+        "smoke": false
+      }
+    }
+  },
+  "pairing": {
+    "join_key": [
+      "evaluation_seed",
+      "traffic_variant"
+    ],
+    "common_pairs_by_source": {
+      "SAC+MLP": 100,
+      "D1-ST": 100,
+      "MST+SLT": 100
+    },
+    "target_variant_count": 30,
+    "variant_size_distribution": {
+      "3": 20,
+      "4": 10
+    },
+    "comparisons_to_ST_RT": {
+      "SAC+MLP": {
+        "source_method_rows": "SAC+MLP",
+        "target_method_columns": "ST-RT",
+        "pair_key": [
+          "evaluation_seed",
+          "traffic_variant"
+        ],
+        "matched_pairs": 100,
+        "unmatched_source": 0,
+        "unmatched_target": 0,
+        "matrix_source_rows_target_columns": {
+          "success": {
+            "success": 15,
+            "collision": 7,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "collision": {
+            "success": 23,
+            "collision": 15,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "timeout": {
+            "success": 25,
+            "collision": 15,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "off_route": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "other": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          }
+        },
+        "row_margins": {
+          "success": 22,
+          "collision": 38,
+          "timeout": 40,
+          "off_route": 0,
+          "other": 0
+        },
+        "column_margins": {
+          "success": 63,
+          "collision": 37,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_2x2": {
+          "both_success": 15,
+          "source_only_success": 7,
+          "target_only_success": 48,
+          "neither_success": 30,
+          "mcnemar_exact_two_sided_episode_iid_p": 1.3087586125948292e-08,
+          "interpretation_limit": "Exploratory only: episode-IID p-value ignores repeated traffic variants and does not measure training-seed variability."
+        },
+        "traffic_clusters": {
+          "count": 30,
+          "variant_episode_counts": {
+            "3": 20,
+            "4": 10
+          }
+        },
+        "cluster_bootstrap": {
+          "direction": "ST-RT minus source method, percentage points",
+          "resampling_unit": "traffic_variant; sample 30 variant IDs with replacement and include every matched episode for each selected ID",
+          "weighting": "pooled episode counts retain observed 3/4 episode cluster sizes",
+          "replicates": 50000,
+          "seed": 20260929,
+          "rng": "NumPy Generator PCG64 via default_rng",
+          "ci": "two-sided 95% percentile interval using linear quantiles",
+          "limitation": "Fixed-checkpoint scenario-cluster sensitivity only; not a confidence interval over training seeds or over unseen route populations.",
+          "outcomes": {
+            "success": {
+              "target_minus_source_percentage_points": 41.0,
+              "percentile_95_ci": [
+                30.0,
+                52.0
+              ]
+            },
+            "collision": {
+              "target_minus_source_percentage_points": -1.0000000000000009,
+              "percentile_95_ci": [
+                -15.533980582524272,
+                14.141414141414142
+              ]
+            },
+            "timeout": {
+              "target_minus_source_percentage_points": -40.0,
+              "percentile_95_ci": [
+                -50.476190476190474,
+                -30.094660194174615
+              ]
+            }
+          }
+        }
+      },
+      "D1-ST": {
+        "source_method_rows": "D1-ST",
+        "target_method_columns": "ST-RT",
+        "pair_key": [
+          "evaluation_seed",
+          "traffic_variant"
+        ],
+        "matched_pairs": 100,
+        "unmatched_source": 0,
+        "unmatched_target": 0,
+        "matrix_source_rows_target_columns": {
+          "success": {
+            "success": 35,
+            "collision": 15,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "collision": {
+            "success": 28,
+            "collision": 22,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "timeout": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "off_route": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "other": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          }
+        },
+        "row_margins": {
+          "success": 50,
+          "collision": 50,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "column_margins": {
+          "success": 63,
+          "collision": 37,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_2x2": {
+          "both_success": 35,
+          "source_only_success": 15,
+          "target_only_success": 28,
+          "neither_success": 22,
+          "mcnemar_exact_two_sided_episode_iid_p": 0.0659940344557981,
+          "interpretation_limit": "Exploratory only: episode-IID p-value ignores repeated traffic variants and does not measure training-seed variability."
+        },
+        "traffic_clusters": {
+          "count": 30,
+          "variant_episode_counts": {
+            "3": 20,
+            "4": 10
+          }
+        },
+        "cluster_bootstrap": {
+          "direction": "ST-RT minus source method, percentage points",
+          "resampling_unit": "traffic_variant; sample 30 variant IDs with replacement and include every matched episode for each selected ID",
+          "weighting": "pooled episode counts retain observed 3/4 episode cluster sizes",
+          "replicates": 50000,
+          "seed": 20260929,
+          "rng": "NumPy Generator PCG64 via default_rng",
+          "ci": "two-sided 95% percentile interval using linear quantiles",
+          "limitation": "Fixed-checkpoint scenario-cluster sensitivity only; not a confidence interval over training seeds or over unseen route populations.",
+          "outcomes": {
+            "success": {
+              "target_minus_source_percentage_points": 13.0,
+              "percentile_95_ci": [
+                2.0618556701030926,
+                23.232323232323232
+              ]
+            },
+            "collision": {
+              "target_minus_source_percentage_points": -13.0,
+              "percentile_95_ci": [
+                -23.232323232323232,
+                -2.0618556701030926
+              ]
+            },
+            "timeout": {
+              "target_minus_source_percentage_points": 0.0,
+              "percentile_95_ci": [
+                0.0,
+                0.0
+              ]
+            }
+          }
+        }
+      },
+      "MST+SLT": {
+        "source_method_rows": "MST+SLT",
+        "target_method_columns": "ST-RT",
+        "pair_key": [
+          "evaluation_seed",
+          "traffic_variant"
+        ],
+        "matched_pairs": 100,
+        "unmatched_source": 0,
+        "unmatched_target": 0,
+        "matrix_source_rows_target_columns": {
+          "success": {
+            "success": 39,
+            "collision": 14,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "collision": {
+            "success": 24,
+            "collision": 23,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "timeout": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "off_route": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          },
+          "other": {
+            "success": 0,
+            "collision": 0,
+            "timeout": 0,
+            "off_route": 0,
+            "other": 0
+          }
+        },
+        "row_margins": {
+          "success": 53,
+          "collision": 47,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "column_margins": {
+          "success": 63,
+          "collision": 37,
+          "timeout": 0,
+          "off_route": 0,
+          "other": 0
+        },
+        "success_2x2": {
+          "both_success": 39,
+          "source_only_success": 14,
+          "target_only_success": 24,
+          "neither_success": 23,
+          "mcnemar_exact_two_sided_episode_iid_p": 0.14330665429588407,
+          "interpretation_limit": "Exploratory only: episode-IID p-value ignores repeated traffic variants and does not measure training-seed variability."
+        },
+        "traffic_clusters": {
+          "count": 30,
+          "variant_episode_counts": {
+            "3": 20,
+            "4": 10
+          }
+        },
+        "cluster_bootstrap": {
+          "direction": "ST-RT minus source method, percentage points",
+          "resampling_unit": "traffic_variant; sample 30 variant IDs with replacement and include every matched episode for each selected ID",
+          "weighting": "pooled episode counts retain observed 3/4 episode cluster sizes",
+          "replicates": 50000,
+          "seed": 20260929,
+          "rng": "NumPy Generator PCG64 via default_rng",
+          "ci": "two-sided 95% percentile interval using linear quantiles",
+          "limitation": "Fixed-checkpoint scenario-cluster sensitivity only; not a confidence interval over training seeds or over unseen route populations.",
+          "outcomes": {
+            "success": {
+              "target_minus_source_percentage_points": 9.999999999999998,
+              "percentile_95_ci": [
+                -1.0526315789473684,
+                21.428571428571427
+              ]
+            },
+            "collision": {
+              "target_minus_source_percentage_points": -9.999999999999998,
+              "percentile_95_ci": [
+                -21.428571428571427,
+                1.0526315789473684
+              ]
+            },
+            "timeout": {
+              "target_minus_source_percentage_points": 0.0,
+              "percentile_95_ci": [
+                0.0,
+                0.0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "common_success_efficiency_SAC_vs_ST_RT": {
+      "direction": "ST-RT minus SAC+MLP among same seed+traffic pairs where both checkpoints succeeded",
+      "matched_common_successes": 15,
+      "raw_steps_delta": {
+        "mean": -0.13333333333333333,
+        "median": 3.0,
+        "min": -99.0,
+        "max": 107.0
+      },
+      "completion_seconds_delta": {
+        "mean": -0.013333333333332338,
+        "median": 0.3000000000000007,
+        "min": -9.899999999999999,
+        "max": 10.700000000000003
+      },
+      "episode_speed_delta_mps": {
+        "mean": 0.024786920579126105,
+        "median": -0.0588253935845815,
+        "min": -1.8131358224602279,
+        "max": 2.203652149867567
+      },
+      "episode_speed_mean_mps": {
+        "SAC+MLP": 6.244925084414826,
+        "ST-RT": 6.269712004993952
+      },
+      "paired_records": [
+        {
+          "seed": 10000,
+          "traffic_variant": "traffic_10.rou.xml",
+          "sac_raw_steps": 265,
+          "strt_raw_steps": 372,
+          "strt_minus_sac_raw_steps": 107,
+          "sac_completion_seconds": 26.5,
+          "strt_completion_seconds": 37.2,
+          "strt_minus_sac_completion_seconds": 10.700000000000003,
+          "sac_episode_weighted_actual_speed_mps": 6.3231419030123455,
+          "strt_episode_weighted_actual_speed_mps": 4.510006080552118,
+          "strt_minus_sac_episode_speed_mps": -1.8131358224602279
+        },
+        {
+          "seed": 10003,
+          "traffic_variant": "traffic_13.rou.xml",
+          "sac_raw_steps": 258,
+          "strt_raw_steps": 276,
+          "strt_minus_sac_raw_steps": 18,
+          "sac_completion_seconds": 25.8,
+          "strt_completion_seconds": 27.6,
+          "strt_minus_sac_completion_seconds": 1.8000000000000007,
+          "sac_episode_weighted_actual_speed_mps": 6.479611777621369,
+          "strt_episode_weighted_actual_speed_mps": 6.071988988810856,
+          "strt_minus_sac_episode_speed_mps": -0.4076227888105137
+        },
+        {
+          "seed": 10005,
+          "traffic_variant": "traffic_15.rou.xml",
+          "sac_raw_steps": 272,
+          "strt_raw_steps": 230,
+          "strt_minus_sac_raw_steps": -42,
+          "sac_completion_seconds": 27.200000000000003,
+          "strt_completion_seconds": 23.0,
+          "strt_minus_sac_completion_seconds": -4.200000000000003,
+          "sac_episode_weighted_actual_speed_mps": 6.168366564404491,
+          "strt_episode_weighted_actual_speed_mps": 7.312086555428349,
+          "strt_minus_sac_episode_speed_mps": 1.1437199910238585
+        },
+        {
+          "seed": 10017,
+          "traffic_variant": "traffic_27.rou.xml",
+          "sac_raw_steps": 257,
+          "strt_raw_steps": 273,
+          "strt_minus_sac_raw_steps": 16,
+          "sac_completion_seconds": 25.700000000000003,
+          "strt_completion_seconds": 27.3,
+          "strt_minus_sac_completion_seconds": 1.5999999999999979,
+          "sac_episode_weighted_actual_speed_mps": 6.543130020017715,
+          "strt_episode_weighted_actual_speed_mps": 6.140405483592252,
+          "strt_minus_sac_episode_speed_mps": -0.40272453642546324
+        },
+        {
+          "seed": 10025,
+          "traffic_variant": "traffic_05.rou.xml",
+          "sac_raw_steps": 273,
+          "strt_raw_steps": 202,
+          "strt_minus_sac_raw_steps": -71,
+          "sac_completion_seconds": 27.3,
+          "strt_completion_seconds": 20.200000000000003,
+          "strt_minus_sac_completion_seconds": -7.099999999999998,
+          "sac_episode_weighted_actual_speed_mps": 6.130759048906313,
+          "strt_episode_weighted_actual_speed_mps": 8.33441119877388,
+          "strt_minus_sac_episode_speed_mps": 2.203652149867567
+        },
+        {
+          "seed": 10031,
+          "traffic_variant": "traffic_11.rou.xml",
+          "sac_raw_steps": 259,
+          "strt_raw_steps": 257,
+          "strt_minus_sac_raw_steps": -2,
+          "sac_completion_seconds": 25.900000000000002,
+          "strt_completion_seconds": 25.700000000000003,
+          "strt_minus_sac_completion_seconds": -0.1999999999999993,
+          "sac_episode_weighted_actual_speed_mps": 6.478289754667227,
+          "strt_episode_weighted_actual_speed_mps": 6.526034435000855,
+          "strt_minus_sac_episode_speed_mps": 0.04774468033362833
+        },
+        {
+          "seed": 10033,
+          "traffic_variant": "traffic_13.rou.xml",
+          "sac_raw_steps": 273,
+          "strt_raw_steps": 277,
+          "strt_minus_sac_raw_steps": 4,
+          "sac_completion_seconds": 27.3,
+          "strt_completion_seconds": 27.700000000000003,
+          "strt_minus_sac_completion_seconds": 0.40000000000000213,
+          "sac_episode_weighted_actual_speed_mps": 6.122930299818608,
+          "strt_episode_weighted_actual_speed_mps": 6.040741384405676,
+          "strt_minus_sac_episode_speed_mps": -0.0821889154129325
+        },
+        {
+          "seed": 10040,
+          "traffic_variant": "traffic_20.rou.xml",
+          "sac_raw_steps": 270,
+          "strt_raw_steps": 314,
+          "strt_minus_sac_raw_steps": 44,
+          "sac_completion_seconds": 27.0,
+          "strt_completion_seconds": 31.400000000000002,
+          "strt_minus_sac_completion_seconds": 4.400000000000002,
+          "sac_episode_weighted_actual_speed_mps": 6.2285099991304005,
+          "strt_episode_weighted_actual_speed_mps": 5.340348709433601,
+          "strt_minus_sac_episode_speed_mps": -0.8881612896967992
+        },
+        {
+          "seed": 10045,
+          "traffic_variant": "traffic_25.rou.xml",
+          "sac_raw_steps": 245,
+          "strt_raw_steps": 232,
+          "strt_minus_sac_raw_steps": -13,
+          "sac_completion_seconds": 24.5,
+          "strt_completion_seconds": 23.200000000000003,
+          "strt_minus_sac_completion_seconds": -1.2999999999999972,
+          "sac_episode_weighted_actual_speed_mps": 6.861285162387444,
+          "strt_episode_weighted_actual_speed_mps": 7.2370282977680045,
+          "strt_minus_sac_episode_speed_mps": 0.3757431353805609
+        },
+        {
+          "seed": 10046,
+          "traffic_variant": "traffic_26.rou.xml",
+          "sac_raw_steps": 472,
+          "strt_raw_steps": 373,
+          "strt_minus_sac_raw_steps": -99,
+          "sac_completion_seconds": 47.2,
+          "strt_completion_seconds": 37.300000000000004,
+          "strt_minus_sac_completion_seconds": -9.899999999999999,
+          "sac_episode_weighted_actual_speed_mps": 3.5470610994127263,
+          "strt_episode_weighted_actual_speed_mps": 4.486072053311374,
+          "strt_minus_sac_episode_speed_mps": 0.9390109538986477
+        },
+        {
+          "seed": 10053,
+          "traffic_variant": "traffic_03.rou.xml",
+          "sac_raw_steps": 267,
+          "strt_raw_steps": 262,
+          "strt_minus_sac_raw_steps": -5,
+          "sac_completion_seconds": 26.700000000000003,
+          "strt_completion_seconds": 26.200000000000003,
+          "strt_minus_sac_completion_seconds": -0.5,
+          "sac_episode_weighted_actual_speed_mps": 6.292320334872571,
+          "strt_episode_weighted_actual_speed_mps": 6.403789192951205,
+          "strt_minus_sac_episode_speed_mps": 0.11146885807863427
+        },
+        {
+          "seed": 10060,
+          "traffic_variant": "traffic_10.rou.xml",
+          "sac_raw_steps": 233,
+          "strt_raw_steps": 307,
+          "strt_minus_sac_raw_steps": 74,
+          "sac_completion_seconds": 23.3,
+          "strt_completion_seconds": 30.700000000000003,
+          "strt_minus_sac_completion_seconds": 7.400000000000002,
+          "sac_episode_weighted_actual_speed_mps": 7.216623735945716,
+          "strt_episode_weighted_actual_speed_mps": 5.463900538453767,
+          "strt_minus_sac_episode_speed_mps": -1.7527231974919495
+        },
+        {
+          "seed": 10061,
+          "traffic_variant": "traffic_11.rou.xml",
+          "sac_raw_steps": 275,
+          "strt_raw_steps": 229,
+          "strt_minus_sac_raw_steps": -46,
+          "sac_completion_seconds": 27.5,
+          "strt_completion_seconds": 22.900000000000002,
+          "strt_minus_sac_completion_seconds": -4.599999999999998,
+          "sac_episode_weighted_actual_speed_mps": 6.105809565644814,
+          "strt_episode_weighted_actual_speed_mps": 7.332248881119126,
+          "strt_minus_sac_episode_speed_mps": 1.2264393154743116
+        },
+        {
+          "seed": 10074,
+          "traffic_variant": "traffic_24.rou.xml",
+          "sac_raw_steps": 259,
+          "strt_raw_steps": 262,
+          "strt_minus_sac_raw_steps": 3,
+          "sac_completion_seconds": 25.900000000000002,
+          "strt_completion_seconds": 26.200000000000003,
+          "strt_minus_sac_completion_seconds": 0.3000000000000007,
+          "sac_episode_weighted_actual_speed_mps": 6.464067854044006,
+          "strt_episode_weighted_actual_speed_mps": 6.405242460459425,
+          "strt_minus_sac_episode_speed_mps": -0.0588253935845815
+        },
+        {
+          "seed": 10081,
+          "traffic_variant": "traffic_01.rou.xml",
+          "sac_raw_steps": 250,
+          "strt_raw_steps": 260,
+          "strt_minus_sac_raw_steps": 10,
+          "sac_completion_seconds": 25.0,
+          "strt_completion_seconds": 26.0,
+          "strt_minus_sac_completion_seconds": 1.0,
+          "sac_episode_weighted_actual_speed_mps": 6.711969146336642,
+          "strt_episode_weighted_actual_speed_mps": 6.441375814848793,
+          "strt_minus_sac_episode_speed_mps": -0.2705933314878495
+        }
+      ]
+    },
+    "SAC_timeout_route_liveness": {
+      "scenario": "intersection_sorted",
+      "network_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\map.net.xml",
+      "ego_route_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\ego.rou.xml",
+      "timeout_episode_snapshot_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\eval_worker_00\\episodes.jsonl",
+      "timeout_behavior_summary_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\analysis_100k_behavior.json",
+      "fixed_ego_route": {
+        "route_id": "scene_rep_ego_route",
+        "route_edges": [
+          "-E1",
+          "-E0"
+        ],
+        "vehicle_depart_lane": "2",
+        "vehicle_arrival_lane": "1"
+      },
+      "current_to_next_edge": {
+        "current_edge": "-E1",
+        "next_edge": "-E0",
+        "current_edge_lanes": [
+          {
+            "id": "-E1_0",
+            "index": 0,
+            "length_m": 70.0,
+            "allow_attribute": null,
+            "disallow_attribute": null
+          },
+          {
+            "id": "-E1_1",
+            "index": 1,
+            "length_m": 70.0,
+            "allow_attribute": null,
+            "disallow_attribute": null
+          },
+          {
+            "id": "-E1_2",
+            "index": 2,
+            "length_m": 70.0,
+            "allow_attribute": null,
+            "disallow_attribute": null
+          }
+        ],
+        "explicit_allow_disallow_attributes_present": false,
+        "connections_for_route_transition": [
+          {
+            "from_lane": 2,
+            "to_lane": 1,
+            "direction": "l",
+            "state": "m"
+          }
+        ],
+        "legal_from_lane_indices_in_static_connections": [
+          2
+        ]
+      },
+      "observed_sac_timeout_terminal_states": {
+        "n": 40,
+        "all_match_fixed_route": true,
+        "route_edges_counts": {
+          "-E1 -E0": 40
+        },
+        "route_index_counts": {
+          "0": 40
+        },
+        "road_id_counts": {
+          "-E1": 40
+        },
+        "lane_id_counts": {
+          "-E1_0": 38,
+          "-E1_1": 2
+        },
+        "lane_position_m_counts": {
+          "70.0": 40
+        },
+        "ego_speed_mps_counts": {
+          "0.0": 40
+        },
+        "lane_change_mode_counts_from_reset_info": {
+          "0": 40
+        },
+        "lane_change_mode_configured_by_environment_code": 0,
+        "mean_target_speed_mps_equal_episode": 8.057994215264916,
+        "mean_actual_speed_mps_equal_episode": 1.1670733847531827,
+        "stopped_fraction_mean_equal_episode": 0.741,
+        "seed_10002_snapshot": {
+          "seed": 10002,
+          "route_id": "scene_rep_ego_route",
+          "route_edges": [
+            "-E1",
+            "-E0"
+          ],
+          "route_index": 0,
+          "road_id": "-E1",
+          "lane_id": "-E1_0",
+          "lane_position_m": 70.0,
+          "ego_speed_mps": 0.0,
+          "source_observation_contract": "smarts",
+          "speed_mode": 0,
+          "lane_change_mode": 0,
+          "terminal_target_speed_mps": 8.744304180145264,
+          "terminal_lane_command": -1,
+          "terminal_lane_change_request_sent": false
+        }
+      },
+      "interpretation": "All 40 timeout snapshots show the fixed route (-E1,-E0), route_index 0, and terminal position at the 70 m end of -E1 on lane 0 or 1. The static network lists only fromLane 2 for the -E1 to -E0 connection. This supports route-incompatible-lane stagnation with requested target speed not realized; it does not establish why the policy selected those lanes or by itself prove an environment control bug.",
+      "not_inferred": [
+        "No claim that the complete route is unreachable: the left-turn lane can be reached by lane changes before the junction.",
+        "No claim that speedMode=0 disables every SUMO constraint.",
+        "No causal attribution of timeout behavior to one code setting or module from this static comparison."
+      ]
+    }
+  },
+  "limitations": [
+    "Only one training seed per method; no training-seed stability estimate.",
+    "The 100 episodes reuse 30 traffic variants (20 variants with 3 episodes, 10 with 4); there is no held-out route-template test.",
+    "Per-episode Wilson intervals and exact McNemar p-values assume independent episodes and are exploratory under repeated variants.",
+    "Traffic-cluster bootstrap intervals resample only the observed fixed-checkpoint route variants; they do not estimate training-seed variability or performance on unseen route populations.",
+    "SAC+MLP to ST-RT changes the feature extractor family and route-processing path; only ST to ST-RT is the intended route-toggle ablation, and that comparison still has one training seed."
+  ],
+  "source_artifacts": [
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\launcher_status.json",
+      "exists": true,
+      "size_bytes": 7312,
+      "sha256": "d34047a9cddb3edea9b29ae3524781777bcdff091cc6b3c6130352fa9b42ff62"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\experiment_manifest.json",
+      "exists": true,
+      "size_bytes": 5383,
+      "sha256": "6e951449cc3b59ded61cd1bc44033b26f3862c287d1f76219aa54fa2d748a529"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\arguments.json",
+      "exists": true,
+      "size_bytes": 906,
+      "sha256": "a938db2584e7aac422cef23491a546069adf8c777cab60d1402c9207b78e9fde"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\training_complete.json",
+      "exists": true,
+      "size_bytes": 257,
+      "sha256": "2dabda7e041b931ab77f1b1f9f2f533a057db7ea1f6d04cc86843565193ff987"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\evaluation_results.json",
+      "exists": true,
+      "size_bytes": 37840,
+      "sha256": "4dadc04721956e5ba2b8bd633f9e11bf5071e7748ac98f85606a8335ca9e537e"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\final_model.zip",
+      "exists": true,
+      "size_bytes": 2934697,
+      "sha256": "59b7279b6c42d5f97f5aa4c11e163720288e628a1430fda7db23f30380c2167a"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\eval_worker_00\\summary.json",
+      "exists": true,
+      "size_bytes": 557369,
+      "sha256": "2b5ffdae518a7e79fc19417cdc0eefb6f91188079e748a60c923fe0f06eff5d0"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+      "exists": true,
+      "size_bytes": 2497870,
+      "sha256": "5978e684b761155a531b5a04613909dda4437337e0bc333e36d4f641598f2a09"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\train\\optimization.jsonl",
+      "exists": true,
+      "size_bytes": 67458,
+      "sha256": "54ea731be95f90acc337debd86717fb60f4f8c75d4fdd568681d1695fe666266"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\arguments.json",
+      "exists": true,
+      "size_bytes": 1317,
+      "sha256": "34cbcb46a1f84622dee17d6b34dd99100e50fc32efb47908f51e84623e5653ef"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\training_complete.json",
+      "exists": true,
+      "size_bytes": 258,
+      "sha256": "d99424db14d832117f0c0cd4333a724086e9f11fbbde8dbd30a94d9b1fccc122"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\evaluation_results.json",
+      "exists": true,
+      "size_bytes": 37786,
+      "sha256": "3a4275c7644416c8df0b33f6a5c7b1a703bb107d7414fb5d99028e93fcef2ffe"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\final_model.zip",
+      "exists": true,
+      "size_bytes": 15238986,
+      "sha256": "070b05b5ad2b60ce6fc4e47ee4508f0c1d2f1dd45579a0462d50e7d6a93f6262"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\eval\\summary.json",
+      "exists": true,
+      "size_bytes": 558926,
+      "sha256": "f194f09fb0264e03ba3f4499b27604bd856c3d7d49dfee1a043676b3115a4d99"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\train\\summary.json",
+      "exists": true,
+      "size_bytes": 2780790,
+      "sha256": "ba9c72beba34cd568e14ecc5a7c8840150cacbe55713126626f931781692718d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp_d1_st_rt__intersection_sorted_depart4p0\\diagnostics\\train\\optimization.jsonl",
+      "exists": true,
+      "size_bytes": 67553,
+      "sha256": "9d97f8b914b17d169c34a3a0bbb22f2cda930aa7152130b906fe382d8318783a"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\evaluation_results.json",
+      "exists": true,
+      "size_bytes": 37625,
+      "sha256": "342e54bae2d7e47812c8f692f7945930eab63da190fa42913d05c17a4b76ca3e"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\arguments.json",
+      "exists": true,
+      "size_bytes": 1180,
+      "sha256": "15a702dee2e9dbfc59107baaefcec54eb5085c78a319c50972c4a2a6c0200d99"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\sac_mlp_d1_st__intersection_sorted_depart4p0\\training_complete.json",
+      "exists": true,
+      "size_bytes": 225,
+      "sha256": "59ec42f415184872ccb9e3fffaa46638635507f6bc8ada6e130cb74664bd48ce"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_sorted_depart4p0\\evaluation_results.json",
+      "exists": true,
+      "size_bytes": 38021,
+      "sha256": "0c0f9dff807185e298b87f0c8930351aafb83a5ea9092db953891d191c82830b"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\mst_slt__intersection_sorted_depart4p0\\arguments.json",
+      "exists": true,
+      "size_bytes": 1770,
+      "sha256": "5ad455afb588892f447dfa885ded8b312f9a8a0ea502d50fdd100dcaa5d6bf54"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\map.net.xml",
+      "exists": true,
+      "size_bytes": 15050,
+      "sha256": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\ego.rou.xml",
+      "exists": true,
+      "size_bytes": 437,
+      "sha256": "e9b0d992510dca46ac0d7fd258956a11dff1d821b51744e649c2ebbd3fc8cb57"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d0929_100k_diag\\sac_mlp__intersection_sorted_depart4p0\\diagnostics\\eval_worker_00\\episodes.jsonl",
+      "exists": true,
+      "size_bytes": 3950483,
+      "sha256": "871f113b08c40a3653c033cfce6cfdecbd35a65d6f05967dd8132a098b7f075c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\analysis_100k_behavior.json",
+      "exists": true,
+      "size_bytes": 465306,
+      "sha256": "6bd82e9bf468355292bdb811dbce3ee4ae512462b7a1026ef42b9fd10233125b"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_scenario_registry.py",
+      "exists": true,
+      "size_bytes": 5788,
+      "sha256": "d1fd7115280fa6084369e0513ccd34ffc5084b76626030abfca80fa458768ba1"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_env.py",
+      "exists": true,
+      "size_bytes": 18004,
+      "sha256": "83cc57cc7b03907d5bb6323b06dc615a27c9da092cd8d64796ea5732a87be77e"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\sumo_env.py",
+      "exists": true,
+      "size_bytes": 91069,
+      "sha256": "df4350776efea5bbdcdcd58ffba89a3bf124e63b0be53562a6d08514a5feceb7"
+    }
+  ]
+}

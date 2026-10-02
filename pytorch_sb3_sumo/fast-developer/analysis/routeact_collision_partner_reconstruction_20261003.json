@@ -1,0 +1,4172 @@
+{
+  "title": "Offline RouteAct geometric-collision partner reconstruction",
+  "as_of": "2026-10-03",
+  "source_raw_steps": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\sortct_1002\\sac_mlp_d1_st_rt_routeact_v1__intersection_sorted_depart4p0\\diagnostics\\eval\\raw_steps.jsonl.gz",
+  "method": {
+    "input": "same raw-step behavior snapshot where events.geometric_collision=true",
+    "geometry": "SAT over snapshot center x/y, physical heading radians, length, width",
+    "sat": "same four axes and 0.05m leeway as envs/sumo/sumo_env.py::_oriented_boxes_overlap",
+    "no_simulation": true,
+    "not_sumo_reported_partner": true
+  },
+  "sumo_coordinate_reference": {
+    "url": "https://sumo.dlr.de/docs/TraCI/Vehicle_Value_Retrieval.html",
+    "documented_vehicle_position": "center of front bumper",
+    "documented_vehicle_angle": "degrees; TraCI getAngle",
+    "source_conversion": "front bumper to center via SUMO angle; physical heading is radians(90-angle)"
+  },
+  "counts": {
+    "geometric_collision_rows": 53,
+    "ego_current_rows": 53,
+    "geometry_only_no_sumo_collision_rows": 53,
+    "rows_without_sumo_collision_ids": 53,
+    "rows_without_sumo_collision_events": 53,
+    "neighbors_omitted_total": 0,
+    "zero_neighbors_omitted_rows": 53,
+    "neighbors_in_radius_total": 1095,
+    "all_valid_vehicles_current_at_ego_time_rows": 53,
+    "exactly_one_snapshot_overlap_candidate": 53
+  },
+  "unique_reconstructed_actor_ids": 50,
+  "reconstructed_rows": [
+    {
+      "episode": 2,
+      "decision": 63,
+      "raw_step": 187,
+      "sim_time_s": 68.8,
+      "ego_state_source": "current",
+      "ego_state_time_s": 68.8,
+      "other_state_source": "current",
+      "other_state_time_s": 68.8,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 186,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.06537508964538574,
+          -4.680547714233398
+        ],
+        "velocity": [
+          -0.018024483603889054,
+          0.044447314031370935
+        ],
+        "heading": 1.9560562829163413,
+        "speed": 0.04796296210400447,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-11-4",
+        "key": "vehicle:car_type_1-flow-11-4",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -1.3177177906036377
+        ],
+        "velocity": [
+          -6.943303454397999e-07,
+          -7.9422130584716495
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 7.94221305847168,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-11-4",
+        "vehicle:car_type_4-flow-11-243",
+        "vehicle:car_type_1-flow-11-240",
+        "vehicle:car_type_2-flow-11-1",
+        "vehicle:car_type_3-flow-11-2"
+      ],
+      "center_distance_m": 3.752612338609251,
+      "relative_velocity_mps": [
+        0.018023789273543613,
+        -7.98666037250302
+      ],
+      "relative_speed_mps_partner_minus_ego": 7.894250096367675,
+      "relative_heading_difference_rad": 2.7563326100455683,
+      "relative_heading_difference_deg": 157.9262254898896,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 3,
+      "decision": 148,
+      "raw_step": 444,
+      "sim_time_s": 94.5,
+      "ego_state_source": "current",
+      "ego_state_time_s": 94.5,
+      "other_state_source": "current",
+      "other_state_time_s": 94.5,
+      "same_timestamp_current_vehicle_count": 24,
+      "valid_vehicle_count": 24,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 24,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 441,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -1.7959108352661133,
+          -0.9672086834907532
+        ],
+        "velocity": [
+          -0.011852875599339124,
+          0.01940704867032913
+        ],
+        "heading": 2.11908353964356,
+        "speed": 0.022740364950148282,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-12-442",
+        "key": "vehicle:car_type_3-flow-12-442",
+        "kind": "vehicle",
+        "position": [
+          -3.8107335567474365,
+          -1.600000023841858
+        ],
+        "velocity": [
+          10.33366584777831,
+          -4.516988986539189e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.33366584777832,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-12-442",
+        "vehicle:car_type_3-flow-12-242",
+        "vehicle:car_type_4-flow-12-3",
+        "vehicle:car_type_2-flow-12-1",
+        "vehicle:car_type_2-flow-12-441"
+      ],
+      "center_distance_m": 2.11185593244917,
+      "relative_velocity_mps": [
+        10.34551872337765,
+        -0.01940750036922778
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.310925482828171,
+      "relative_heading_difference_rad": 2.11908358335495,
+      "relative_heading_difference_deg": 121.41454576169762,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 4,
+      "decision": 88,
+      "raw_step": 262,
+      "sim_time_s": 76.3,
+      "ego_state_source": "current",
+      "ego_state_time_s": 76.3,
+      "other_state_source": "current",
+      "other_state_time_s": 76.3,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 261,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.3563880920410156,
+          -5.6700592041015625
+        ],
+        "velocity": [
+          -0.0026987285886731866,
+          0.009131703523777106
+        ],
+        "heading": 1.8581508258965354,
+        "speed": 0.009522139740703515,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-13-444",
+        "key": "vehicle:car_type_1-flow-13-444",
+        "kind": "vehicle",
+        "position": [
+          -1.1891409158706665,
+          -8.0
+        ],
+        "velocity": [
+          10.379179954528798,
+          -4.536883835274628e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.379179954528809,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-13-444",
+        "vehicle:car_type_4-flow-13-443",
+        "vehicle:car_type_1-flow-13-0",
+        "vehicle:car_type_4-flow-13-7",
+        "vehicle:car_type_2-flow-13-241"
+      ],
+      "center_distance_m": 2.7959406336130086,
+      "relative_velocity_mps": [
+        10.38187868311747,
+        -0.009132157212160635
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.369657814788106,
+      "relative_heading_difference_rad": 1.8581508696079254,
+      "relative_heading_difference_deg": 106.46420252709788,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 6,
+      "decision": 112,
+      "raw_step": 336,
+      "sim_time_s": 83.7,
+      "ego_state_source": "current",
+      "ego_state_time_s": 83.7,
+      "other_state_source": "current",
+      "other_state_time_s": 83.7,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 333,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -0.9646551012992859,
+          -2.2923624515533447
+        ],
+        "velocity": [
+          -0.002765065666590149,
+          0.005578641359147786
+        ],
+        "heading": 2.030959622063909,
+        "speed": 0.006226301273994849,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-15-2",
+        "key": "vehicle:car_type_3-flow-15-2",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          0.5757953524589539
+        ],
+        "velocity": [
+          -1.2557043235536373e-06,
+          -14.36358261108393
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 14.363582611083984,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-15-1",
+        "vehicle:car_type_3-flow-15-2",
+        "vehicle:car_type_4-flow-15-243",
+        "vehicle:car_type_3-flow-15-246",
+        "vehicle:car_type_4-flow-15-7"
+      ],
+      "center_distance_m": 2.937684863854065,
+      "relative_velocity_mps": [
+        0.0027638099622665953,
+        -14.369161252443076
+      ],
+      "relative_speed_mps_partner_minus_ego": 14.35735630980999,
+      "relative_heading_difference_rad": 2.6814292708980005,
+      "relative_heading_difference_deg": 153.63458028529692,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 7,
+      "decision": 78,
+      "raw_step": 232,
+      "sim_time_s": 73.3,
+      "ego_state_source": "current",
+      "ego_state_time_s": 73.3,
+      "other_state_source": "current",
+      "other_state_time_s": 73.3,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 231,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2314980030059814,
+          -10.4962797164917
+        ],
+        "velocity": [
+          -0.0009739340096234243,
+          0.008202993304911994
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.008260608126253911,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-16-444",
+        "key": "vehicle:car_type_1-flow-16-444",
+        "kind": "vehicle",
+        "position": [
+          -1.150281548500061,
+          -8.0
+        ],
+        "velocity": [
+          10.430837631225575,
+          -4.559464123833089e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.430837631225586,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-16-444",
+        "vehicle:car_type_3-flow-16-2",
+        "vehicle:car_type_4-flow-16-3",
+        "vehicle:car_type_2-flow-16-5",
+        "vehicle:car_type_3-flow-16-242"
+      ],
+      "center_distance_m": 3.4502588678156023,
+      "relative_velocity_mps": [
+        10.431811565235199,
+        -0.008203449251324378
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.422577023099333,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 8,
+      "decision": 65,
+      "raw_step": 195,
+      "sim_time_s": 69.6,
+      "ego_state_source": "current",
+      "ego_state_time_s": 69.6,
+      "other_state_source": "current",
+      "other_state_time_s": 69.6,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 192,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.0024582147598267,
+          -8.556740760803223
+        ],
+        "velocity": [
+          -0.0009320278731723251,
+          0.007895245217220154
+        ],
+        "heading": 1.688301765420709,
+        "speed": 0.00795006748376439,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-17-440",
+        "key": "vehicle:car_type_1-flow-17-440",
+        "kind": "vehicle",
+        "position": [
+          -1.462888240814209,
+          -8.0
+        ],
+        "velocity": [
+          8.400316238403311,
+          -3.671894997501964e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 8.40031623840332,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-17-440",
+        "vehicle:car_type_3-flow-17-2",
+        "vehicle:car_type_4-flow-17-443",
+        "vehicle:car_type_3-flow-17-6",
+        "vehicle:car_type_2-flow-17-1"
+      ],
+      "center_distance_m": 2.52742822267047,
+      "relative_velocity_mps": [
+        8.401248266276484,
+        -0.007895612406719904
+      ],
+      "relative_speed_mps_partner_minus_ego": 8.392366170919557,
+      "relative_heading_difference_rad": 1.6883018091320992,
+      "relative_heading_difference_deg": 96.73256820757075,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 9,
+      "decision": 76,
+      "raw_step": 226,
+      "sim_time_s": 72.7,
+      "ego_state_source": "current",
+      "ego_state_time_s": 72.7,
+      "other_state_source": "current",
+      "other_state_time_s": 72.7,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 225,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.0085574388504028,
+          -8.608721733093262
+        ],
+        "velocity": [
+          -0.0013099408155378299,
+          0.011092833244343413
+        ],
+        "heading": 1.6883408884194235,
+        "speed": 0.011169910220186298,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-18-444",
+        "key": "vehicle:car_type_1-flow-18-444",
+        "kind": "vehicle",
+        "position": [
+          -1.2000902891159058,
+          -8.0
+        ],
+        "velocity": [
+          10.404168128967274,
+          -4.547806513673077e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.404168128967285,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-18-444",
+        "vehicle:car_type_4-flow-18-443",
+        "vehicle:car_type_3-flow-18-6",
+        "vehicle:car_type_2-flow-18-245",
+        "vehicle:car_type_1-flow-18-244"
+      ],
+      "center_distance_m": 2.2909969302883844,
+      "relative_velocity_mps": [
+        10.405478069782813,
+        -0.01109328802499478
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.392998218747099,
+      "relative_heading_difference_rad": 1.6883409321308136,
+      "relative_heading_difference_deg": 96.73480979027899,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 10,
+      "decision": 66,
+      "raw_step": 198,
+      "sim_time_s": 69.9,
+      "ego_state_source": "current",
+      "ego_state_time_s": 69.9,
+      "other_state_source": "current",
+      "other_state_time_s": 69.9,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 195,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -5.301239013671875,
+          2.4524786472320557
+        ],
+        "velocity": [
+          -1.5033778310175945,
+          1.091927002256849
+        ],
+        "heading": 2.5134225646641593,
+        "speed": 1.8580768232376172,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-19-6",
+        "key": "vehicle:car_type_3-flow-19-6",
+        "kind": "vehicle",
+        "position": [
+          -8.0,
+          2.9526207447052
+        ],
+        "velocity": [
+          -9.171611551523729e-07,
+          -10.491100311279258
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 10.491100311279297,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-19-6",
+        "vehicle:car_type_2-flow-19-245",
+        "vehicle:car_type_2-flow-19-241",
+        "vehicle:car_type_1-flow-19-244",
+        "vehicle:car_type_3-flow-19-242"
+      ],
+      "center_distance_m": 2.7447136424391507,
+      "relative_velocity_mps": [
+        1.5033769138564392,
+        -11.583027313536107
+      ],
+      "relative_speed_mps_partner_minus_ego": 8.63302348804168,
+      "relative_heading_difference_rad": 2.1989663282977503,
+      "relative_heading_difference_deg": 125.9914899028401,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 11,
+      "decision": 82,
+      "raw_step": 245,
+      "sim_time_s": 74.6,
+      "ego_state_source": "current",
+      "ego_state_time_s": 74.6,
+      "other_state_source": "current",
+      "other_state_time_s": 74.6,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 243,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.116877794265747,
+          -9.530885696411133
+        ],
+        "velocity": [
+          -0.0015810703188850568,
+          0.013316620132634968
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.013410151196394405,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-20-442",
+        "key": "vehicle:car_type_3-flow-20-442",
+        "kind": "vehicle",
+        "position": [
+          -1.1320815086364746,
+          -8.0
+        ],
+        "velocity": [
+          10.354124069213857,
+          -4.5259315595108524e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.354124069213867,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-20-442",
+        "vehicle:car_type_3-flow-20-242",
+        "vehicle:car_type_4-flow-20-443",
+        "vehicle:car_type_2-flow-20-241",
+        "vehicle:car_type_1-flow-20-444"
+      ],
+      "center_distance_m": 2.7205567374319997,
+      "relative_velocity_mps": [
+        10.355705139532741,
+        -0.01331707272579092
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.340713918017473,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 12,
+      "decision": 96,
+      "raw_step": 287,
+      "sim_time_s": 78.8,
+      "ego_state_source": "current",
+      "ego_state_time_s": 78.8,
+      "other_state_source": "current",
+      "other_state_time_s": 78.8,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 285,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -0.06555535644292831,
+          -4.240038871765137
+        ],
+        "velocity": [
+          -0.007756866989293934,
+          0.017008180007013204
+        ],
+        "heading": 1.9986839751389365,
+        "speed": 0.018693506162316412,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-21-440",
+        "key": "vehicle:car_type_1-flow-21-440",
+        "kind": "vehicle",
+        "position": [
+          -1.6542190313339233,
+          -1.600000023841858
+        ],
+        "velocity": [
+          10.910881996154774,
+          -4.769298188663198e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.910881996154785,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-21-440",
+        "vehicle:car_type_1-flow-21-444",
+        "vehicle:car_type_2-flow-21-241",
+        "vehicle:car_type_1-flow-21-4",
+        "vehicle:car_type_4-flow-21-7"
+      ],
+      "center_distance_m": 3.081177922558552,
+      "relative_velocity_mps": [
+        10.918638863144068,
+        -0.01700865693683207
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.892188489992469,
+      "relative_heading_difference_rad": 1.9986840188503265,
+      "relative_heading_difference_deg": 114.51615886036959,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 14,
+      "decision": 155,
+      "raw_step": 465,
+      "sim_time_s": 96.6,
+      "ego_state_source": "current",
+      "ego_state_time_s": 96.6,
+      "other_state_source": "current",
+      "other_state_time_s": 96.6,
+      "same_timestamp_current_vehicle_count": 25,
+      "valid_vehicle_count": 25,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 25,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 462,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -0.90021812915802,
+          -2.4223670959472656
+        ],
+        "velocity": [
+          -0.007794780072560271,
+          0.015726310960227603
+        ],
+        "heading": 2.030959622063909,
+        "speed": 0.017552078304216782,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-23-2",
+        "key": "vehicle:car_type_3-flow-23-2",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          0.5801436305046082
+        ],
+        "velocity": [
+          -7.819446329642155e-07,
+          -8.944403648376431
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 8.944403648376465,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-23-442",
+        "vehicle:car_type_3-flow-23-2",
+        "vehicle:car_type_1-flow-23-244",
+        "vehicle:car_type_2-flow-23-1",
+        "vehicle:car_type_3-flow-23-246"
+      ],
+      "center_distance_m": 3.082979948456665,
+      "relative_velocity_mps": [
+        0.007793998127927307,
+        -8.960129959336658
+      ],
+      "relative_speed_mps_partner_minus_ego": 8.926851570072248,
+      "relative_heading_difference_rad": 2.6814292708980005,
+      "relative_heading_difference_deg": 153.63458028529692,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 15,
+      "decision": 61,
+      "raw_step": 181,
+      "sim_time_s": 68.2,
+      "ego_state_source": "current",
+      "ego_state_time_s": 68.2,
+      "other_state_source": "current",
+      "other_state_time_s": 68.2,
+      "same_timestamp_current_vehicle_count": 15,
+      "valid_vehicle_count": 15,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 15,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 180,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.018776576966047287,
+          -4.523299217224121
+        ],
+        "velocity": [
+          -1.581723293705487,
+          3.7353298827966266
+        ],
+        "heading": 1.9713528911259512,
+        "speed": 4.0564193460691405,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-24-1",
+        "key": "vehicle:car_type_2-flow-24-1",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -1.785821557044983
+        ],
+        "velocity": [
+          -8.911753353966222e-07,
+          -10.193857192993125
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 10.193857192993164,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-24-1",
+        "vehicle:car_type_3-flow-24-242",
+        "vehicle:car_type_3-flow-24-442",
+        "vehicle:car_type_2-flow-24-245",
+        "vehicle:car_type_1-flow-24-0"
+      ],
+      "center_distance_m": 3.1802864058608065,
+      "relative_velocity_mps": [
+        1.5817224025301517,
+        -13.929187075789752
+      ],
+      "relative_speed_mps_partner_minus_ego": 6.137437846924024,
+      "relative_heading_difference_rad": 2.7410360018359583,
+      "relative_heading_difference_deg": 157.04979439861378,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 16,
+      "decision": 61,
+      "raw_step": 182,
+      "sim_time_s": 68.3,
+      "ego_state_source": "current",
+      "ego_state_time_s": 68.3,
+      "other_state_source": "current",
+      "other_state_time_s": 68.3,
+      "same_timestamp_current_vehicle_count": 17,
+      "valid_vehicle_count": 17,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 17,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 180,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.19208562374115,
+          -10.164326667785645
+        ],
+        "velocity": [
+          -0.9569815031264413,
+          8.060210225234965
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 8.116822190507097,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_4-flow-25-443",
+        "key": "vehicle:car_type_4-flow-25-443",
+        "kind": "vehicle",
+        "position": [
+          1.803961157798767,
+          -8.0
+        ],
+        "velocity": [
+          11.696757316589343,
+          -5.112815215387949e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 11.696757316589355,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_4-flow-25-443",
+        "vehicle:car_type_2-flow-25-245",
+        "vehicle:car_type_1-flow-25-440",
+        "vehicle:car_type_1-flow-25-0",
+        "vehicle:car_type_4-flow-25-243"
+      ],
+      "center_distance_m": 2.2491557514023803,
+      "relative_velocity_mps": [
+        12.653738819715784,
+        -8.060210736516487
+      ],
+      "relative_speed_mps_partner_minus_ego": 3.5799351260822583,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 17,
+      "decision": 151,
+      "raw_step": 452,
+      "sim_time_s": 95.3,
+      "ego_state_source": "current",
+      "ego_state_time_s": 95.3,
+      "other_state_source": "current",
+      "other_state_time_s": 95.3,
+      "same_timestamp_current_vehicle_count": 25,
+      "valid_vehicle_count": 25,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 25,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 450,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.1876744031906128,
+          -10.12717342376709
+        ],
+        "velocity": [
+          -0.00204203575576129,
+          0.017199117668534377
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.01731991797335943,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-26-441",
+        "key": "vehicle:car_type_2-flow-26-441",
+        "kind": "vehicle",
+        "position": [
+          -1.3508163690567017,
+          -8.0
+        ],
+        "velocity": [
+          8.412583351135245,
+          -3.677257122997699e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 8.412583351135254,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-26-441",
+        "vehicle:car_type_4-flow-26-443",
+        "vehicle:car_type_3-flow-26-6",
+        "vehicle:car_type_3-flow-26-242",
+        "vehicle:car_type_2-flow-26-445"
+      ],
+      "center_distance_m": 3.3119182018228908,
+      "relative_velocity_mps": [
+        8.414625386891005,
+        -0.017199485394246677
+      ],
+      "relative_speed_mps_partner_minus_ego": 8.395263433161894,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 18,
+      "decision": 130,
+      "raw_step": 389,
+      "sim_time_s": 89.0,
+      "ego_state_source": "current",
+      "ego_state_time_s": 89.0,
+      "other_state_source": "current",
+      "other_state_time_s": 89.0,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 387,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.558372974395752,
+          -6.355435371398926
+        ],
+        "velocity": [
+          -0.0047625170533211495,
+          0.021416733093664833
+        ],
+        "heading": 1.7896095673230032,
+        "speed": 0.02193987295059963,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-27-442",
+        "key": "vehicle:car_type_3-flow-27-442",
+        "kind": "vehicle",
+        "position": [
+          -1.8038161993026733,
+          -4.800000190734863
+        ],
+        "velocity": [
+          10.752387046813954,
+          -4.700017843126527e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.752387046813965,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-27-442",
+        "vehicle:car_type_2-flow-27-1",
+        "vehicle:car_type_4-flow-27-3",
+        "vehicle:car_type_2-flow-27-5",
+        "vehicle:car_type_1-flow-27-4"
+      ],
+      "center_distance_m": 2.8283062588032246,
+      "relative_velocity_mps": [
+        10.757149563867275,
+        -0.021417203095449144
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.730447173863364,
+      "relative_heading_difference_rad": 1.7896096110343933,
+      "relative_heading_difference_deg": 102.53707768831961,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 19,
+      "decision": 86,
+      "raw_step": 256,
+      "sim_time_s": 75.7,
+      "ego_state_source": "current",
+      "ego_state_time_s": 75.7,
+      "other_state_source": "current",
+      "other_state_time_s": 75.7,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 255,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -5.631093978881836,
+          2.6383183002471924
+        ],
+        "velocity": [
+          -4.789220824762867,
+          3.3067233347735354
+        ],
+        "heading": 2.537304059663091,
+        "speed": 5.819884476609319,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-28-5",
+        "key": "vehicle:car_type_2-flow-28-5",
+        "kind": "vehicle",
+        "position": [
+          -8.0,
+          1.0847705602645874
+        ],
+        "velocity": [
+          -7.791021186748033e-07,
+          -8.911889076232876
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 8.91188907623291,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-28-5",
+        "vehicle:car_type_1-flow-28-0",
+        "vehicle:car_type_4-flow-28-7",
+        "vehicle:car_type_3-flow-28-6",
+        "vehicle:car_type_2-flow-28-1"
+      ],
+      "center_distance_m": 2.8328830398191434,
+      "relative_velocity_mps": [
+        4.789220045660748,
+        -12.218612411006411
+      ],
+      "relative_speed_mps_partner_minus_ego": 3.092004599623591,
+      "relative_heading_difference_rad": 2.1750848332988184,
+      "relative_heading_difference_deg": 124.62318103093853,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 21,
+      "decision": 90,
+      "raw_step": 270,
+      "sim_time_s": 77.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 77.1,
+      "other_state_source": "current",
+      "other_state_time_s": 77.1,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 267,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.3646409809589386,
+          -5.698209285736084
+        ],
+        "velocity": [
+          -2.329152167427348,
+          7.963669282475858
+        ],
+        "heading": 1.8553326884892325,
+        "speed": 8.297287403704964,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-0-5",
+        "key": "vehicle:car_type_2-flow-0-5",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -5.7445878982543945
+        ],
+        "velocity": [
+          -9.165253537218849e-07,
+          -10.483827590942344
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 10.483827590942383,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-0-5",
+        "vehicle:car_type_3-flow-0-246",
+        "vehicle:car_type_1-flow-0-440",
+        "vehicle:car_type_1-flow-0-0",
+        "vehicle:car_type_2-flow-0-1"
+      ],
+      "center_distance_m": 1.965188350627951,
+      "relative_velocity_mps": [
+        2.3291512509019943,
+        -18.447496873418203
+      ],
+      "relative_speed_mps_partner_minus_ego": 2.1865401872374193,
+      "relative_heading_difference_rad": 2.857056204472677,
+      "relative_heading_difference_deg": 163.69726234795036,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 24,
+      "decision": 167,
+      "raw_step": 500,
+      "sim_time_s": 100.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 100.1,
+      "other_state_source": "current",
+      "other_state_time_s": 100.1,
+      "same_timestamp_current_vehicle_count": 27,
+      "valid_vehicle_count": 27,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 27,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 498,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2418572902679443,
+          -10.58353042602539
+        ],
+        "velocity": [
+          -0.0012919962916909545,
+          0.010881884014718693
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.010958314383495912,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-3-446",
+        "key": "vehicle:car_type_3-flow-3-446",
+        "kind": "vehicle",
+        "position": [
+          -0.16469688713550568,
+          -8.0
+        ],
+        "velocity": [
+          10.505360603332509,
+          -4.592039150857362e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.50536060333252,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-3-446",
+        "vehicle:car_type_1-flow-3-0",
+        "vehicle:car_type_2-flow-3-5",
+        "vehicle:car_type_1-flow-3-244",
+        "vehicle:car_type_2-flow-3-9"
+      ],
+      "center_distance_m": 2.941602304216196,
+      "relative_velocity_mps": [
+        10.5066525996242,
+        -0.010882343218633779
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.494402288949024,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 25,
+      "decision": 91,
+      "raw_step": 273,
+      "sim_time_s": 77.4,
+      "ego_state_source": "current",
+      "ego_state_time_s": 77.4,
+      "other_state_source": "current",
+      "other_state_time_s": 77.4,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 270,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.206559181213379,
+          -10.28623104095459
+        ],
+        "velocity": [
+          -0.5323868553316801,
+          4.484046934142391
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 4.515541237916196,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-4-444",
+        "key": "vehicle:car_type_1-flow-4-444",
+        "kind": "vehicle",
+        "position": [
+          3.6041712760925293,
+          -8.0
+        ],
+        "velocity": [
+          8.901458740234366,
+          -3.8909513512492883e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 8.901458740234375,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-4-444",
+        "vehicle:car_type_4-flow-4-443",
+        "vehicle:car_type_4-flow-4-3",
+        "vehicle:car_type_2-flow-4-245",
+        "vehicle:car_type_1-flow-4-244"
+      ],
+      "center_distance_m": 3.312913540999085,
+      "relative_velocity_mps": [
+        9.433845595566046,
+        -4.484047323237526
+      ],
+      "relative_speed_mps_partner_minus_ego": 4.385917502318179,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 26,
+      "decision": 105,
+      "raw_step": 315,
+      "sim_time_s": 81.6,
+      "ego_state_source": "current",
+      "ego_state_time_s": 81.6,
+      "other_state_source": "current",
+      "other_state_time_s": 81.6,
+      "same_timestamp_current_vehicle_count": 21,
+      "valid_vehicle_count": 21,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 21,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 312,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -4.528955936431885,
+          1.8915573358535767
+        ],
+        "velocity": [
+          -0.010014929015628712,
+          0.007274000715075473
+        ],
+        "heading": 2.5134225646641593,
+        "speed": 0.012377798252960837,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_4-flow-5-3",
+        "key": "vehicle:car_type_4-flow-5-3",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          5.217109680175781
+        ],
+        "velocity": [
+          -1.0009060248705496e-06,
+          -11.449029922485309
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 11.449029922485352,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_4-flow-5-3",
+        "vehicle:car_type_1-flow-5-0",
+        "vehicle:car_type_2-flow-5-445",
+        "vehicle:car_type_3-flow-5-246",
+        "vehicle:car_type_2-flow-5-245"
+      ],
+      "center_distance_m": 3.3365795933287083,
+      "relative_velocity_mps": [
+        0.010013928109603842,
+        -11.456303923200384
+      ],
+      "relative_speed_mps_partner_minus_ego": 11.43665212423239,
+      "relative_heading_difference_rad": 2.1989663282977503,
+      "relative_heading_difference_deg": 125.9914899028401,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 27,
+      "decision": 81,
+      "raw_step": 243,
+      "sim_time_s": 74.4,
+      "ego_state_source": "current",
+      "ego_state_time_s": 74.4,
+      "other_state_source": "current",
+      "other_state_time_s": 74.4,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 240,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -6.537261486053467,
+          3.019745349884033
+        ],
+        "velocity": [
+          -8.486516832905876,
+          4.366457694778841
+        ],
+        "heading": 2.6663989583638052,
+        "speed": 9.543946812272589,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-6-1",
+        "key": "vehicle:car_type_2-flow-6-1",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          5.109311103820801
+        ],
+        "velocity": [
+          -8.71366777585235e-07,
+          -9.967273712158166
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 9.967273712158203,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-6-1",
+        "vehicle:car_type_1-flow-6-444",
+        "vehicle:car_type_3-flow-6-2",
+        "vehicle:car_type_3-flow-6-6",
+        "vehicle:car_type_4-flow-6-443"
+      ],
+      "center_distance_m": 2.717418232116176,
+      "relative_velocity_mps": [
+        8.486515961539098,
+        -14.333731406937007
+      ],
+      "relative_speed_mps_partner_minus_ego": 0.42332689988561434,
+      "relative_heading_difference_rad": 2.0459899345981043,
+      "relative_heading_difference_deg": 117.2265881787187,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 29,
+      "decision": 128,
+      "raw_step": 383,
+      "sim_time_s": 88.4,
+      "ego_state_source": "current",
+      "ego_state_time_s": 88.4,
+      "other_state_source": "current",
+      "other_state_time_s": 88.4,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 381,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.118727684020996,
+          -9.546466827392578
+        ],
+        "velocity": [
+          -0.001231033148716038,
+          0.010368419807977427
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.010441243792178036,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-8-444",
+        "key": "vehicle:car_type_1-flow-8-444",
+        "kind": "vehicle",
+        "position": [
+          -1.7143959999084473,
+          -8.0
+        ],
+        "velocity": [
+          10.769570350646962,
+          -4.7075289040906996e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.769570350646973,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-8-444",
+        "vehicle:car_type_2-flow-8-5",
+        "vehicle:car_type_1-flow-8-0",
+        "vehicle:car_type_3-flow-8-442",
+        "vehicle:car_type_4-flow-8-443"
+      ],
+      "center_distance_m": 3.2277158265044967,
+      "relative_velocity_mps": [
+        10.770801383795678,
+        -0.010368890560867835
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.759129106854795,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 30,
+      "decision": 113,
+      "raw_step": 338,
+      "sim_time_s": 83.9,
+      "ego_state_source": "current",
+      "ego_state_time_s": 83.9,
+      "other_state_source": "current",
+      "other_state_time_s": 83.9,
+      "same_timestamp_current_vehicle_count": 22,
+      "valid_vehicle_count": 22,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 22,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 336,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2166534662246704,
+          -10.37125015258789
+        ],
+        "velocity": [
+          -0.001572672474005376,
+          0.01324588899002876
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.013338923264141649,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-9-440",
+        "key": "vehicle:car_type_1-flow-9-440",
+        "kind": "vehicle",
+        "position": [
+          -1.0179004669189453,
+          -8.0
+        ],
+        "velocity": [
+          10.474238395690907,
+          -4.578435201278895e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.474238395690918,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-9-440",
+        "vehicle:car_type_4-flow-9-7",
+        "vehicle:car_type_1-flow-9-240",
+        "vehicle:car_type_3-flow-9-242",
+        "vehicle:car_type_1-flow-9-0"
+      ],
+      "center_distance_m": 3.2582293605999713,
+      "relative_velocity_mps": [
+        10.475811068164912,
+        -0.013246346833548887
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.460899472426776,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 39,
+      "decision": 79,
+      "raw_step": 237,
+      "sim_time_s": 73.8,
+      "ego_state_source": "current",
+      "ego_state_time_s": 73.8,
+      "other_state_source": "current",
+      "other_state_time_s": 73.8,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 234,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2309364080429077,
+          -10.491549491882324
+        ],
+        "velocity": [
+          -0.9922464145101921,
+          8.357230176402984
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 8.415928301054436,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-18-444",
+        "key": "vehicle:car_type_1-flow-18-444",
+        "kind": "vehicle",
+        "position": [
+          1.1538773775100708,
+          -8.0
+        ],
+        "velocity": [
+          11.005830764770497,
+          -4.810801615272922e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 11.005830764770508,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-18-444",
+        "vehicle:car_type_3-flow-18-6",
+        "vehicle:car_type_4-flow-18-443",
+        "vehicle:car_type_1-flow-18-244",
+        "vehicle:car_type_2-flow-18-245"
+      ],
+      "center_distance_m": 2.492740853896716,
+      "relative_velocity_mps": [
+        11.998077179280688,
+        -8.357230657483147
+      ],
+      "relative_speed_mps_partner_minus_ego": 2.589902463716072,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 40,
+      "decision": 103,
+      "raw_step": 307,
+      "sim_time_s": 80.8,
+      "ego_state_source": "current",
+      "ego_state_time_s": 80.8,
+      "other_state_source": "current",
+      "other_state_time_s": 80.8,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 306,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2157649993896484,
+          -10.363767623901367
+        ],
+        "velocity": [
+          -0.004221739273549837,
+          0.035557746884107184
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.03580749147829358,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-19-442",
+        "key": "vehicle:car_type_3-flow-19-442",
+        "kind": "vehicle",
+        "position": [
+          0.15150503814220428,
+          -8.0
+        ],
+        "velocity": [
+          7.5876851081848065,
+          -3.3166826343980174e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 7.5876851081848145,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-19-442",
+        "vehicle:car_type_1-flow-19-0",
+        "vehicle:car_type_4-flow-19-443",
+        "vehicle:car_type_1-flow-19-240",
+        "vehicle:car_type_3-flow-19-246"
+      ],
+      "center_distance_m": 2.5923052761815546,
+      "relative_velocity_mps": [
+        7.591906847458357,
+        -0.03555807855237062
+      ],
+      "relative_speed_mps_partner_minus_ego": 7.551877616706521,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 41,
+      "decision": 107,
+      "raw_step": 320,
+      "sim_time_s": 82.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 82.1,
+      "other_state_source": "current",
+      "other_state_time_s": 82.1,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 318,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.06226677820086479,
+          -4.6700439453125
+        ],
+        "velocity": [
+          -0.3051881602349015,
+          0.7503678753850691
+        ],
+        "heading": 1.9570806781437735,
+        "speed": 0.8100566409563387,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-20-2",
+        "key": "vehicle:car_type_3-flow-20-2",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -1.7740042209625244
+        ],
+        "velocity": [
+          -8.92500797125169e-07,
+          -10.209018707275352
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 10.20901870727539,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-20-2",
+        "vehicle:car_type_4-flow-20-7",
+        "vehicle:car_type_2-flow-20-5",
+        "vehicle:car_type_1-flow-20-440",
+        "vehicle:car_type_1-flow-20-240"
+      ],
+      "center_distance_m": 3.339188075893064,
+      "relative_velocity_mps": [
+        0.3051872677341044,
+        -10.959386582660422
+      ],
+      "relative_speed_mps_partner_minus_ego": 9.398962066319053,
+      "relative_heading_difference_rad": 2.755308214818136,
+      "relative_heading_difference_deg": 157.8675319668044,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 44,
+      "decision": 120,
+      "raw_step": 360,
+      "sim_time_s": 86.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 86.1,
+      "other_state_source": "current",
+      "other_state_time_s": 86.1,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 357,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.7784886360168457,
+          -7.093871116638184
+        ],
+        "velocity": [
+          -0.0012216700153967115,
+          0.008371312179286095
+        ],
+        "heading": 1.7157086739924292,
+        "speed": 0.008459984942633357,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-23-442",
+        "key": "vehicle:car_type_3-flow-23-442",
+        "kind": "vehicle",
+        "position": [
+          -1.85072922706604,
+          -4.787901401519775
+        ],
+        "velocity": [
+          8.055173876702804,
+          -0.052965710436649785
+        ],
+        "heading": -0.0065752704951425045,
+        "speed": 8.055348009266723,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-23-442",
+        "vehicle:car_type_2-flow-23-1",
+        "vehicle:car_type_1-flow-23-4",
+        "vehicle:car_type_4-flow-23-3",
+        "vehicle:car_type_1-flow-23-444"
+      ],
+      "center_distance_m": 3.4971821368921305,
+      "relative_velocity_mps": [
+        8.056395546718202,
+        -0.06133702261593588
+      ],
+      "relative_speed_mps_partner_minus_ego": 8.04688802432409,
+      "relative_heading_difference_rad": 1.7222839444875717,
+      "relative_heading_difference_deg": 98.67960114228163,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 47,
+      "decision": 133,
+      "raw_step": 399,
+      "sim_time_s": 90.0,
+      "ego_state_source": "current",
+      "ego_state_time_s": 90.0,
+      "other_state_source": "current",
+      "other_state_time_s": 90.0,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 396,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -3.1458215713500977,
+          0.646186888217926
+        ],
+        "velocity": [
+          -0.024435661693110705,
+          0.02205548626150192
+        ],
+        "heading": 2.407346145310674,
+        "speed": 0.03291726046637931,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_4-flow-26-3",
+        "key": "vehicle:car_type_4-flow-26-3",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          3.4069161415100098
+        ],
+        "velocity": [
+          -9.802652391704749e-07,
+          -11.21292686462398
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 11.212926864624023,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_4-flow-26-3",
+        "vehicle:car_type_4-flow-26-247",
+        "vehicle:car_type_1-flow-26-444",
+        "vehicle:car_type_4-flow-26-243",
+        "vehicle:car_type_2-flow-26-5"
+      ],
+      "center_distance_m": 3.2183742658075607,
+      "relative_velocity_mps": [
+        0.024434681427871533,
+        -11.234982350885483
+      ],
+      "relative_speed_mps_partner_minus_ego": 11.180009604157645,
+      "relative_heading_difference_rad": 2.3050427476512354,
+      "relative_heading_difference_deg": 132.06922103765464,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 50,
+      "decision": 70,
+      "raw_step": 210,
+      "sim_time_s": 71.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 71.1,
+      "other_state_source": "current",
+      "other_state_time_s": 71.1,
+      "same_timestamp_current_vehicle_count": 17,
+      "valid_vehicle_count": 17,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 17,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 207,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -5.322231292724609,
+          2.4677257537841797
+        ],
+        "velocity": [
+          -7.48763677030981,
+          5.438388543389968
+        ],
+        "heading": 2.5134225646641593,
+        "speed": 9.25423007888667,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-29-6",
+        "key": "vehicle:car_type_3-flow-29-6",
+        "kind": "vehicle",
+        "position": [
+          -8.0,
+          2.300692081451416
+        ],
+        "velocity": [
+          -1.0692065725077776e-06,
+          -12.230297088623
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 12.230297088623047,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-29-6",
+        "vehicle:car_type_1-flow-29-0",
+        "vehicle:car_type_2-flow-29-1",
+        "vehicle:car_type_1-flow-29-444",
+        "vehicle:car_type_2-flow-29-241"
+      ],
+      "center_distance_m": 2.6829732569215605,
+      "relative_velocity_mps": [
+        7.487635701103238,
+        -17.66868563201297
+      ],
+      "relative_speed_mps_partner_minus_ego": 2.9760670097363775,
+      "relative_heading_difference_rad": 2.1989663282977503,
+      "relative_heading_difference_deg": 125.9914899028401,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 51,
+      "decision": 136,
+      "raw_step": 406,
+      "sim_time_s": 90.7,
+      "ego_state_source": "current",
+      "ego_state_time_s": 90.7,
+      "other_state_source": "current",
+      "other_state_time_s": 90.7,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 405,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.160841464996338,
+          -9.901171684265137
+        ],
+        "velocity": [
+          -0.0037696282463302797,
+          0.03174982592363792
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.031972825075317346,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-0-444",
+        "key": "vehicle:car_type_1-flow-0-444",
+        "kind": "vehicle",
+        "position": [
+          -1.006465196609497,
+          -8.0
+        ],
+        "velocity": [
+          10.62564754486083,
+          -4.644618245063773e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.62564754486084,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-0-444",
+        "vehicle:car_type_3-flow-0-6",
+        "vehicle:car_type_4-flow-0-247",
+        "vehicle:car_type_1-flow-0-244",
+        "vehicle:car_type_3-flow-0-246"
+      ],
+      "center_distance_m": 2.882997041013495,
+      "relative_velocity_mps": [
+        10.629417173107159,
+        -0.031750290385462426
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.593674719785522,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 52,
+      "decision": 140,
+      "raw_step": 419,
+      "sim_time_s": 92.0,
+      "ego_state_source": "current",
+      "ego_state_time_s": 92.0,
+      "other_state_source": "current",
+      "other_state_time_s": 92.0,
+      "same_timestamp_current_vehicle_count": 24,
+      "valid_vehicle_count": 24,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 24,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 417,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.0123794078826904,
+          -8.641294479370117
+        ],
+        "velocity": [
+          -0.0010250282817889432,
+          0.008678311483508542
+        ],
+        "heading": 1.688365408280168,
+        "speed": 0.00873863680348734,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-1-445",
+        "key": "vehicle:car_type_2-flow-1-445",
+        "kind": "vehicle",
+        "position": [
+          -1.298492193222046,
+          -8.0
+        ],
+        "velocity": [
+          7.975362777709953,
+          -3.4861419327116697e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 7.975362777709961,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-1-6",
+        "vehicle:car_type_2-flow-1-445",
+        "vehicle:car_type_1-flow-1-0",
+        "vehicle:car_type_1-flow-1-8",
+        "vehicle:car_type_2-flow-1-245"
+      ],
+      "center_distance_m": 2.3982047798432387,
+      "relative_velocity_mps": [
+        7.976387805991742,
+        -0.008678660097701813
+      ],
+      "relative_speed_mps_partner_minus_ego": 7.9666241409064735,
+      "relative_heading_difference_rad": 1.688365451991558,
+      "relative_heading_difference_deg": 96.7362146748139,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 58,
+      "decision": 87,
+      "raw_step": 260,
+      "sim_time_s": 76.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 76.1,
+      "other_state_source": "current",
+      "other_state_time_s": 76.1,
+      "same_timestamp_current_vehicle_count": 20,
+      "valid_vehicle_count": 20,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 20,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 258,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2140501737594604,
+          -10.349323272705078
+        ],
+        "velocity": [
+          -0.0017223570896963017,
+          0.014506612907900512
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.014608502045182211,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-7-440",
+        "key": "vehicle:car_type_1-flow-7-440",
+        "kind": "vehicle",
+        "position": [
+          -0.7326531410217285,
+          -8.0
+        ],
+        "velocity": [
+          10.785536766052235,
+          -4.7145080462075927e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.785536766052246,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-7-440",
+        "vehicle:car_type_2-flow-7-1",
+        "vehicle:car_type_1-flow-7-244",
+        "vehicle:car_type_3-flow-7-246",
+        "vehicle:car_type_2-flow-7-5"
+      ],
+      "center_distance_m": 3.0510610671459473,
+      "relative_velocity_mps": [
+        10.787259123141931,
+        -0.014507084358705133
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.770928264007065,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 59,
+      "decision": 117,
+      "raw_step": 351,
+      "sim_time_s": 85.2,
+      "ego_state_source": "current",
+      "ego_state_time_s": 85.2,
+      "other_state_source": "current",
+      "other_state_time_s": 85.2,
+      "same_timestamp_current_vehicle_count": 22,
+      "valid_vehicle_count": 22,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 22,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 348,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -4.198323726654053,
+          1.6514140367507935
+        ],
+        "velocity": [
+          -1.558721433639042,
+          1.1321239327008927
+        ],
+        "heading": 2.5134225646641593,
+        "speed": 1.926477901944345,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-8-6",
+        "key": "vehicle:car_type_3-flow-8-6",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          5.055517196655273
+        ],
+        "velocity": [
+          -8.272216819349491e-07,
+          -9.462312698364222
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 9.462312698364258,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-8-2",
+        "vehicle:car_type_3-flow-8-6",
+        "vehicle:car_type_2-flow-8-245",
+        "vehicle:car_type_3-flow-8-442",
+        "vehicle:car_type_2-flow-8-445"
+      ],
+      "center_distance_m": 3.4568674968387856,
+      "relative_velocity_mps": [
+        1.55872060641736,
+        -10.594436631065115
+      ],
+      "relative_speed_mps_partner_minus_ego": 7.535834796419913,
+      "relative_heading_difference_rad": 2.1989663282977503,
+      "relative_heading_difference_deg": 125.9914899028401,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 60,
+      "decision": 72,
+      "raw_step": 215,
+      "sim_time_s": 71.6,
+      "ego_state_source": "current",
+      "ego_state_time_s": 71.6,
+      "other_state_source": "current",
+      "other_state_time_s": 71.6,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 213,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.251559853553772,
+          -10.665250778198242
+        ],
+        "velocity": [
+          -0.0012329656692089436,
+          0.010384696529509145
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.010457634835441862,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-9-442",
+        "key": "vehicle:car_type_3-flow-9-442",
+        "kind": "vehicle",
+        "position": [
+          0.1736367642879486,
+          -8.0
+        ],
+        "velocity": [
+          10.888659477233876,
+          -4.7595844167358383e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.888659477233887,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-9-442",
+        "vehicle:car_type_3-flow-9-2",
+        "vehicle:car_type_3-flow-9-6",
+        "vehicle:car_type_1-flow-9-444",
+        "vehicle:car_type_4-flow-9-3"
+      ],
+      "center_distance_m": 2.8749747645951107,
+      "relative_velocity_mps": [
+        10.889892442903085,
+        -0.010385172487950818
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.878201842398445,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 61,
+      "decision": 170,
+      "raw_step": 508,
+      "sim_time_s": 100.9,
+      "ego_state_source": "current",
+      "ego_state_time_s": 100.9,
+      "other_state_source": "current",
+      "other_state_time_s": 100.9,
+      "same_timestamp_current_vehicle_count": 25,
+      "valid_vehicle_count": 25,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 25,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 507,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -2.689518690109253,
+          0.10152561217546463
+        ],
+        "velocity": [
+          -5.817090159984639,
+          6.34996879524924
+        ],
+        "heading": 2.312425629296575,
+        "speed": 8.611657310299174,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-10-8",
+        "key": "vehicle:car_type_1-flow-10-8",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          2.4463961124420166
+        ],
+        "velocity": [
+          -9.836803582624823e-07,
+          -11.251991271972614
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 11.251991271972656,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-10-8",
+        "vehicle:car_type_2-flow-10-241",
+        "vehicle:car_type_4-flow-10-243",
+        "vehicle:car_type_2-flow-10-9",
+        "vehicle:car_type_3-flow-10-246"
+      ],
+      "center_distance_m": 3.154766208057776,
+      "relative_velocity_mps": [
+        5.817089176304281,
+        -17.601960067221853
+      ],
+      "relative_speed_mps_partner_minus_ego": 2.640333961673482,
+      "relative_heading_difference_rad": 2.3999632636653345,
+      "relative_heading_difference_deg": 137.50776599446647,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 62,
+      "decision": 59,
+      "raw_step": 176,
+      "sim_time_s": 67.7,
+      "ego_state_source": "current",
+      "ego_state_time_s": 67.7,
+      "other_state_source": "current",
+      "other_state_time_s": 67.7,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 174,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -2.444309949874878,
+          -0.19301407039165497
+        ],
+        "velocity": [
+          -2.416975761533409,
+          2.9340331349166906
+        ],
+        "heading": 2.2598655382778983,
+        "speed": 3.8013579506051602,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-11-4",
+        "key": "vehicle:car_type_1-flow-11-4",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          1.6720526218414307
+        ],
+        "velocity": [
+          -8.951194552854361e-07,
+          -10.238972663879355
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 10.238972663879395,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-11-4",
+        "vehicle:car_type_4-flow-11-243",
+        "vehicle:car_type_3-flow-11-6",
+        "vehicle:car_type_2-flow-11-245",
+        "vehicle:car_type_2-flow-11-1"
+      ],
+      "center_distance_m": 3.0046214865370713,
+      "relative_velocity_mps": [
+        2.4169748664139536,
+        -13.173005798796046
+      ],
+      "relative_speed_mps_partner_minus_ego": 6.437614713274234,
+      "relative_heading_difference_rad": 2.4525233546840113,
+      "relative_heading_difference_deg": 140.51923738066012,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 65,
+      "decision": 88,
+      "raw_step": 264,
+      "sim_time_s": 76.5,
+      "ego_state_source": "current",
+      "ego_state_time_s": 76.5,
+      "other_state_source": "current",
+      "other_state_time_s": 76.5,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 261,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.10152730345726013,
+          -4.802855491638184
+        ],
+        "velocity": [
+          -0.002091366714613511,
+          0.005339606231950442
+        ],
+        "heading": 1.9441016177323203,
+        "speed": 0.005734562707589595,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-14-0",
+        "key": "vehicle:car_type_1-flow-14-0",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -1.326365351676941
+        ],
+        "velocity": [
+          -7.911171482775418e-07,
+          -9.049324989318814
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 9.049324989318848,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-14-0",
+        "vehicle:car_type_2-flow-14-5",
+        "vehicle:car_type_3-flow-14-242",
+        "vehicle:car_type_4-flow-14-443",
+        "vehicle:car_type_4-flow-14-3"
+      ],
+      "center_distance_m": 3.870552794988517,
+      "relative_velocity_mps": [
+        0.0020905755974652334,
+        -9.054664595550765
+      ],
+      "relative_speed_mps_partner_minus_ego": 9.043590426611258,
+      "relative_heading_difference_rad": 2.7682872752295893,
+      "relative_heading_difference_deg": 158.61117735042598,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 68,
+      "decision": 53,
+      "raw_step": 159,
+      "sim_time_s": 66.0,
+      "ego_state_source": "current",
+      "ego_state_time_s": 66.0,
+      "other_state_source": "current",
+      "other_state_time_s": 66.0,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 156,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.22497685253620148,
+          -5.222122669219971
+        ],
+        "velocity": [
+          -2.4356700398576354,
+          7.06516126180891
+        ],
+        "heading": 1.9027808467533927,
+        "speed": 7.473218329369574,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-17-2",
+        "key": "vehicle:car_type_3-flow-17-2",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -6.12410306930542
+        ],
+        "velocity": [
+          -1.043638200662131e-06,
+          -11.937829017639116
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 11.93782901763916,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-17-2",
+        "vehicle:car_type_1-flow-17-4",
+        "vehicle:car_type_2-flow-17-245",
+        "vehicle:car_type_3-flow-17-6",
+        "vehicle:car_type_1-flow-17-0"
+      ],
+      "center_distance_m": 2.0357085354865823,
+      "relative_velocity_mps": [
+        2.4356689962194347,
+        -19.002990279448028
+      ],
+      "relative_speed_mps_partner_minus_ego": 4.464610688269586,
+      "relative_heading_difference_rad": 2.809608046208517,
+      "relative_heading_difference_deg": 160.9786831337452,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 69,
+      "decision": 143,
+      "raw_step": 428,
+      "sim_time_s": 92.9,
+      "ego_state_source": "current",
+      "ego_state_time_s": 92.9,
+      "other_state_source": "current",
+      "other_state_time_s": 92.9,
+      "same_timestamp_current_vehicle_count": 24,
+      "valid_vehicle_count": 24,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 24,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 426,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.5776202082633972,
+          -6.42040491104126
+        ],
+        "velocity": [
+          -0.00248428201651887,
+          0.011524785309277677
+        ],
+        "heading": 1.7831076244500021,
+        "speed": 0.011789500988699294,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_4-flow-18-443",
+        "key": "vehicle:car_type_4-flow-18-443",
+        "kind": "vehicle",
+        "position": [
+          -1.6942853927612305,
+          -4.800000190734863
+        ],
+        "velocity": [
+          10.811083793640126,
+          -4.725675007086062e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.811083793640137,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_4-flow-18-443",
+        "vehicle:car_type_1-flow-18-0",
+        "vehicle:car_type_1-flow-18-8",
+        "vehicle:car_type_1-flow-18-244",
+        "vehicle:car_type_2-flow-18-241"
+      ],
+      "center_distance_m": 2.790567418565322,
+      "relative_velocity_mps": [
+        10.813568075656645,
+        -0.011525257876778387
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.799294292651437,
+      "relative_heading_difference_rad": 1.7831076681613922,
+      "relative_heading_difference_deg": 102.16454380306149,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 73,
+      "decision": 90,
+      "raw_step": 268,
+      "sim_time_s": 76.9,
+      "ego_state_source": "current",
+      "ego_state_time_s": 76.9,
+      "other_state_source": "current",
+      "other_state_time_s": 76.9,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 267,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.8010190725326538,
+          -7.168751239776611
+        ],
+        "velocity": [
+          -0.0014739054901480486,
+          0.01065689882910312
+        ],
+        "heading": 1.7082297513869147,
+        "speed": 0.010758340487622987,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-22-442",
+        "key": "vehicle:car_type_3-flow-22-442",
+        "kind": "vehicle",
+        "position": [
+          -2.034642219543457,
+          -4.800000190734863
+        ],
+        "velocity": [
+          10.362549781799306,
+          -4.5296145556046734e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.362549781799316,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-22-0",
+        "vehicle:car_type_3-flow-22-442",
+        "vehicle:car_type_3-flow-22-2",
+        "vehicle:car_type_1-flow-22-244",
+        "vehicle:car_type_4-flow-22-7"
+      ],
+      "center_distance_m": 3.6948554093110517,
+      "relative_velocity_mps": [
+        10.364023687289453,
+        -0.01065735179055868
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.351791441311693,
+      "relative_heading_difference_rad": 1.7082297950983047,
+      "relative_heading_difference_deg": 97.87435769763026,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 74,
+      "decision": 91,
+      "raw_step": 271,
+      "sim_time_s": 77.2,
+      "ego_state_source": "current",
+      "ego_state_time_s": 77.2,
+      "other_state_source": "current",
+      "other_state_time_s": 77.2,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 270,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.27696847915649414,
+          -5.399231433868408
+        ],
+        "velocity": [
+          -0.21980348101442593,
+          0.675953925072027
+        ],
+        "heading": 1.8851867179062705,
+        "speed": 0.710793415196243,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-23-1",
+        "key": "vehicle:car_type_2-flow-23-1",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -2.044029951095581
+        ],
+        "velocity": [
+          -1.1375724010943987e-06,
+          -13.012310981750439
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 13.012310981750488,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-23-1",
+        "vehicle:car_type_3-flow-23-2",
+        "vehicle:car_type_2-flow-23-5",
+        "vehicle:car_type_1-flow-23-440",
+        "vehicle:car_type_3-flow-23-246"
+      ],
+      "center_distance_m": 3.8445269866719434,
+      "relative_velocity_mps": [
+        0.21980234344202484,
+        -13.688264906822466
+      ],
+      "relative_speed_mps_partner_minus_ego": 12.301517566554246,
+      "relative_heading_difference_rad": 2.827202175055639,
+      "relative_heading_difference_deg": 161.98675246089468,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 76,
+      "decision": 161,
+      "raw_step": 482,
+      "sim_time_s": 98.3,
+      "ego_state_source": "current",
+      "ego_state_time_s": 98.3,
+      "other_state_source": "current",
+      "other_state_time_s": 98.3,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 480,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -2.368802547454834,
+          -0.28372251987457275
+        ],
+        "velocity": [
+          -0.01545814652576067,
+          0.019402078953084736
+        ],
+        "heading": 2.243537918725286,
+        "speed": 0.024807155453893143,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-25-244",
+        "key": "vehicle:car_type_1-flow-25-244",
+        "kind": "vehicle",
+        "position": [
+          -1.3081353902816772,
+          1.600000023841858
+        ],
+        "velocity": [
+          -9.37563705444335,
+          -4.098221295249628e-07
+        ],
+        "heading": -3.141592609878403,
+        "speed": 9.37563705444336,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_6",
+        "lane_id": ":J1_6_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-25-244",
+        "vehicle:car_type_3-flow-25-6",
+        "vehicle:car_type_2-flow-25-241",
+        "vehicle:car_type_1-flow-25-444",
+        "vehicle:car_type_4-flow-25-7"
+      ],
+      "center_distance_m": 2.1618106855160297,
+      "relative_velocity_mps": [
+        -9.36017890791759,
+        -0.01940248877521426
+      ],
+      "relative_speed_mps_partner_minus_ego": 9.350829898989467,
+      "relative_heading_difference_rad": 0.8980547785758972,
+      "relative_heading_difference_deg": 51.454748583954576,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 77,
+      "decision": 120,
+      "raw_step": 360,
+      "sim_time_s": 86.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 86.1,
+      "other_state_source": "current",
+      "other_state_time_s": 86.1,
+      "same_timestamp_current_vehicle_count": 22,
+      "valid_vehicle_count": 22,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 22,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 357,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.1485605239868164,
+          -9.797735214233398
+        ],
+        "velocity": [
+          -0.0007857389095479516,
+          0.006617913483607419
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.006664395284681911,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-26-444",
+        "key": "vehicle:car_type_1-flow-26-444",
+        "kind": "vehicle",
+        "position": [
+          -0.984673023223877,
+          -8.0
+        ],
+        "velocity": [
+          10.6987543106079,
+          -4.6765742286019876e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.69875431060791,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-26-444",
+        "vehicle:car_type_1-flow-26-8",
+        "vehicle:car_type_2-flow-26-1",
+        "vehicle:car_type_1-flow-26-4",
+        "vehicle:car_type_3-flow-26-246"
+      ],
+      "center_distance_m": 2.7897199263438472,
+      "relative_velocity_mps": [
+        10.699540049517447,
+        -0.00661838114103028
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.692089915323228,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 78,
+      "decision": 74,
+      "raw_step": 222,
+      "sim_time_s": 72.3,
+      "ego_state_source": "current",
+      "ego_state_time_s": 72.3,
+      "other_state_source": "current",
+      "other_state_time_s": 72.3,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 219,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -0.015411916188895702,
+          -4.408246994018555
+        ],
+        "velocity": [
+          -2.804285792305129,
+          6.422331321104203
+        ],
+        "heading": 1.9824898103859763,
+        "speed": 7.007878309656958,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_4-flow-27-3",
+        "key": "vehicle:car_type_4-flow-27-3",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          -2.2681634426116943
+        ],
+        "velocity": [
+          -1.5942338188058589e-06,
+          -18.235908508300714
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 18.23590850830078,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_4-flow-27-3",
+        "vehicle:car_type_1-flow-27-0",
+        "vehicle:car_type_3-flow-27-242",
+        "vehicle:car_type_1-flow-27-444",
+        "vehicle:car_type_3-flow-27-6"
+      ],
+      "center_distance_m": 2.6628700828086593,
+      "relative_velocity_mps": [
+        2.8042841980713105,
+        -24.658239829404916
+      ],
+      "relative_speed_mps_partner_minus_ego": 11.228030198643824,
+      "relative_heading_difference_rad": 2.7298990825759333,
+      "relative_heading_difference_deg": 156.41169592823638,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 81,
+      "decision": 99,
+      "raw_step": 297,
+      "sim_time_s": 79.8,
+      "ego_state_source": "current",
+      "ego_state_time_s": 79.8,
+      "other_state_source": "current",
+      "other_state_time_s": 79.8,
+      "same_timestamp_current_vehicle_count": 21,
+      "valid_vehicle_count": 21,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 21,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 294,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -0.680176854133606,
+          -2.866309881210327
+        ],
+        "velocity": [
+          -0.008803819874258205,
+          0.017762093053504284
+        ],
+        "heading": 2.030959622063909,
+        "speed": 0.019824207273425307,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-0-0",
+        "key": "vehicle:car_type_1-flow-0-0",
+        "kind": "vehicle",
+        "position": [
+          -1.600000023841858,
+          0.13091197609901428
+        ],
+        "velocity": [
+          -1.0495173212590745e-06,
+          -12.005078315734817
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 12.005078315734863,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-0-0",
+        "vehicle:car_type_2-flow-0-5",
+        "vehicle:car_type_3-flow-0-246",
+        "vehicle:car_type_4-flow-0-7",
+        "vehicle:car_type_1-flow-0-240"
+      ],
+      "center_distance_m": 3.135189551759988,
+      "relative_velocity_mps": [
+        0.008802770356936947,
+        -12.022840408788321
+      ],
+      "relative_speed_mps_partner_minus_ego": 11.985254108461438,
+      "relative_heading_difference_rad": 2.6814292708980005,
+      "relative_heading_difference_deg": 153.63458028529692,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 82,
+      "decision": 148,
+      "raw_step": 444,
+      "sim_time_s": 94.5,
+      "ego_state_source": "current",
+      "ego_state_time_s": 94.5,
+      "other_state_source": "current",
+      "other_state_time_s": 94.5,
+      "same_timestamp_current_vehicle_count": 24,
+      "valid_vehicle_count": 24,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 24,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 441,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          0.6310660243034363,
+          -6.600478649139404
+        ],
+        "velocity": [
+          -0.0017697889438185583,
+          0.008994434022701014
+        ],
+        "heading": 1.7650792906668524,
+        "speed": 0.009166896764684544,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-1-442",
+        "key": "vehicle:car_type_3-flow-1-442",
+        "kind": "vehicle",
+        "position": [
+          -1.8934992551803589,
+          -4.800000190734863
+        ],
+        "velocity": [
+          10.110244750976552,
+          -4.419328519432928e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.110244750976562,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-1-442",
+        "vehicle:car_type_1-flow-1-8",
+        "vehicle:car_type_1-flow-1-4",
+        "vehicle:car_type_1-flow-1-240",
+        "vehicle:car_type_4-flow-1-243"
+      ],
+      "center_distance_m": 3.10083094178865,
+      "relative_velocity_mps": [
+        10.11201453992037,
+        -0.008994875955552957
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.101077854211878,
+      "relative_heading_difference_rad": 1.7650793343782425,
+      "relative_heading_difference_deg": 101.13159636563388,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 83,
+      "decision": 83,
+      "raw_step": 248,
+      "sim_time_s": 74.9,
+      "ego_state_source": "current",
+      "ego_state_time_s": 74.9,
+      "other_state_source": "current",
+      "other_state_time_s": 74.9,
+      "same_timestamp_current_vehicle_count": 18,
+      "valid_vehicle_count": 18,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 18,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 246,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.16600501537323,
+          -9.944662094116211
+        ],
+        "velocity": [
+          -0.0025718350736511518,
+          0.021661370977953
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.021813512516111813,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-2-440",
+        "key": "vehicle:car_type_1-flow-2-440",
+        "kind": "vehicle",
+        "position": [
+          -1.6268525123596191,
+          -7.949706554412842
+        ],
+        "velocity": [
+          4.982651708384485,
+          -0.13624349560198534
+        ],
+        "heading": -0.027336760363306567,
+        "speed": 4.984514052258322,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-2-440",
+        "vehicle:car_type_3-flow-2-6",
+        "vehicle:car_type_1-flow-2-0",
+        "vehicle:car_type_4-flow-2-443",
+        "vehicle:car_type_1-flow-2-244"
+      ],
+      "center_distance_m": 3.4321860053917828,
+      "relative_velocity_mps": [
+        4.985223543458136,
+        -0.15790486657993835
+      ],
+      "relative_speed_mps_partner_minus_ego": 4.96270053974221,
+      "relative_heading_difference_rad": 1.7163089662790298,
+      "relative_heading_difference_deg": 98.33726010824954,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 85,
+      "decision": 86,
+      "raw_step": 256,
+      "sim_time_s": 75.7,
+      "ego_state_source": "current",
+      "ego_state_time_s": 75.7,
+      "other_state_source": "current",
+      "other_state_time_s": 75.7,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 255,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.0439491271972656,
+          -8.910346984863281
+        ],
+        "velocity": [
+          -0.003695722340708318,
+          0.031235195707691735
+        ],
+        "heading": 1.6885679523136954,
+        "speed": 0.0314530732126038,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_1-flow-4-444",
+        "key": "vehicle:car_type_1-flow-4-444",
+        "kind": "vehicle",
+        "position": [
+          -0.7291943430900574,
+          -8.0
+        ],
+        "velocity": [
+          10.729369163513173,
+          -4.6899564063726544e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.729369163513184,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_1-flow-4-444",
+        "vehicle:car_type_2-flow-4-245",
+        "vehicle:car_type_3-flow-4-442",
+        "vehicle:car_type_2-flow-4-5",
+        "vehicle:car_type_4-flow-4-243"
+      ],
+      "center_distance_m": 1.9931807241372363,
+      "relative_velocity_mps": [
+        10.733064885853882,
+        -0.03123566470333237
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.69791609030058,
+      "relative_heading_difference_rad": 1.6885679960250854,
+      "relative_heading_difference_deg": 96.74781959310056,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 95,
+      "decision": 116,
+      "raw_step": 347,
+      "sim_time_s": 84.8,
+      "ego_state_source": "current",
+      "ego_state_time_s": 84.8,
+      "other_state_source": "current",
+      "other_state_time_s": 84.8,
+      "same_timestamp_current_vehicle_count": 22,
+      "valid_vehicle_count": 22,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 22,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 345,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -1.848862886428833,
+          -0.904628574848175
+        ],
+        "velocity": [
+          -0.012124363072867987,
+          0.01934948148989167
+        ],
+        "heading": 2.130544559159551,
+        "speed": 0.0228342421343557,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-14-242",
+        "key": "vehicle:car_type_3-flow-14-242",
+        "kind": "vehicle",
+        "position": [
+          -0.21536888182163239,
+          1.600000023841858
+        ],
+        "velocity": [
+          -11.068860054016103,
+          -4.838352607304508e-07
+        ],
+        "heading": -3.141592609878403,
+        "speed": 11.068860054016113,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_6",
+        "lane_id": ":J1_6_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-14-242",
+        "vehicle:car_type_3-flow-14-2",
+        "vehicle:car_type_3-flow-14-246",
+        "vehicle:car_type_3-flow-14-6",
+        "vehicle:car_type_4-flow-14-243"
+      ],
+      "center_distance_m": 2.9902286000343965,
+      "relative_velocity_mps": [
+        -11.056735690943235,
+        -0.019349965325152402
+      ],
+      "relative_speed_mps_partner_minus_ego": 11.046025811881757,
+      "relative_heading_difference_rad": 1.011048138141632,
+      "relative_heading_difference_deg": 57.92879120007535,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 97,
+      "decision": 117,
+      "raw_step": 351,
+      "sim_time_s": 85.2,
+      "ego_state_source": "current",
+      "ego_state_time_s": 85.2,
+      "other_state_source": "current",
+      "other_state_time_s": 85.2,
+      "same_timestamp_current_vehicle_count": 22,
+      "valid_vehicle_count": 22,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 22,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 348,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.1217914819717407,
+          -9.572272300720215
+        ],
+        "velocity": [
+          -0.0009035540702185094,
+          0.007610215800446517
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.0076636671696501965,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_3-flow-16-442",
+        "key": "vehicle:car_type_3-flow-16-442",
+        "kind": "vehicle",
+        "position": [
+          -1.4367843866348267,
+          -8.0
+        ],
+        "velocity": [
+          11.132811546325673,
+          -4.866306680003671e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 11.132811546325684,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_3-flow-16-442",
+        "vehicle:car_type_4-flow-16-7",
+        "vehicle:car_type_2-flow-16-241",
+        "vehicle:car_type_1-flow-16-440",
+        "vehicle:car_type_2-flow-16-445"
+      ],
+      "center_distance_m": 3.0030568864122253,
+      "relative_velocity_mps": [
+        11.133715100395891,
+        -0.007610702431114518
+      ],
+      "relative_speed_mps_partner_minus_ego": 11.125147879156033,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 98,
+      "decision": 127,
+      "raw_step": 381,
+      "sim_time_s": 88.2,
+      "ego_state_source": "current",
+      "ego_state_time_s": 88.2,
+      "other_state_source": "current",
+      "other_state_time_s": 88.2,
+      "same_timestamp_current_vehicle_count": 23,
+      "valid_vehicle_count": 23,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 23,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 378,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          1.2537181377410889,
+          -10.683428764343262
+        ],
+        "velocity": [
+          -0.013203133780322902,
+          0.11120385666142085
+        ],
+        "heading": 1.6889722059157233,
+        "speed": 0.11198491183188447,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_14",
+        "lane_id": ":J1_14_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-17-445",
+        "key": "vehicle:car_type_2-flow-17-445",
+        "kind": "vehicle",
+        "position": [
+          0.619378387928009,
+          -8.0
+        ],
+        "velocity": [
+          10.541086196899403,
+          -4.607655304413743e-07
+        ],
+        "heading": -4.371139006309477e-08,
+        "speed": 10.541086196899414,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_16",
+        "lane_id": ":J1_16_0",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-17-445",
+        "vehicle:car_type_2-flow-17-245",
+        "vehicle:car_type_1-flow-17-240",
+        "vehicle:car_type_3-flow-17-246",
+        "vehicle:car_type_4-flow-17-3"
+      ],
+      "center_distance_m": 2.7573858727965015,
+      "relative_velocity_mps": [
+        10.554289330679726,
+        -0.11120431742695129
+      ],
+      "relative_speed_mps_partner_minus_ego": 10.42910128506753,
+      "relative_heading_difference_rad": 1.6889722496271133,
+      "relative_heading_difference_deg": 96.77098161834972,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 99,
+      "decision": 95,
+      "raw_step": 285,
+      "sim_time_s": 78.6,
+      "ego_state_source": "current",
+      "ego_state_time_s": 78.6,
+      "other_state_source": "current",
+      "other_state_time_s": 78.6,
+      "same_timestamp_current_vehicle_count": 21,
+      "valid_vehicle_count": 21,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 21,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 282,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -2.4962995052337646,
+          -0.1305428445339203
+        ],
+        "velocity": [
+          -6.113544511690516,
+          7.254161317781622
+        ],
+        "heading": 2.271074370541845,
+        "speed": 9.48674248205465,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_2-flow-18-5",
+        "key": "vehicle:car_type_2-flow-18-5",
+        "kind": "vehicle",
+        "position": [
+          -4.800000190734863,
+          -0.31533104181289673
+        ],
+        "velocity": [
+          -1.0915184838140288e-06,
+          -12.485515594482374
+        ],
+        "heading": -1.5707964142176767,
+        "speed": 12.485515594482422,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_1",
+        "lane_id": ":J1_1_1",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_2-flow-18-5",
+        "vehicle:car_type_4-flow-18-3",
+        "vehicle:car_type_3-flow-18-246",
+        "vehicle:car_type_2-flow-18-441",
+        "vehicle:car_type_4-flow-18-243"
+      ],
+      "center_distance_m": 2.3111000684158713,
+      "relative_velocity_mps": [
+        6.113543420172032,
+        -19.739676912263995
+      ],
+      "relative_speed_mps_partner_minus_ego": 2.998773112427772,
+      "relative_heading_difference_rad": 2.4413145224200647,
+      "relative_heading_difference_deg": 139.8770185986659,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    },
+    {
+      "episode": 100,
+      "decision": 74,
+      "raw_step": 220,
+      "sim_time_s": 72.1,
+      "ego_state_source": "current",
+      "ego_state_time_s": 72.1,
+      "other_state_source": "current",
+      "other_state_time_s": 72.1,
+      "same_timestamp_current_vehicle_count": 19,
+      "valid_vehicle_count": 19,
+      "vehicle_time_mismatch_count": 0,
+      "neighbors_in_radius": 19,
+      "neighbors_omitted": 0,
+      "observed_neighbor_raw_step": 219,
+      "ego": {
+        "id": "ego",
+        "key": "vehicle:ego",
+        "position": [
+          -1.8979488611221313,
+          -0.8464753031730652
+        ],
+        "velocity": [
+          -4.560497396375034,
+          7.1088666194569035
+        ],
+        "heading": 2.141188816228185,
+        "speed": 8.445952943011942,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_21",
+        "lane_id": ":J1_21_0",
+        "route_index": 0
+      },
+      "overlap_actor": {
+        "id": "car_type_4-flow-19-243",
+        "key": "vehicle:car_type_4-flow-19-243",
+        "kind": "vehicle",
+        "position": [
+          -1.9242852926254272,
+          1.600000023841858
+        ],
+        "velocity": [
+          -7.6912384033203045,
+          -3.361947228576933e-07
+        ],
+        "heading": -3.141592609878403,
+        "speed": 7.6912384033203125,
+        "length": 3.68,
+        "width": 1.47,
+        "road_id": ":J1_6",
+        "lane_id": ":J1_6_2",
+        "route_index": 0
+      },
+      "overlap_actor_observed_by_policy": true,
+      "observed_neighbor_ids_at_last_observation": [
+        "vehicle:car_type_4-flow-19-243",
+        "vehicle:car_type_1-flow-19-0",
+        "vehicle:car_type_2-flow-19-241",
+        "vehicle:car_type_3-flow-19-242",
+        "vehicle:car_type_1-flow-19-4"
+      ],
+      "center_distance_m": 2.446617079421523,
+      "relative_velocity_mps": [
+        -3.1307410069452706,
+        -7.108866955651626
+      ],
+      "relative_speed_mps_partner_minus_ego": -0.7547145396916299,
+      "relative_heading_difference_rad": 1.000403881072998,
+      "relative_heading_difference_deg": 57.31892019399032,
+      "same_road": false,
+      "same_lane": false,
+      "snapshot_sat_overlap": true,
+      "sat_leeway_m": 0.05,
+      "sumo_reported_collision": false,
+      "sumo_collision_ids": [],
+      "sumo_collision_events": []
+    }
+  ],
+  "interpretation_limits": [
+    "The original telemetry stores geometric_collision as a boolean and does not store an explicit partner ID.",
+    "A unique overlap is reconstructed under the same geometric rule from the saved same-tick state; it is not an independent SUMO collision event or a liability/right-of-way judgment.",
+    "No SUMO raw collision participants/events were reported for these geometric-only rows."
+  ]
+}

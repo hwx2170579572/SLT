@@ -13,7 +13,7 @@
   "requested_raw_steps": {
     "scenario": "intersection_sorted",
     "algo": "scene_rep",
-    "max_steps": 50000,
+    "max_steps": 100000,
     "seed": 0,
     "device": "cuda",
     "batch_size": 32,
@@ -37,8 +37,8 @@
     "check_only": false
   },
   "effective_sb3_decision_steps": {
-    "expected_total_without_partial_repeats": 16667,
-    "learn_loop_upper_bound": 50000,
+    "expected_total_without_partial_repeats": 33334,
+    "learn_loop_upper_bound": 100000,
     "learning_starts_decisions": 1667,
     "model_learning_starts_argument": 5000,
     "checkpoint_freq": 67,

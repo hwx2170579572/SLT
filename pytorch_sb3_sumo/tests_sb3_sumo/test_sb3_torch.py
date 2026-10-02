@@ -87,7 +87,19 @@ def test_detailed_evaluation_uses_only_successful_raw_completion_times() -> None
     report = evaluate_model_detailed(
         _DetailedEvaluationModel(), _DetailedEvaluationEnv(), episodes=2, seed=10
     )
-    assert report.summary.mean_return == pytest.approx(2.5)
+    assert report.summary.mean_return == pytest.approx(-247.5)
+    assert report.summary.raw_mean_return == pytest.approx(2.5)
+    assert report.summary.raw_std_return == pytest.approx(0.5)
+    assert report.summary.evaluation_return_protocol_version == (
+        "environment_step_reward_v2"
+    )
+    assert report.episode_records[0].episode_return == pytest.approx(-198.0)
+    assert report.episode_records[0].raw_episode_return == pytest.approx(2.0)
+    assert (
+        report.episode_records[0].raw_return_source
+        == "info.undiscounted_reward"
+    )
+    assert report.summary.reward_component_coverage == 0
     assert report.summary.mean_raw_steps == pytest.approx(2.5)
     assert report.summary.success_rate == pytest.approx(0.5)
     assert report.summary.collision_rate == pytest.approx(0.5)
@@ -97,6 +109,77 @@ def test_detailed_evaluation_uses_only_successful_raw_completion_times() -> None
     assert report.episode_records[0].completion_time_seconds == pytest.approx(0.2)
     assert report.episode_records[0].environment_steps == 2
     assert report.episode_records[1].completion_time_seconds is None
+
+
+class _ShapedEvaluationEnv:
+    def reset(self, *, seed: int):
+        del seed
+        self.steps = 0
+        return np.zeros(1, dtype=np.float32), {}
+
+    def step(self, action: np.ndarray):
+        del action
+        self.steps += 1
+        terminal = self.steps == 2
+        info = {
+            "undiscounted_reward": 1.0 if terminal else 0.0,
+            "raw_simulation_steps": self.steps,
+            "is_success": terminal,
+            "collision": False,
+            "off_route": False,
+            "max_time": False,
+            "reward_success": 10.0 if terminal else 0.0,
+            "reward_collision": 0.0,
+            "reward_off_route": 0.0,
+            "reward_timeout": 0.0,
+            "reward_step_cost": -0.01 * self.steps,
+            "reward_progress": 0.4 if self.steps == 1 else 1.0,
+        }
+        shaped_reward = 0.39 if self.steps == 1 else 10.59
+        return np.zeros(1, dtype=np.float32), shaped_reward, False, terminal, info
+
+
+def test_shaped_evaluation_preserves_raw_reward_and_reconciles_branches() -> None:
+    report = evaluate_model_detailed(
+        _DetailedEvaluationModel(), _ShapedEvaluationEnv(), episodes=1, seed=10
+    )
+
+    record = report.episode_records[0]
+    assert record.episode_return == pytest.approx(10.98)
+    assert record.raw_episode_return == pytest.approx(1.0)
+    assert record.success is True
+    assert record.collision is False
+    assert record.timeout is False
+    assert record.reward_success == pytest.approx(10.0)
+    assert record.reward_step_cost == pytest.approx(-0.02)
+    assert record.reward_progress == pytest.approx(1.0)
+    assert record.reward_component_protocol_version == (
+        "yield_v2_cumulative_reward_branches_v1"
+    )
+    assert record.reward_component_reconciliation_error == pytest.approx(0.0)
+    assert report.summary.mean_return == pytest.approx(10.98)
+    assert report.summary.raw_mean_return == pytest.approx(1.0)
+    assert report.summary.success_rate == pytest.approx(1.0)
+    assert report.summary.collision_rate == pytest.approx(0.0)
+    assert report.summary.reward_component_coverage == 1
+    assert report.summary.reward_component_means == pytest.approx(
+        {
+            "reward_success": 10.0,
+            "reward_collision": 0.0,
+            "reward_off_route": 0.0,
+            "reward_timeout": 0.0,
+            "reward_step_cost": -0.02,
+            "reward_progress": 1.0,
+        }
+    )
+    assert report.summary.reward_component_reconciliation_max_abs_error == (
+        pytest.approx(0.0)
+    )
+    payload = report.to_dict()
+    assert payload["evaluation_return_protocol_version"] == (
+        "environment_step_reward_v2"
+    )
+    assert payload["episode_records"][0]["raw_episode_return"] == pytest.approx(1.0)
 
 
 def test_summary_evaluation_holds_carla_ppo_action_on_raw_clock() -> None:
@@ -109,6 +192,8 @@ def test_summary_evaluation_holds_carla_ppo_action_on_raw_clock() -> None:
         policy_action_hold=3,
     )
     assert model.predictions == 1
+    assert summary.mean_return == pytest.approx(-198.0)
+    assert summary.raw_mean_return == pytest.approx(2.0)
     assert summary.mean_decision_steps == pytest.approx(1.0)
     assert summary.mean_raw_steps == pytest.approx(2.0)
     assert summary.success_rate == pytest.approx(1.0)

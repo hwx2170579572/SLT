@@ -11,6 +11,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+from .random_intersection import RANDOM_INTERSECTION_SCENARIOS
+
 
 _SUMO_ROOT = Path(__file__).resolve().parent
 
@@ -104,6 +106,12 @@ SCENARIOS: dict[str, SumoScenarioSpec] = {
         "intersection_sorted", max_episode_steps=600, runnable_in_base_env=False
     ),
 }
+
+
+SCENARIOS.update({
+    name: SumoScenarioSpec(name, max_episode_steps=600, runnable_in_base_env=False)
+    for name in RANDOM_INTERSECTION_SCENARIOS
+})
 
 
 def get_scenario_spec(name: str) -> SumoScenarioSpec:
