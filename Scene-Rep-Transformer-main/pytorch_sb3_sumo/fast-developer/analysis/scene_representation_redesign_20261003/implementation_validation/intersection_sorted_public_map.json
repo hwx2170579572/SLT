@@ -1,0 +1,511 @@
+{
+  "scenario": "intersection_sorted_depart4p0",
+  "network_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\map.net.xml",
+  "ego_route_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\original_scenarios_v1\\intersection_sorted\\ego.rou.xml",
+  "network_sha256": "fa6bcfad8777585e3c401f5aae644c47c49e6a86907fe97b13eb371a5c85f0ed",
+  "public_map_fingerprint": "8b2df8aae4cf8c3c6be1be6fa669739f6bdf8daabc935663904e280291514582",
+  "L_lanes": 46,
+  "E_typed_edges": 348,
+  "Z_zones": 54,
+  "Vmax_zone_vertices": 49,
+  "ego_route_lane_count": 10,
+  "zone_geometry": {
+    "candidate_relation_pairs": 106,
+    "zone_count": 54,
+    "geometric_fallback_pairs": 12,
+    "same_edge_pairs_excluded": 0,
+    "unmapped_relation_pairs": 39,
+    "unmapped_pairs_by_relation": {
+      "merge": 18,
+      "conflict": 21
+    },
+    "geometric_fallback_pairs_by_relation": {
+      "conflict": 12
+    },
+    "mapped_pairs_by_relation": {
+      "conflict": 67
+    },
+    "intersection_point_count": 67,
+    "intersection_cluster_radius_m": 1.25,
+    "polygons_with_holes": 0,
+    "numeric_polygon_hole_policy": "public numeric arrays store exterior vertices only; holes are filled in the proxy polygon and must not be interpreted as exact collision regions",
+    "zone_geometry_semantics": "clustered public lane-centerline conflict/merge intersections buffered by half lane width"
+  },
+  "candidate_route_coverage": {
+    "all_lanes": {
+      "starting_lane_count": 46,
+      "starts_with_more_than_four_paths": 0,
+      "starts_with_incomplete_prefix": 0,
+      "starts_with_enumeration_overflow": 0,
+      "starts_with_unmodeled_lateral_alternative": 46,
+      "maximum_enumerated_paths": 3
+    },
+    "ego_route_lanes": {
+      "starting_lane_count": 10,
+      "starts_with_more_than_four_paths": 0,
+      "starts_with_incomplete_prefix": 0,
+      "starts_with_enumeration_overflow": 0,
+      "starts_with_unmodeled_lateral_alternative": 9,
+      "maximum_enumerated_paths": 3
+    }
+  },
+  "candidate_routes_by_lane": {
+    "all_lanes": [
+      {
+        "lane": "-E0_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E0_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E0_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E1_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E1_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E1_2",
+        "path_count": 3,
+        "incomplete_paths": 0,
+        "max_path_lanes": 4,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E2_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E2_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E2_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E3_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E3_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E3_2",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_0_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_10_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_11_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_11_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_11_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_14_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_15_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_16_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_16_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_16_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_19_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_1_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_1_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_1_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_20_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_21_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_4_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_5_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_6_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_6_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_6_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_9_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E0_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E0_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E0_2",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E1_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E1_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E1_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E2_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E2_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E2_2",
+        "path_count": 3,
+        "incomplete_paths": 0,
+        "max_path_lanes": 4,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E3_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E3_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "E3_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      }
+    ],
+    "ego_route_lanes": [
+      {
+        "lane": "-E0_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E1_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E1_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": "-E1_2",
+        "path_count": 3,
+        "incomplete_paths": 0,
+        "max_path_lanes": 4,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_10_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": false
+      },
+      {
+        "lane": ":J1_11_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_11_1",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_11_2",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 1,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_14_0",
+        "path_count": 2,
+        "incomplete_paths": 0,
+        "max_path_lanes": 3,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      },
+      {
+        "lane": ":J1_21_0",
+        "path_count": 1,
+        "incomplete_paths": 0,
+        "max_path_lanes": 2,
+        "overflow_unknown": false,
+        "has_unmodeled_lateral_alternative": true
+      }
+    ]
+  },
+  "unmodeled_lateral_source_lane_count": 36,
+  "npz_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\scene_representation_redesign_20261003\\implementation_validation\\intersection_sorted_public_map.npz",
+  "npz_sha256": "b7b644f85cd581c2ff3f39190a62c729d9c41883fe40215b87af47a46427cab0",
+  "json_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\analysis\\scene_representation_redesign_20261003\\implementation_validation\\intersection_sorted_public_map.json",
+  "static_only_no_sumo_or_simulation": true
+}

@@ -1,0 +1,597 @@
+{
+  "timestamp_utc": "2026-10-03T12:11:29.960129+00:00",
+  "python": "3.10.16 | packaged by conda-forge | (main, Apr  3 2025, 14:14:45) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+  "command_line": [
+    "train_scene_event_v1.py",
+    "--mode",
+    "smoke",
+    "--method",
+    "sac_scene_dualgraph_v1",
+    "--run-root",
+    "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\scene_event_validation_20261003\\m0_02",
+    "--device",
+    "cuda",
+    "--raw-steps",
+    "1200",
+    "--eval-episodes",
+    "2"
+  ],
+  "pid": 66484,
+  "parent_pid": 89244,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.12.0+cu132",
+  "numpy": "2.2.6",
+  "cuda_available": true,
+  "requested_device": "cuda",
+  "cuda_device_names": [
+    "NVIDIA GeForce RTX 5060 Ti"
+  ],
+  "sources": [
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/algos/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/__init__.py",
+      "sha256": "8b3692edea6204dd346f4210cb3fd52a46f51430f134b48cc66debbd8d9931be"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\baselines.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/baselines.py",
+      "sha256": "6cc5bd15ab9cda631c70002c7cc1df7c689c71f33c83bd18ad85cecfb3edd9b7"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\callbacks.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/callbacks.py",
+      "sha256": "53648fc19a0ed45188622f995012e22900e72f8d6355ab18a5aee96feeee4401"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\evaluation.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/evaluation.py",
+      "sha256": "ec3a7c652b16f9604f2e753e0467d72c5573873b84d40ac054f4b3e2fb7ebee0"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\features.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/features.py",
+      "sha256": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\graph_representation.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/graph_representation.py",
+      "sha256": "42ccc323e50f2641f88216986227f81efbc50a22af9192933487dc396b1c3ace"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4.py",
+      "sha256": "a8cab4094a1d3d24a3d1a5e285ab2c8881f536bee75ab8c3f18624f664834f5d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_10_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_10_model.py",
+      "sha256": "2ed222d0cccda4c68566abbecb86e5bdb3dbf0516c4839c812ab0049c9b400cc"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_11_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_11_model.py",
+      "sha256": "ca6bc307f18423ecc99116a1c600e274bb826a52bb8e235451963ba937ce20d1"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_12_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_12_model.py",
+      "sha256": "297c2a7c9bc487f3d9ca96daa15eeaea225a75d5a2f7f7039788c63326b2249f"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_13_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_13_model.py",
+      "sha256": "2d49cf03e0230afb0dbb5f54c1c4c739f214caf8c45d8c81939d9b5e7aac7553"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_3.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_3.py",
+      "sha256": "4c00d061ff12a1c538356bcc28d991a390f77cd8b2a3091a005fc527573bb210"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_5.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_5.py",
+      "sha256": "e07884a5f235e7081a9bd636596d9645c1da1c154a3db6204240d7867d2c5891"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\hybrid_policy_v4_9_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/hybrid_policy_v4_9_model.py",
+      "sha256": "cba4377d9da1a65c5ee45d61a9273c592fe261db284f4d97910e8a8d208198a9"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\module_diagnostics.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/module_diagnostics.py",
+      "sha256": "e9e9ad366103414b0cf68db5e59ebcd93ad9cf0642943015fd2729832da603f1"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\policies.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/policies.py",
+      "sha256": "d7f44e647c14cdd8d84effd7269e826679828610ed01ac434c5b5cdda3ec5d0a"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\ppo.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/ppo.py",
+      "sha256": "fc11830e7cfc8cc5039e14e58cb704203572fc3401e5953128ba0eb7efdac2d8"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\replay_buffer.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/replay_buffer.py",
+      "sha256": "f206c49b20dc9149494abd346d9044ce0b2710909e4c27404542b16733b0961d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\replay_buffer_v4_7.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/replay_buffer_v4_7.py",
+      "sha256": "0e16475e7641d797d8417d5ce11eee5f25f58135ad6bcf1627d3c296e0332e33"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\replay_buffer_v4_9.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/replay_buffer_v4_9.py",
+      "sha256": "c44dd06f5ecd3454f10886dede6a21b73028ae39196e1fb0422bfd7630e60660"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\representation.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/representation.py",
+      "sha256": "8bcac82dd4428a43a2e753ee3daab875b7b0c93f9ff0f8ee2c95b75842d0b772"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac.py",
+      "sha256": "06c33befdd86e62f78366d76f541483880835920ba7e716c5457c99ed13c180d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v2.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v2.py",
+      "sha256": "d43a9f67fa023b913e460465a76b783fe048d597a93bd6ead3afcaa3484174a4"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4.py",
+      "sha256": "c76c1fa2704e2c253635ddc83532f1f4fa41b65353bccc60ac285cc1d60d82b3"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_11_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_11_model.py",
+      "sha256": "ac65afacad4fc991f8261100bdece48a4310313f4f98099b2891a9ec23864e26"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_12_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_12_model.py",
+      "sha256": "71607f63975f4431f360e1cacc52807e469d1332338b0fbc773a802e698653cc"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_13_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_13_model.py",
+      "sha256": "6e0591741f78f23c70d51e3a7b9812293663623fae2580ff4d8cd017464f452f"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_2.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_2.py",
+      "sha256": "cf17a51760b5f8db3644b48ac034022974579c3d16c323399cd71b64bb28ecaf"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_3.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_3.py",
+      "sha256": "5797fd1ee38873092d928a9216484c78161d901638d959188fe9662e4ff5ca6a"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_5.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_5.py",
+      "sha256": "3f2c26b2d7ea7a86573082f4c2623db5a463b6b2ef0cc133d880a0ea88255dca"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\sac_v4_9_model.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/sac_v4_9_model.py",
+      "sha256": "3e0788d9f191fef05c2ac80e74113e21305de7159a6c2949b66959f77e729292"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/topo_temporal_features.py",
+      "sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+      "archive_path": "pytorch_sb3_sumo/algos/sb3_torch/topo_temporal_features_v2.py",
+      "sha256": "443b069b3432695f750e6f453ab84325b135dc54341831cd437920320fbc0fec"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/configs/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs.py",
+      "sha256": "ef8c950c8edfc213c4e44eda9a47608087acd6aa359f59528afe645079649358"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v2.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v2.py",
+      "sha256": "61ff38acda794cd7ca4da0776ffbeb8523b61be48269f86cf35ad2b3ace314a0"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4.py",
+      "sha256": "ae32c78c0dd95a5084b80a586f5910bfd659a5475880931b8ea87d6b8dac3265"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_11.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_11.py",
+      "sha256": "1eacc59b536fbcf493d83b6f2d73de81f6c9cba853e054827ee343d574a3cabb"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_12.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_12.py",
+      "sha256": "aaefad5f720d13d3d43a6ead0f14512d6814f4ee11c5bfeb404718d80c8fafe9"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_13.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_13.py",
+      "sha256": "49f3fbfaf9f60ad9e4d198417d0572c01b16d6f3857be9c7cc84ddf59bc391c2"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_5.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_5.py",
+      "sha256": "c57dc6521afc7d5f45dd8ef92673267ba6e63496eed993e1ff7a2b0224aa0063"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_6.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_6.py",
+      "sha256": "c9c7d476835db8d695f4a6d215eed0d8b281ce93406be93df2c4fa230fe7f333"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_7.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_7.py",
+      "sha256": "4d9714cf37f577b6b08b761da406268fcf619aeb0c9d2b2083b60ee3bebf5ce8"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_8.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_8.py",
+      "sha256": "f7770ed7ef34b7845c1f60d4718c7e9d03004b181c4cf5b5258d54e5a0e06940"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\configs\\sb3_configs_v4_9.py",
+      "archive_path": "pytorch_sb3_sumo/configs/sb3_configs_v4_9.py",
+      "sha256": "4fa1b16d583359af64cf9865fdc2d2da3c39dfd6704ed019f3c3c57675b5bc34"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/envs/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/__init__.py",
+      "sha256": "9deffe8e163b0477d947fad9e634886e53b3d6325f6ff29c760fe388608f2516"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\decision_alignment_v4.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/decision_alignment_v4.py",
+      "sha256": "89073904b90c674596552063878cfa6295ef0487eafda60c396fd05ae4e5eee9"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\high_density_env_v1.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/high_density_env_v1.py",
+      "sha256": "9562d4b20805baf29de5996088f58d639b47ab0e0fa290ff8ab3fa0608eae73c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\independent_v2_five_methods_six_scenarios_100ep_v1.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/independent_v2_five_methods_six_scenarios_100ep_v1.py",
+      "sha256": "7ac4dbabe8aea5f8fc0c8f4c0f37680f59315c4749b3c0802c6bd3fea4a26900"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_env.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/paper_env.py",
+      "sha256": "4d40c8416f5987208ac1218f57b68c6aa2b4330957ce232a1d97ef91f3bbeabb"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_env_v2.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/paper_env_v2.py",
+      "sha256": "7ec22932c20756c8cc649fc17f68fef304f7b61aa52f7c0f09b15f9c6429cb07"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_env_v4.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/paper_env_v4.py",
+      "sha256": "0734d9362b98c4da138b0fb8c24228cf862ae9d50aa71de105d03623d6633f45"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\paper_scenario_registry.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/paper_scenario_registry.py",
+      "sha256": "6459701376aa77c338039850c0b23886b4c94a20947b8ef4264da5a86d68ef0c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\ppo_env.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/ppo_env.py",
+      "sha256": "5c1418021e8807ad939720d850a9d9bfa843072c1c7817c8b6f9a9f1f95ee9d4"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\random_intersection.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/random_intersection.py",
+      "sha256": "ec612fbf75d9b9264d51b8f702535b2f58446a5bb1b6fadf8131136fce545f1c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\scenario_registry.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/scenario_registry.py",
+      "sha256": "23949ffb827b2abe20ffcf7c01df6c8fadf00bca4473e400e56b81708926d694"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\sumo_env.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/sumo_env.py",
+      "sha256": "4cc4317e3bc7d45b0b5753f7a4e02b67976cb7ee0c4033a381ca2c52ba2ca3f3"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\topology_graph.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/topology_graph.py",
+      "sha256": "f88f042db14c902b28e38f37ef4a0596da934276f773835d110e1b3ee9d5f74f"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\envs\\sumo\\topology_graph_v2.py",
+      "archive_path": "pytorch_sb3_sumo/envs/sumo/topology_graph_v2.py",
+      "sha256": "9ffba5e3d78d6c8e10ee602c69eab1e2f74f1d58f4ada1b91fb5d0679d3170fd"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\reward_shaping_v2.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/reward_shaping_v2.py",
+      "sha256": "d09caedb887379e2b316f60d7c3648e817ca75ea090f2a0d6abcf45604d3a969"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/__init__.py",
+      "sha256": "e200b0d6075101eb96e25175f1f06b851eda9a886039660b837f2a0b61f18c71"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\acceptance.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/acceptance.py",
+      "sha256": "1f4e14a185e7f355cbd4098cb0a4e8004b80fb684de8f843e96785b0ac0fd5a7"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\collector.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/collector.py",
+      "sha256": "4b930fec2cf6928e8b35a5a3c778087a2be7429ba82ce64fdcb46dbabffa1969"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\diagnostics.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/diagnostics.py",
+      "sha256": "8c39553524104f0f3944be29c51d1b56c4509f0205022b580a9f61a8c7a8328c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\dual_graph.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/dual_graph.py",
+      "sha256": "e828bbbf015555901fec5e1e23f4b92c81a2e0ec88c1faf02f6fdc665893e175"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\encoder.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/encoder.py",
+      "sha256": "f73e71681bd2ebdf8c7ada327de8fe8bf447b15d1ca4b730777697394a5a3b8b"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\env.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/env.py",
+      "sha256": "0cc2d8ec38fa055c5083df51b38f3eedf2fc8fb89aeedcb1fed63a55e8ec735d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\event_graph.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/event_graph.py",
+      "sha256": "d39f35cb9d1437081c2782faff84b5dec0f4d9613251c3308c7d826ca6330f81"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\event_projection.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/event_projection.py",
+      "sha256": "c668192be9ed99aaeb680b6092c876ab26b153386652c1068cd88e1d6d543083"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\future_targets.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/future_targets.py",
+      "sha256": "32ee61a8702a214c668d02583f62bac66f6811b6b4d8c2eec47178d9173d75d7"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\geometry.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/geometry.py",
+      "sha256": "696e4cef39806c980af4cc074466920baa86ca6edca830fa4fb2bb0ee6504fb8"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\map_cache.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/map_cache.py",
+      "sha256": "eaa25ae5aa1d2fe240757a56e50f89773f02c95746b98070088a9448cf38c034"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\policy.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/policy.py",
+      "sha256": "343441de02a97151bcde2740150b052c253b1de137bbd66ac61714a68ba5fb7c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\polyline.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/polyline.py",
+      "sha256": "a0ee887cc0199ac489521755f6b5c37374fb17e09f96dccf9beb4dc6831a3628"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\protocol.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/protocol.py",
+      "sha256": "88be55f4a20d0576787df4c64940e945be7c25ff30979391bcfb2aaa341c2433"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\provenance.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/provenance.py",
+      "sha256": "c6ef4262289de38780d4479a2a5adc4475e9437c3f675e2f6f56faad8033c0d7"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\replay.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/replay.py",
+      "sha256": "dcfa16a7caf5e6b2c2aef3146d143a0b0110b40c3e032b01061a5a3441540fd5"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\schema.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/schema.py",
+      "sha256": "9eb5470c6f509ac9ed33380abe0e4b91335c561381022a5feece204531879073"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\temporal.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/temporal.py",
+      "sha256": "7ce9ac47f081206f83fc27b887871b2cf74c6968442d2b110e6832f98e873fcb"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\scene_event\\trainer.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/scene_event/trainer.py",
+      "sha256": "1e8eec422b005e6283b2369ae2e0f04d9fbf332e619d3e3a65d48fb04c85b774"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_scene_event_v1.py",
+      "archive_path": "pytorch_sb3_sumo/fast-developer/train_scene_event_v1.py",
+      "sha256": "0a2a7ded28d19bb292e69cff7e6414697cb9e7b329a270d59bf05038c4b1a8f8"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\__init__.py",
+      "archive_path": "pytorch_sb3_sumo/tools/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v2.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v2.py",
+      "sha256": "aee02ceca7f5830eb851ee60bcc5395e62517df36b2c97f72e61124652dd5ce4"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4.py",
+      "sha256": "44cf211f9dec19cef408047df304b584ebbfdd5041abf438b99d124dc38b27b3"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_11_model.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_11_model.py",
+      "sha256": "736348385b37f77a1058e763975f42b4fd4c9149124114bffc5821eb0e510016"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_12_model.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_12_model.py",
+      "sha256": "acb5eb269e2dfcdbf5c737aae157c6255796edc74c0f6917d2e7b06725ca4eaf"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_13_model.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_13_model.py",
+      "sha256": "6503da72aede32e4f2d1c7ea7b4d39f6339d081db167847f4b98a97238d64551"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_2.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_2.py",
+      "sha256": "8aacb0581a29cec6ad7e8e34c432b57c83692de3f2dc2aab1ce4401c30f82a04"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_3.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_3.py",
+      "sha256": "e754067b8d42a7d561693c50c4fa472f0f7fa665d8b53aebeb6e41d2bd7be613"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_5.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_5.py",
+      "sha256": "156c149da45784e5b382288f36e64d7e69e3cc295aa61c4ec0fd1e1e59d522d6"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_6.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_6.py",
+      "sha256": "b5bc105a61a192771bfcf95c11f18e1cb2cd352c6c581861c0b4f308dc2e95b5"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\action_diagnostics_v4_9_model.py",
+      "archive_path": "pytorch_sb3_sumo/tools/action_diagnostics_v4_9_model.py",
+      "sha256": "b88b7fe8b36427f48bb4156a69828254fef3afa9408807429d892f8aa9295bbf"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\checkpoint_decoder_selector_v4_6.py",
+      "archive_path": "pytorch_sb3_sumo/tools/checkpoint_decoder_selector_v4_6.py",
+      "sha256": "2ac55b945183f5b3459250f59a4b534e8424f0605423c40e5cd435136667f236"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\checkpoint_decoder_selector_v4_8.py",
+      "archive_path": "pytorch_sb3_sumo/tools/checkpoint_decoder_selector_v4_8.py",
+      "sha256": "2dcd6b78d6a71ca5831114835c4d17c6bc970076aa588719f530be5bb59edf77"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\checkpoint_decoder_selector_v4_9_2.py",
+      "archive_path": "pytorch_sb3_sumo/tools/checkpoint_decoder_selector_v4_9_2.py",
+      "sha256": "243c4ee184cfdadbe0ba2d0a26cb746778c322f698de29d11f188917dd51db6c"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\checkpoint_selector_v4_4.py",
+      "archive_path": "pytorch_sb3_sumo/tools/checkpoint_selector_v4_4.py",
+      "sha256": "aad48a06254adb20efee96fc8de0ac4ef84a5c8f42c5a589dc52be2b21fa1b8b"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\checkpoint_selector_v4_5_1.py",
+      "archive_path": "pytorch_sb3_sumo/tools/checkpoint_selector_v4_5_1.py",
+      "sha256": "a42d8861797b9573e76c96024f1ab0e1365c0c2ec001836cedfc9d17098a417e"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\independent_v2_5m6s100e_v1_common.py",
+      "archive_path": "pytorch_sb3_sumo/tools/independent_v2_5m6s100e_v1_common.py",
+      "sha256": "ee682340d2c47248a018da22eaae5925bf30a753621d6cde5662ee55853d008d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\paper_evaluation_contract.py",
+      "archive_path": "pytorch_sb3_sumo/tools/paper_evaluation_contract.py",
+      "sha256": "f6deb86c6d74ce57c90c8225299427cf0c0cd0304a217325f5a247deeda857da"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\paper_evaluation_contract_v2.py",
+      "archive_path": "pytorch_sb3_sumo/tools/paper_evaluation_contract_v2.py",
+      "sha256": "9cd246dc423e12337478f9072a05afdf8232bef8c7629e89705adb24a93c74a0"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_independent_v2_5m6s100e_v1.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_independent_v2_5m6s100e_v1.py",
+      "sha256": "14dfb239cf1447f565a16582fcb6669b7acc044bce67d9e5d26c6ad8f285e100"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3.py",
+      "sha256": "ee70ebfe1af714568e1d9f8ed3c5086f3ae5c4425142233a25c75f6f6ccbcd74"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_11.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_11.py",
+      "sha256": "02e22758ac89055948441cc13b2ed6cf2f79ed6d69ddcc7dc78b8be79cc36dc4"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_12.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_12.py",
+      "sha256": "c4ba432ad43e7108e01640c91874796d8cf9be4458cf9b17227e35fce9e190cf"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_13.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_13.py",
+      "sha256": "dcc205eabc248097943441e78242046676b53d463fdeda587f3180a52619062d"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_5.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_5.py",
+      "sha256": "7928b966791003eaa7903da5495d05ced346df670469ae2974207824464581ff"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_6.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_6.py",
+      "sha256": "d0c291a85e3bacd5de5031fd75f225e5bb36ba420e537d168e1b88219a5f9c15"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_7.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_7.py",
+      "sha256": "beeabe12e0ddc411cb7858769919f66437de839aa6257e41e2b4f8dfe5d226ae"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_8.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_8.py",
+      "sha256": "170a2cf37bf86c8f5c403629f77fe01a079edced9932df1914362dcd8ad64965"
+    },
+    {
+      "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\tools\\train_sb3_v4_9.py",
+      "archive_path": "pytorch_sb3_sumo/tools/train_sb3_v4_9.py",
+      "sha256": "74dca33c45304903cb4ce4375486c9cca000eda8cac7d2334d2d8a8e1d0aec3c"
+    }
+  ],
+  "archive_sha256": "045576813ec84bf316ab8123d39555762466bb0fb601eaf0395f4df94bec0ea6",
+  "fresh_training": true,
+  "training_started": true,
+  "resume": false,
+  "protocol": "scene_event_sac_deadline_nstep_v1"
+}

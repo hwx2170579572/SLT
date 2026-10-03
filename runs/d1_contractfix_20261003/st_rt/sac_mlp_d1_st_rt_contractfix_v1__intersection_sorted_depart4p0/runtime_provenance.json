@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "recorded_at_epoch_seconds": 1790990440.239506,
+      "phase": "train",
+      "method": "sac_mlp_d1_st_rt_contractfix_v1",
+      "pid": 45944,
+      "python_executable": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+      "argv": [
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1_contractfix.py",
+        "train-method",
+        "--method",
+        "sac_mlp_d1_st_rt_contractfix_v1",
+        "--scenario",
+        "intersection_sorted",
+        "--depart-scale",
+        "4.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d1_contractfix_20261003\\st_rt",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics",
+        "--policy-shadow-probes",
+        "--policy-shadow-train-raw-interval",
+        "5000",
+        "--policy-shadow-eval-max-per-episode",
+        "4",
+        "--policy-shadow-critical-eval-sample"
+      ],
+      "cwd": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo",
+      "project_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo",
+      "model_path": null,
+      "source_files": {
+        "d1_entrypoint": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1_contractfix.py",
+          "sha256": "b57fc285e80f60dabfdd8aba19fe564686bb2f603efa1c01165d0c40f87b5cd6"
+        },
+        "base_runner": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py",
+          "sha256": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e"
+        },
+        "incremental_topo_encoder": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\incremental_topo_encoder.py",
+          "sha256": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9"
+        },
+        "behavior_diagnostics": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\behavior_diagnostics.py",
+          "sha256": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b"
+        },
+        "contractfix_entrypoint": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1_contractfix.py",
+          "sha256": "b57fc285e80f60dabfdd8aba19fe564686bb2f603efa1c01165d0c40f87b5cd6"
+        },
+        "legacy_d1_trainer": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+          "sha256": "b133deb4fa7c52b4ff7b3967e4e2e24e1ab8aa549be01e81ef5249b4b4770bfd"
+        },
+        "contractfix_encoder": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\contractfix_encoder.py",
+          "sha256": "1f30168e9e57ce5da619799c8683da820e870481afc817ed3f9d587fa4612437"
+        },
+        "trajectory_history_audit": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\contractfix_trajectory_audit.py",
+          "sha256": "2d010a725c0f4cbcd9bf52100b7321ac76686048ac7551f02871f4abc4fa9590"
+        },
+        "topo_temporal_features": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features.py",
+          "sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204"
+        },
+        "topo_temporal_features_v2": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+          "sha256": "443b069b3432695f750e6f453ab84325b135dc54341831cd437920320fbc0fec"
+        },
+        "features": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\features.py",
+          "sha256": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6"
+        }
+      },
+      "contractfix": {
+        "method_protocol": "d1_c8_c9_contractfix_joint_v1",
+        "c8": "max_true_valid_history_index_with_empty_history_handling",
+        "c9": "SMARTS_pseudo_velocity_to_cartesian_only_for_geometry_edges",
+        "source_observation_contract": "smarts",
+        "source_contract_injection": "extractor_constructor_adapter_from_new_entrypoint",
+        "geometry_active": true,
+        "trajectory_audit": "every_real_preaction_decision; no replay or shadow forwards"
+      }
+    },
+    {
+      "recorded_at_epoch_seconds": 1791005347.0512612,
+      "phase": "evaluation",
+      "method": "sac_mlp_d1_st_rt_contractfix_v1",
+      "pid": 45944,
+      "python_executable": "D:\\Programs\\Anaconda\\envs\\pytorch\\python.exe",
+      "argv": [
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1_contractfix.py",
+        "train-method",
+        "--method",
+        "sac_mlp_d1_st_rt_contractfix_v1",
+        "--scenario",
+        "intersection_sorted",
+        "--depart-scale",
+        "4.0",
+        "--eval-traffic-split",
+        "validation",
+        "--max-steps",
+        "100000",
+        "--run-root",
+        "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d1_contractfix_20261003\\st_rt",
+        "--checkpoint-frequency",
+        "10000",
+        "--behavior-diagnostics",
+        "--policy-shadow-probes",
+        "--policy-shadow-train-raw-interval",
+        "5000",
+        "--policy-shadow-eval-max-per-episode",
+        "4",
+        "--policy-shadow-critical-eval-sample"
+      ],
+      "cwd": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo",
+      "project_root": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo",
+      "model_path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\runs\\d1_contractfix_20261003\\st_rt\\sac_mlp_d1_st_rt_contractfix_v1__intersection_sorted_depart4p0\\final_model.zip",
+      "source_files": {
+        "d1_entrypoint": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1_contractfix.py",
+          "sha256": "b57fc285e80f60dabfdd8aba19fe564686bb2f603efa1c01165d0c40f87b5cd6"
+        },
+        "base_runner": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2.py",
+          "sha256": "283bd2fc2fe3f63ff81fcb02d52351b24e9acdd7b9ba6c6f98273a36c4a9e34e"
+        },
+        "incremental_topo_encoder": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\incremental_topo_encoder.py",
+          "sha256": "3c04c7a5a69a55784f6132b8ed59b838378565098b8a5e0abe29176d430ffae9"
+        },
+        "behavior_diagnostics": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\behavior_diagnostics.py",
+          "sha256": "8790b77ee0ca4afd09b2432c5b577efa4f895dad9e7d84e8f357bb3c3d45283b"
+        },
+        "contractfix_entrypoint": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1_contractfix.py",
+          "sha256": "b57fc285e80f60dabfdd8aba19fe564686bb2f603efa1c01165d0c40f87b5cd6"
+        },
+        "legacy_d1_trainer": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\train_intersection_yield_v2_d1.py",
+          "sha256": "b133deb4fa7c52b4ff7b3967e4e2e24e1ab8aa549be01e81ef5249b4b4770bfd"
+        },
+        "contractfix_encoder": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\contractfix_encoder.py",
+          "sha256": "1f30168e9e57ce5da619799c8683da820e870481afc817ed3f9d587fa4612437"
+        },
+        "trajectory_history_audit": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\fast-developer\\contractfix_trajectory_audit.py",
+          "sha256": "2d010a725c0f4cbcd9bf52100b7321ac76686048ac7551f02871f4abc4fa9590"
+        },
+        "topo_temporal_features": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features.py",
+          "sha256": "2096291d07dc603f6d92764695f695b43ec2c3c5c24838ea0e7ba58ae3385204"
+        },
+        "topo_temporal_features_v2": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\topo_temporal_features_v2.py",
+          "sha256": "443b069b3432695f750e6f453ab84325b135dc54341831cd437920320fbc0fec"
+        },
+        "features": {
+          "path": "D:\\Program Files (x86)\\paper\\Scene-Rep-Transformer-main1\\Scene-Rep-Transformer-main\\pytorch_sb3_sumo\\algos\\sb3_torch\\features.py",
+          "sha256": "4982a6ebb8976f3611dfdcc9a852e7ddd7d51a03b0d3534eeb27f83c306b0aa6"
+        }
+      },
+      "contractfix": {
+        "method_protocol": "d1_c8_c9_contractfix_joint_v1",
+        "c8": "max_true_valid_history_index_with_empty_history_handling",
+        "c9": "SMARTS_pseudo_velocity_to_cartesian_only_for_geometry_edges",
+        "source_observation_contract": "smarts",
+        "source_contract_injection": "extractor_constructor_adapter_from_new_entrypoint",
+        "geometry_active": true,
+        "trajectory_audit": "every_real_preaction_decision; no replay or shadow forwards"
+      }
+    }
+  ]
+}

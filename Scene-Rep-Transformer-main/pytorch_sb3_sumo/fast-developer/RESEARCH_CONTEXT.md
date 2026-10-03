@@ -329,3 +329,63 @@ ConflictTiming未来校准日志补充已完成：`envs/sumo/conflict_timing_obs
 ## 2026-10-03：投稿目标与候选研究主线（待验证）
 
 用户确认目标为争取 CCF-A 或中科院二区 Top 以上；具体 venue 尚未确定，两套分区体系不能直接等价。当前单训练 seed 仅用于可行性探索，最终论文仍需验证稳定性。当前建议尚未获用户批准实施：暂固定 ST-RT 并暂停继续叠加表征模块，先核对 RL target、reward 与 termination 协议，再检验“在规定候选动作及其后续策略下仍可改变安全通过结果的决策时窗与信用分配”这一候选主线。它不是已证实根因或已确认新颖性；晚期不可避免碰撞仍可能用于 Q 校准，不能据此排除，回放设计应保留 uniform 覆盖。PER、RUDDER、COCOA 是需区分的近邻/控制方向；单纯增加风险奖励或 PER 不足以构成新方法主张。未来不要求保留全部模块，应优先成功率与机制证据。本条无新增训练结果。
+
+## 2026-10-03：D1 C8/C9 contractfix entry 已准备，等待前序pair完成
+
+新增独立入口注册 `sac_mlp_d1_st_contractfix_v1` 与 `sac_mlp_d1_st_rt_contractfix_v1`，联合修复D1 last-valid history index（C8）及SMARTS几何边Cartesian velocity contract（C9）；两方法均实际使用geometry edges。奖励、SAC/replay/bootstrap和训练预算保持原协议。新入口注入SMARTS观测合同并在train/eval真实pre-action轨迹挂被动审计wrapper；runtime provenance和source archive将包含entry、encoder、audit wrapper、features、topo temporal v1/v2父实现。详细定义见[contractfix协议](analysis/d1_contractfix_protocol_20261003.md)。
+
+默认准备根为`runs/d1_contractfix_20261003`。只读launcher预览为blocked：截至2026-10-03 06:53(+08)的一次进度/进程快照中，retry01/ST-RT为77917 raw/72917 updates、retry01_longres/Longres为65061/60061，两有效worker均存活且status为training，没有final100评估。guard逐方法要求fresh seed0/100000 raw、training checkpoint SHA一致、final validation 100回合且记录seeds 10000–10099与checkpoint path/SHA匹配；忽略retry01兄弟失败候选造成的aggregate status。全局exclusive pair-launch receipt防止换run-root重复启动；entry还拒绝未经guard的训练和checkpoint/resume输入。测试完成后仍pending；未启动新训练或报告性能结果。
+
+## 2026-10-03：retry01 ST-RT 完成，Longres 仍在训练
+
+08:16(+08)只读核验时，retry01的ST-RT已status=trained并通过final身份门：seed0 fresh、100000 raw/95001 updates、validation seeds 10000–10099。100回合为S/C/T/O=63/37/0/0，9003 decisions；shaped mean±std=4.389848/10.389009，raw未折扣mean±std=0.26/0.965609，六分量最大对账误差3.55e−15。它复现此前ST-RT同seed验证行为，不能作为独立seed稳定性证据。Longres当时为training、99690 raw/94690 updates，因此pair guard仍blocked；contractfix全局receipt和新run root均不存在、没有启动修复训练。完整身份、源档案和限制见[experiment history](analysis/experiment_history.md)及[场景汇总](analysis/intersection_experiment_summary_20261001.md)。
+
+## 2026-10-03：retry01 Longres 完成，D1 contractfix pair 已启动
+
+Longres现已fresh完成seed0、100000 raw/95001 updates，并通过final validation身份核验：100回合、逻辑seeds 10000–10099，S/C/T/O=39/55/6/0。Shaped environment_step_reward_v2 mean/std为−0.74052338/10.49490709；raw未折扣return另列为−0.16/0.95624265。Final checkpoint实算SHA256为41c5ead07ff053a8f221bbc8d4870da5ac7c6e39ed92b7af476054a4fa103afb，与training-complete及evaluation identity一致。六项shaped component means为3.9/−5.5/0/−0.3/−1.1379/2.29737662，100回合均有记录，最大对账误差5.33e−15。训练和评估诊断错误为0；训练shadow 20 unique/300行，评估300 unique/4500行、100/100回合有记录且active-invalid为0。source archive共8736项，ZIP实算SHA与manifest一致，runtime provenance列出的源码SHA均匹配归档；suite记录CUDA、RTX 5060 Ti和torch 2.12.0+cu132。细节见[experiment history](analysis/experiment_history.md)和[场景汇总](analysis/intersection_experiment_summary_20261001.md)。
+
+前序pair完成后，独立D1 contractfix pair于2026-10-03 09:20(+08)启动在runs/d1_contractfix_20261003：ST worker PID 48788、ST-RT worker PID 45944，各自使用短run root st与st_rt；supervisor PID 72064。两臂按seed0 fresh/no-resume、CUDA、100000 raw、sorted/depart4协议启动，尚无性能结果。启动时两status均training；早期progress文件各记录5082 raw/0 updates，训练learning-start门槛为5000 raw，诊断与轨迹审计errors均0。trajectory audit是每个真实pre-action decision一次，覆盖episode/cache及raw-step统计；progress和异步summary不是同一写入时点。运行身份、源档案与traffic隔离证据见[contractfix协议](analysis/d1_contractfix_protocol_20261003.md)及[experiment history](analysis/experiment_history.md)。本记录不将旧count-minus-one对照差异外推为成功率效应；D1修复效果仍待正式结果。
+
+## 2026-10-03 09:32(+08)：contractfix pair越过warmup后的运行状态
+
+两worker仍为training，supervisor PID 72064；ST PID 48788的progress快照为8976 raw/3976 updates，ST-RT PID 45944为8664/3664。optimization JSONL尾记录也有正更新数（ST 4011；ST-RT尾记录3010较progress快照旧），各文件异步写入，不把不同时点的raw/update强行对齐。behavior diagnostic errors与trajectory-history audit errors均为0，summary写入无pending/permission denial；轨迹审计持续按真实pre-action decision计数。协议审计另确认两臂前5个共同完成episode逐例与train_monitor的decision/raw计数匹配，history-age公式与缓存核验正确。该状态只证明新入口已正常越过warmup并发生优化更新，不是性能结果。
+
+## 2026-10-03：D1 contractfix ST final validation完成，ST-RT final validation待核
+
+ST方法`sac_mlp_d1_st_contractfix_v1`已fresh完成seed0、100000 raw steps/95001 updates（CUDA、no-resume、非smoke）。Final validation在`intersection_sorted`/depart4.0上使用100个唯一逻辑seeds 10000–10099。逐episode布尔字段汇总为S/C/T/O=45/50/5/0。`environment_step_reward_v2` shaped return均值±标准差为0.79356204±10.54762652；raw未折扣return单独为−0.05±0.97339612。六项shaped reward均值(success/collision/off-route/timeout/step cost/progress)为4.5/−5.0/0/−0.25/−0.8644/2.40796204，均覆盖100回合，最大对账误差3.55e−15。`final_model.zip`的SHA-256为`AF0D6674ADF321E148DB54D3D48B8349D558E40101C229FDDA9D13EFFE74B162`，与training-complete和evaluation identity一致。训练与评估runtime provenance各有11个源文件引用，22/22均匹配20文件source archive manifest。评估诊断记录100回合、8644 decisions、25832 raw steps、errors=0；轨迹审计errors和unknown raw-step decisions均为0；shadow为357 unique samples、100/100回合覆盖、active-invalid=0。
+
+ST-RT方法`sac_mlp_d1_st_rt_contractfix_v1`的训练已完成100000 raw/95001 updates，但本次只读快照尚无最终evaluation identity/results文件，故配对仍未完成且不报告其评估结果。ST单臂结果只代表一个训练seed；C8与C9同时改变，不单独归因任何一项修复，也不作为多seed稳健性证据。完整工件与核验边界见[experiment history](analysis/experiment_history.md)及[场景汇总](analysis/intersection_experiment_summary_20261001.md)。
+
+## 2026-10-03：D1 contractfix pair final100均完成并通过身份核验
+
+后续final快照更新上节pending状态：suite现为complete，两worker均exit_code=0。ST-RT也已fresh seed0完成100000 raw/95001 updates，validation final100使用唯一seeds 10000–10099；最终checkpoint SHA256 `706548B4E84450ADCE1C224C122D88F0C0647B1F212A695A9558C4FE00A55D0F`与training-complete、evaluation identity和实算ZIP SHA一致。ST-RT结果S/C/T/O=52/48/0/0，shaped return mean±std=2.02868299±10.74453241，raw未折扣return=0.04±0.99919968；六项shaped分量均值(success/collision/off-route/timeout/step cost/progress)=5.2/−4.8/0/0/−0.8773/2.50598299，100回合覆盖，最大对账误差3.55e−15。评估诊断errors=0，8773 decisions/26218 raw；轨迹审计errors=0、unknown=0；shadow为298 unique、100/100回合覆盖、active-invalid=0。两臂train/evaluation provenance合计44个源码引用，全部匹配20项source archive manifest。
+
+ST与ST-RT的同验证seed池描述性结果分别为S/C/T/O=45/50/5/0与52/48/0/0；这是同训练seed下的两方法结果，不是独立训练seed证据。两项修复C8/C9共同启用，不能由该pair单独归因某一项修复效果。完整身份、来源与限制见[experiment history](analysis/experiment_history.md)、[场景汇总](analysis/intersection_experiment_summary_20261001.md)和[contractfix协议](analysis/d1_contractfix_protocol_20261003.md)。
+
+## 2026-10-03：D1 contractfix结果与证据审阅完成
+
+结果归因和独立审计材料已完成并交叉核对核心结果身份、奖励分列、逐seed转换和来源边界：见[最终归因报告](analysis/d1_contractfix_results_attribution_20261003.md)、[诊断审计](analysis/d1_contractfix_diagnostic_audit_20261003.md)及[配对对照证据](analysis/d1_contractfix_comparison_evidence_20261003.md)。ST→ST-RT是同一100-seed验证池上的描述性比较；启用route分支也改变有效计算/梯度路径，不能用名义参数量相同推断等有效容量或唯一归因于某个query。两臂各只有一个训练seed，C8/C9联合修复不能拆分因果贡献。bootstrap审计确认当前单γ与标准γ^k决策级k-step目标存在协议差异；若未来采纳新协议，SAC+MLP、MST+SLT等主比较也须统一对齐，旧历史结果不能当作已对齐新协议。本轮未授权或启动相应重训。automation-3已暂停本轮自动跟进；未追加训练或仿真。
+
+## 2026-10-03：四方法失败分布审计完成（只读）
+
+仅汇总既有final100，见[四方法失败分布审计](analysis/st_strt_four_way_failure_audit_20261003.md)。旧ST final100缺行为字段；旧ST-RT的几何OBB fallback候选不是SUMO确认的物理接触对象。无新训练或评估；automation-3保持暂停。
+
+## 2026-10-03：奖励目标审计与近期文献路线（研究设计，非新训练）
+
+见[奖励目标审计](analysis/reward_objective_audit_20261003.md)、[14篇文献与近邻](analysis/literature-search-20261003-interaction-rl/papers.md)及[完整技术路线](analysis/reward_literature_technical_route_20261003.md)。旧ST-RT、修复ST、修复ST-RT三组v2 final100中，未折扣及按0.99/decision重算的环境回报均未出现失败高于成功；不据此推断实际n=4 soft target正确。旧ST raw-only不混入shaped比较。当前证据不支持奖励为首要根因；先处理已确认的bootstrap协议差异与60s任务边界定义。
+
+候选路线为修复ST-RT上的策略相关竞争终局价值学习；它是待验证方法，SVL/SRL/SRPL/TraCeS/DSAC-T及动作风险预印本已覆盖大量概念，不能称首创时间分布或新价值分解理论。当前未保存完整replay/逐transition obs-nextobs，不能承诺直接离线训练事件critic。仅执行合成有限MDP代数检查（不是驾驶实验），未改训练实现、未运行新仿真；历史结果保留，automation-3继续暂停。若后续实施，先授权并独立记录公共协议校正，再公平比较方法；10000–10099作为已多次查看的开发validation，不冒充未见test。
+
+## 2026-10-03：研究优先级转向场景表征重构（待验证）
+
+用户当前优先重新设计 `intersection_sorted_depart4p0` 的场景表征，保留 SAC 与 `Q(z_t,a_t)` 接口；前述策略相关事件价值/critic 学习机制保留为备选，不在本轮并行叠加。设计入口为[通行事件图技术路线](analysis/scene_representation_redesign_20261003/technical_route.md)，环境可观测性核查见[环境证据](analysis/scene_representation_redesign_20261003/environment_evidence.md)。路线尚未实现、训练或验证性能/新颖性。只读审阅已将联合mode内事件分布到确定性 `z_t` 读出的定义、重放一致性、未来入场actor覆盖等实现合同问题反馈；不表示审阅通过。无新仿真或训练，automation-3仍暂停。
+
+## 2026-10-03：场景表征分阶段实现路线（计划）
+
+新增[分阶段实现路线](analysis/scene_representation_redesign_20261003/implementation_roadmap.md)：M0通用双图并接入SAC，M1确定性通行事件，M2学习progress与辅助事件目标，M3共享scene latent联合事件图。首版M3使用共享scene queries，不要求指数级joint beam；如数据证明残余依赖重要，再另行验证。此文是方法计划，未新增代码、训练、仿真或评估，历史结果不变。只读复核曾指出z维度声明不一致（当前文本已统一为128维），并要求明确M2梯度边界；路线现已补张量级合同，但维度与autograd/target同步均未实现验证。不将此记录称为审阅通过。automation-3仍暂停。
+
+## 2026-10-03：场景表征路线获授权进入分阶段实施（验收待完成）
+
+用户已授权按[独立实验协议](analysis/scene_representation_redesign_20261003/experiment_protocol.md)实施完整路线、逐阶段验收并修复未通过的实现检查。60秒已确认是ego任务deadline：新协议将剩余任务时间纳入观测；deadline为`terminated`且不bootstrap，外部采集截断单独标记并从末状态bootstrap；暖机不计入deadline。新目标使用实际policy-decision步数的`gamma**k`，并明确保留reward-only多步累加加末端soft bootstrap，不加入中间熵项或IS/Retrace修正；此目标是近似off-policy目标，不称为精确soft n-step评估器。历史方法、协议和结果保持原身份。
+
+当前独立代码入口为`fast-developer/scene_event/`。各阶段实现与实证状态、协议对齐审阅及阶段0测试门见[阶段验收表](analysis/scene_representation_redesign_20261003/stage_acceptance.md)；当前没有记录任何阶段通过或新的性能结果。授权实施不等于模型效果已验证；既有seed、checkpoint和S/C/T结果未改写。

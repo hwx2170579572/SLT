@@ -1,0 +1,38 @@
+{
+  "state": "completed",
+  "kind": "smoke",
+  "pid": 66484,
+  "started_utc": "2026-10-03T12:11:10.407212+00:00",
+  "updated_utc": "2026-10-03T12:18:01.296938+00:00",
+  "config_sha256": "f3323a719121f31b48851812a10b38f048c018ffca9988f67158611ad3906f58",
+  "protocol": "scene_event_sac_deadline_nstep_v1",
+  "method": "sac_scene_dualgraph_v1",
+  "scenario": "intersection_sorted_depart4p0",
+  "seed": 0,
+  "fresh": true,
+  "raw_steps": 1200,
+  "decision_steps": 403,
+  "updates": 1083,
+  "replay_used_raw": 1200,
+  "omitted_tail_raw": 0,
+  "completed_train_episodes": 5,
+  "completed_eval_episodes": 2,
+  "eval_seeds": [
+    10000,
+    10001
+  ],
+  "checkpoint_sha256": "351a20127724b7c2bac92e8bf984efb26ddbdd573cb2479cedbeb5d54ceff6c5",
+  "public_map_sha256": "9c8b499b82401c4ad76faacf95dcc131fb0964bca5ca207354009a9c97cd42c8",
+  "reload_action_max_abs_error": 0.0,
+  "counts": {
+    "success": 0,
+    "collision": 2,
+    "off_route": 0,
+    "timeout": 0
+  },
+  "mean_environment_step_reward_v2_return": -9.000073075843975,
+  "mean_raw_environment_return": -1.0,
+  "max_reward_component_error": 0.0,
+  "elapsed_seconds": 410.89099999982864,
+  "interpretation": "Correctness smoke, not a 100k performance experiment"
+}

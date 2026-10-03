@@ -270,6 +270,15 @@ RouteAct冻结ST-RT先导的9003次决策中0次veto，仅证明原策略部署�
 未来的`conflict_timing`校准候选路径记录补充了`path_deviation_evidence`：分别保留ego/foe首个偏离的raw与decision时刻、道路/车道/位置、横距/弧长、lane membership、原因、候选lane IDs及已知数据截断；每侧entry/clearance仍以实际观测为准，既有日志不回填。该补充不增加TraCI查询、仿真步或prediction row；7项wrapper纯测试与几何碰撞相关15项共22项通过。整体方法结果与限度见[最终归因报告](sorted_routeact_conflicttime_attribution_20261003.md)。正式两路100k/final100及122回合冻结诊断均已完成，正常采集补充已完成；此后没有新增完整训练，本轮跟进可暂停。
 
 *** End of File
+## 22. 2026-10-03：D1 C8/C9 contractfix pair queued
+
+新增独立入口注册 `sac_mlp_d1_st_contractfix_v1` 与 `sac_mlp_d1_st_rt_contractfix_v1`，用于在前序ST-RT/Longres pair完成且身份核验通过后fresh检验D1 last-valid history index（C8）与SMARTS几何边速度合同（C9）的联合修复。训练入口/launcher和CPU SB3 checkpoint save/load roundtrip已验证；前序pair completion guard目前阻止启动，故新实验仍pending且没有性能结果。具体协议见[d1_contractfix_protocol_20261003.md](d1_contractfix_protocol_20261003.md)。
+
+## 23. 2026-10-03：retry01 ST-RT 完成，Longres pending
+
+ST-RT `sac_mlp_d1_st_rt`在`runs/sortlr_1003_retry01`已fresh seed0完成100000 raw steps/95001 updates；final validation为100回合、seeds 10000–10099，S/C/T/O=63/37/0/0、9003 decisions。Final checkpoint SHA256 `cce43cacb359ac7688858d514dce0004b64a296ef908b3818de76d01d75274ed`与training-complete和evaluation identity相符。Shaped `environment_step_reward_v2` mean/std为4.3898484078/10.3890093033；raw未折扣return独立列为0.26/0.9656086164。六项shaped奖励分量均覆盖100回合，最大reconciliation error 3.55e−15；train/eval diagnostic errors均为0。该fresh重跑与先前同seed的63/37/0、9003 decisions/回报复现一致，不构成独立seed证据。
+
+完整证据位于[ST-RT run目录](../../../../runs/sortlr_1003_retry01/sac_mlp_d1_st_rt__intersection_sorted_depart4p0)、[pair suite manifest](../../../../runs/sortlr_1003_retry01/suite_manifest.json)、[source archive manifest](../../../../runs/sortlr_1003_retry01/source_archive_manifest.json)及[experiment history](experiment_history.md)。训练终结记录为100000/95001；稀疏`progress.json`末值99715/94715仅保留为较早快照。Longres在2026-10-03 08:16(+08)仍training于99690 raw/94690 updates且进程存活，因此有效pair尚未完成，contractfix仍pending、未启动。D1 as-run last-valid index风险继续约束模块归因，MST+SLT first-frame mask不由此定性。
 ## 21. 2026-10-03：ST-RT / Longres 中断与恢复运行快照
 
 原正式根 runs/sortlr_1003 经用户确认手动中断，raw历史保留：ST-RT 9276 raw/4276 updates、Longres 8679/3679；诊断错误均0。没有周期/最终checkpoint、replay buffer或RNG/optimizer状态，不能精确续训；详见 runs/sortlr_1003/interruption_receipt.json。上述部分训练不并入fresh重跑的100000 raw预算。
@@ -280,3 +289,35 @@ retry01中的Longres候选因同根并发写traffic overlay触发WinError 5退�
 
 两个selected root各有一个10k边界policy observation样本，trajectory shape为6×10×5。生产x!=0 proxy下所有slot均为10/10帧；count-minus-one与真实proxy最后索引均为9，样本未见idx mismatch或索引到proxy-masked帧。样本稀疏且proxy不是真实车辆presence；由于缺actor ID和history tracking/reset timestamps，late-entrant短历史频率未知。不得用这两个样本估计总体暴露率或性能影响。D1 left-pad/count-minus-one问题是运行后发现的实现风险；当前正式运行未热改或停止，原始运行指标按as-run记录，模块设计归因需重新审视。MST+SLT的first-frame mask行为不据此定性。细节见[history-index审计](last_valid_history_index_audit_20261003.md)及配对恢复收据。
 *** End of File
+
+## 25. 2026-10-03：retry01 Longres 完成，ST-RT / Longres pair身份门通过
+
+上一节保留ST-RT完成、Longres仍在training的08:16(+08)快照；Longres现已完成并核验最终身份。其run根为[retry01_longres](../../../../runs/sortlr_1003_retry01_longres)，方法目录为[sac_mlp_d1_st_rt_longres_v1](../../../../runs/sortlr_1003_retry01_longres/sac_mlp_d1_st_rt_longres_v1__intersection_sorted_depart4p0)。两臂均为intersection_sorted/depart4.0、fresh seed0、100000 raw、no-resume、CUDA及validation 100回合/seeds 10000–10099。Longres终结值为95001 updates，S/C/T/O=39/55/6/0；shaped environment_step_reward_v2 mean/std=−0.74052338/10.49490709，raw未折扣return mean/std=−0.16/0.95624265。Final checkpoint SHA256 41c5ead07ff053a8f221bbc8d4870da5ac7c6e39ed92b7af476054a4fa103afb与训练终结记录及eval identity一致。
+
+六项shaped分量(success/collision/off-route/timeout/step cost/progress)均值为3.9/−5.5/0/−0.3/−1.1379/2.29737662，100回合覆盖完整，最大对账误差5.33e−15。Train/eval diagnostics errors=0；shadow train 20 unique/300行，eval 300 unique/4500行且100/100回合有样本，active-invalid=0。归档8736文件，source archive SHA与manifest一致，runtime provenance列出的文件SHA匹配归档；suite runtime probe为RTX 5060 Ti/torch 2.12.0+cu132。progress.json稀疏末值99990/94990早于training_complete的100000/95001，保留为快照。更细的证据路径和provenance device字段限制见[experiment history](experiment_history.md)。
+
+ST-RT为前节已核验的63/37/0/0，SHA cce43cacb359ac7688858d514dce0004b64a296ef908b3818de76d01d75274ed；本次check-only显示两前序臂ready、contractfix新根runs/d1_contractfix_20261003无全局receipt、guard ready。未由本次启动训练或评估。该paired结果仍只有一个训练seed，且as-run源码含D1 last-valid实现风险；在contractfix结果出现前不作修复有效性或模块因果结论。协议见[d1 contractfix](d1_contractfix_protocol_20261003.md)。
+
+## 26. 2026-10-03：D1 contractfix 联合修复pair启动快照
+
+ST与ST-RT两方法已在前序身份核验通过后启动，分别位于独立run-root st和st_rt，worker PID为48788/45944、supervisor PID为72064。fresh seed0/CUDA、sorted/depart4、每臂100000 raw，final evaluation仍计划使用validation seeds 10000–10099。源归档与两个30文件traffic pool的SHA审计通过；scaled pool及train/eval overlay根由短worker子root隔离。初始持久化progress各为5082 raw/0 updates，diagnostics与trajectory-history audit errors均0；这是训练初期状态，没有性能结果。实际身份和文件链接见[experiment history](experiment_history.md)与[协议](d1_contractfix_protocol_20261003.md)。
+
+## 27. 2026-10-03 09:32(+08)：contractfix pair post-warmup进度
+
+ST与ST-RT两臂仍training，progress分别为8976 raw/3976 updates、8664/3664；optimization日志确认两臂均已有更新，但尾记录与progress更新时间不同，保留各自文件时点。behavior diagnostics与trajectory audit errors均为0、summary写入正常；独立审计确认两臂前5个共同完成episode的raw/decision计数逐例与train_monitor相符。该进度只证明训练与被动采集正常运行，不构成性能结果。见[d1 contractfix protocol](d1_contractfix_protocol_20261003.md)。
+
+## 28. 2026-10-03：D1 contractfix ST完成final validation，ST-RT评估待核验
+
+ST方法`runs/d1_contractfix_20261003/st/sac_mlp_d1_st_contractfix_v1__intersection_sorted_depart4p0`按seed0 fresh/no-resume、CUDA训练100000 raw/95001 updates，最终validation为100个唯一seeds 10000–10099。Checkpoint `final_model.zip` SHA256 `AF0D6674ADF321E148DB54D3D48B8349D558E40101C229FDDA9D13EFFE74B162`与training-complete及evaluation identity匹配。episode布尔标签统计为S/C/T/O=45/50/5/0；shaped return mean/std=0.79356204/10.54762652，raw未折扣return mean/std=−0.05/0.97339612。六项shaped reward均值(success/collision/off-route/timeout/step cost/progress)=4.5/−5.0/0/−0.25/−0.8644/2.40796204，coverage=100，最大分量对账误差3.55e−15。评估诊断errors=0；trajectory audit 8644 real decisions、25832 raw steps、errors=0、unknown=0；shadow 357 unique、100/100回合覆盖、active-invalid=0。
+
+ST-RT已完成同预算fresh seed0训练100000 raw/95001 updates，但本次只读核验未见最终evaluation identity/results文件，故不记其最终成绩或两臂差值。结果只对应一个训练seed；ST配置同时修复C8/C9，尚不能隔离各自贡献。完整source/runtime与评估证据见[experiment history](experiment_history.md)和[contractfix协议](d1_contractfix_protocol_20261003.md)。
+
+## 29. 2026-10-03：D1 contractfix paired final100完成
+
+后续检查确认suite status=complete且两个worker均exit_code=0，更新此前ST-RT final待核快照。ST-RT按fresh seed0/no-resume/CUDA训练100000 raw/95001 updates，final validation 100个唯一seeds 10000–10099。Final checkpoint SHA256 `706548B4E84450ADCE1C224C122D88F0C0647B1F212A695A9558C4FE00A55D0F`与training-complete/evaluation identity及实际zip SHA一致。结果S/C/T/O=52/48/0/0；shaped mean/std=2.02868299/10.74453241，raw未折扣mean/std=0.04/0.99919968。六分量均值(success/collision/off-route/timeout/step cost/progress)=5.2/−4.8/0/0/−0.8773/2.50598299，100回合覆盖、最大对账误差3.55e−15。评估diagnostic错误0，8773 decisions/26218 raw；轨迹审计错误0、unknown raw决策0；shadow 298 unique、100/100回合有样本、active-invalid=0。
+
+与ST（SHA256 `AF0D6674ADF321E148DB54D3D48B8349D558E40101C229FDDA9D13EFFE74B162`；S/C/T/O=45/50/5/0）相比，ST-RT在同一validation seed池上的类别比例为52/48/0/0，shaped mean为2.02868299、raw未折扣mean为0.04；ST对应mean为0.79356204及−0.05。这是同一训练seed下的描述性方法对照。训练均为单seed，不能据此声称稳定性；C8与C9共同改变，也无法由此拆分两项修复的因果贡献。完整文件路径见[experiment history](experiment_history.md)和[contractfix协议](d1_contractfix_protocol_20261003.md)。
+
+## 30. 2026-10-03：contractfix配对结果归因和证据审阅完成
+
+核心身份、回报、配对转换矩阵与诊断摘要已核对。综合分析见[结果归因报告](d1_contractfix_results_attribution_20261003.md)，运行诊断和C8/C9实施暴露见[诊断审计](d1_contractfix_diagnostic_audit_20261003.md)，逐seed类别迁移与公平性边界见[配对对照证据](d1_contractfix_comparison_evidence_20261003.md)。ST和ST-RT的7个成功差与终局迁移是同一seed0训练轨迹在共同验证seed池上的描述性差异；ST→ST-RT同时启用route分支、改变有效计算/梯度路径，名义encoder参数量相同不等于有效容量相等。两方法不能证明多seed稳健性或拆分C8/C9效果。bootstrap单γ与标准γ^k目标的差异属协议差异；若之后采用新协议，论文主比较baseline也应同协议重训，旧结果按原协议保留。本次无新训练。automation-3已暂停本轮自动跟进；未追加训练或仿真。
